@@ -22,11 +22,27 @@ Main goal: get mobile visitors to WhatsApp or call in one tap, or to send a deta
 | Plugins | WP Mail Logging 1.17.0 (active), WP Mail SMTP 4.10.0 (inactive) |
 | Themes | Twenty Twenty-Five 1.5 (active for now, fallback) |
 | Pages | Home (ID 5, static front page), About Us (6), Our Services (7), Contact Us (8) |
+| Git remote | `origin` = https://github.com/urtech87-ops/ayesha_movers.git |
+
+> **Startup note:** MySQL runs on **port 3307**. After a reboot, start **Apache + MySQL from the XAMPP Control Panel**. **Laragon must stay closed**; it grabs ports 80 and 3306 and serves a different docroot.
+
+### Media status
+| ID | File | Status | Reason |
+|---|---|---|---|
+| 9 | yellow-box-truck-residential-building | OK | |
+| 10 | movers-carrying-white-sofa | **PLACEHOLDER ONLY** | Looks like a stock photo; replace with a real client photo before go-live (or confirm licence) |
+| 11 | white-pickup-truck-cargo-rails | **DO NOT USE** | Shows phone number 0524070463 (not an AYESHA number) |
+| 12 | pickup-loaded-with-household-goods | OK | |
+| 13 | crew-loading-wrapped-furniture | **DO NOT USE** | Appears AI-generated |
+| 14 | red-curtain-side-truck | OK | |
+| 15 | large-box-truck-with-driver | OK | |
+
+In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLACEHOLDER ONLY]`) and the reason is in the Description field.
 
 ## Phase checklist
 | Phase | Branch | Status |
 |---|---|---|
-| 1. Setup (WP, CLAUDE.md, PROGRESS.md, git) | phase-1-setup | Done; awaiting approval |
+| 1. Setup (WP, CLAUDE.md, PROGRESS.md, git) | phase-1-setup | **Done; approved and merged into main 2026-10-01** |
 | 2. Design plan | phase-2-design | Not started |
 | 3. Foundation (theme, plugin, header/footer) | phase-3-foundation | Not started |
 | 4. Home page | phase-4-home | Not started |
@@ -35,8 +51,8 @@ Main goal: get mobile visitors to WhatsApp or call in one tap, or to send a deta
 | 7. Full QA, SEO, performance, handover | phase-7-qa | Not started |
 
 ## Current phase + next step
-- **Current:** Phase 1 complete, on branch `phase-1-setup`. Waiting for user approval.
-- **Next step:** After approval, merge phase-1-setup into main (only when told), then start Phase 2 (design plan, no code).
+- **Current:** Phase 1 approved and merged into `main`. Waiting for the Phase 2 prompt.
+- **Next step:** Phase 2 (design plan, no code) on branch `phase-2-design`. Only use photos marked OK in Media status; ID 10 is placeholder only; never use IDs 11 and 13.
 
 ## Decisions log
 - 2026-10-01: Project brief written to CLAUDE.md.
@@ -49,6 +65,8 @@ Main goal: get mobile visitors to WhatsApp or call in one tap, or to send a deta
 - 2026-10-01: `.htaccess` written by hand (standard WP block, `RewriteBase /ayesha-movers/`) because WP-CLI can't write it on this setup. Not in git.
 - 2026-10-01: `.gitignore` uses a whitelist: ignore all, un-ignore `.gitignore`, `CLAUDE.md`, `PROGRESS.md`, `docs/`, `wp-content/themes/ayesha-movers/`, `wp-content/plugins/ayesha-core/`.
 - 2026-10-01: Media alt text describes what is visible and makes no claim that a pictured vehicle belongs to AYESHA (see Open questions).
+- 2026-10-01: User approved Phase 1. Media IDs 11 and 13 tagged DO NOT USE; ID 10 tagged PLACEHOLDER ONLY (see Environment > Media status).
+- 2026-10-01: Outside this session, `phase-1-setup` was renamed to `main` and pushed to origin. `phase-1-setup` was recreated from `main` for the final Phase 1 commit, then fast-forward merged into `main`.
 
 ## Open questions for the client
 - Founding year / years in business ("decades" vs "Est. 2026")
@@ -58,9 +76,9 @@ Main goal: get mobile visitors to WhatsApp or call in one tap, or to send a deta
 - Gmail App Password for WP Mail SMTP (needed at go-live)
 - Final domain name and hosting
 - **Photos (from ayeshamoverspackingksa.pages.dev):** which are really AYESHA's own trucks/crew? Concerns:
-  - `movers-carrying-white-sofa` (ID 10) looks like a stock photo; need proof of licence or don't use it.
-  - `crew-loading-wrapped-furniture` (ID 13) looks AI-generated (uniform crew, garbled shop signs).
-  - `white-pickup-truck-cargo-rails` (ID 11) shows the phone number 0524070463 (looks like a UAE number) with "Movers Packers" branding; this is not a client number, so it probably shouldn't be shown.
+  - `movers-carrying-white-sofa` (ID 10): **PLACEHOLDER ONLY**, looks like a stock photo.
+  - `crew-loading-wrapped-furniture` (ID 13): **DO NOT USE**, looks AI-generated (uniform crew, garbled shop signs).
+  - `white-pickup-truck-cargo-rails` (ID 11): **DO NOT USE**, shows phone number 0524070463 (looks like a UAE number), not a client number.
   - Can the client send his own real photos of jobs, trucks and crew?
 - **Photos from the expatriates.com ad (60361653.1–8.jpg):** couldn't be downloaded automatically (see Known issues). The client or the user can send them directly.
 
