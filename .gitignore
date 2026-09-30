@@ -1,0 +1,26 @@
+# Whitelist approach: ignore everything, then un-ignore only our own work.
+# This keeps out WordPress core (wp-admin/, wp-includes/, root wp-*.php,
+# index.php, license.txt, readme.html, xmlrpc.php), wp-config.php,
+# wp-cli.phar, .htaccess, uploads, and all third-party plugins/themes.
+/*
+!/.gitignore
+!/CLAUDE.md
+!/PROGRESS.md
+!/docs/
+
+# wp-content: only our theme and plugin
+!/wp-content/
+/wp-content/*
+!/wp-content/themes/
+/wp-content/themes/*
+!/wp-content/themes/ayesha-movers/
+!/wp-content/plugins/
+/wp-content/plugins/*
+!/wp-content/plugins/ayesha-core/
+
+# Never commit these, even inside whitelisted folders
+debug.log
+*.log
+.DS_Store
+Thumbs.db
+node_modules/
