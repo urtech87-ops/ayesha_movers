@@ -823,6 +823,18 @@ a[href^="mailto:"] {
 	}
 }
 
+/* Below 960px the lead card and the five rows stack in one column, as on phones.
+   (WordPress puts columns side by side from 782px; without the photo that left a gap.) */
+@media (min-width: 782px) and (max-width: 959.98px) {
+	.wp-block-columns.ayesha-services__columns {
+		flex-wrap: wrap !important;
+	}
+
+	.wp-block-columns.ayesha-services__columns > .wp-block-column {
+		flex-basis: 100% !important;
+	}
+}
+
 .ayesha-services__photo img {
 	display: block;
 	max-width: 100%;
