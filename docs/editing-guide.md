@@ -125,7 +125,7 @@ Two sections are **synced patterns**: the yellow **CTA band** ("Moving soon? Mes
 
 ### Services: the photo under the house-shifting card
 
-The photo under the large grey "House, villa, flat and office shifting" card (the pickup loaded with boxes) is a normal Image block shown at its real size. Click it to replace it (**Replace** in the toolbar) or delete it. Keep the alt text a plain description of what is in the photo.
+The photo under the large grey "House, villa, flat and office shifting" card (the pickup loaded with boxes) is a normal Image block shown at its real size. It appears on computers only; phones and tablets don't show it (or download it), to keep the page short. Click it to replace it (**Replace** in the toolbar) or delete it. Keep the alt text a plain description of what is in the photo.
 
 ### Services: "Ask on WhatsApp" links
 

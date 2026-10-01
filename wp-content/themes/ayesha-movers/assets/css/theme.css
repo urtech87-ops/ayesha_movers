@@ -810,9 +810,17 @@ a[href^="mailto:"] {
 	transform: rotate(45deg);
 }
 
-/* Photo 12 under the lead card, at its natural size (366 x 480). */
+/* Photo 12 under the lead card, at its natural size (366 x 480). Desktop only: on phones and
+   tablets it would only lengthen the page. It is lazy-loaded (AYESHA Core), so a hidden copy is
+   never downloaded. The editor still shows it. */
 .ayesha-services__photo {
 	margin-block: var(--wp--preset--spacing--40) 0;
+}
+
+@media (max-width: 959.98px) {
+	body:not(.editor-styles-wrapper) .ayesha-services__photo {
+		display: none;
+	}
 }
 
 .ayesha-services__photo img {
