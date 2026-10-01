@@ -1,0 +1,498 @@
+/*
+ * AYESHA Movers theme styles (front end + editor).
+ * Tokens come from theme.json; see docs/design-plan.md for the reasoning.
+ */
+
+/* ---------------------------------------------------------------
+ * 1. Fallback faces sized to Archivo, so the font swap doesn't reflow text.
+ *    Ratios measured against Arial on real copy (Phase 3).
+ * ------------------------------------------------------------- */
+@font-face {
+	font-family: "Archivo Fallback";
+	src: local("Arial"), local("ArialMT");
+	font-weight: 100 450;
+	size-adjust: 98.58%;
+	ascent-override: 89.07%;
+	descent-override: 21.3%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: "Archivo Fallback";
+	src: local("Arial Bold"), local("Arial-BoldMT");
+	font-weight: 451 900;
+	size-adjust: 95.32%;
+	ascent-override: 92.11%;
+	descent-override: 22.03%;
+	line-gap-override: 0%;
+}
+
+/* Headings: Archivo 700 at wdth 75. */
+@font-face {
+	font-family: "Archivo Display Fallback";
+	src: local("Arial Bold"), local("Arial-BoldMT");
+	font-weight: 100 750;
+	size-adjust: 77.78%;
+	ascent-override: 112.88%;
+	descent-override: 27%;
+	line-gap-override: 0%;
+}
+
+/* Display: Archivo 800 at wdth 62. */
+@font-face {
+	font-family: "Archivo Display Fallback";
+	src: local("Arial Bold"), local("Arial-BoldMT");
+	font-weight: 751 900;
+	size-adjust: 69.21%;
+	ascent-override: 126.86%;
+	descent-override: 30.34%;
+	line-gap-override: 0%;
+}
+
+:root {
+	--ayesha-icon-phone: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z'/></svg>");
+	--ayesha-icon-whatsapp: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 1.8a8.2 8.2 0 1 1-4.2 15.3l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 0 1 12 3.8Z'/><path d='M8.7 7.3c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3 4.9 4.3 2.4 1 2.9.8 3.4.8.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3l-1.9-.9c-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.7-1.6-1.9-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.5-.5-.6-.5h-.5Z'/></svg>");
+	--ayesha-chevron: repeating-linear-gradient(
+		-45deg,
+		var(--wp--preset--color--box-yellow) 0 10px,
+		var(--wp--preset--color--cab-teal) 10px 20px
+	);
+}
+
+/* ---------------------------------------------------------------
+ * 2. Type
+ * ------------------------------------------------------------- */
+body {
+	-webkit-text-size-adjust: 100%;
+	text-rendering: optimizeLegibility;
+}
+
+h1,
+.wp-block-site-title,
+.is-style-display-number {
+	font-stretch: 62%;
+}
+
+h2,
+h3,
+h4 {
+	font-stretch: 75%;
+}
+
+/* Sentence case everywhere; numbers line up. */
+a[href^="tel:"],
+.is-style-display-number {
+	font-variant-numeric: tabular-nums;
+}
+
+p,
+li {
+	overflow-wrap: break-word;
+}
+
+a[href^="mailto:"] {
+	overflow-wrap: anywhere;
+}
+
+.is-style-display-number {
+	font-family: var(--wp--preset--font-family--display);
+	font-weight: 800;
+	line-height: 0.95;
+	letter-spacing: -0.01em;
+}
+
+.is-style-display-number:not([class*="-font-size"]) {
+	font-size: var(--wp--preset--font-size--heading-2);
+}
+
+.is-style-display-number a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.is-style-display-number a:hover {
+	text-decoration: underline;
+	text-decoration-thickness: 0.06em;
+}
+
+/* ---------------------------------------------------------------
+ * 3. Layout: one left edge; text columns max 68 characters.
+ * ------------------------------------------------------------- */
+.wp-site-blocks > * {
+	margin-block-start: 0;
+}
+
+/* Short pages: the footer still sits at the bottom of the screen. */
+.wp-site-blocks {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	min-height: 100svh;
+}
+
+.wp-site-blocks > main,
+.wp-site-blocks > .ayesha-main {
+	flex: 1 0 auto;
+}
+
+:where(p, .wp-block-list, .wp-block-details) {
+	max-inline-size: var(--wp--custom--measure);
+}
+
+/* In a centred (constrained) container, keep short text blocks on the content's left edge instead of centring them. */
+.is-layout-constrained > :is(p, .wp-block-list, .wp-block-details):not(.alignwide):not(.alignfull) {
+	margin-left: max(0px, calc((100% - var(--wp--style--global--content-size)) / 2)) !important;
+	margin-right: auto !important;
+}
+
+.ayesha-page {
+	padding-block: var(--wp--preset--spacing--50) var(--wp--preset--spacing--60);
+}
+
+/* ---------------------------------------------------------------
+ * 4. Focus: 3px teal ring with a 2px white gap on light backgrounds,
+ *    3px yellow ring on teal backgrounds.
+ * ------------------------------------------------------------- */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible,
+.wp-element-button:focus-visible {
+	outline: var(--wp--custom--focus-width) solid var(--wp--preset--color--cab-teal);
+	outline-offset: 2px;
+	box-shadow: 0 0 0 2px var(--wp--preset--color--paper);
+}
+
+.is-style-teal-panel :focus-visible,
+.is-style-teal-panel .wp-element-button:focus-visible {
+	outline-color: var(--wp--preset--color--box-yellow);
+	box-shadow: none;
+}
+
+.skip-link.screen-reader-text:focus {
+	background: var(--wp--preset--color--paper);
+	color: var(--wp--preset--color--cab-teal);
+}
+
+/* ---------------------------------------------------------------
+ * 5. Buttons: 48px tap targets; icons from the link type.
+ *    Allowed pairs only: paper on teal, teal on chat-green, teal on yellow.
+ * ------------------------------------------------------------- */
+.wp-block-button__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	min-height: var(--wp--custom--tap-target);
+	box-sizing: border-box;
+}
+
+.wp-block-button__link:is([href^="tel:"], [href*="wa.me/"])::before {
+	content: "";
+	flex: none;
+	width: 1.25rem;
+	height: 1.25rem;
+	background: currentColor;
+	-webkit-mask: var(--ayesha-icon-phone) center / contain no-repeat;
+	mask: var(--ayesha-icon-phone) center / contain no-repeat;
+}
+
+.wp-block-button__link[href*="wa.me/"]::before {
+	-webkit-mask-image: var(--ayesha-icon-whatsapp);
+	mask-image: var(--ayesha-icon-whatsapp);
+}
+
+.wp-block-button.is-style-whatsapp .wp-block-button__link {
+	background: var(--wp--custom--color--chat-green);
+	color: var(--wp--preset--color--cab-teal);
+}
+
+.wp-block-button.is-style-whatsapp .wp-block-button__link:hover {
+	background: var(--wp--custom--color--chat-green-hover);
+	color: var(--wp--preset--color--cab-teal);
+}
+
+.wp-block-button.is-style-yellow .wp-block-button__link,
+.is-style-teal-panel .wp-block-button:not(.is-style-whatsapp):not(.is-style-outline) .wp-block-button__link {
+	background: var(--wp--preset--color--box-yellow);
+	color: var(--wp--preset--color--cab-teal);
+}
+
+.wp-block-button.is-style-yellow .wp-block-button__link:hover,
+.is-style-teal-panel .wp-block-button:not(.is-style-whatsapp):not(.is-style-outline) .wp-block-button__link:hover {
+	background: var(--wp--preset--color--paper);
+	color: var(--wp--preset--color--cab-teal);
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link {
+	background: transparent;
+	color: currentColor;
+	border: 2px solid currentColor;
+}
+
+/* ---------------------------------------------------------------
+ * 6. Section panels (block styles for Group). Each sets its own text colour.
+ * ------------------------------------------------------------- */
+.is-style-teal-panel {
+	background: var(--wp--preset--color--cab-teal);
+	color: var(--wp--preset--color--concrete);
+}
+
+.is-style-teal-panel :is(.wp-block-site-title, .is-style-display-number) {
+	color: var(--wp--preset--color--box-yellow);
+}
+
+.is-style-yellow-panel {
+	background: var(--wp--preset--color--box-yellow);
+	color: var(--wp--preset--color--cab-teal);
+}
+
+.is-style-concrete-panel {
+	background: var(--wp--preset--color--concrete);
+	color: var(--wp--preset--color--cab-teal);
+}
+
+/* ---------------------------------------------------------------
+ * 7. Chevron strip: the reflective tape from the truck body.
+ *    Used only under the hero and on top of the footer.
+ * ------------------------------------------------------------- */
+.wp-block-spacer.is-style-chevron-strip {
+	height: 12px !important;
+	margin-block: 0 !important;
+	background: var(--ayesha-chevron);
+}
+
+/* ---------------------------------------------------------------
+ * 8. Header (64px, not sticky)
+ * ------------------------------------------------------------- */
+.ayesha-header__bar {
+	min-height: var(--wp--custom--header-height);
+	gap: var(--wp--preset--spacing--30);
+}
+
+.ayesha-header .wp-block-site-title {
+	margin: 0;
+	padding-block: 0.5rem;
+}
+
+.ayesha-header__actions {
+	gap: var(--wp--preset--spacing--20);
+}
+
+.ayesha-header__call .wp-block-button__link {
+	white-space: nowrap;
+	padding-block: 0.5rem;
+}
+
+.ayesha-nav .wp-block-navigation-item__content {
+	display: inline-flex;
+	align-items: center;
+	min-height: var(--wp--custom--tap-target);
+}
+
+.ayesha-nav .current-menu-item > .wp-block-navigation-item__content,
+.ayesha-nav [aria-current="page"] {
+	text-decoration: underline;
+	text-decoration-thickness: 3px;
+	text-underline-offset: 0.35em;
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container-open,
+.ayesha-nav .wp-block-navigation__responsive-container-close {
+	width: var(--wp--custom--tap-target);
+	height: var(--wp--custom--tap-target);
+	align-items: center;
+	justify-content: center;
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container-close {
+	display: flex;
+	top: 8px;
+	right: 8px;
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open {
+	--navigation-layout-justification-setting: flex-start;
+	--navigation-layout-justify: flex-start;
+	padding: var(--wp--preset--spacing--30);
+	text-align: left;
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-content {
+	align-items: flex-start;
+	padding-top: var(--wp--preset--spacing--50);
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container {
+	align-items: flex-start;
+	gap: var(--wp--preset--spacing--20);
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content {
+	font-family: var(--wp--preset--font-family--display);
+	font-size: var(--wp--preset--font-size--heading-3);
+	font-stretch: 75%;
+	font-weight: 700;
+}
+
+/* Under 960px: wordmark, call icon, menu button. The call button shows only its icon;
+   the number stays in the link text for screen readers. */
+@media (max-width: 959.98px) {
+	.ayesha-header__call {
+		order: -1;
+	}
+
+	.ayesha-header__call .wp-block-button__link {
+		width: var(--wp--custom--tap-target);
+		height: var(--wp--custom--tap-target);
+		padding: 0;
+		font-size: 0;
+		gap: 0;
+	}
+
+	.ayesha-header__call .wp-block-button__link::before {
+		width: 22px;
+		height: 22px;
+	}
+}
+
+/* Core collapses the menu at 600px; this site keeps the menu button up to 960px. */
+@media (min-width: 600px) and (max-width: 959.98px) {
+	.ayesha-nav .wp-block-navigation__responsive-container-open:not(.always-shown) {
+		display: flex;
+	}
+
+	.ayesha-nav .wp-block-navigation__responsive-container:not(.hidden-by-default):not(.is-menu-open) {
+		display: none;
+	}
+}
+
+/* ---------------------------------------------------------------
+ * 9. Footer (teal, chevron strip on top)
+ * ------------------------------------------------------------- */
+.ayesha-footer__body {
+	padding-block: var(--wp--preset--spacing--50);
+}
+
+.ayesha-footer .wp-block-site-title {
+	font-size: var(--wp--preset--font-size--heading-3);
+}
+
+.ayesha-footer__label {
+	margin-block-end: 0;
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.ayesha-footer__label + * {
+	margin-block-start: 0.125rem !important;
+	font-weight: 600;
+}
+
+.ayesha-footer .wp-block-navigation .wp-block-navigation-item__content {
+	min-height: 44px;
+}
+
+.ayesha-footer__small {
+	font-size: var(--wp--preset--font-size--small);
+}
+
+/* ---------------------------------------------------------------
+ * 10. Sticky mobile Call | WhatsApp bar (under 960px)
+ * ------------------------------------------------------------- */
+.ayesha-sticky-bar {
+	position: fixed;
+	inset-inline: 0;
+	bottom: 0;
+	z-index: 100;
+	margin: 0 !important;
+	padding: 0 0 env(safe-area-inset-bottom);
+	background: var(--wp--preset--color--cab-teal);
+}
+
+.ayesha-sticky-bar .wp-block-buttons {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 0;
+	width: 100%;
+	margin: 0;
+}
+
+.ayesha-sticky-bar .wp-block-button {
+	flex: 1 1 50%;
+	width: 50%;
+	margin: 0;
+}
+
+.ayesha-sticky-bar .wp-block-button__link {
+	width: 100%;
+	height: var(--wp--custom--sticky-bar-height);
+	border-radius: 0;
+}
+
+/* Inset rings so they aren't cut off by the screen edge: yellow on teal, teal on green. */
+.ayesha-sticky-bar .wp-block-button__link:focus-visible {
+	outline: var(--wp--custom--focus-width) solid var(--wp--preset--color--box-yellow);
+	outline-offset: -6px;
+	box-shadow: none;
+}
+
+.ayesha-sticky-bar .is-style-whatsapp .wp-block-button__link:focus-visible {
+	outline-color: var(--wp--preset--color--cab-teal);
+}
+
+@media (max-width: 959.98px) {
+	/* Matching space at the bottom of the page so the bar never covers the footer. */
+	body {
+		padding-bottom: calc(var(--wp--custom--sticky-bar-height) + env(safe-area-inset-bottom));
+	}
+
+	.wp-site-blocks {
+		min-height: calc(100svh - var(--wp--custom--sticky-bar-height) - env(safe-area-inset-bottom));
+	}
+
+	/* Hidden while typing in a form field, so it doesn't sit on top of the keyboard. */
+	.ayesha-typing body {
+		padding-bottom: 0;
+	}
+
+	.ayesha-typing .ayesha-sticky-bar {
+		display: none;
+	}
+}
+
+@media (min-width: 960px) {
+	.ayesha-sticky-bar {
+		display: none;
+	}
+}
+
+/* In the Site Editor, show the bar in place instead of fixed to the screen. */
+.editor-styles-wrapper .ayesha-sticky-bar {
+	position: static;
+	display: block;
+}
+
+.editor-styles-wrapper {
+	padding-bottom: 0;
+}
+
+/* ---------------------------------------------------------------
+ * 11. Motion and print
+ * ------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation: none !important;
+		transition: none !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+@media print {
+	.ayesha-sticky-bar,
+	.ayesha-nav {
+		display: none !important;
+	}
+
+	body {
+		padding-bottom: 0;
+	}
+}

@@ -1,0 +1,39 @@
+/* Floating WhatsApp button: desktop only (960px and up). Phones use the sticky Call/WhatsApp bar. */
+.ayesha-wa-float {
+	display: none;
+}
+
+@media (min-width: 960px) {
+	.ayesha-wa-float {
+		position: fixed;
+		right: 24px;
+		bottom: 24px;
+		z-index: 90;
+		display: grid;
+		place-items: center;
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		background: var(--wp--custom--color--chat-green, #25d366);
+		color: var(--wp--preset--color--cab-teal, #0f4d4a);
+		box-shadow: 0 2px 6px rgb(15 77 74 / 0.35);
+		text-decoration: none;
+	}
+
+	.ayesha-wa-float:hover {
+		background: #3ddc77;
+	}
+
+	/* Teal ring with a white gap, visible on white and on the teal footer. */
+	.ayesha-wa-float:focus-visible {
+		outline: 3px solid var(--wp--preset--color--cab-teal, #0f4d4a);
+		outline-offset: 2px;
+		box-shadow: 0 0 0 2px #fff;
+	}
+}
+
+@media print {
+	.ayesha-wa-float {
+		display: none !important;
+	}
+}
