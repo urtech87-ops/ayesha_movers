@@ -8,13 +8,13 @@ All contact details live on one page: **Settings → Business Info** (in the bla
 
 | Field | What it changes |
 |---|---|
-| Main phone number | The Call button in the header, the big number in the footer, and the **Call** button in the bar at the bottom of phone screens |
+| Main phone number | The big number at the top of the Home page and in the yellow band above the footer, every **Call** button, the Call button in the header, the big number in the footer, and the **Call** button in the bar at the bottom of phone screens. The big number resizes itself to fit, even if the new number is longer |
 | Second mobile number, Office number | The numbers listed in the footer (and the Contact page later) |
 | WhatsApp number | Every WhatsApp button and link: footer, phone bar, and the round green button on computers. **Digits only**, with the country code, e.g. `97334448236` |
 | WhatsApp opening message | The message that is already typed for the visitor when WhatsApp opens. They can change it before sending |
 | Email address | The email shown on the site, **and** the sender address of emails the website sends you |
 | Opening hours | The hours line in the footer |
-| Service areas | One place per line |
+| Service areas | One place per line. Kept for later use: the "Where we go" list on the pages is edited in the editor instead (see section 5) |
 | Instagram page | The Instagram link in the footer |
 | Business address | **Leave empty** until you want an address on the site. When you fill it in, search engines are told about it too |
 | Show reviews section | Leave **off** until the example reviews have been replaced with real customer reviews. While it is off, the reviews section is hidden from visitors |
@@ -57,6 +57,7 @@ Which field to pick:
 | You want | Paragraph, heading or list item (content) | Button words (text) | Button link (url) |
 |---|---|---|---|
 | A number people can tap to call | "Main phone, tap to call (for text)" | "Main phone number" | "Main phone: call link (for buttons)" |
+| The big number (two lines on phones, one on wide screens) | "Main phone, tap to call, as the big number (hero and yellow band)". Give the paragraph the style *Big phone number* | | |
 | A WhatsApp chat | "WhatsApp number, tap to chat (for text)" | "WhatsApp number", or type your own words | "WhatsApp: chat link (for buttons)" |
 | Your email | "Email address, tap to write (for text)" | "Email address" | "Email: send link (for buttons)" |
 | Opening hours | "Opening hours" | "Opening hours" | |
@@ -96,10 +97,54 @@ If a block can't be connected, add a **Shortcode** block and type one of these:
 To keep every text readable (WCAG AA), the editor offers only safe combinations:
 
 - **Group** block → Styles: *Teal panel*, *Yellow panel*, *Grey panel* (each sets its own text colour).
-- **Button** block → Styles: *Fill* (teal), *WhatsApp green*, *Yellow*, *Outline*.
+- **Button** block → Styles: *Fill* (teal), *WhatsApp green*, *Yellow*, *Outline*, *Text link* (an underlined link with the WhatsApp or phone icon, used for "Ask on WhatsApp" under each service).
 - **Paragraph** → Styles: *Big phone number* (the large condensed number style).
 - **Spacer** → Styles: *Chevron strip* (the yellow and teal tape). Use it only under the Home hero; the footer already has one.
 
 Free colour pickers are switched off on purpose: white text on WhatsApp green, or yellow text on white, can't be read by many people.
 
 Ready-made sections are under **Patterns → Ayesha Movers** in the block inserter.
+
+## 5. The Home page
+
+Open **Pages → Home**. Every section is made of normal blocks: click any text, button or photo to change it, then click **Save**. Open **List View** (the icon with three lines at the top left) to see the sections by name: Hero, What we do, How a move works, Where we go, Reviews, Why people book us + Questions, CTA band.
+
+### Sections shared with other pages (synced patterns)
+
+Two sections are **synced patterns**: the yellow **CTA band** ("Moving soon? Message us now.") and **Where we go**. They have a purple outline in the editor. Change one once and it changes on every page that uses it.
+
+- To edit: click the section, then **Edit original** in the toolbar. Make the change and save. Or open **Appearance → Editor → Patterns → Ayesha Movers**.
+- Don't choose **Detach** unless you want this page to have its own separate copy. A detached copy no longer follows the shared one.
+- To add one to another page: **+** (block inserter) → **Patterns** → **Ayesha Movers** → "Call to action band" or "Where we go".
+
+### The hero (top of the page)
+
+- **The big number** comes from Settings → Business Info → Main phone number. You can't type in it. It is two lines on phones ("+973" / "3444 8236") and one line on wide screens, and it resizes itself to fit.
+- **WhatsApp us** and **Call** take their links from Business Info. You can change the button words.
+- **The photo is optional.** To remove it, click the photo and delete it (the ⋮ menu → **Delete**). The text then fills the whole width; nothing else needs to change. To add a photo back, click the empty photo column → **+** → **Image** and pick a photo from the Media Library, size *Photo (560px)*. Don't write a caption or alt text that says the truck is yours until that is confirmed.
+
+### Services: "Ask on WhatsApp" links
+
+Each service has a WhatsApp link that opens the chat with the service already typed, e.g. "Hi AYESHA Movers & Packers, I'd like a price for packing and unpacking." To change that message, use the code editor (⋮ → **Code editor**), find the service's `"message":"…"` and edit the words between the quotes (see section 3). The service titles link to the matching part of the Our Services page.
+
+### Questions (FAQ)
+
+Each question is a **Details** block: the question is the first line and the answer goes inside. To add one, select a question, then ⋮ → **Duplicate**, and change both texts. Only answer with facts you are sure of. There is no pricing question yet, on purpose.
+
+### Reviews
+
+The **What customers say** section holds three placeholder cards. Visitors can't see it while **Show reviews section** is off in Settings → Business Info. When you have real reviews:
+1. Replace each card with a real review: the customer's own words, their name and area, the month and year, and a link to the original on Google or Instagram. Delete any card you don't have a real review for.
+2. Delete the grey line that starts "Placeholder section."
+3. Switch on **Show reviews section** in Business Info.
+
+Never write a review yourself or change a customer's words.
+
+### Title and description in Google (Search engines)
+
+Each page has its own title and description for search results. Open the page, click **Page** in the right-hand sidebar, and scroll to the **Search engines** panel:
+
+- **Title in search results**: about 60 characters at most.
+- **Description in search results**: about 155 characters. The counter under each box tells you when it's too long.
+
+Click **Save**. If you leave them empty, WordPress uses the page name and Google picks the description itself. The Home description mentions the WhatsApp number as text: if the number changes, update the description too.

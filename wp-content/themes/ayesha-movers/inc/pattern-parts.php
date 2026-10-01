@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
  */
 function ayesha_theme_reasons_markup() {
 	$reasons = array(
-		array( 'Labour is in the price', 'The price we give you includes the crew who pack, carry and load. No separate bill for labour.' ),
+		array( 'Low rates, with labour included', 'The price we give you includes the crew who pack, carry and load. No separate bill for labour.' ),
 		array( 'Door to door', 'We collect from your door and deliver to the door of your new place.' ),
 		array( 'One team for everything', 'Labour, trucks and carpenters all come from us, so you deal with one team from start to finish.' ),
 		array( 'Careful with your things', 'Fragile items and crockery get special packing, and we clear away the packing debris before we leave.' ),

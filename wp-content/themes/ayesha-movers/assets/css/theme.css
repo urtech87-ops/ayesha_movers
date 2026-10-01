@@ -410,7 +410,7 @@ a[href^="mailto:"] {
 }
 
 .ayesha-footer__row > .ayesha-footer__label {
-	flex: 0 0 4rem;
+	flex: 0 0 4.75rem;
 	font-weight: 400;
 }
 
@@ -707,7 +707,7 @@ a[href^="mailto:"] {
 
 /* Wide screens: photo on the yellow, its bottom edge on the chevron strip. */
 @media (min-width: 782px) {
-	.wp-block-columns.ayesha-hero__columns > .wp-block-column.ayesha-hero__photo {
+	.wp-block-columns.ayesha-hero__columns > .wp-block-column.ayesha-hero__photo:has(img) {
 		flex: 0 1 46%;
 		max-width: 560px;
 		display: flex;
@@ -717,15 +717,18 @@ a[href^="mailto:"] {
 
 /* Desktop: the quote link sits beside the two buttons. */
 @media (min-width: 960px) {
-	.ayesha-hero__buttons {
+	.ayesha-hero__text > .ayesha-hero__buttons {
 		display: inline-flex;
+		margin-block-start: var(--wp--preset--spacing--40);
 		vertical-align: middle;
 	}
 
-	.ayesha-hero__quote-link {
+	.ayesha-hero__text > .ayesha-hero__quote-link {
 		display: inline-block;
-		margin-block-start: 0 !important;
+		/* Same top margin as the buttons, so both line up in the middle. */
+		margin-block-start: var(--wp--preset--spacing--40) !important;
 		margin-inline-start: var(--wp--preset--spacing--30) !important;
+		line-height: 1;
 		vertical-align: middle;
 	}
 }
@@ -989,6 +992,10 @@ a[href^="mailto:"] {
 
 .ayesha-review > * {
 	margin-block: 0;
+}
+
+.ayesha-review > * + * {
+	margin-block-start: var(--wp--preset--spacing--30);
 }
 
 .ayesha-review__flag {
