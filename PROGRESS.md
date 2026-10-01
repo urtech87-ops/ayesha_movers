@@ -19,11 +19,12 @@ Main goal: get mobile visitors to WhatsApp or call in one tap, or to send a deta
 | Admin username | `ayesha_admin` (password given in chat once; never stored in any file) |
 | WP-CLI | `D:\xampp\php\php.exe wp-cli.phar <command>` from the project root |
 | wp-config extras | `WP_ENVIRONMENT_TYPE=local`, `WP_DEBUG` on, log to `wp-content/debug.log`, display off, `DISALLOW_FILE_EDIT`, **`AUTOMATIC_UPDATER_DISABLED` = true** (no automatic core/plugin/theme/translation updates, so WordPress stays at 7.1.2 for the whole project). wp-config.php is not in git: re-add these by hand on any new install |
-| Plugins | **AYESHA Core 0.3.0 (active)**, WP Mail Logging 1.17.0 (active), WP Mail SMTP 4.10.0 (inactive) |
-| Themes | **AYESHA Movers 0.3.0 (active)**; Twenty Twenty-Five 1.5 (fallback) |
+| Plugins | **AYESHA Core 0.4.0 (active)**, WP Mail Logging 1.17.0 (active), WP Mail SMTP 4.10.0 (inactive) |
+| Themes | **AYESHA Movers 0.4.0 (active)**; Twenty Twenty-Five 1.5 (fallback) |
 | Navigation | `wp_navigation` post 4 "Main menu": Home, About Us, Our Services, Contact Us + a bound Call/WhatsApp Buttons block (shown only in the open mobile menu). Used by header and footer. Lives in the database; reference copy in `docs/navigation-main-menu.html` |
 | Business Info | Settings → Business Info (option `ayesha_business`) |
 | Pages | Home (ID 5, static front page), About Us (6), Our Services (7), Contact Us (8) |
+| Synced patterns | "CTA band" (`wp_block` 26, slug `ayesha-cta-band`), "Where we go" (27, `ayesha-where-we-go`); category Ayesha Movers. Backup + rebuild script in `docs/content/` |
 | Git remote | `origin` = https://github.com/urtech87-ops/ayesha_movers.git |
 
 > **Startup note:** MySQL runs on **port 3307**. After a reboot, start **Apache + MySQL from the XAMPP Control Panel**. **Laragon must stay closed**; it grabs ports 80 and 3306 and serves a different docroot.
@@ -31,7 +32,7 @@ Main goal: get mobile visitors to WhatsApp or call in one tap, or to send a deta
 ### Media status
 | ID | File | Status | Reason |
 |---|---|---|---|
-| 9 | yellow-box-truck-residential-building | OK | |
+| 9 | yellow-box-truck-residential-building | OK | Home hero (560px WebP copy). No caption; alt describes only what's visible |
 | 10 | movers-carrying-white-sofa | **PLACEHOLDER ONLY** | Looks like a stock photo; replace with a real client photo before go-live (or confirm licence) |
 | 11 | white-pickup-truck-cargo-rails | **DO NOT USE** | Shows phone number 0524070463 (not an AYESHA number) |
 | 12 | pickup-loaded-with-household-goods | OK | |
@@ -47,17 +48,16 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | 1. Setup (WP, CLAUDE.md, PROGRESS.md, git) | phase-1-setup | **Done; approved and merged into main 2026-10-01** |
 | 2. Design plan | phase-2-design | **Done; approved and merged into main 2026-10-01** |
 | 3. Foundation (theme, plugin, header/footer) | phase-3-foundation | **Done; approved and merged into main 2026-10-01 (merge commit 81c86cf)** |
-| 4. Home page | phase-4-home | **In progress** (built on the local site; front-end tests done; editor tests and Lighthouse pending) |
+| 4. Home page | phase-4-home | **In progress**: all tests done except the 3 editor tests (waiting for sign-in) |
 | 5. Our Services + About Us | phase-5-services-about | Not started |
 | 6. Contact Us + quote form + email | phase-6-contact | Not started |
 | 7. Full QA, SEO, performance, handover | phase-7-qa | Not started |
 
 ## Current phase + next step
 - **Current:** Phase 4 – Home page, on branch `phase-4-home` (git worktree `.claude/worktrees/phase-4-home-build-e1b2e8`).
-- **Done so far (commits 852928b, 10b5ca3):** patterns, plugin 0.4.0, Home page built on the local site (synced patterns CTA band = ID 26, Where we go = ID 27), SEO title/description set, docs/content/ export, editing guide section 5, screenshots in docs/screenshots/phase-4/. Front-end tests passed: hero number (real + long number, 5 widths, recalculates on a settings change), binding change, hero without photo, reviews toggle, WhatsApp links, headings/alt/reduced motion, php -l, debug.log.
-- **Local site:** `wp-content/themes/ayesha-movers` and `wp-content/plugins/ayesha-core` in the main checkout are **directory junctions** into the worktree (user-approved 2026-10-01). The original folders were moved, not deleted, to the session scratchpad (`…\scratchpad\main-folders\`). Before merging: remove the junctions with `rmdir` (link only), then merge in the main checkout.
-- **Waiting for the user:** (1) sign in to wp-admin in the app's browser pane, so the editor tests can run (creating an admin session from WP-CLI was refused by the safety check); (2) permission to download Lighthouse from npm for the Lighthouse runs.
-- **Next step after that:** editor tests (no "invalid content", edit text/button/image in 3 sections + revert, edit the CTA band synced pattern + revert), Lighthouse mobile/desktop, re-export docs/content if the editor re-saved anything, test table, push.
+- **Done:** everything in the Phase 4 list except the editor tests (E1–E3 in the Phase 4 table): Home page built, front-end tests, Lighthouse (4 runs), editing guide, docs/content/ export, branch pushed.
+- **Local site:** `wp-content/themes/ayesha-movers` and `wp-content/plugins/ayesha-core` in the main checkout are **directory junctions** into the worktree (user-approved 2026-10-01). The original folders were moved, not deleted, to the session scratchpad (`...\scratchpad\main-folders\`). Before merging: remove the junctions with `rmdir` (link only), then merge in the main checkout.
+- **Waiting for the user:** a sign-in as `ayesha_admin` in the app's browser pane (WordPress showed 0 login sessions after the first attempt). Then: E1–E3, re-export docs/content/ if the editor re-saved anything, update the table, push, stop for approval.
 - **Service anchors for Phase 5** (the Home page links to them): `/our-services/#house-shifting`, `#packing`, `#furniture`, `#appliances`, `#trucks`, `#cargo`.
 - **Last completed:** Phase 3 (foundation), approved and merged into `main` 2026-10-01 at 81c86cf (fast-forward); smoke test passed (see Test results › Phase 3 › Post-merge smoke test).
 - **Phase 4 notes (carried over):**
@@ -93,9 +93,18 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 - 2026-10-01: Phase 3 is developed in a git worktree. To let the local site run it, `wp-content/themes/ayesha-movers` and `wp-content/plugins/ayesha-core` in the main checkout are **directory junctions** pointing into the worktree.
 - 2026-10-01: User approved Phase 3. The two dev junctions were removed (`rmdir`, link only), `phase-3-foundation` was fast-forward merged into `main` (81c86cf) in the main checkout, so the theme and plugin are now real folders from git; `main` and `phase-3-foundation` pushed to origin (both 81c86cf).
 - 2026-10-01: WordPress automatic updates turned off for this local build: `define( 'AUTOMATIC_UPDATER_DISABLED', true );` in wp-config.php (not committed), so the WordPress version (7.1.2) doesn't change mid-project. Reason: an automatic update check ran during the Phase 3 smoke test (it changed nothing; still 7.1.2). Updates are now applied only on purpose; revisit at go-live (Phase 7) for the production host.
+- 2026-10-01: Phase 4: where the prompt and design plan differed, the plan won (user approved each): "Why people book us" and "Questions" side by side on desktop, so Reviews sits just before them; photo 9 under the chevron strip on phones; "See all services" link; "Manama" in the hero line; SEO panel added now instead of Phase 7.
+- 2026-10-01: Phase 4 copy decisions (user approved): no caption under photo 9; "Truck hire: 8 hours or a full day" (not "by the hour"); price point worded "Low rates, with labour included", never "lowest" or "cheapest".
+- 2026-10-01: Hero number sizing: AYESHA Core writes the number's width in em (from Archivo's measured glyph widths) into CSS custom properties; CSS divides the paragraph's container width by it (max 128px hero, 96px CTA band; two lines below 420px of column width). Recalculates on every settings change (user approved).
+- 2026-10-01: Search-engine title and description: post meta `_ayesha_seo_title` / `_ayesha_seo_description` on pages and posts, edited in the page editor's "Search engines" panel (AYESHA Core); no SEO plugin.
+- 2026-10-01: Resized images are saved as WebP (AYESHA Core, `image_editor_output_format`); theme size `ayesha-photo` = 560px wide. Photo 9 regenerated.
+- 2026-10-01: Shared sections: the theme's CTA band and Where we go patterns insert the synced pattern (found by slug) when it exists, otherwise the plain blocks.
+- 2026-10-01: Footer contact label column widened 4rem to 4.75rem ("Instagram" broke onto two lines at 1280px; Phase 3 issue found in Phase 4).
+- 2026-10-01: Lighthouse 12.8.2 run with `npx` (user approved the download). The first run hit "Fatal process out of memory" (about 1 GB of RAM free); each report was then run on its own from the npx cache.
 - 2026-10-01: Outside this session, `phase-1-setup` was renamed to `main` and pushed to origin. `phase-1-setup` was recreated from `main` for the final Phase 1 commit, then fast-forward merged into `main`.
 
 ## Open questions for the client
+- Price point: the site says "Low rates, with labour included" (his own selling point, no superlative). Confirm the wording
 - How are prices worked out (per truck, per hour, per room)? Needed for an honest FAQ answer; not invented in the plan
 - Is the man in photo 15 the GM or crew, and are the trucks in photos 9, 14, 15 AYESHA's own? (Affects alt text and captions; until confirmed, no caption or alt text claims ownership)
 - Which languages does your team speak? (Needed before adding `availableLanguage` to the JSON-LD or mentioning languages on the site)
@@ -184,3 +193,32 @@ Screenshots: `docs/screenshots/phase-3/` (`<width>-top.png` and `<width>-bottom.
 | S8 | Pushes | `origin/main` and `origin/phase-3-foundation` = merge commit | Both 81c86cf, same as local `main` | Pass |
 
 Before/after for the review fixes: `docs/screenshots/phase-3/compare-fix1-footer-375.png`, `compare-fix1-footer-320.png`, `compare-fix1-footer-1280.png`, `compare-fix2-header-1280.png`, `compare-fix3-menu-375.png`; originals in `before/` and `after/`, JSON-LD in `before/fix4-jsonld.json` and `after/fix4-jsonld.json`.
+
+### Phase 4 (run 2026-10-01)
+Screenshots: `docs/screenshots/phase-4/` (`full-<width>.png` at 320, 375, 768, 1280, 1920; `hero-long-number-*.png`, `hero-no-photo-*.png`, `reviews-on-*.png`). In the full-page shots the sticky bar and floating button are pinned to the page bottom (where they sit once scrolled to the end) instead of mid-page. Lighthouse reports: `docs/lighthouse/phase-4/`.
+
+| # | Test | Expected | Actual | Pass/Fail |
+|---|---|---|---|---|
+| E1 | Editor: every block on Home opens without "invalid content"; change one text, one button and one image in 3 different sections, save, check front end, revert | No warnings; edits show, then revert | **Not run yet:** needs the user signed in to wp-admin (WordPress showed 0 sessions for `ayesha_admin`) | Pending |
+| E2 | Edit the CTA band synced pattern once; change shows everywhere it is used; revert | Shows on Home (and any page using it) | **Not run yet** (same reason) | Pending |
+| E3 | Search engines panel in the page editor saves the title/description | Saved values in `<title>` and meta description | **Not run yet** (same reason). Front-end output itself verified in test 12 | Pending |
+| 1 | Hero number, real number (+973 3444 8236), 320 / 375 / 768 / 1280 / 1920 | No clipping, no h-scroll; 2 lines at 320/375; 1 line at 1280/1920; whole number tappable | Hero: 72 / 72 / 125 / 104 / 104 px; lines 2 / 2 / 1 / 1 / 1; width used 255/273, 255/328, 682/714, 565/592, 565/592; no clipping; no h-scroll. CTA band: 64 / 64 / 96 / 96 / 96 px, same line pattern. A hit test at the left, middle and right of both parts lands on the `tel:+97334448236` link at every width | Pass |
+| 2 | Hero number, long number (+966 55 123 4567), same widths | Same as 1 | Hero: 62 / 72 / 114 / 94 / 94 px; lines 2 / 2 / 1 / 1 / 1; width used 254/273, 294/328, 681/714, 565/592, 565/592; no clipping; no h-scroll; whole number tappable. Screenshots `hero-long-number-375.png`, `-1280.png` | Pass |
+| 3 | Number size recalculates when Business Info changes | New widths without editing anything else | Changing only the setting changed the link's custom properties from `--ayesha-number-w1:5.48;--ayesha-number-w2:3.56` to `6.03;4.11`; sizes in test 2 follow | Pass |
+| 4 | Business Info binding: change the main number | Hero, CTA band, header, footer, sticky bar update | Main number set to +966 55 123 4567: hero number + Call, CTA number + Call, header button, footer main number, sticky-bar Call and mobile-menu Call all showed it / `tel:+966551234567`. Settings restored from a JSON backup, then compared: identical | Pass |
+| 5 | Hero without photo 9 (Image block deleted), 375 and 1280 | Looks complete; no gap | 375: photo column hidden; yellow panel, number, buttons and strip intact. 1280 (after a fix): photo column hidden, text column takes 1200 px, number grows to 128 px on one line. Screenshots `hero-no-photo-*.png`. Page restored; content identical to the backup | Pass (after fix: a desktop rule kept the empty column 46 % wide) |
+| 6 | Reviews hidden with the toggle off; visible with it on; off again | Off: not in the HTML; on: 3 placeholder cards | Off: 0 matches for `ayesha-reviews` / "Placeholder". On: 3 cards "Placeholder: replace with a real customer review" (`reviews-on-375.png`, `-1280.png`). Off again: 0 matches; settings identical to the backup | Pass |
+| 7 | Service WhatsApp links | Right number; URL-encoded text naming the service | 8 links in the page content, all `wa.me/97334448236`: hero + CTA band ("...a price for my move."), lead card ("...house, villa, flat or office shifting."), packing and unpacking, furniture dismantling and refitting, AC, TV or curtain removal and fitting, truck hire (Dyna or 6-wheel truck), international cargo (20ft or 40ft container). Encoded with `rawurlencode` (`%20`, `%26` for &, `%27` for ', `%28`/`%29` for brackets); each decodes back to the exact message | Pass |
+| 8 | Anchors to Our Services / Contact Us | Each goes to the right place | Links: `/our-services/#house-shifting`, `#packing`, `#furniture`, `#appliances`, `#trucks`, `#cargo`; "See all services" to `/our-services/`; "Send a detailed quote request" to `/contact-us/#quote`. Both pages return 200; **the target ids don't exist yet** (Our Services is built in Phase 5, the quote form in Phase 6) | Pass (anchors pending Phases 5/6) |
+| 9 | Responsive full-page screenshots | 5 widths, no h-scroll | `full-320/375/768/1280/1920.png`; page heights 6802 / 6259 / 5835 / 4238 / 4238 px; no horizontal scroll and no element past the right edge at any width | Pass |
+| 10 | Heading order | One H1, no skipped levels | Outline 1 2 3 3 3 3 3 3 2 2 2 3 3 3 3 2 2: one H1, no skips | Pass |
+| 11 | Images have alt text | All | 1 image (photo 9, 560px WebP, `fetchpriority=high`, width/height set), alt "Large yellow box truck with a green cab parked outside a residential apartment building" (no ownership claim). Photos 10, 11, 13 not used | Pass |
+| 12 | SEO title and meta description (design plan 7) | Exact text | `<title>` "Movers and Packers in Bahrain, 24 Hours &#124; AYESHA Movers" (55 chars); description exactly as the plan (154 chars) | Pass |
+| 13 | Animation | Chevron strip slides in once (400 ms); none with reduced motion | Normal: `ayesha-strip-in 0.4s`. With `prefers-reduced-motion: reduce`: animation `none`, transform `none` | Pass |
+| 14 | Lighthouse mobile, as-is (noindex) | 90+ each | Performance **93**, Accessibility **100**, Best Practices **100**, SEO **66**. SEO is below 90 only because of "Page is blocked from indexing" (noindex on purpose until go-live). LCP 2.9 s (the H1 text; about 0.8 s is local server time with WP_DEBUG on and no page cache, the rest is render-blocking CSS under simulated slow 4G), CLS 0, TBT 70 ms | Pass (SEO 66 explained) |
+| 15 | Lighthouse desktop, as-is (noindex) | 90+ each | 100 / 100 / 100 / **66** (same single SEO audit). LCP 0.6 s, CLS 0, TBT 0 | Pass (SEO 66 explained) |
+| 16 | Lighthouse with "Discourage search engines" temporarily OFF | SEO 90+ | Mobile 93 / 100 / 100 / **100**; desktop 100 / 100 / 100 / **100**. Setting OFF at 12:58:46 UTC, **back ON at 12:59:23 UTC**: `blog_public` = 0 and the page sends `noindex, nofollow` again | Pass |
+| 17 | `php -l` | No syntax errors | 24 PHP files (theme, plugin, docs/content script): no errors | Pass |
+| 18 | debug.log | Nothing new | No lines from Phase 4. The file holds only 3 older entries (10:58 and 12:10 UTC, before this session started) | Pass |
+| 19 | Mobile hero order (design plan 3.1) | Yellow text panel, strip, then photo on white | As expected at 320/375/768; desktop: photo on the yellow, bottom edge on the strip | Pass |
+| 20 | Desktop hero row | Quote link beside the buttons | After a fix: link and buttons share the same vertical middle (582.5 px) | Pass (after fix) |
