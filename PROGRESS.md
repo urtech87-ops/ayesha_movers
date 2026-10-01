@@ -43,7 +43,7 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | Phase | Branch | Status |
 |---|---|---|
 | 1. Setup (WP, CLAUDE.md, PROGRESS.md, git) | phase-1-setup | **Done; approved and merged into main 2026-10-01** |
-| 2. Design plan | phase-2-design | Not started |
+| 2. Design plan | phase-2-design | **Plan written (docs/design-plan.md); pushed; waiting for approval** |
 | 3. Foundation (theme, plugin, header/footer) | phase-3-foundation | Not started |
 | 4. Home page | phase-4-home | Not started |
 | 5. Our Services + About Us | phase-5-services-about | Not started |
@@ -66,9 +66,15 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 - 2026-10-01: `.gitignore` uses a whitelist: ignore all, un-ignore `.gitignore`, `CLAUDE.md`, `PROGRESS.md`, `docs/`, `wp-content/themes/ayesha-movers/`, `wp-content/plugins/ayesha-core/`.
 - 2026-10-01: Media alt text describes what is visible and makes no claim that a pictured vehicle belongs to AYESHA (see Open questions).
 - 2026-10-01: User approved Phase 1. Media IDs 11 and 13 tagged DO NOT USE; ID 10 tagged PLACEHOLDER ONLY (see Environment > Media status).
+- 2026-10-01: CLAUDE.md gained the GitHub remote/push rule; committed on `main` (8e90417) and pushed to origin.
+- 2026-10-01: Phase 2 design direction: palette from client truck photo 9 (box yellow #F2B705, cab teal #0F4D4A for all text, tarmac #3F6F6B, concrete #E8EBE9, paper #FFFFFF, WhatsApp green #25D366 with teal text). One font: Archivo variable (condensed 800 for display, normal width for body), self-hosted. Hero = the phone number painted large on a yellow panel with the truck's chevron tape. Full plan: docs/design-plan.md.
+- 2026-10-01: Floating WhatsApp button is desktop-only; mobile uses the sticky Call/WhatsApp bar.
+- 2026-10-01: Competitor check: only bahrainmovers.com was reachable; gulfmoversbahrain.com (DNS error) and bhmoversbahrain.com (403) were not.
 - 2026-10-01: Outside this session, `phase-1-setup` was renamed to `main` and pushed to origin. `phase-1-setup` was recreated from `main` for the final Phase 1 commit, then fast-forward merged into `main`.
 
 ## Open questions for the client
+- How are prices worked out (per truck, per hour, per room)? Needed for an honest FAQ answer; not invented in the plan
+- Is the man in photo 15 the GM or crew, and are the trucks in photos 9, 14, 15 AYESHA's own? (Affects alt text and captions)
 - Founding year / years in business ("decades" vs "Est. 2026")
 - Business address or office location, if he wants one shown
 - Logo (none known; we'll use a wordmark for now)
