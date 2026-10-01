@@ -47,14 +47,17 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | 1. Setup (WP, CLAUDE.md, PROGRESS.md, git) | phase-1-setup | **Done; approved and merged into main 2026-10-01** |
 | 2. Design plan | phase-2-design | **Done; approved and merged into main 2026-10-01** |
 | 3. Foundation (theme, plugin, header/footer) | phase-3-foundation | **Done; approved and merged into main 2026-10-01 (merge commit 81c86cf)** |
-| 4. Home page | phase-4-home | Not started |
+| 4. Home page | phase-4-home | **In progress** (code written and committed; not yet installed on the local site or tested) |
 | 5. Our Services + About Us | phase-5-services-about | Not started |
 | 6. Contact Us + quote form + email | phase-6-contact | Not started |
 | 7. Full QA, SEO, performance, handover | phase-7-qa | Not started |
 
 ## Current phase + next step
-- **Current:** Phase 4 – Home page (not started).
-- **Next step:** wait for the Phase 4 prompt; build it on branch `phase-4-home`, following `docs/design-plan.md`. Only use photos marked OK in Media status; ID 10 is placeholder only; never use IDs 11 and 13.
+- **Current:** Phase 4 – Home page, on branch `phase-4-home` (git worktree `.claude/worktrees/phase-4-home-build-e1b2e8`).
+- **Done so far (commit 852928b):** 9 Home section patterns in the "Ayesha Movers" category; CTA band and Where we go insert their synced pattern when it exists; section CSS; hero number sized by container width and the number's own em width (new binding key `phone_primary_big`); one-time chevron slide-in; "Text link" button style; 560px WebP photo size; AYESHA Core 0.4.0 with a "Search engines" panel (title + description per page) and WebP sub-sizes; `docs/content/home-content.php` (build / export / import).
+- **Blocked on:** switching the local site to the worktree code. The Phase 3 method (move the main checkout's theme/plugin folders aside and put directory junctions in their place) was refused by the tool's safety check, so it needs the user's go-ahead (or the user runs it). Nothing has been written to the database yet.
+- **Next step after that:** `wp media regenerate 9`, run `home-content.php build`, check every block is valid in the editor, then run the Phase 4 tests and export to docs/content/.
+- **Service anchors for Phase 5** (the Home page links to them): `/our-services/#house-shifting`, `#packing`, `#furniture`, `#appliances`, `#trucks`, `#cargo`.
 - **Last completed:** Phase 3 (foundation), approved and merged into `main` 2026-10-01 at 81c86cf (fast-forward); smoke test passed (see Test results › Phase 3 › Post-merge smoke test).
 - **Phase 4 notes (carried over):**
   - Hero number: fluid size from the hero column's container width (design-plan section 4). Test at 320, 375, 768, 1280 and 1920 px, with the real number and with +966 55 123 4567: no overflow, one line on desktop, two lines on mobile.
