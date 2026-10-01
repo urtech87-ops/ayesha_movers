@@ -42,4 +42,5 @@
 - Security: nonces, sanitize input, escape output, honeypot + rate-limit on the form, and capability checks on admin pages.
 - Performance: no jQuery on the front end, self-host fonts, lazy-load images, WebP where possible.
 - Git: one branch per phase (phase-1-setup, phase-2-design, ...). Commit as you go. NEVER merge into main without my explicit approval; stop and wait.
+- GitHub remote: origin = https://github.com/urtech87-ops/ayesha_movers (currently PUBLIC). At every phase STOP, push the phase branch to origin. After I approve the merge: merge into main, push main to origin, and confirm both pushes succeeded. Before every push, check that no secrets are staged (wp-config.php, passwords, SMTP/App Passwords, .env, database dumps).
 - Update PROGRESS.md at the end of every phase AND whenever you stop mid-phase.
