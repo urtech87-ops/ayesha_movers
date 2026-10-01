@@ -18,7 +18,7 @@ Main goal: get mobile visitors to WhatsApp or call in one tap, or to send a deta
 | Admin URL | http://localhost/ayesha-movers/wp-admin |
 | Admin username | `ayesha_admin` (password given in chat once; never stored in any file) |
 | WP-CLI | `D:\xampp\php\php.exe wp-cli.phar <command>` from the project root |
-| wp-config extras | `WP_ENVIRONMENT_TYPE=local`, `WP_DEBUG` on, log to `wp-content/debug.log`, display off, `DISALLOW_FILE_EDIT` |
+| wp-config extras | `WP_ENVIRONMENT_TYPE=local`, `WP_DEBUG` on, log to `wp-content/debug.log`, display off, `DISALLOW_FILE_EDIT`, **`AUTOMATIC_UPDATER_DISABLED` = true** (no automatic core/plugin/theme/translation updates, so WordPress stays at 7.1.2 for the whole project). wp-config.php is not in git: re-add these by hand on any new install |
 | Plugins | **AYESHA Core 0.3.0 (active)**, WP Mail Logging 1.17.0 (active), WP Mail SMTP 4.10.0 (inactive) |
 | Themes | **AYESHA Movers 0.3.0 (active)**; Twenty Twenty-Five 1.5 (fallback) |
 | Navigation | `wp_navigation` post 4 "Main menu": Home, About Us, Our Services, Contact Us + a bound Call/WhatsApp Buttons block (shown only in the open mobile menu). Used by header and footer. Lives in the database; reference copy in `docs/navigation-main-menu.html` |
@@ -46,15 +46,16 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 |---|---|---|
 | 1. Setup (WP, CLAUDE.md, PROGRESS.md, git) | phase-1-setup | **Done; approved and merged into main 2026-10-01** |
 | 2. Design plan | phase-2-design | **Done; approved and merged into main 2026-10-01** |
-| 3. Foundation (theme, plugin, header/footer) | phase-3-foundation | **Built, review fixes 1–4 applied and tested; pushed; waiting for approval** |
+| 3. Foundation (theme, plugin, header/footer) | phase-3-foundation | **Done; approved and merged into main 2026-10-01 (merge commit 81c86cf)** |
 | 4. Home page | phase-4-home | Not started |
 | 5. Our Services + About Us | phase-5-services-about | Not started |
 | 6. Contact Us + quote form + email | phase-6-contact | Not started |
 | 7. Full QA, SEO, performance, handover | phase-7-qa | Not started |
 
 ## Current phase + next step
-- **Current:** Phase 3 (foundation) built on `phase-3-foundation`; review fixes 1–4 (footer rows, header gap, menu Call/WhatsApp, JSON-LD image) applied; all tests pass (see Test results); branch pushed to origin. **Waiting for approval; not merged.**
-- **Next step:** after "approved": remove the two dev junctions (see Known issues), merge `phase-3-foundation` into `main`, push main, confirm. Then Phase 4 (Home page). Only use photos marked OK in Media status; ID 10 is placeholder only; never use IDs 11 and 13.
+- **Current:** Phase 4 – Home page (not started).
+- **Next step:** wait for the Phase 4 prompt; build it on branch `phase-4-home`, following `docs/design-plan.md`. Only use photos marked OK in Media status; ID 10 is placeholder only; never use IDs 11 and 13.
+- **Last completed:** Phase 3 (foundation), approved and merged into `main` 2026-10-01 at 81c86cf (fast-forward); smoke test passed (see Test results › Phase 3 › Post-merge smoke test).
 - **Phase 4 notes (carried over):**
   - Hero number: fluid size from the hero column's container width (design-plan section 4). Test at 320, 375, 768, 1280 and 1920 px, with the real number and with +966 55 123 4567: no overflow, one line on desktop, two lines on mobile.
   - Hero must look complete with photo 9 removed; photo 9 alt text/caption makes no ownership claim.
@@ -86,6 +87,8 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 - 2026-10-01: Phase 3 review fixes: (1) footer shows one "Call or WhatsApp" row when the WhatsApp number equals the main number (AYESHA Core hides blocks with class `ayesha-if-whatsapp-same` / `ayesha-if-whatsapp-differs`), contact rows are label-beside-value, 44 px tap targets, page links in 2 columns on mobile; (2) 32 px gap between the last nav item and the Call button from 960 px; (3) Call/WhatsApp buttons (sticky-bar styles, bound to Business Info) inside the open mobile menu, stored in the Main menu itself so they stay editable; (4) JSON-LD `image` removed until the client confirms photo 9 (filter `ayesha_core_schema_image_id` now defaults to 0).
 - 2026-10-01: Theme CSS/JS are versioned with the file's modified time (`ayesha_theme_asset_version()`), because a fixed `?ver=` let the browser keep an old stylesheet during testing.
 - 2026-10-01: Phase 3 is developed in a git worktree. To let the local site run it, `wp-content/themes/ayesha-movers` and `wp-content/plugins/ayesha-core` in the main checkout are **directory junctions** pointing into the worktree.
+- 2026-10-01: User approved Phase 3. The two dev junctions were removed (`rmdir`, link only), `phase-3-foundation` was fast-forward merged into `main` (81c86cf) in the main checkout, so the theme and plugin are now real folders from git; `main` and `phase-3-foundation` pushed to origin (both 81c86cf).
+- 2026-10-01: WordPress automatic updates turned off for this local build: `define( 'AUTOMATIC_UPDATER_DISABLED', true );` in wp-config.php (not committed), so the WordPress version (7.1.2) doesn't change mid-project. Reason: an automatic update check ran during the Phase 3 smoke test (it changed nothing; still 7.1.2). Updates are now applied only on purpose; revisit at go-live (Phase 7) for the production host.
 - 2026-10-01: Outside this session, `phase-1-setup` was renamed to `main` and pushed to origin. `phase-1-setup` was recreated from `main` for the final Phase 1 commit, then fast-forward merged into `main`.
 
 ## Open questions for the client
@@ -111,7 +114,7 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 - XAMPP MySQL is currently running as a process started by Claude (`mysqld --standalone`), not from the XAMPP Control Panel, so the panel may show it as stopped. To restart normally: end `mysqld.exe` in Task Manager, then click Start in the XAMPP panel.
 - ~~The default sender `wordpress@localhost` is rejected by PHPMailer.~~ Fixed in Phase 3: AYESHA Core sends as "AYESHA Movers & Packers <Business Info email>". Locally, mail is logged but not sent (no mail server: "Could not instantiate mail function"). At go-live, WP Mail SMTP with the Gmail App Password must send through Gmail, because a gmail.com From address sent from any other server fails DMARC.
 - WP Mail Logging stores only the headers passed to `wp_mail()`, not the From set by filters, so the From address does not appear in its log; Phase 3 verified it with a `phpmailer_init` capture instead.
-- **Dev junctions (Phase 3):** the main checkout's `wp-content/themes/ayesha-movers` and `wp-content/plugins/ayesha-core` are junctions into `.claude/worktrees/phase-3-foundation-984154`. Before merging into `main` in the main checkout, remove the two junctions with `rmdir` (not a recursive delete, which would follow the link), then merge; the real folders then come from git. Never delete the worktree while the junctions exist.
+- ~~**Dev junctions (Phase 3):**~~ Resolved 2026-10-01: the junctions were removed before the merge; the main checkout now has the real theme and plugin folders from git. If a later phase is built in a worktree again, the same rule applies: remove junctions with `rmdir` (never a recursive delete) before merging.
 - `wp db query` / `wp db check` fail because `mysql` isn't on the PATH. Use `wp eval` with `$wpdb`, or call `D:\xampp\mysql\bin\mysql.exe -P 3307` directly.
 - In Git Bash, run `export MSYS_NO_PATHCONV=1` before WP-CLI commands (see Phase 1 test notes).
 - `wp rewrite structure --hard` can't regenerate `.htaccess` on this setup. If permalinks change, edit `.htaccess` by hand.
@@ -163,5 +166,17 @@ Screenshots: `docs/screenshots/phase-3/` (`<width>-top.png` and `<width>-bottom.
 | 23 | Fix 2: desktop header gap | ≥ 24 px between the last nav item and the Call button from 960 px | 32 px at 960, 1280 and 1920 px; header stays one row; before: 8 px | Pass |
 | 24 | Fix 3: Call/WhatsApp in the open mobile menu | Buttons at the bottom of the open menu, sticky-bar styles, bound to Business Info; nothing covered; hidden elsewhere | At 320, 375 and 800 px the open menu has Call (`tel:+97334448236`, white on teal) and WhatsApp (`wa.me/97334448236?text=…`, teal on chat-green), each 56 px tall at the bottom of the screen; last menu link ends at 284 px, far above the buttons. Keyboard: Tab reaches Call (yellow ring) and WhatsApp (teal ring). Hidden in the desktop menu and the footer menu. Values come from Business Info (prefilled message proves the binding) | Pass |
 | 25 | After fixes: full layout re-run (320–1920) | Tests 6–9 still pass | No horizontal scroll; sticky bar < 960 only; floating button ≥ 960 only; footer never covered (584/584, 756/756, 968/968); every focusable has a ring; debug.log empty | Pass |
+
+#### Post-merge smoke test (main folder, after merging at 81c86cf)
+| # | Test | Expected | Actual | Pass/Fail |
+|---|---|---|---|---|
+| S1 | Directory links removed; real folders in place | `themes/ayesha-movers` and `plugins/ayesha-core` are real folders from git | Both real folders (no junction); main checkout on `main`, clean | Pass |
+| S2 | Home page | HTTP 200 | 200 (About Us, Our Services, Contact Us also 200) | Pass |
+| S3 | Theme active | `ayesha-movers` | `ayesha-movers`, loaded from `wp-content/themes/ayesha-movers` | Pass |
+| S4 | Plugin active | `ayesha-core` active | `ayesha-core` 0.3.0 active | Pass |
+| S5 | Business Info in header/footer | Settings values shown | Header Call button "+973 3444 8236" → `tel:+97334448236`; footer "Call or WhatsApp" +973 3444 8236, Mobile +973 3642 9850, Office +973 7736 0292, Email, Instagram, hours, © 2026; sticky bar and floating button → `wa.me/97334448236` | Pass |
+| S6 | Mobile menu (375 px) | Shows Call/WhatsApp | Home, About Us, Our Services, Contact Us, then Call (`tel:+97334448236`) and WhatsApp (`wa.me/97334448236`) | Pass |
+| S7 | debug.log | No new entries | No PHP notices or warnings. 2 informational lines from WordPress core ("Automatic updates starting…" / "…complete", 10:58 UTC), from a background update check; nothing changed (still 7.1.2). Automatic updates were then disabled (see Decisions log) | Pass (with note) |
+| S8 | Pushes | `origin/main` and `origin/phase-3-foundation` = merge commit | Both 81c86cf, same as local `main` | Pass |
 
 Before/after for the review fixes: `docs/screenshots/phase-3/compare-fix1-footer-375.png`, `compare-fix1-footer-320.png`, `compare-fix1-footer-1280.png`, `compare-fix2-header-1280.png`, `compare-fix3-menu-375.png`; originals in `before/` and `after/`, JSON-LD in `before/fix4-jsonld.json` and `after/fix4-jsonld.json`.
