@@ -102,6 +102,61 @@ function ayesha_core_link( $url, $text, $blank = false ) {
 }
 
 /**
+ * Approximate width of a phone number in em, set in the display face (Archivo 800, wdth 62).
+ * Advances measured from the font file in Phase 4, rounded up; unknown characters count wide.
+ *
+ * @param string $text Number as shown.
+ * @return float
+ */
+function ayesha_core_number_em_width( $text ) {
+	$advance = array(
+		' ' => 0.12,
+		'+' => 0.51,
+		'-' => 0.24,
+		'(' => 0.37,
+		')' => 0.37,
+	);
+	$width   = 0.0;
+	foreach ( str_split( (string) $text ) as $char ) {
+		$width += ctype_digit( $char ) ? 0.43 : ( $advance[ $char ] ?? 0.6 );
+	}
+	return round( $width, 2 );
+}
+
+/**
+ * The big two-part number: a tel: link with the country code and the local number in
+ * separate spans, so CSS can put them on two lines on phones and one line on wide screens.
+ * The em widths go into custom properties; CSS sizes the number from its container width.
+ *
+ * @param string $phone Phone as entered ("+973 3444 8236").
+ * @return string Safe HTML.
+ */
+function ayesha_core_big_number_link( $phone ) {
+	$phone = trim( (string) $phone );
+	$url   = ayesha_core_tel_url( $phone );
+	if ( '' === $phone || '' === $url ) {
+		return esc_html( $phone );
+	}
+	$parts = preg_split( '/\s+/', $phone, 2 );
+	if ( 2 === count( $parts ) && str_starts_with( $parts[0], '+' ) ) {
+		list( $code, $local ) = $parts;
+	} else {
+		list( $code, $local ) = array( '', $phone );
+	}
+	$whole   = ayesha_core_number_em_width( $phone );
+	$longest = max( ayesha_core_number_em_width( $code ), ayesha_core_number_em_width( $local ) );
+	$inner   = ( '' === $code ? '' : '<span class="ayesha-number__code">' . esc_html( $code ) . '</span> ' )
+		. '<span class="ayesha-number__local">' . esc_html( $local ) . '</span>';
+	return sprintf(
+		'<a class="ayesha-number" href="%1$s" style="--ayesha-number-w1:%2$s;--ayesha-number-w2:%3$s">%4$s</a>',
+		esc_url( $url, array( 'tel' ) ),
+		esc_attr( (string) $whole ),
+		esc_attr( (string) $longest ),
+		$inner
+	);
+}
+
+/**
  * Every key the site can display, with a plain-English label for the editor.
  * "kind" says what the value is: text, url (for button/link targets) or html (a ready-made link for paragraphs).
  *
@@ -112,6 +167,7 @@ function ayesha_core_value_keys() {
 		'phone_primary'        => array( 'label' => __( 'Main phone number', 'ayesha-core' ), 'kind' => 'text' ),
 		'phone_primary_url'    => array( 'label' => __( 'Main phone: call link (for buttons)', 'ayesha-core' ), 'kind' => 'url' ),
 		'phone_primary_link'   => array( 'label' => __( 'Main phone, tap to call (for text)', 'ayesha-core' ), 'kind' => 'html' ),
+		'phone_primary_big'    => array( 'label' => __( 'Main phone, tap to call, as the big number (hero and yellow band)', 'ayesha-core' ), 'kind' => 'html' ),
 		'phone_secondary'      => array( 'label' => __( 'Second mobile number', 'ayesha-core' ), 'kind' => 'text' ),
 		'phone_secondary_url'  => array( 'label' => __( 'Second mobile: call link (for buttons)', 'ayesha-core' ), 'kind' => 'url' ),
 		'phone_secondary_link' => array( 'label' => __( 'Second mobile, tap to call (for text)', 'ayesha-core' ), 'kind' => 'html' ),
@@ -167,6 +223,8 @@ function ayesha_core_value( $key, $args = array() ) {
 		case 'phone_office_link':
 			$phone = (string) $s[ substr( $key, 0, -5 ) ];
 			return ayesha_core_link( ayesha_core_tel_url( $phone ), $label ?? $phone );
+		case 'phone_primary_big':
+			return ayesha_core_big_number_link( $s['phone_primary'] );
 		case 'whatsapp_number':
 			return ayesha_core_format_whatsapp( $s['whatsapp'] );
 		case 'whatsapp_url':

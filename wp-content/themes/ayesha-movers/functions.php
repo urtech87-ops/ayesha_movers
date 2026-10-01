@@ -11,6 +11,8 @@ defined( 'ABSPATH' ) || exit;
 
 define( 'AYESHA_THEME_VERSION', wp_get_theme( 'ayesha-movers' )->get( 'Version' ) );
 
+require_once get_theme_file_path( 'inc/pattern-parts.php' );
+
 add_action( 'after_setup_theme', 'ayesha_theme_setup' );
 
 /**
@@ -20,6 +22,21 @@ function ayesha_theme_setup() {
 	add_theme_support( 'editor-styles' );
 	add_editor_style( 'assets/css/theme.css' );
 	remove_theme_support( 'core-block-patterns' );
+	// Photos are shown at their natural size (the originals are 640px wide): one 560px copy for the Home hero.
+	add_image_size( 'ayesha-photo', 560, 0 );
+}
+
+add_filter( 'image_size_names_choose', 'ayesha_theme_image_size_names' );
+
+/**
+ * Offer the 560px copy in the Image block's size menu.
+ *
+ * @param array<string, string> $sizes Size slug => label.
+ * @return array<string, string>
+ */
+function ayesha_theme_image_size_names( $sizes ) {
+	$sizes['ayesha-photo'] = __( 'Photo (560px)', 'ayesha-movers' );
+	return $sizes;
 }
 
 /**
@@ -80,8 +97,9 @@ function ayesha_theme_register_styles_and_patterns() {
 			'concrete-panel' => __( 'Grey panel', 'ayesha-movers' ),
 		),
 		'core/button'    => array(
-			'whatsapp' => __( 'WhatsApp green', 'ayesha-movers' ),
-			'yellow'   => __( 'Yellow', 'ayesha-movers' ),
+			'whatsapp'  => __( 'WhatsApp green', 'ayesha-movers' ),
+			'yellow'    => __( 'Yellow', 'ayesha-movers' ),
+			'text-link' => __( 'Text link', 'ayesha-movers' ),
 		),
 		'core/paragraph' => array(
 			'display-number' => __( 'Big phone number', 'ayesha-movers' ),
@@ -109,4 +127,17 @@ function ayesha_theme_register_styles_and_patterns() {
 			'description' => __( 'Sections for the AYESHA Movers & Packers pages.', 'ayesha-movers' ),
 		)
 	);
+}
+
+/**
+ * ID of a published synced pattern (Patterns > My patterns), found by its slug.
+ * The CTA band and "Where we go" pattern files insert this synced copy when it exists,
+ * so editing it once updates every page; on a fresh site they insert the plain blocks.
+ *
+ * @param string $slug Post slug of the synced pattern (wp_block).
+ * @return int 0 when there is none.
+ */
+function ayesha_theme_synced_pattern_id( $slug ) {
+	$post = get_page_by_path( $slug, OBJECT, 'wp_block' );
+	return ( $post && 'publish' === $post->post_status ) ? (int) $post->ID : 0;
 }
