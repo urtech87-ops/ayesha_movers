@@ -43,7 +43,7 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | Phase | Branch | Status |
 |---|---|---|
 | 1. Setup (WP, CLAUDE.md, PROGRESS.md, git) | phase-1-setup | **Done; approved and merged into main 2026-10-01** |
-| 2. Design plan | phase-2-design | **Plan written (docs/design-plan.md); pushed; waiting for approval** |
+| 2. Design plan | phase-2-design | **Done; approved and merged into main 2026-10-01** |
 | 3. Foundation (theme, plugin, header/footer) | phase-3-foundation | Not started |
 | 4. Home page | phase-4-home | Not started |
 | 5. Our Services + About Us | phase-5-services-about | Not started |
@@ -51,8 +51,12 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | 7. Full QA, SEO, performance, handover | phase-7-qa | Not started |
 
 ## Current phase + next step
-- **Current:** Phase 1 approved and merged into `main`. Waiting for the Phase 2 prompt.
-- **Next step:** Phase 2 (design plan, no code) on branch `phase-2-design`. Only use photos marked OK in Media status; ID 10 is placeholder only; never use IDs 11 and 13.
+- **Current:** Phase 2 design plan (`docs/design-plan.md`) amended per review, approved, and merged into `main`. Waiting for the Phase 3 prompt.
+- **Next step:** Phase 3 (foundation) on branch `phase-3-foundation`, following `docs/design-plan.md`. Only use photos marked OK in Media status; ID 10 is placeholder only; never use IDs 11 and 13.
+- **Phase 3 notes:**
+  - Measure the real Archivo woff2 size after subsetting. If it's over 100 KB, subset more tightly or limit the axis ranges to those we use (wght 400–800, wdth 62–100).
+  - Hero number: fluid size from the hero column's container width (design-plan section 4). Test at 320, 375, 768, 1280 and 1920 px, with the real number and with +966 55 123 4567: no overflow, one line on desktop, two lines on mobile.
+  - Hero must look complete with photo 9 removed; photo 9 alt text/caption makes no ownership claim.
 
 ## Decisions log
 - 2026-10-01: Project brief written to CLAUDE.md.
@@ -67,14 +71,17 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 - 2026-10-01: Media alt text describes what is visible and makes no claim that a pictured vehicle belongs to AYESHA (see Open questions).
 - 2026-10-01: User approved Phase 1. Media IDs 11 and 13 tagged DO NOT USE; ID 10 tagged PLACEHOLDER ONLY (see Environment > Media status).
 - 2026-10-01: CLAUDE.md gained the GitHub remote/push rule; committed on `main` (8e90417) and pushed to origin.
-- 2026-10-01: Phase 2 design direction: palette from client truck photo 9 (box yellow #F2B705, cab teal #0F4D4A for all text, tarmac #3F6F6B, concrete #E8EBE9, paper #FFFFFF, WhatsApp green #25D366 with teal text). One font: Archivo variable (condensed 800 for display, normal width for body), self-hosted. Hero = the phone number painted large on a yellow panel with the truck's chevron tape. Full plan: docs/design-plan.md.
+- 2026-10-01: Phase 2 design direction: palette from truck photo 9 (box yellow #F2B705, cab teal #0F4D4A for all text, tarmac #3F6F6B, concrete #E8EBE9, paper #FFFFFF, WhatsApp green #25D366 with teal text). One font: Archivo variable (condensed 800 for display, normal width for body), self-hosted. Hero = the phone number painted large on a yellow panel with the truck's chevron tape. Full plan: docs/design-plan.md.
 - 2026-10-01: Floating WhatsApp button is desktop-only; mobile uses the sticky Call/WhatsApp bar.
 - 2026-10-01: Competitor check: only bahrainmovers.com was reachable; gulfmoversbahrain.com (DNS error) and bhmoversbahrain.com (403) were not.
+- 2026-10-01: The quote form fields in design-plan.md section 5 supersede the field list in Prompt 6.
+- 2026-10-01: Design plan amended after review: photo 9 makes no ownership claim and the hero must work without it; hero number size is fluid from its container (with a viewport/long-number test list); `availableLanguage` removed from JSON-LD; Archivo size check added to Phase 3 notes. Plan approved; `phase-2-design` merged into `main`.
 - 2026-10-01: Outside this session, `phase-1-setup` was renamed to `main` and pushed to origin. `phase-1-setup` was recreated from `main` for the final Phase 1 commit, then fast-forward merged into `main`.
 
 ## Open questions for the client
 - How are prices worked out (per truck, per hour, per room)? Needed for an honest FAQ answer; not invented in the plan
-- Is the man in photo 15 the GM or crew, and are the trucks in photos 9, 14, 15 AYESHA's own? (Affects alt text and captions)
+- Is the man in photo 15 the GM or crew, and are the trucks in photos 9, 14, 15 AYESHA's own? (Affects alt text and captions; until confirmed, no caption or alt text claims ownership)
+- Which languages does your team speak? (Needed before adding `availableLanguage` to the JSON-LD or mentioning languages on the site)
 - Founding year / years in business ("decades" vs "Est. 2026")
 - Business address or office location, if he wants one shown
 - Logo (none known; we'll use a wordmark for now)

@@ -14,7 +14,7 @@ Only the photos not tagged DO NOT USE were reviewed (IDs 9, 10, 12, 14, 15).
 
 | ID | What it shows | Design use |
 |---|---|---|
-| 9 | Yellow box truck with a teal cab and yellow/black reflective chevron tape, parked in front of a Gulf apartment block | The **source of the palette** (box yellow, cab teal, chevron tape). Home hero photo. |
+| 9 | Yellow box truck with a teal cab and yellow/black reflective chevron tape, parked in front of a Gulf apartment block | The **source of the palette** (box yellow, cab teal, chevron tape). Home hero photo, optional: alt text and caption make no ownership claim, and the hero must work without it (see section 4). |
 | 15 | Dark box truck, man in a blue shirt standing in front, villa street | About Us. Alt text must not claim the man is the GM or that the truck is AYESHA's until the client confirms. |
 | 14 | Red curtain-side truck (has a manufacturer model name on the cab) | Our Services, transport section. Crop so the cab lettering is not the focus. |
 | 12 | Small pickup loaded high with boxes and furniture, palm trees | Our Services, truck hire / small moves. The most "real job" photo we have. |
@@ -86,11 +86,11 @@ A 1.25 ratio (major third) on mobile, 1.333 (perfect fourth) from 960 px up, bui
 | 3 | H2 | 33 | 43 |
 | 4 | H1 on inner pages | 41 | 57 |
 | 5 | H1 on Home | 52 | 76 |
-| Hero number | The painted phone number | fits the screen width (≈ 64) | 128 |
+| Hero number | The painted phone number | fluid, fits the column on 2 lines (≈ 64) | fluid, one line, max 128 (see section 4) |
 
 Rhythm: vertical spacing in multiples of the body line-height (≈ 26 px mobile, 28 px desktop). Section padding 2× on mobile, 3–4× on desktop.
 
-Loading: one `woff2` file (~70–90 KB Latin subset), `font-display: swap`, preloaded in the head. System fallback stack with `size-adjust` tuned to Archivo so the swap does not shift the layout.
+Loading: one `woff2` file (~70–90 KB Latin subset, estimated), `font-display: swap`, preloaded in the head. **Phase 3:** measure the real file size after subsetting; if it's over 100 KB, subset more tightly or limit the axis ranges to those we use (wght 400–800, wdth 62–100). System fallback stack with `size-adjust` tuned to Archivo so the swap does not shift the layout.
 
 ---
 
@@ -182,7 +182,7 @@ Desktop (1280 px):
 │ day and night.                      │   [photo 9, 560 px wide,   │
 │                                     │    sits on the yellow,     │
 │ +973 3444 8236                      │    bottom edge on the      │
-│ (cols 1–7, 128 px, one line)        │    chevron strip]          │
+│ (cols 1–7, fluid ≤128 px, one line) │    chevron strip]          │
 │ Houses, flats, offices...           │                            │
 │ [WhatsApp us] [Call]  Send a quote request                       │
 │▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚▚│
@@ -317,8 +317,8 @@ Desktop: contact rows in cols 1–5 (sticky while the form scrolls), form in col
 
 Why it fits:
 - In Bahrain, people find a mover by **calling the number they saw on a truck, in a classified ad or in an Instagram post**. The number is the product. Making it the hero puts the primary job (call or WhatsApp in one tap) in the most visible place, instead of hiding it behind a slogan.
-- The **yellow panel with the reflective chevron strip along its bottom edge** is the client's own truck (photo 9), not a stock "logistics" look. Someone who has seen the truck in their street will recognise it.
-- It **works with small photos**. The hero is type and colour, so it is sharp on any screen and loads with no image at all. The real truck photo sits next to it as evidence, at its true size.
+- The **yellow panel with the reflective chevron strip along its bottom edge** is taken from the Gulf moving-truck look in photo 9 (yellow box body, teal cab, reflective tape), not a stock "logistics" look.
+- It **works with small photos**. The hero is type and colour, so it is sharp on any screen and loads with no image at all. Photo 9 sits next to it at its true size.
 - It is **one memorable thing**. The rest of the page is quiet: paper background, teal text, left aligned, no animation.
 
 Details:
@@ -326,6 +326,17 @@ Details:
 - The number, headline and button labels are **bound to the Business Info settings** (Block Bindings), so changing the number in the settings updates the hero, the sticky bar, the CTA band and the footer at once. The client can still edit the layout and text in the editor.
 - **One motion moment on the whole site:** on first load, the chevron strip slides in once from the left (400 ms), like a truck pulling into frame. Off under `prefers-reduced-motion`. No other entrance animations.
 - No text on top of the photo, no gradient, no overlay.
+
+Photo 9 ownership (open question for the client):
+- Photo 9's **alt text and caption must not say or imply the truck belongs to AYESHA** until the client confirms it is his. Alt text describes only what is visible, e.g. "Yellow box truck with a teal cab parked in front of an apartment building". No caption like "our truck" or "the AYESHA fleet".
+- **The hero must look complete with the photo removed**, in case the client says it is not his truck. The photo is a separate Image block in its own column; deleting it lets the text column take the full width with no empty gap, broken grid or orphaned spacing, and the yellow panel, number, buttons and chevron strip still read as a finished hero. Phase 4 tests the hero both with and without the photo.
+
+Hero number sizing:
+- The number must **never overflow**: **one line on desktop** (≥ 960 px), **two lines on mobile** ("+973" / "3444 8236", via a controlled break between the country code and the local number, not by wrapping wherever it lands).
+- The font size is fluid and based on the **hero text column's width, not the viewport**. The column is a CSS size container (`container-type: inline-size`), and the number uses container query units, e.g. `font-size: clamp(2.75rem, 17cqi, 8rem)` on mobile (sized for the longer half, "3444 8236") and `clamp(3rem, 11.5cqi, 8rem)` on desktop (sized for the whole number on one line). The exact `cqi` values are tuned in Phase 3/4 against the measured width of Archivo wght 800 wdth 62 with tabular figures, with a few percent spare.
+- The 128 px in the type scale is a **maximum**, not a fixed size.
+- Overflow guard: `white-space: nowrap` on each half plus `max-inline-size: 100%`; if a much longer number is entered in settings, it still fits because the size scales with its container. The test below catches any case where it doesn't.
+- **Phase 3/4 tests:** check the hero number at **320, 375, 768, 1280 and 1920 px** wide, with the real number and with a **longer test number (+966 55 123 4567)**. Pass = no horizontal scroll, no clipping, one line at 1280 and 1920, two lines at 320 and 375, and the tap target still covers the whole number.
 
 ---
 
@@ -367,7 +378,7 @@ I checked bahrainmovers.com in this phase. gulfmoversbahrain.com did not resolve
 |---|---|
 | **Generic "No.1 / Best company" copy** | No superlatives and no claims we can't prove. Copy says what is actually included: labour in the price, carpenters who dismantle and refit, AC and TV removal, Dyna and 6-wheel trucks by 8 hours or a full day, 20/40ft containers, customs papers, 24 hours. Specific beats "best". |
 | **No detailed quote form** (or a name/phone/message box) | A form that collects what a mover needs to price a job: from/to, date, size, floors and lifts, services ticked, special items. The client can price faster, and the customer gets a quicker, more accurate answer. Every submission is saved, not only emailed. |
-| **Fake-looking reviews** (stock faces, identical five-star quotes) | Reviews are **hidden until real**. Real ones show name, area, date and a link to the source. We'd rather have no reviews section than one that makes people distrust the rest of the page. Photos are the client's own trucks, not stock (the stock-looking one is marked placeholder). |
+| **Fake-looking reviews** (stock faces, identical five-star quotes) | Reviews are **hidden until real**. Real ones show name, area, date and a link to the source. We'd rather have no reviews section than one that makes people distrust the rest of the page. Photos are real street photos, not stock (the stock-looking one is marked placeholder), and captions make no ownership claim until the client confirms which trucks are his. |
 | **Weak mobile UX** (tiny phone links, desktop layouts squeezed down, popups) | Designed for the phone first: the number is the hero, a sticky Call/WhatsApp bar on every page, 48–56 px tap targets, WhatsApp messages prefilled per service, no popups, no carousel, fast (one font file, no jQuery, WebP, lazy-loaded images). |
 | **Hard to tell who you're dealing with** | Named General Manager, all real numbers and the email, Instagram link, "also trading as AYESHA Cargo Handling". |
 | **Contact info typed by hand on every page** (often out of date) | One Business Info settings page; Block Bindings push the numbers everywhere. |
@@ -410,7 +421,7 @@ Keyword placement (natural, no stuffing):
     "jobTitle": "General Manager"
   },
   "contactPoint": [
-    { "@type": "ContactPoint", "telephone": "+97334448236", "contactType": "customer service", "availableLanguage": "English" },
+    { "@type": "ContactPoint", "telephone": "+97334448236", "contactType": "customer service" },
     { "@type": "ContactPoint", "telephone": "+97336429850", "contactType": "customer service" },
     { "@type": "ContactPoint", "telephone": "+97377360292", "contactType": "customer service" }
   ],
