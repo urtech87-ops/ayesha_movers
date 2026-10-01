@@ -276,6 +276,13 @@ a[href^="mailto:"] {
 	gap: var(--wp--preset--spacing--20);
 }
 
+/* Desktop: clear space between the last menu item and the Call button. */
+@media (min-width: 960px) {
+	.ayesha-header__actions {
+		gap: 2rem;
+	}
+}
+
 .ayesha-header__call .wp-block-button__link {
 	white-space: nowrap;
 	padding-block: 0.5rem;
@@ -376,17 +383,78 @@ a[href^="mailto:"] {
 }
 
 .ayesha-footer__label {
-	margin-block-end: 0;
+	margin-block: 0;
 	font-size: var(--wp--preset--font-size--small);
 }
 
-.ayesha-footer__label + * {
-	margin-block-start: 0.125rem !important;
+/* Contact rows: label beside the value, one 44px row each (the value wraps under
+   the label only when it doesn't fit, e.g. the email at 320px). */
+.ayesha-footer__contacts > * + * {
+	margin-block-start: 0;
+}
+
+.ayesha-footer__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	column-gap: 0.5rem;
+}
+
+.ayesha-footer__row + .ayesha-footer__row {
+	margin-block-start: 0.25rem;
+}
+
+.ayesha-footer__row > p {
+	margin-block: 0 !important;
 	font-weight: 600;
+}
+
+.ayesha-footer__row > .ayesha-footer__label {
+	flex: 0 0 4rem;
+	font-weight: 400;
+}
+
+.ayesha-footer__row a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+}
+
+/* The main number: label above, number large. */
+.ayesha-footer__row--main {
+	display: block;
+	margin-block-end: 0.25rem;
 }
 
 .ayesha-footer .wp-block-navigation .wp-block-navigation-item__content {
 	min-height: 44px;
+}
+
+@media (max-width: 781.98px) {
+	.ayesha-footer__body {
+		padding-block: var(--wp--preset--spacing--40);
+	}
+
+	.ayesha-footer__about > * + * {
+		margin-block-start: 0.25rem;
+	}
+
+	/* The email is the longest value: one step smaller so it stays beside its label. */
+	.ayesha-footer__row a[href^="mailto:"] {
+		font-size: var(--wp--preset--font-size--small);
+	}
+
+	/* Page links in two columns. */
+	.ayesha-footer__nav .wp-block-navigation__container {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		column-gap: var(--wp--preset--spacing--30);
+		width: 100%;
+	}
+
+	.ayesha-footer__small {
+		margin-block-start: var(--wp--preset--spacing--30);
+	}
 }
 
 .ayesha-footer__small {
@@ -406,7 +474,9 @@ a[href^="mailto:"] {
 	background: var(--wp--preset--color--cab-teal);
 }
 
-.ayesha-sticky-bar .wp-block-buttons {
+/* Shared by the sticky bar and the Call/WhatsApp buttons in the open mobile menu. */
+.ayesha-sticky-bar .wp-block-buttons,
+.ayesha-menu-actions.wp-block-buttons {
 	display: flex;
 	flex-wrap: nowrap;
 	gap: 0;
@@ -414,27 +484,52 @@ a[href^="mailto:"] {
 	margin: 0;
 }
 
-.ayesha-sticky-bar .wp-block-button {
+:is(.ayesha-sticky-bar, .ayesha-menu-actions) .wp-block-button {
 	flex: 1 1 50%;
 	width: 50%;
 	margin: 0;
 }
 
-.ayesha-sticky-bar .wp-block-button__link {
+:is(.ayesha-sticky-bar, .ayesha-menu-actions) .wp-block-button__link {
 	width: 100%;
 	height: var(--wp--custom--sticky-bar-height);
 	border-radius: 0;
+	font-family: var(--wp--preset--font-family--body);
+	font-size: var(--wp--preset--font-size--base);
+	font-stretch: 100%;
+	font-weight: 600;
+	text-decoration: none;
 }
 
 /* Inset rings so they aren't cut off by the screen edge: yellow on teal, teal on green. */
-.ayesha-sticky-bar .wp-block-button__link:focus-visible {
+:is(.ayesha-sticky-bar, .ayesha-menu-actions) .wp-block-button__link:focus-visible {
 	outline: var(--wp--custom--focus-width) solid var(--wp--preset--color--box-yellow);
 	outline-offset: -6px;
 	box-shadow: none;
 }
 
-.ayesha-sticky-bar .is-style-whatsapp .wp-block-button__link:focus-visible {
+:is(.ayesha-sticky-bar, .ayesha-menu-actions) .is-style-whatsapp .wp-block-button__link:focus-visible {
 	outline-color: var(--wp--preset--color--cab-teal);
+}
+
+/* The menu buttons exist only inside the open mobile menu: hidden in the desktop menu and the footer menu. */
+.ayesha-menu-actions.wp-block-buttons {
+	display: none;
+}
+
+.ayesha-nav .is-menu-open .ayesha-menu-actions.wp-block-buttons {
+	display: flex;
+	position: fixed;
+	inset-inline: 0;
+	bottom: 0;
+	z-index: 2;
+	padding-bottom: env(safe-area-inset-bottom);
+	background: var(--wp--preset--color--cab-teal);
+}
+
+/* Room at the bottom of the open menu so the buttons never cover a link. */
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open {
+	padding-bottom: calc(var(--wp--custom--sticky-bar-height) + env(safe-area-inset-bottom) + var(--wp--preset--spacing--30));
 }
 
 @media (max-width: 959.98px) {

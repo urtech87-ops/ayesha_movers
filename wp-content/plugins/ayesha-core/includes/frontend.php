@@ -46,6 +46,44 @@ function ayesha_core_floating_whatsapp() {
 	);
 }
 
+/**
+ * Whether the WhatsApp number is the same as the main phone number.
+ *
+ * @return bool
+ */
+function ayesha_core_whatsapp_is_main_phone() {
+	$main     = ltrim( ayesha_core_e164( ayesha_core_setting( 'phone_primary' ) ), '+' );
+	$whatsapp = preg_replace( '/\D/', '', (string) ayesha_core_setting( 'whatsapp' ) );
+	return '' !== $main && $main === $whatsapp;
+}
+
+add_filter( 'render_block', 'ayesha_core_whatsapp_conditional_blocks', 10, 2 );
+
+/**
+ * Blocks with the class "ayesha-if-whatsapp-same" show only when the WhatsApp number equals the
+ * main number; "ayesha-if-whatsapp-differs" only when they differ. Lets the footer show one
+ * "Call or WhatsApp" row instead of two rows with the same number.
+ *
+ * @param string $content Block HTML.
+ * @param array  $block   Parsed block.
+ * @return string
+ */
+function ayesha_core_whatsapp_conditional_blocks( $content, $block ) {
+	$class = $block['attrs']['className'] ?? '';
+	if ( '' === $class || false === strpos( $class, 'ayesha-if-whatsapp-' ) ) {
+		return $content;
+	}
+	$classes = preg_split( '/\s+/', $class );
+	$same    = ayesha_core_whatsapp_is_main_phone();
+	if ( in_array( 'ayesha-if-whatsapp-same', $classes, true ) && ! $same ) {
+		return '';
+	}
+	if ( in_array( 'ayesha-if-whatsapp-differs', $classes, true ) && $same ) {
+		return '';
+	}
+	return $content;
+}
+
 add_filter( 'render_block', 'ayesha_core_hide_reviews', 10, 2 );
 
 /**

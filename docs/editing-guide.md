@@ -32,6 +32,8 @@ Go to **Appearance → Editor**.
 - **Patterns → Header** or **Footer**: click the part, then click any text to change it. The Save button is at the top right.
 - **Navigation**: the menu used in the header and the footer. Add, remove, rename or reorder pages here; both menus update together.
 - **Mobile Call and WhatsApp bar**: the bar at the bottom of phone screens. You can change the button words ("Call", "WhatsApp"). The links come from Business Info.
+- **Footer "Call or WhatsApp" row**: when your WhatsApp number is the same as your main number, the footer shows one row, "Call or WhatsApp". If you set a different WhatsApp number in Business Info, the footer shows "Main number" and "WhatsApp" as two rows instead. In the editor you see all three rows (their names say when each one shows); the website picks the right one by itself.
+- **Call and WhatsApp in the phone menu**: the Main menu (Navigation) ends with two buttons, Call and WhatsApp. They appear only when the menu is opened on a phone, at the bottom of the screen. You can change their words; the links come from Business Info.
 
 Made a mistake? In the Editor, open the part, click the three dots (⋮) at the top right and choose **Reset** to go back to the original design.
 

@@ -80,11 +80,12 @@ function ayesha_core_schema() {
 	}
 
 	/**
-	 * Media Library ID of the image given to search engines (design plan: photo 9).
+	 * Media Library ID of the image given to search engines.
+	 * Off (0) until the client confirms the truck in photo 9 is his; then this default becomes 9.
 	 *
 	 * @param int $id Attachment ID; 0 to leave the image out.
 	 */
-	$image_id = (int) apply_filters( 'ayesha_core_schema_image_id', 9 );
+	$image_id = (int) apply_filters( 'ayesha_core_schema_image_id', 0 );
 	$image    = $image_id ? wp_get_attachment_image_url( $image_id, 'full' ) : false;
 	if ( $image ) {
 		$schema['image'] = $image;

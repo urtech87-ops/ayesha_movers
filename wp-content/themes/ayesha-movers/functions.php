@@ -22,18 +22,29 @@ function ayesha_theme_setup() {
 	remove_theme_support( 'core-block-patterns' );
 }
 
+/**
+ * Asset version: theme version plus the file's modified time, so browsers fetch edited files.
+ *
+ * @param string $file Path relative to the theme.
+ * @return string
+ */
+function ayesha_theme_asset_version( $file ) {
+	$path = get_theme_file_path( $file );
+	return AYESHA_THEME_VERSION . ( file_exists( $path ) ? '.' . filemtime( $path ) : '' );
+}
+
 add_action( 'wp_enqueue_scripts', 'ayesha_theme_assets' );
 
 /**
  * Front-end CSS and the tiny sticky-bar script (deferred, no jQuery).
  */
 function ayesha_theme_assets() {
-	wp_enqueue_style( 'ayesha-theme', get_theme_file_uri( 'assets/css/theme.css' ), array(), AYESHA_THEME_VERSION );
+	wp_enqueue_style( 'ayesha-theme', get_theme_file_uri( 'assets/css/theme.css' ), array(), ayesha_theme_asset_version( 'assets/css/theme.css' ) );
 	wp_enqueue_script(
 		'ayesha-sticky-bar',
 		get_theme_file_uri( 'assets/js/sticky-bar.js' ),
 		array(),
-		AYESHA_THEME_VERSION,
+		ayesha_theme_asset_version( 'assets/js/sticky-bar.js' ),
 		array(
 			'in_footer' => true,
 			'strategy'  => 'defer',
