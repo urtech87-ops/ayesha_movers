@@ -123,6 +123,10 @@ Two sections are **synced patterns**: the yellow **CTA band** ("Moving soon? Mes
 - **WhatsApp us** and **Call** take their links from Business Info. You can change the button words.
 - **The photo is optional.** To remove it, click the photo and delete it (the ⋮ menu → **Delete**). The text then fills the whole width; nothing else needs to change. To add a photo back, click the empty photo column → **+** → **Image** and pick a photo from the Media Library, size *Photo (560px)*. Don't write a caption or alt text that says the truck is yours until that is confirmed.
 
+### Services: the photo under the house-shifting card
+
+The photo under the large grey "House, villa, flat and office shifting" card (the pickup loaded with boxes) is a normal Image block shown at its real size. Click it to replace it (**Replace** in the toolbar) or delete it. Keep the alt text a plain description of what is in the photo.
+
 ### Services: "Ask on WhatsApp" links
 
 Each service has a WhatsApp link that opens the chat with the service already typed, e.g. "Hi AYESHA Movers & Packers, I'd like a price for packing and unpacking." To change that message, use the code editor (⋮ → **Code editor**), find the service's `"message":"…"` and edit the words between the quotes (see section 3). The service titles link to the matching part of the Our Services page.

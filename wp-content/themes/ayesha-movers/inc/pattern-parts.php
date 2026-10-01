@@ -51,7 +51,7 @@ function ayesha_theme_reasons_markup() {
 function ayesha_theme_questions_markup() {
 	$faq   = array(
 		array( 'Do you take furniture apart and put it back together?', 'Yes. Our carpenters dismantle your furniture before the move and fit them back together in your new home or office. They also take down and put up curtains, and set up new furniture.' ),
-		array( 'Can I hire a truck for just a few hours?', 'Yes. You can hire a Dyna or a 6-wheel truck for 8 hours or for a full day. We also do runs to Mina Salman, Khalifa Bin Salman Port, the airport and courier depots such as DHL, Aramex and GLS.' ),
+		array( 'Can I hire a truck for 8 hours or a full day?', 'Yes. You can hire a Dyna or a 6-wheel truck for 8 hours or for a full day. We also do runs to Mina Salman, Khalifa Bin Salman Port, the airport and courier depots such as DHL, Aramex and GLS.' ),
 		array( 'Can you move my things to Saudi Arabia?', 'Yes. We move households and offices to Saudi Arabia and the other GCC countries, and to the UK, the USA, Canada and worldwide. We also handle the customs documents.' ),
 		array( 'Can you move us at night?', 'Yes. We work 24 hours, day and night. Tell us the time that suits you.' ),
 		array( 'Do you remove and refit air conditioners and TVs?', 'Yes. We take down and fit split units and other air conditioners, LCD and LED TVs, and curtains and blinds.' ),

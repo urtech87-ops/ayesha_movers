@@ -810,6 +810,17 @@ a[href^="mailto:"] {
 	transform: rotate(45deg);
 }
 
+/* Photo 12 under the lead card, at its natural size (366 x 480). */
+.ayesha-services__photo {
+	margin-block: var(--wp--preset--spacing--40) 0;
+}
+
+.ayesha-services__photo img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
 .ayesha-services__rows > * {
 	margin-block: 0;
 }
@@ -949,12 +960,21 @@ a[href^="mailto:"] {
 	padding-block-end: 0;
 }
 
+/* The route runs across the full content width under the heading and intro. */
+.ayesha-where > .ayesha-route {
+	margin-block-start: var(--wp--preset--spacing--50);
+	max-inline-size: var(--wp--style--global--content-size);
+}
+
+/* Desktop: left to right, one row whatever the number of stops. Auto-sized grid columns:
+   short names keep their full width and the spare room goes to the long ones
+   (two lines at most at 1280px). */
 @media (min-width: 960px) {
 	.ayesha-route {
 		display: grid;
-		grid-template-columns: repeat(6, minmax(0, 1fr));
+		grid-auto-flow: column;
+		grid-auto-columns: auto;
 		column-gap: var(--wp--preset--spacing--30);
-		padding-block-start: var(--wp--preset--spacing--20);
 	}
 
 	.ayesha-route > li {

@@ -4,12 +4,14 @@
  * Slug: ayesha-movers/what-we-do
  * Categories: ayesha-movers
  * Keywords: services, shifting, packing, furniture, trucks, cargo
- * Description: House shifting as the large lead card with what's included, then the other five services as short rows. Each title links to its section on Our Services; each WhatsApp link opens a chat with the service name already typed.
+ * Description: House shifting as the large lead card with what's included and a photo under it, then the other five services as short rows. Each title links to its section on Our Services; each WhatsApp link opens a chat with the service name already typed.
  *
  * @package AyeshaMovers
  */
 
 $ayesha_services_url = home_url( '/our-services/' );
+$ayesha_photo_url    = wp_get_attachment_image_url( 12, 'full' );
+$ayesha_photo_alt    = (string) get_post_meta( 12, '_wp_attachment_image_alt', true );
 
 /*
  * One compact service row. The WhatsApp link's message is in the button's binding ("message"),
@@ -73,11 +75,15 @@ $ayesha_row = static function ( $anchor, $title, $text, $service ) use ( $ayesha
 <!-- /wp:list -->
 
 <!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-whatsapp","metadata":{"bindings":{"url":{"source":"ayesha/business","args":{"key":"whatsapp_url","message":"Hi AYESHA Movers & Packers, I'd like a price for house, villa, flat or office shifting."}}},"name":"WhatsApp: house shifting"}} -->
+<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-whatsapp","metadata":{"bindings":{"url":{"source":"ayesha/business","args":{"key":"whatsapp_url","message":"Hi AYESHA Movers \u0026 Packers, I'd like a price for house, villa, flat or office shifting."}}},"name":"WhatsApp: house shifting"}} -->
 <div class="wp-block-button is-style-whatsapp"><a class="wp-block-button__link wp-element-button" href="https://wa.me/97334448236">Ask about this on WhatsApp</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
-<!-- /wp:group --></div>
+<!-- /wp:group --><?php if ( $ayesha_photo_url ) : ?>
+
+<!-- wp:image {"id":12,"sizeSlug":"full","linkDestination":"none","className":"ayesha-services__photo"} -->
+<figure class="wp-block-image size-full ayesha-services__photo"><img src="<?php echo esc_url( $ayesha_photo_url ); ?>" alt="<?php echo esc_attr( $ayesha_photo_alt ); ?>" class="wp-image-12"/></figure>
+<!-- /wp:image --><?php endif; ?></div>
 <!-- /wp:column -->
 
 <!-- wp:column {"width":"42%","className":"ayesha-services__rows"} -->
