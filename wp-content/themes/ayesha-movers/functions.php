@@ -67,6 +67,20 @@ function ayesha_theme_assets() {
 			'strategy'  => 'defer',
 		)
 	);
+
+	// Our Services: marks the current service in the "Jump to a service" menu. Only on pages that have it.
+	if ( is_singular() && str_contains( (string) get_post_field( 'post_content', get_queried_object_id() ), 'ayesha-jump' ) ) {
+		wp_enqueue_script(
+			'ayesha-service-rail',
+			get_theme_file_uri( 'assets/js/service-rail.js' ),
+			array(),
+			ayesha_theme_asset_version( 'assets/js/service-rail.js' ),
+			array(
+				'in_footer' => true,
+				'strategy'  => 'defer',
+			)
+		);
+	}
 }
 
 add_action( 'wp_head', 'ayesha_theme_head', -1 );

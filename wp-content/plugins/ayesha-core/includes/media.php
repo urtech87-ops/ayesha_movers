@@ -28,12 +28,40 @@ function ayesha_core_webp_sub_sizes( $formats ) {
 add_filter( 'wp_omit_loading_attr_threshold', 'ayesha_core_eager_image_count' );
 
 /**
- * Only the first content image (the Home hero photo) skips lazy loading; WordPress's default is 3.
- * Every other image gets loading="lazy", so an image hidden on phones (e.g. the photo under the
- * house-shifting card) is never downloaded there.
+ * At most one content image skips lazy loading (WordPress's default is 3), and only when it is in
+ * the page's first section, i.e. on screen when the page opens (the Home hero photo, the About Us
+ * photo). Every other image gets loading="lazy", so an image hidden on phones (e.g. the photo
+ * under the house-shifting card) is never downloaded there, and a photo far down a page (the
+ * truck on Our Services) doesn't compete with the top of the page.
  *
  * @return int
  */
 function ayesha_core_eager_image_count() {
-	return 1;
+	static $count = null;
+	if ( null === $count ) {
+		$count = 1;
+		if ( is_singular() ) {
+			$blocks = array_values( array_filter( parse_blocks( (string) get_post_field( 'post_content', get_queried_object_id() ) ), static fn( $block ) => null !== $block['blockName'] ) );
+			$count  = ( $blocks && ayesha_core_block_has_image( $blocks[0] ) ) ? 1 : 0;
+		}
+	}
+	return $count;
+}
+
+/**
+ * Whether a parsed block is, or contains, an Image block.
+ *
+ * @param array $block Parsed block.
+ * @return bool
+ */
+function ayesha_core_block_has_image( $block ) {
+	if ( 'core/image' === $block['blockName'] ) {
+		return true;
+	}
+	foreach ( $block['innerBlocks'] as $inner ) {
+		if ( ayesha_core_block_has_image( $inner ) ) {
+			return true;
+		}
+	}
+	return false;
 }

@@ -690,7 +690,7 @@ a[href^="mailto:"] {
 }
 
 /* The one motion moment on the site: the strip slides in once, like a truck pulling into frame.
-   Switched off with reduced motion (section 12). */
+   Switched off with reduced motion (section 13). */
 .ayesha-hero > .is-style-chevron-strip {
 	animation: ayesha-strip-in 400ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
@@ -1142,7 +1142,189 @@ a[href^="mailto:"] {
 }
 
 /* ---------------------------------------------------------------
- * 12. Motion and print
+ * 12. Inner pages (About Us, Our Services): the H1 is a block in the page
+ *     (template "Page with sections"), on paper, no yellow panel.
+ * ------------------------------------------------------------- */
+.ayesha-intro h1 {
+	margin-block: 0;
+}
+
+.ayesha-intro .wp-block-heading + p {
+	margin-block-start: var(--wp--preset--spacing--30);
+}
+
+/* ---- Our Services: "Jump to a service" + the six service sections ---- */
+
+/* The grey bands reach the screen edges (see below); clip keeps them from causing sideways scroll
+   without creating a scroll container, so the sticky menu still works. */
+.ayesha-svc {
+	overflow-x: clip;
+}
+
+.ayesha-svc__grid > *,
+.ayesha-svc__sections > * {
+	margin-block: 0;
+}
+
+/* Phones and tablets: the list wraps onto lines under the intro, one 48px tap target per link. */
+.ayesha-jump {
+	padding-block-end: var(--wp--preset--spacing--40);
+}
+
+.ayesha-jump > * {
+	margin-block: 0;
+}
+
+.ayesha-jump__label {
+	margin-block-end: var(--wp--preset--spacing--20) !important;
+	font-weight: 600;
+}
+
+.ayesha-jump__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--20);
+	padding-inline-start: 0;
+	list-style: none;
+}
+
+.ayesha-jump__list a {
+	display: inline-flex;
+	align-items: center;
+	min-height: var(--wp--custom--tap-target);
+	box-sizing: border-box;
+	padding-inline: var(--wp--preset--spacing--30);
+	border: 2px solid currentColor;
+	border-radius: var(--wp--custom--radius);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.ayesha-jump__list a:hover {
+	background: var(--wp--preset--color--concrete);
+}
+
+/* Each service: alternating white and grey bands. A grey section's background is extended to both
+   screen edges with a border image, so the band is full width while its text stays in the column. */
+.ayesha-svc__section.is-style-concrete-panel {
+	border-image: conic-gradient(var(--wp--preset--color--concrete) 0 0) fill 0 / / 0 100vmax;
+}
+
+.ayesha-svc__section > * {
+	margin-block: 0;
+}
+
+.ayesha-svc__section > * + * {
+	margin-block-start: var(--wp--preset--spacing--30);
+}
+
+/* A jump lands with the top of the band at the top of the screen. */
+.ayesha-svc__section h2 {
+	scroll-margin-block-start: var(--wp--preset--spacing--50);
+}
+
+.ayesha-svc__section > .ayesha-svc__label {
+	margin-block-start: var(--wp--preset--spacing--40);
+	font-weight: 600;
+}
+
+.ayesha-svc__section > .ayesha-svc__label + .ayesha-checklist {
+	margin-block-start: var(--wp--preset--spacing--20);
+}
+
+.ayesha-svc__section > .wp-block-buttons {
+	margin-block-start: var(--wp--preset--spacing--40);
+}
+
+.ayesha-svc__photo {
+	margin-block-start: var(--wp--preset--spacing--40) !important;
+}
+
+.ayesha-svc__photo img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+/* Computers: the list becomes a menu on the left (cols 1-3) that stays on screen while the
+   services scroll past (cols 4-10); the service on screen is marked with a bar. */
+@media (min-width: 960px) {
+	.ayesha-svc__grid {
+		display: grid;
+		grid-template-columns: minmax(0, 3fr) minmax(0, 7fr) minmax(0, 2fr);
+		column-gap: 24px;
+	}
+
+	.ayesha-jump {
+		position: sticky;
+		top: 0;
+		grid-column: 1;
+		grid-row: 1;
+		align-self: start;
+		padding-block: var(--wp--preset--spacing--50);
+	}
+
+	.ayesha-svc__sections {
+		grid-column: 2;
+		grid-row: 1;
+	}
+
+	.ayesha-jump__list {
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.ayesha-jump__list a {
+		min-height: 44px;
+		padding-inline: var(--wp--preset--spacing--30) 0;
+		border: 0;
+		border-inline-start: 3px solid transparent;
+		border-radius: 0;
+		font-weight: 400;
+	}
+
+	.ayesha-jump__list a:hover {
+		background: none;
+		text-decoration: underline;
+	}
+
+	.ayesha-jump__list a[aria-current] {
+		border-inline-start-color: currentColor;
+		font-weight: 700;
+	}
+}
+
+/* ---- About Us ---- */
+.ayesha-about-intro__columns,
+.ayesha-about-team__columns {
+	margin-block: 0;
+}
+
+.ayesha-about-intro__columns .wp-block-column > *,
+.ayesha-about-team__columns .wp-block-column > * {
+	margin-block: 0;
+}
+
+.ayesha-about-team__columns .wp-block-column > * + * {
+	margin-block-start: var(--wp--preset--spacing--30);
+}
+
+.ayesha-about-how > .ayesha-reasons {
+	margin-block-start: var(--wp--preset--spacing--40);
+}
+
+.ayesha-about-intro__photo figure {
+	margin: 0;
+}
+
+.ayesha-about-intro__photo img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+/* ---------------------------------------------------------------
+ * 13. Motion and print
  * ------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
 	*,

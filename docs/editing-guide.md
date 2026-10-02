@@ -152,3 +152,38 @@ Each page has its own title and description for search results. Open the page, c
 - **Description in search results**: about 155 characters. The counter under each box tells you when it's too long.
 
 Click **Save**. If you leave them empty, WordPress uses the page name and Google picks the description itself. The Home description mentions the WhatsApp number as text: if the number changes, update the description too.
+
+## 6. The Our Services page
+
+Open **Pages → Our Services**. In **List View** you'll see: Page heading, Services (with "Jump to a service" and one group per service), Questions and the CTA band.
+
+### Change a service
+
+Each service is one group named "Service: …". Click any text to change it:
+
+- **The heading** (e.g. "Packing and unpacking"). Keep its **HTML anchor**: with the heading selected, open **Advanced** in the right-hand sidebar. The anchor (`house-shifting`, `packing`, `furniture`, `appliances`, `trucks`, `cargo`) is what the Home page's service links and the "Jump to a service" list point to. If you change an anchor, change the matching links too.
+- **The paragraph** under the heading.
+- **What's included**: a list. Click at the end of an item and press Enter to add one; select an item and press Delete/Backspace to remove one. Only list things the team really does.
+- **Ask about this on WhatsApp**: the link comes from Business Info and the chat opens with the service already typed. To change that message, use the code editor (⋮ → **Code editor**), find `"message":"…"` in that button and edit the words between the quotes (see section 3).
+- **The truck photo** (Truck hire): click it, then **Replace**. Keep the alt text a plain description of what is in the photo, and don't say the truck is yours until that's confirmed. (The photo was cropped in the Media Library so the brand name on the cab doesn't show; **Edit image → Restore image** there brings back the full photo.)
+
+The grey and white bands alternate. To make a service grey or white, select its group and pick the **Grey panel** style (or the default style) in the sidebar. The grey band stretches to the screen edges by itself.
+
+### The "Jump to a service" list
+
+One list does two jobs: on phones it's a row of buttons under the intro; on computers it's the menu on the left that stays on screen and marks the service you're reading. Each item is a link to a heading's anchor, e.g. `#packing`. If you add a service, copy a service group (⋮ → **Duplicate**), give its heading a new anchor, and add a link to it here.
+
+### Questions
+
+As on the Home page: each question is a **Details** block. Answer only with facts you're sure of.
+
+## 7. The About Us page
+
+Open **Pages → About Us**. In **List View**: Page heading (with the photo), Who runs it + How we work, Where we go and the CTA band.
+
+- **Heading, lead paragraph, "Who runs it", "How we work"**: click any text to change it. Each of the four "How we work" points is a small heading with a paragraph under it.
+- **The photo**: click it, then **Replace** (size *Photo (560px)*). On computers it sits beside the heading, on phones under the paragraph. Keep the alt text a plain description of the scene: don't name the man or say whose truck it is until that's confirmed. No caption.
+- **Where we go** and the yellow **CTA band** are the shared (synced) sections: edit them with **Edit original** (see section 5). A change shows on every page that uses them.
+- Please don't add a founding year or "years of experience" until the client has confirmed one.
+
+Both pages use the template **Page with sections (heading in the page)**: the big heading at the top is a normal Heading block in the page, not the page's title. Renaming the page doesn't change this heading (and doesn't rename the menu item either: that is in **Appearance → Editor → Navigation**). The title and description in Google are set in the **Search engines** panel, as for Home (section 5).

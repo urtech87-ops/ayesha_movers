@@ -43,13 +43,14 @@ function ayesha_theme_reasons_markup() {
 }
 
 /**
- * "Questions": heading and six Details blocks, answered only with client facts.
+ * "Questions": heading and Details blocks, answered only with client facts.
  * (No pricing question: how prices are worked out is still an open question for the client.)
  *
+ * @param array<int, array{0: string, 1: string}>|null $faq Question/answer pairs; null = the Home page's six.
  * @return string Block markup.
  */
-function ayesha_theme_questions_markup() {
-	$faq   = array(
+function ayesha_theme_questions_markup( $faq = null ) {
+	$faq   = $faq ?? array(
 		array( 'Do you take furniture apart and put it back together?', 'Yes. Our carpenters dismantle your furniture before the move and fit them back together in your new home or office. They also take down and put up curtains, and set up new furniture.' ),
 		array( 'Can I hire a truck for 8 hours or a full day?', 'Yes. You can hire a Dyna or a 6-wheel truck for 8 hours or for a full day. We also do runs to Mina Salman, Khalifa Bin Salman Port, the airport and courier depots such as DHL, Aramex and GLS.' ),
 		array( 'Can you move my things to Saudi Arabia?', 'Yes. We move households and offices to Saudi Arabia and the other GCC countries, and to the UK, the USA, Canada and worldwide. We also handle the customs documents.' ),
@@ -86,4 +87,101 @@ function ayesha_theme_section_markup( $name, $classes, $inner ) {
 	return '<!-- wp:group {"metadata":{"name":"' . esc_attr( $name ) . '"},"tagName":"section","align":"full","className":"' . esc_attr( $classes ) . '","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
 <section class="wp-block-group alignfull ' . esc_attr( $classes ) . '" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)">' . $inner . '</section>
 <!-- /wp:group -->';
+}
+
+/**
+ * One section of the Our Services page: H2 with the id the Home page links to, a short paragraph,
+ * an optional photo, the "What's included" checklist and an "Ask about this on WhatsApp" button
+ * whose prefilled message names the service (in the button's binding, so the client can edit it).
+ *
+ * @param array{id: string, title: string, text: string, items: string[], message: string, grey?: bool, image?: string} $service Section content.
+ * @return string Block markup.
+ */
+function ayesha_theme_service_section_markup( $service ) {
+	$classes = 'ayesha-svc__section' . ( empty( $service['grey'] ) ? '' : ' is-style-concrete-panel' );
+	$items   = array();
+	foreach ( $service['items'] as $item ) {
+		$items[] = '<!-- wp:list-item -->
+<li>' . esc_html( $item ) . '</li>
+<!-- /wp:list-item -->';
+	}
+	$button = array(
+		'className' => 'is-style-whatsapp',
+		'metadata'  => array(
+			'bindings' => array(
+				'url' => array(
+					'source' => 'ayesha/business',
+					'args'   => array(
+						'key'     => 'whatsapp_url',
+						'message' => $service['message'],
+					),
+				),
+			),
+			'name'     => 'WhatsApp: ' . $service['title'],
+		),
+	);
+	$section = array(
+		'metadata'  => array( 'name' => 'Service: ' . $service['title'] ),
+		'tagName'   => 'section',
+		'className' => $classes,
+		'style'     => array(
+			'spacing' => array(
+				'padding' => array(
+					'top'    => 'var:preset|spacing|50',
+					'bottom' => 'var:preset|spacing|50',
+				),
+			),
+		),
+		'layout'    => array( 'type' => 'default' ),
+	);
+	return '<!-- wp:group ' . serialize_block_attributes( $section ) . ' -->
+<section class="wp-block-group ' . esc_attr( $classes ) . '" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50)"><!-- wp:heading -->
+<h2 class="wp-block-heading" id="' . esc_attr( $service['id'] ) . '">' . esc_html( $service['title'] ) . '</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>' . esc_html( $service['text'] ) . '</p>
+<!-- /wp:paragraph -->' . ( empty( $service['image'] ) ? '' : "\n\n" . $service['image'] ) . '
+
+<!-- wp:paragraph {"className":"ayesha-svc__label"} -->
+<p class="ayesha-svc__label">What\'s included</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"className":"ayesha-checklist"} -->
+<ul class="wp-block-list ayesha-checklist">' . implode( "\n\n", $items ) . '</ul>
+<!-- /wp:list -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button ' . serialize_block_attributes( $button ) . ' -->
+<div class="wp-block-button is-style-whatsapp"><a class="wp-block-button__link wp-element-button" href="https://wa.me/97334448236">Ask about this on WhatsApp</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></section>
+<!-- /wp:group -->';
+}
+
+/**
+ * An Image block for a Media Library photo at a given size, with the attachment's alt text.
+ *
+ * @param int    $id        Attachment ID.
+ * @param string $size      Image size slug.
+ * @param string $class     Extra CSS class ('' for none).
+ * @return string Block markup, or '' when the photo is missing.
+ */
+function ayesha_theme_image_markup( $id, $size, $class = '' ) {
+	$url = wp_get_attachment_image_url( $id, $size );
+	if ( ! $url ) {
+		return '';
+	}
+	$attrs = array(
+		'id'              => $id,
+		'sizeSlug'        => $size,
+		'linkDestination' => 'none',
+	);
+	if ( '' !== $class ) {
+		$attrs['className'] = $class;
+	}
+	$alt = (string) get_post_meta( $id, '_wp_attachment_image_alt', true );
+	return '<!-- wp:image ' . serialize_block_attributes( $attrs ) . ' -->
+<figure class="wp-block-image size-' . esc_attr( $size ) . ( '' === $class ? '' : ' ' . esc_attr( $class ) ) . '"><img src="' . esc_url( $url ) . '" alt="' . esc_attr( $alt ) . '" class="wp-image-' . (int) $id . '"/></figure>
+<!-- /wp:image -->';
 }

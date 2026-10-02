@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       AYESHA Core
  * Description:       Business Info settings, Block Bindings, shortcodes, structured data, search-engine titles, WebP image sizes and mail settings for the AYESHA Movers & Packers website.
- * Version:           0.4.0
+ * Version:           0.5.0
  * Requires at least: 6.9
  * Requires PHP:      8.0
  * Author:            AYESHA Movers & Packers
@@ -14,7 +14,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'AYESHA_CORE_VERSION', '0.4.0' );
+define( 'AYESHA_CORE_VERSION', '0.5.0' );
 define( 'AYESHA_CORE_FILE', __FILE__ );
 define( 'AYESHA_CORE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AYESHA_CORE_URL', plugin_dir_url( __FILE__ ) );

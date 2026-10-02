@@ -19,12 +19,12 @@ Main goal: get mobile visitors to WhatsApp or call in one tap, or to send a deta
 | Admin username | `ayesha_admin` (password given in chat once; never stored in any file) |
 | WP-CLI | `D:\xampp\php\php.exe wp-cli.phar <command>` from the project root |
 | wp-config extras | `WP_ENVIRONMENT_TYPE=local`, `WP_DEBUG` on, log to `wp-content/debug.log`, display off, `DISALLOW_FILE_EDIT`, **`AUTOMATIC_UPDATER_DISABLED` = true** (no automatic core/plugin/theme/translation updates, so WordPress stays at 7.1.2 for the whole project). wp-config.php is not in git: re-add these by hand on any new install |
-| Plugins | **AYESHA Core 0.4.0 (active)**, WP Mail Logging 1.17.0 (active), WP Mail SMTP 4.10.0 (inactive) |
-| Themes | **AYESHA Movers 0.4.0 (active)**; Twenty Twenty-Five 1.5 (fallback) |
+| Plugins | **AYESHA Core 0.5.0 (active)**, WP Mail Logging 1.17.0 (active), WP Mail SMTP 4.10.0 (inactive) |
+| Themes | **AYESHA Movers 0.5.0 (active)**; Twenty Twenty-Five 1.5 (fallback) |
 | Navigation | `wp_navigation` post 4 "Main menu": Home, About Us, Our Services, Contact Us + a bound Call/WhatsApp Buttons block (shown only in the open mobile menu). Used by header and footer. Lives in the database; reference copy in `docs/navigation-main-menu.html` |
 | Business Info | Settings → Business Info (option `ayesha_business`) |
-| Pages | Home (ID 5, static front page), About Us (6), Our Services (7), Contact Us (8) |
-| Synced patterns | "CTA band" (`wp_block` 26, slug `ayesha-cta-band`), "Where we go" (27, `ayesha-where-we-go`); category Ayesha Movers. Backup + rebuild script in `docs/content/` |
+| Pages | Home (ID 5, static front page), About Us (6), Our Services (7), Contact Us (8). About Us and Our Services use the template "Page with sections (heading in the page)" (`page-sections`): the H1 is a block in the page |
+| Synced patterns | "CTA band" (`wp_block` 26, slug `ayesha-cta-band`), "Where we go" (27, `ayesha-where-we-go`); category Ayesha Movers. Backup + rebuild script `docs/content/content.php` (Home, About Us, Our Services) |
 | Git remote | `origin` = https://github.com/urtech87-ops/ayesha_movers.git |
 
 > **Startup note:** MySQL runs on **port 3307**. After a reboot, start **Apache + MySQL from the XAMPP Control Panel**. **Laragon must stay closed**; it grabs ports 80 and 3306 and serves a different docroot.
@@ -37,8 +37,8 @@ Main goal: get mobile visitors to WhatsApp or call in one tap, or to send a deta
 | 11 | white-pickup-truck-cargo-rails | **DO NOT USE** | Shows phone number 0524070463 (not an AYESHA number) |
 | 12 | pickup-loaded-with-household-goods | OK | Home, under the house-shifting card, from 960px only (366 x 480, natural size, WebP, lazy-loaded). Alt describes only what's visible |
 | 13 | crew-loading-wrapped-furniture | **DO NOT USE** | Appears AI-generated |
-| 14 | red-curtain-side-truck | OK | |
-| 15 | large-box-truck-with-driver | OK | |
+| 14 | red-curtain-side-truck | OK | Our Services, Truck hire section (560px WebP, lazy-loaded). **Cropped in Phase 5** with WordPress's image editor to 640 x 244 (a band below the cab, so the "Globetrotter" model name on the cab is out of frame); the original is kept and can be restored in Media → Edit image → Restore image. Alt "Red curtain-side cargo truck parked on a street, seen from the side" (the brand name was removed from the alt) |
+| 15 | large-box-truck-with-driver | OK | About Us, beside the H1 (560px WebP, loads first with `fetchpriority=high`; it is the page's LCP). Alt describes the scene only; no caption |
 
 In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLACEHOLDER ONLY]`) and the reason is in the Description field.
 
@@ -49,21 +49,19 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | 2. Design plan | phase-2-design | **Done; approved and merged into main 2026-10-01** |
 | 3. Foundation (theme, plugin, header/footer) | phase-3-foundation | **Done; approved and merged into main 2026-10-01 (merge commit 81c86cf)** |
 | 4. Home page | phase-4-home | **Done; approved and merged into main 2026-10-02 (fast-forward to f2105b4)** |
-| 5. Our Services + About Us | phase-5-services-about | Not started |
+| 5. Our Services + About Us | phase-5-services-about | **Built and tested; pushed; waiting for approval** |
 | 6. Contact Us + quote form + email | phase-6-contact | Not started |
 | 7. Full QA, SEO, performance, handover | phase-7-qa | Not started |
 
 ## Current phase + next step
-- **Current:** Phase 5 – Our Services + About Us (not started). Branch `phase-5-services-about`.
-- **Next step:** wait for the Phase 5 prompt; build it following `docs/design-plan.md` (sections 3.2 and 3.3).
-- **Last completed:** Phase 4 (Home page), approved and merged into `main` 2026-10-02 at f2105b4 (fast-forward); smoke test passed (see Test results › Phase 4 › Post-merge smoke test).
-- **Phase 5 notes (carried over from Phase 4):**
-  - The Home page links to these anchors on Our Services; each service H2 there must have the matching id: `#house-shifting`, `#packing`, `#furniture`, `#appliances`, `#trucks`, `#cargo`. The quote form (Phase 6) needs `id="quote"` on Contact Us.
-  - Reuse the synced patterns "CTA band" (`wp_block` 26) and "Where we go" (27): insert them from **Patterns → Ayesha Movers** (the theme patterns insert the synced copy), never as plain copies.
-  - Use the theme helpers in `inc/pattern-parts.php` (`ayesha_theme_section_markup()`, the Questions markup) for new sections; per-service WhatsApp buttons bind `url` to `whatsapp_url` with `args.message` (see docs/editing-guide.md).
-  - Photos: 12 and 14 for Our Services, 15 for About Us (no ownership claims in alt text). Resized copies are WebP automatically; only the first image on a page loads eagerly.
-  - After building a page, back its content up in `docs/content/` (extend `home-content.php` or add a script) and set its title/description in the Search engines panel (design plan section 7).
-  - If Phase 5 is built in a worktree again, use the same junction method and remove the junctions with `rmdir` (link only) before merging.
+- **Current:** Phase 5 – Our Services + About Us: built, tested, committed and pushed to `origin/phase-5-services-about`. **Waiting for approval; not merged.**
+- **Next step:** when the user replies "approved": remove the two dev junctions (`rmdir`, links only), put the original folders back from git in the main checkout, merge `phase-5-services-about` into `main`, push `main`, smoke test, mark Phase 5 approved here, push, confirm, STOP.
+- **Dev setup during Phase 5:** built in the worktree `.claude/worktrees/phase-5-services-about-afb2a3`. `wp-content/themes/ayesha-movers` and `wp-content/plugins/ayesha-core` in the main checkout are **junctions** into that worktree. The original folders were moved (not deleted) to the session scratch folder `…/scratchpad/original-folders/` (identical to `main` at 8916e3a).
+- **Last completed:** Phase 4 (Home page), approved and merged into `main` 2026-10-02 at f2105b4.
+- **Phase 6 notes:**
+  - Contact Us can use the template "Page with sections (heading in the page)" like About Us and Our Services, with the H1 as a block in the page. Add it to `docs/content/content.php` (`$ayesha_pages`) so it is backed up too.
+  - The quote form needs `id="quote"` on Contact Us (Home links to `/contact-us/#quote`).
+  - Only the first image in a page's first section loads eagerly (AYESHA Core, `ayesha_core_eager_image_count()`); every other image is lazy.
 
 ## Decisions log
 - 2026-10-01: Project brief written to CLAUDE.md.
@@ -107,6 +105,16 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 - 2026-10-02: User approved Phase 4. The two dev junctions were removed (`rmdir`, links only), the theme and plugin folders restored from git in the main checkout, `phase-4-home` fast-forward merged into `main` (f2105b4), `main` pushed. The copies of the Phase 3 folders that were moved aside at the start of Phase 4 are still in the Phase 4 session's scratch folder; they are identical to git and no longer needed.
 - 2026-10-02: Apache and MySQL were found stopped (after a restart); the user restarted them from the XAMPP Control Panel.
 - 2026-10-01: Outside this session, `phase-1-setup` was renamed to `main` and pushed to origin. `phase-1-setup` was recreated from `main` for the final Phase 1 commit, then fast-forward merged into `main`.
+
+- 2026-10-03: Phase 5: where the prompt and design plan differed, the plan won: "Jump to" list styled as chips (a real `<ul>` that wraps); photo 15 after the lead paragraph on phones; desktop rail in cols 1–3 with content in cols 4–10; "Who runs it" (5) beside "How we work" (7). Earlier approved changes to the plan kept: photo 12 stays on Home only (Truck hire uses photo 14); heading "Truck hire: 8 hours or a full day"; no "lowest". "Appliance removal and fixing" written as "Appliance removal and refitting" ("fixing" reads as repairs).
+- 2026-10-03: One list for both "Jump to" (wrapping chips on phones) and the sticky desktop rail, so the client edits it once. A Group with `tagName` nav and `aria-label` "Services on this page". The rail is shown from 960px; below that there is no rail. `service-rail.js` (42 lines, deferred, loaded only on pages that contain the list) adds `aria-current="location"` to the link of the section crossing a line a third of the way down the screen; without JS the links still work.
+- 2026-10-03: Grey service bands reach the screen edges with a `border-image` outset on sections with the Grey panel style (ink overflow, no sideways scroll; `.ayesha-svc` also has `overflow-x: clip`, which keeps `position: sticky` working).
+- 2026-10-03: New template `page-sections` ("Page with sections (heading in the page)") for About Us and Our Services: the H1s ("Our services", "About AYESHA Movers & Packers") differ from the page names in the menu, so they are Heading blocks in the page instead of the post title.
+- 2026-10-03: Lazy loading: AYESHA Core now lets an image skip lazy loading only when it is in the page's first top-level block (Home hero, About Us photo). Before, the first image anywhere did, which would have loaded the Truck hire photo (far down Our Services) eagerly with `fetchpriority=high`.
+- 2026-10-03: Photo 14 cropped with WordPress's own image editor (`wp_save_image`, original kept). The editor saved the cropped main file as WebP (AYESHA Core's WebP filter) while recording a `.jpg` name; attachment 14 was pointed at the real `.webp` file (path, metadata, MIME type). Leftover files from two discarded crop attempts (`red-curtain-side-truck-e1790975923214*`, `…941735*`, `…955559*`) are unused and can be deleted from uploads.
+- 2026-10-03: `docs/content/home-content.php` renamed to `docs/content/content.php` and extended to About Us and Our Services (`build home|about|services`, `export`, `import`).
+- 2026-10-03: Search-engine titles and descriptions for About Us and Our Services typed into the editor's Search engines panel (design plan section 7), during the temporary admin session.
+- 2026-10-03: Temporary local admin session (user-approved standing permission) created with WP-CLI for the editor tests: the cookies were written straight into a Playwright storage-state file in the scratch folder and never printed; the session was destroyed afterwards (0 sessions) and the file deleted.
 
 ## Open questions for the client
 - Price point: the site says "Low rates, with labour included" (his own selling point, no superlative). Confirm the wording
@@ -249,3 +257,72 @@ Screenshots: `docs/screenshots/phase-4/` (`full-<width>.png` at 320, 375, 414, 7
 | S8 | debug.log | No new entries | 3432 bytes / 25 lines before and after the merge and smoke test. (The last 2 entries, 17:00 UTC 2026-10-02, are "connection refused" warnings from WP-CLI while MySQL was stopped, before the user restarted XAMPP) | Pass |
 | S9 | Pushes | `origin/main` = `origin/phase-4-home` = merge commit | Both f2105b4 before this PROGRESS commit | Pass |
 
+
+### Phase 5 (run 2026-10-03)
+Screenshots: `docs/screenshots/phase-5/` (`services-375.png`, `about-375.png` with phone emulation: no scrollbar, touch, iPhone user agent; `services-1280.png`, `about-1280.png`). In the full-page shots the sticky bar and floating button are pinned to the page bottom. Lighthouse reports: `docs/lighthouse/phase-5/`.
+
+| # | Test | Expected | Actual | Pass/Fail |
+|---|---|---|---|---|
+| 1 | Home "What we do" links → Our Services, 375 (phone emulation) and 1280 | Each of the 6 lands on its section: right id, H2 at the top | Clicked each link on Home. 375: `#house-shifting`, `#packing`, `#furniture`, `#appliances`, `#trucks`, `#cargo` each land with the band's top at 0 px and its H2 at 52 px (the section's top padding, via `scroll-margin`); 1280: same, H2 at 56 px. Every target is the H2 with the right title | Pass |
+| 2 | "Jump to a service" links (375) and rail (1280): targets | Each link goes to its section | All 6 at 375 and 1280: right hash, H2 at 52 / 56 px | Pass |
+| 3 | Rail highlights the current section | The section on screen is marked | After each click, `aria-current="location"` is on the clicked service. Scrolling 0 → 4200 px in 350 px steps: house, house, packing, furniture, furniture, appliances, trucks, trucks, cargo, cargo, then none past the services (the rail scrolls away with them). Rail is `position: sticky` and stays at the top of the screen (top 0) all the way through the services | Pass |
+| 4 | Works with JavaScript off | Plain links still work | JS disabled at 1280 and 375: all 6 links land on the right section (same positions); no highlight, as expected | Pass |
+| 5 | Keyboard | Every rail/jump link reachable with Tab, visible focus | 1280 and 375: Tab reaches all 6 in order; each matches `:focus-visible` with a solid teal outline (3 CSS px; reads 2.4 px on this 1.25× screen). Chips at 375 are 48 px tall | Pass |
+| 6 | Rail only on desktop | No rail on phones | Below 960 px the list is static chips under the intro (`position: static`); from 960 px it is a sticky rail in cols 1–3 | Pass |
+| 7 | WhatsApp buttons, both pages | Right number; encoded message naming the service | Our Services: 11 wa.me links, all `https://wa.me/97334448236`. The 6 service buttons say "Hi AYESHA Movers & Packers, I'd like a price for" + house, villa, flat or office shifting / packing and unpacking / furniture dismantling and refitting / AC, TV or curtain removal and fitting / truck hire (Dyna or 6-wheel truck) / international cargo (20ft or 40ft container) (same wording as Home); the CTA band, footer, sticky bar, floating button and menu use the default "…a price for my move.". About Us: 5 links (menu, CTA band, footer, sticky bar, floating button), all with the default message. Every `text=` is exactly `encodeURIComponent` of the message (`%26` for &, `%27` for ', `%28`/`%29` for brackets) | Pass |
+| 8 | Business Info binding: main number | CTA band, header, footer, sticky bar update on both pages; then revert | Set to +966 55 123 4567. About Us and Our Services: header button, CTA band big number and Call button, footer main number and sticky-bar Call all show `tel:+966551234567` / "+966 55 123 4567". The only remaining `34448236` matches are WhatsApp links (a separate setting). Restored from a JSON backup: identical; pages show `tel:+97334448236` again | Pass |
+| E1 | Editor: invalid blocks | 0 on both pages | Temporary admin session. Our Services: 95 blocks, 0 invalid, 0 "invalid content" warnings, template `page-sections`. About Us: 30 blocks, 0 invalid, 0 warnings; synced patterns CTA band (ref 26) and Where we go (ref 27) present; each opened on its own: 10 blocks, 0 invalid | Pass |
+| E2 | Editor: edit text, list item, button and image on Our Services; save; check; revert | Edits show on the front end; revert restores the page | Intro paragraph + " (E test)", list item "International-standard packing (E test)", house-shifting button text "Ask about this on WhatsApp (E test)" (its bound WhatsApp link with the house-shifting message stayed), truck photo 14 → photo 15. Saved: the front end showed all 4. Reverted and saved: every block and attribute identical to before (compared as parsed blocks; the editor re-saves in its own attribute order) | Pass |
+| E3 | Same on About Us | Same | Lead paragraph + " (E test)" and photo 15 → 14 in the page. About Us has no list or button of its own (they are in the synced sections), so the list item ("Saudi Arabia (E test)" in Where we go) and the button ("WhatsApp us (E test)" in the CTA band) were edited through **Edit original**. Front end: the page edits showed on About Us; the list item on Home and About Us; the button on Home, About Us and Our Services. All reverted and saved; About Us identical as parsed blocks | Pass |
+| E4 | Synced sections still synced | Pages use `wp:block` refs; patterns synced | About Us: `wp:block` 27 and 26; Our Services: `wp:block` 26. Both patterns have no `wp_pattern_sync_status` (= synced). Re-exported backup: CTA band byte-identical; Where we go differs only in attribute order (`tagName` before `metadata`) | Pass |
+| E5 | SEO through the Search engines panel | Exactly design plan 7 | Typed into the panel and saved. Our Services: "House Shifting, Furniture & Cargo Services \| AYESHA" (51 chars) / "House and office shifting, packing, furniture dismantling and refitting, AC and TV removal, truck hire and container cargo to KSA." (130). About Us: "About AYESHA Movers & Packers, Bahrain" (38) / "One team for labour, trucks and carpenters. Door-to-door moves across Bahrain and to KSA, the GCC and worldwide, day or night." (126). Saved in `docs/content/*-seo.json` | Pass |
+| E6 | Session removed | 0 sessions | `wp user session destroy ayesha_admin --all`: 0 sessions; storage-state file deleted | Pass |
+| 9 | One H1, no skipped levels | Both pages | Our Services: 1 2 2 2 2 2 2 2 2 (H1 "Our services"). About Us: 1 2 2 3 3 3 3 2 2 (H1 "About AYESHA Movers & Packers") | Pass |
+| 10 | Alt text on all images | Every image | Our Services: photo 14 "Red curtain-side cargo truck parked on a street, seen from the side". About Us: photo 15 "Man in a blue shirt standing in front of a large dark box truck outside villas" (no GM or ownership claim; no caption). Photos 10, 11, 12 and 13 not used | Pass |
+| 11 | Gutters with phone emulation at 320 / 375 / 414 | 16 px both sides | Narrowest left / right over every heading, paragraph, list item, button, chip, image and FAQ box: 320: 16.0 / 16.0; 375: 16.0 / 16.0; 414: 16.3 / 16.3 (both pages) | Pass |
+| 12 | No horizontal scroll 320–1920 | scrollWidth = clientWidth | 0 px extra on both pages at 320, 375, 414, 768, 960, 1280, 1440, 1920 (the grey bands' outset doesn't cause scrolling) | Pass |
+| 13 | Images: lazy loading, nothing hidden is downloaded | Below-the-fold images lazy | Neither page hides an image on phones. Our Services, 375: no image requested at load; photo 14 (`loading="lazy"`, no `fetchpriority`) requested only once scrolled near it. About Us: photo 15 at load with `fetchpriority="high"` (it's on screen; the LCP element). Home unchanged: hero `fetchpriority="high"`, photo 12 `loading="lazy"` | Pass |
+| 14 | Lighthouse mobile, Our Services (noindex) | 90+ | Performance **95**, Accessibility **100**, Best Practices **100**, SEO **66**. LCP 2.7 s (the intro paragraph), CLS 0, TBT 0 ms | Pass (SEO 66 explained) |
+| 15 | Lighthouse desktop, Our Services | 90+ | 100 / 100 / 100 / **66**. LCP 0.5 s, CLS 0, TBT 0 | Pass (SEO 66 explained) |
+| 16 | Lighthouse mobile, About Us | 90+ | **91** / 100 / 100 / **66**. LCP 2.7 s (photo 15), CLS 0, TBT 190 ms (local server time varies between runs with WP_DEBUG on and no page cache) | Pass (SEO 66 explained) |
+| 17 | Lighthouse desktop, About Us | 90+ | 100 / 100 / 100 / **66**. LCP 0.6 s, CLS 0, TBT 0 | Pass (SEO 66 explained) |
+| 18 | SEO score | Explained | SEO is 66 on every run for one reason only: "Page is blocked from indexing" (`is-crawlable`), because "Discourage search engines" stays on until go-live. Phase 4 showed this audit is the only one that fails (100 with indexing allowed). The setting was **not** switched off this time, as asked | Explained |
+| 19 | `php -l` | No syntax errors | 28 PHP files (theme, plugin, docs/content script): no errors | Pass |
+| 20 | debug.log | Nothing new | 3432 bytes before and after; the last entry is from 2026-10-02 17:00 UTC (before this session) | Pass |
+| 21 | Fact check | Every claim has a CLAUDE.md source | See "Phase 5 fact check" below. One sentence without a source was removed while writing ("Whichever name you know us by, it is the same team and the same numbers") | Pass |
+
+#### Phase 5 fact check (every factual claim on About Us and Our Services, with its CLAUDE.md source)
+Sources: **S1–S6** = CLAUDE.md "Services" 1–6; **SP** = "Selling points" line; **CV** = "Coverage" line; **24h** = "Available 24 hours, day and night"; **GM** = "General Manager" line; **TA** = "also trading as" line (Business line); **PH** = phone/WhatsApp lines.
+
+| Page | Claim (as written) | Source |
+|---|---|---|
+| Services intro | Moves in Bahrain or abroad | CV |
+| Services intro | Labour, trucks and carpenters, all from one team | SP ("labour + trucks + carpenters all from one team") |
+| Services intro | Ask on WhatsApp, day or night | PH (WhatsApp), 24h |
+| House shifting | Houses, villas, flats and offices; door to door; anywhere in Bahrain | S1, SP (door-to-door), CV (all of Bahrain) |
+| House shifting | The price includes the labour (the crew who pack, carry and load) | SP ("lowest rates with labour included"); S1 (packing, loading) |
+| House shifting | Packing; loading and unloading; setting up the rooms; taking away the packing debris | S1 ("packing, loading, unloading, all house internal settings, removal of packing debris") |
+| Packing | International-standard packing; special packing for fragile items and for crockery; unpacking | S2 |
+| Furniture | Professional carpenters dismantle and re-fix furniture; curtains down and up; new furniture set-ups for homes and offices | S3 |
+| Appliances | Split units and other air conditioners, LCD and LED TVs, curtains and blinds: removed and fitted again | S4 ("Appliance removal & fixing") |
+| Truck hire | Dyna and 6-wheel trucks; 8 hours or a full day | S5 |
+| Truck hire | Runs to Mina Salman, Khalifa Bin Salman Port, the airport, courier depots DHL, Aramex and GLS | S5, CV |
+| Cargo | 20ft and 40ft container loading and unloading; customs documentation | S6 |
+| Cargo | Moves to Saudi Arabia (KSA), all GCC countries, the UK, the USA, Canada and worldwide | S6, CV |
+| Services FAQ 1 | Runs to DHL, Aramex, GLS, Mina Salman, Khalifa Bin Salman Port, the airport | S5 |
+| Services FAQ 2 | Special packing for fragile items and crockery, on top of international-standard packing | S2 |
+| Services FAQ 3 | Carpenters dismantle and refit, set up new furniture for homes and offices, put up curtains | S3 |
+| Services FAQ 4 | Moves to Saudi Arabia, GCC, UK, USA, Canada, worldwide; 20/40ft containers; customs documentation | CV, S6 |
+| About lead | One team for labour, trucks and carpenters | SP |
+| About lead | Homes and offices, door to door, across Bahrain and abroad, day or night | S1, SP, CV, 24h |
+| Who runs it | Run by its General Manager, Mohammad Ayub Khokhear | GM |
+| Who runs it | Also trades as AYESHA Cargo Handling | TA |
+| How we work | Labour included in the price; packing, carrying, loading and unloading done by our crew | SP, S1 |
+| How we work | Door to door: start at your door, finish at the door of your new home or office | SP, S1 |
+| How we work | One team: labour, trucks and carpenters all come from us (so no separate truck or carpenter to find) | SP |
+| How we work | Work 24 hours, including at night | 24h |
+| Where we go (synced) | Your door; Manama and every city in Bahrain; Mina Salman, Khalifa Bin Salman Port and the airport; Saudi Arabia; all GCC countries; UK, USA, Canada and worldwide | CV |
+| CTA band (synced) | +973 3444 8236; open 24 hours, every day | PH, 24h (from Business Info) |
+| Photos | Alt text describes only what is visible; no ownership claim, no naming of the man, no captions | Open question (see Open questions) |
+
+Not on either page (on purpose): founding year, years of experience, "decades", "best / No.1 / lowest / cheapest", prices or how prices are worked out, reviews, an address.
