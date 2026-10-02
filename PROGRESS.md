@@ -49,19 +49,19 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | 2. Design plan | phase-2-design | **Done; approved and merged into main 2026-10-01** |
 | 3. Foundation (theme, plugin, header/footer) | phase-3-foundation | **Done; approved and merged into main 2026-10-01 (merge commit 81c86cf)** |
 | 4. Home page | phase-4-home | **Done; approved and merged into main 2026-10-02 (fast-forward to f2105b4)** |
-| 5. Our Services + About Us | phase-5-services-about | **Built and tested; pushed; waiting for approval** |
+| 5. Our Services + About Us | phase-5-services-about | **Done; approved and merged into main 2026-10-03 (fast-forward to 7f3e690)** |
 | 6. Contact Us + quote form + email | phase-6-contact | Not started |
 | 7. Full QA, SEO, performance, handover | phase-7-qa | Not started |
 
 ## Current phase + next step
-- **Current:** Phase 5 – Our Services + About Us: built, tested, committed and pushed to `origin/phase-5-services-about`. **Waiting for approval; not merged.**
-- **Next step:** when the user replies "approved": remove the two dev junctions (`rmdir`, links only), put the original folders back from git in the main checkout, merge `phase-5-services-about` into `main`, push `main`, smoke test, mark Phase 5 approved here, push, confirm, STOP.
-- **Dev setup during Phase 5:** built in the worktree `.claude/worktrees/phase-5-services-about-afb2a3`. `wp-content/themes/ayesha-movers` and `wp-content/plugins/ayesha-core` in the main checkout are **junctions** into that worktree. The original folders were moved (not deleted) to the session scratch folder `…/scratchpad/original-folders/` (identical to `main` at 8916e3a).
-- **Last completed:** Phase 4 (Home page), approved and merged into `main` 2026-10-02 at f2105b4.
-- **Phase 6 notes:**
-  - Contact Us can use the template "Page with sections (heading in the page)" like About Us and Our Services, with the H1 as a block in the page. Add it to `docs/content/content.php` (`$ayesha_pages`) so it is backed up too.
+- **Current:** Phase 6 – Contact Us + quote form + email (not started). Branch `phase-6-contact`.
+- **Next step:** wait for the Phase 6 prompt; build it following `docs/design-plan.md` (section 3.4 Contact Us and section 5 "Quote form").
+- **Last completed:** Phase 5 (Our Services + About Us), approved and merged into `main` 2026-10-03 at 7f3e690 (fast-forward); smoke test passed (see Test results › Phase 5 › Post-merge smoke test).
+- **Phase 6 notes (carried over from Phase 5):**
+  - Contact Us can use the template "Page with sections (heading in the page)" (`page-sections`) like About Us and Our Services, with the H1 as a block in the page. Add it to `docs/content/content.php` (`$ayesha_pages`) so it is backed up too.
   - The quote form needs `id="quote"` on Contact Us (Home links to `/contact-us/#quote`).
-  - Only the first image in a page's first section loads eagerly (AYESHA Core, `ayesha_core_eager_image_count()`); every other image is lazy.
+  - Images: only the first image in a page's first section loads eagerly (AYESHA Core, `ayesha_core_eager_image_count()`), and never one with the class `ayesha-desktop-only` or `ayesha-mobile-only` (theme CSS hides those below / from 960px); every other image is lazy.
+  - If Phase 6 is built in a worktree again, use the same junction method and remove the junctions with `rmdir` (links only) before merging.
 
 ## Decisions log
 - 2026-10-01: Project brief written to CLAUDE.md.
@@ -118,6 +118,8 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 
 - 2026-10-03: Phase 5 review change (user request): on About Us below 960px, photo 15 appears after "How we work" instead of above "Who runs it", so visitors don't assume the man is the General Manager. Done with two Image blocks of photo 15 (classes `ayesha-desktop-only` beside the H1, `ayesha-mobile-only` after How we work), shown by CSS; the photo column is hidden below 960px and the heading takes the full width. AYESHA Core never loads an image with one of these classes eagerly, so the hidden copy is never downloaded (at 375, 860 and 1280 exactly one copy is requested). Desktop unchanged. Editor check (short temporary session, destroyed after: 0 sessions): About Us 31 blocks, 0 invalid.
 - 2026-10-03: Deleted the 12 leftover files (3 discarded crop attempts × main file + 3 sizes) of photo 14. None was the file of any Media Library item or used in any content; they were only listed in photo 14's edit history (`_wp_attachment_backup_sizes`), and those 9 history entries were removed with them. The `-orig` entries (the original JPEG and its 2 sizes) were kept, so Media → Edit image → Restore image still works.
+
+- 2026-10-03: User approved Phase 5 (with the About photo change and the leftover-file cleanup above). The two dev junctions were removed (`rmdir`, links only; the worktree's files untouched), the theme and plugin folders restored from git in the main checkout, `phase-5-services-about` fast-forward merged into `main` (7f3e690), `main` pushed. The copies of the original folders moved aside at the start of Phase 5 are in the Phase 5 session's scratch folder; they are identical to `main` at 8916e3a and no longer needed.
 
 ## Open questions for the client
 - Price point: the site says "Low rates, with labour included" (his own selling point, no superlative). Confirm the wording
@@ -330,3 +332,14 @@ Sources: **S1–S6** = CLAUDE.md "Services" 1–6; **SP** = "Selling points" lin
 | Photos | Alt text describes only what is visible; no ownership claim, no naming of the man, no captions | Open question (see Open questions) |
 
 Not on either page (on purpose): founding year, years of experience, "decades", "best / No.1 / lowest / cheapest", prices or how prices are worked out, reviews, an address.
+
+#### Post-merge smoke test (main folder, after merging at 7f3e690, 2026-10-03)
+| # | Test | Expected | Actual | Pass/Fail |
+|---|---|---|---|---|
+| S1 | Junctions removed; real folders from git | `themes/ayesha-movers` and `plugins/ayesha-core` are real folders | Both junctions removed with `rmdir` (links only; worktree still has its 32 theme and 13 plugin files), folders restored with `git checkout`, `main` fast-forwarded: no junctions (no link type), versions 0.5.0 / 0.5.0, main checkout clean | Pass |
+| S2 | All 4 pages | HTTP 200 | `/`, `/about-us/`, `/our-services/`, `/contact-us/`: 200 | Pass |
+| S3 | Theme and plugin active from the main folder | ayesha-movers, ayesha-core | `ayesha-movers` 0.5.0 from `wp-content/themes/ayesha-movers`; `ayesha-core` 0.5.0 active | Pass |
+| S4 | Home "What we do" links land on the right Services sections | 6 ids, at 375 (phone emulation) and 1280 | Clicked on Home: `#house-shifting`, `#packing`, `#furniture`, `#appliances`, `#trucks`, `#cargo` each land on its H2 (top 52 px at 375, 56 px at 1280) | Pass |
+| S5 | Business Info on Our Services and About Us | Settings values shown | Both pages: header `tel:+97334448236`; CTA band number `tel:+97334448236` "+973 3444 8236" and "Open 24 hours, every day"; footer `tel:+97334448236`, `tel:+97336429850`, `tel:+97377360292`, `mailto:ayeshamoversbh786@gmail.com`, Instagram; sticky bar `tel:+97334448236` + `wa.me/97334448236`. Our Services: 6 service WhatsApp buttons | Pass |
+| S6 | debug.log | No new entries | 3432 bytes before and after the merge and smoke test; the last entry is from 2026-10-02 17:00 UTC | Pass |
+| S7 | Pushes | `origin/main` = `origin/phase-5-services-about` = 7f3e690 before this PROGRESS commit | Both 7f3e690 | Pass |
