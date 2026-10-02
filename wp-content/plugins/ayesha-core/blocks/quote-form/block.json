@@ -5,7 +5,7 @@
 	"title": "Quote request form",
 	"category": "widgets",
 	"icon": "feedback",
-	"description": "The detailed quote request form. Requests are saved under Enquiries and emailed to the Business Info address. Change the labels and the button text in the sidebar.",
+	"description": "The detailed quote request form. Requests are saved under Enquiries in the dashboard menu and emailed to the address in Settings → Business Info. Change the words in the panels below; the choices in each list are fixed.",
 	"keywords": [ "quote", "form", "enquiry", "contact" ],
 	"textdomain": "ayesha-core",
 	"supports": {

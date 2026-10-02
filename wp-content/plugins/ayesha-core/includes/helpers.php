@@ -256,3 +256,20 @@ function ayesha_core_value( $key, $args = array() ) {
 	}
 	return null;
 }
+
+/**
+ * A wa.me link ready for an href attribute, keeping line breaks in the message.
+ *
+ * esc_url() removes "%0A", which would join a multi-line WhatsApp message into one line. A link
+ * that is exactly https://wa.me/<digits>?text=<rawurlencode output> can't contain anything unsafe,
+ * so it is only attribute-escaped; anything else goes through esc_url() as usual.
+ *
+ * @param string $url Link from ayesha_core_whatsapp_url().
+ * @return string Escaped for an attribute.
+ */
+function ayesha_core_whatsapp_href( $url ) {
+	if ( preg_match( '#^https://wa\.me/\d{8,15}(\?text=[A-Za-z0-9\-_.~%]*)?$#', (string) $url ) ) {
+		return esc_attr( $url );
+	}
+	return esc_url( $url );
+}

@@ -52,7 +52,7 @@ function ayesha_core_quote_render_success( array $a, array $state, $page ) {
 		. '<p>' . esc_html( $a['successText'] ) . '</p>';
 	if ( '' !== $wa ) {
 		$html .= '<div class="wp-block-buttons"><div class="wp-block-button is-style-whatsapp">'
-			. '<a class="wp-block-button__link wp-element-button" href="' . esc_url( $wa ) . '">' . esc_html( $a['whatsappText'] ) . '</a>'
+			. '<a class="wp-block-button__link wp-element-button" href="' . ayesha_core_whatsapp_href( $wa ) . '">' . esc_html( $a['whatsappText'] ) . '</a>'
 			. '</div></div>';
 	}
 	if ( $page ) {

@@ -103,7 +103,8 @@ function ayesha_core_quote_email_html( $title, $body ) {
  * @return string
  */
 function ayesha_core_quote_email_button( $url, $label, $bg, $color ) {
-	return '<a href="' . esc_url( $url, array( 'tel', 'https', 'mailto' ) ) . '" style="display:inline-block;margin:0 8px 8px 0;padding:12px 18px;border-radius:4px;background:' . esc_attr( $bg ) . ';color:' . esc_attr( $color ) . ';font-weight:bold;text-decoration:none">' . esc_html( $label ) . '</a>';
+	$href = str_starts_with( (string) $url, 'https://wa.me/' ) ? ayesha_core_whatsapp_href( $url ) : esc_url( $url, array( 'tel', 'https', 'mailto' ) );
+	return '<a href="' . $href . '" style="display:inline-block;margin:0 8px 8px 0;padding:12px 18px;border-radius:4px;background:' . esc_attr( $bg ) . ';color:' . esc_attr( $color ) . ';font-weight:bold;text-decoration:none">' . esc_html( $label ) . '</a>';
 }
 
 /**

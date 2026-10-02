@@ -9,13 +9,13 @@ All contact details live on one page: **Settings → Business Info** (in the bla
 | Field | What it changes |
 |---|---|
 | Main phone number | The big number at the top of the Home page and in the yellow band above the footer, every **Call** button, the Call button in the header, the big number in the footer, and the **Call** button in the bar at the bottom of phone screens. The big number resizes itself to fit, even if the new number is longer |
-| Second mobile number, Office number | The numbers listed in the footer (and the Contact page later) |
-| WhatsApp number | Every WhatsApp button and link: footer, phone bar, and the round green button on computers. **Digits only**, with the country code, e.g. `97334448236` |
+| Second mobile number, Office number | The numbers listed in the footer and on the Contact Us page |
+| WhatsApp number | Every WhatsApp button and link: footer, phone bar, the round green button on computers, the WhatsApp row on Contact Us, and the "Send this on WhatsApp too" button after a quote request. **Digits only**, with the country code, e.g. `97334448236` |
 | WhatsApp opening message | The message that is already typed for the visitor when WhatsApp opens. They can change it before sending |
-| Email address | The email shown on the site, **and** the sender address of emails the website sends you |
-| Opening hours | The hours line in the footer |
+| Email address | The email shown on the site, **where quote requests are emailed to**, and the sender address of every email the website sends (see section 9) |
+| Opening hours | The hours line in the footer, the yellow band and the Contact Us page |
 | Service areas | One place per line. Kept for later use: the "Where we go" list on the pages is edited in the editor instead (see section 5) |
-| Instagram page | The Instagram link in the footer |
+| Instagram page | The Instagram link in the footer and on Contact Us |
 | Business address | **Leave empty** until you want an address on the site. When you fill it in, search engines are told about it too |
 | Show reviews section | Leave **off** until the example reviews have been replaced with real customer reviews. While it is off, the reviews section is hidden from visitors |
 
@@ -187,3 +187,54 @@ Open **Pages → About Us**. In **List View**: Page heading (with the photo), Wh
 - Please don't add a founding year or "years of experience" until the client has confirmed one.
 
 Both pages use the template **Page with sections (heading in the page)**: the big heading at the top is a normal Heading block in the page, not the page's title. Renaming the page doesn't change this heading (and doesn't rename the menu item either: that is in **Appearance → Editor → Navigation**). The title and description in Google are set in the **Search engines** panel, as for Home (section 5).
+
+## 8. The Contact Us page
+
+Open **Pages → Contact Us**. In **List View**: Contact → Columns → the left column (heading, opening hours, **Contact rows**) and the right column (**Request a detailed quote**, one line of text, and the **Quote request form**). On computers the left column stays on screen while the form scrolls; on phones it comes first and the form follows.
+
+- **Heading and the line under "Request a detailed quote"**: click and type.
+- **Opening hours and the contact rows** come from **Settings → Business Info** (see section 1): you can't type in the numbers, email or Instagram name here. Each row has a small label above the value ("WhatsApp", "Mobile", "Office", …); click a label to change its words. The whole row is the link, and its icon (phone, WhatsApp, envelope, Instagram) is chosen by the site from the kind of link.
+- To remove a row, select its group in List View (e.g. "Office") and delete it. To add one, duplicate a row (⋮ → **Duplicate**) and connect the copy's value to another Business Info field (section 3: Attributes → content).
+- **Keep the heading "Request a detailed quote" and its HTML anchor `quote`** (Advanced in the sidebar): the Home page's "Send a detailed quote request" link points to `/contact-us/#quote`.
+- There is no address and no map, on purpose. When an address is confirmed, it can be added here as a paragraph connected to Business Info → Business address.
+- The page's title and description in Google are in the **Search engines** panel, as for Home (section 5).
+
+### The quote form
+
+Click the form and look in the right-hand sidebar (Block tab). The panels **Part 1: About you**, **Part 2: Your move**, **Part 3: What you need** and **Button and messages** hold every word on the form: the three part headings, each label and help line, the button ("Send quote request"), the line under the button, and the message shown after sending ("Quote request sent" and the "Send this on WhatsApp too" button). Type, then click **Save**. If you empty a field, the original words come back (except the line under the button, which can be left empty to hide it).
+
+The choices in the lists (types of move, property sizes, floors, services, trucks) and the error messages are fixed, so every request reaches you in the same format. Ask the developer if a choice should change.
+
+The preview in the editor is the real form, so you can't type in it there. Try it on the live page instead (and mark your test enquiry as Done afterwards).
+
+## 9. Quote requests (Enquiries)
+
+Every quote request is **saved** in WordPress and **emailed** to you.
+
+### Where they go
+
+- **Email**: to the address in Settings → Business Info → Email address. The subject reads like "New quote request AYM-261003-001: Flat, Juffair to Riffa". At the top there are two buttons: **Call** (rings the customer) and **WhatsApp the customer** (opens a chat with them). Below is every answer they gave. If they gave an email address, just press **Reply** to write back to them.
+- **The customer** gets a short confirmation with the same reference number and your WhatsApp and phone links, if they gave an email address.
+- **After sending**, the customer sees "Quote request sent", their reference number and a **Send this on WhatsApp too** button. It opens WhatsApp to your number with their reference, name, move and date already typed, so they can send photos of their things straight away.
+- Until Gmail is connected at go-live (see `docs/email-setup.md`), emails are only recorded on the local site (WP Mail Logging) and not delivered. The saved enquiries are always there.
+
+### Reading them in WordPress
+
+Click **Enquiries** in the dashboard menu. The number beside it is how many are **New**.
+
+- The list shows when each request came in, its reference number (AYM, the date as year-month-day, then the number of the day), the name, phone (tap to call), type of move, from → to, the preferred date and the status.
+- Click a reference (or **Open**) to see the whole request, with links to call, WhatsApp or email the customer.
+- **Search** (top right) finds a reference number. **All statuses** (above the list) shows only New, Contacted or Done requests.
+
+### Status: New, Contacted, Done
+
+Every request starts as **New**. Keep them up to date so you can see at a glance who still needs an answer:
+
+- **One request**: open it, pick **Contacted** or **Done** in the **Status** box on the right, then click **Update**.
+- **Several at once**: tick them in the list, choose **Mark as Contacted** (or New / Done) in **Bulk actions**, then click **Apply**.
+
+Requests are private: visitors and search engines can never see them. Only people who can edit posts on the site (editors and administrators) can open them. Don't delete real requests unless you need to; **Move to Trash** keeps them for 30 days in case of a mistake.
+
+### Spam protection (nothing to do)
+
+The form blocks most spam on its own: an invisible field that only robots fill in, a check that the form wasn't sent within 3 seconds of opening, a limit of 5 requests per hour from one connection, and a security code. A real person who hits one of these sees a plain message telling them what to do, including a WhatsApp link.

@@ -98,7 +98,7 @@ function ayesha_core_quote_options() {
 			'ac'        => __( 'AC removal and fitting', 'ayesha-core' ),
 			'tv'        => __( 'TV removal and mounting', 'ayesha-core' ),
 			'curtains'  => __( 'Curtains and blinds', 'ayesha-core' ),
-			'debris'    => __( 'Debris removal', 'ayesha-core' ),
+			'debris'    => __( 'Removing the packing debris', 'ayesha-core' ),
 			'container' => __( '20ft or 40ft container', 'ayesha-core' ),
 			'customs'   => __( 'Customs documents', 'ayesha-core' ),
 		),
@@ -305,6 +305,7 @@ function ayesha_core_quote_validate( array $raw ) {
 		$date = DateTimeImmutable::createFromFormat( '!Y-m-d', $data['date'], wp_timezone() );
 		if ( ! $date || $date->format( 'Y-m-d' ) !== $data['date'] ) {
 			$errors['date'] = __( 'Enter a real date, or leave it empty', 'ayesha-core' );
+			$data['date']   = ''; // A date field can't show an impossible date anyway.
 		} elseif ( $data['date'] < ayesha_core_quote_today() ) {
 			$errors['date'] = __( 'Choose today or a date after today', 'ayesha-core' );
 		}

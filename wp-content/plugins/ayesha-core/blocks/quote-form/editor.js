@@ -90,9 +90,6 @@
 				el(
 					be.InspectorControls,
 					null,
-					el( c.PanelBody, { title: __( 'About this form', 'ayesha-core' ), initialOpen: true },
-						el( 'p', null, __( 'Requests are saved under Enquiries in the dashboard menu and emailed to the address in Settings → Business Info. Change the words in the panels below; the choices in each list are fixed.', 'ayesha-core' ) )
-					),
 					panels.map( function ( panel, i ) {
 						return el( c.PanelBody, { key: i, title: panel[ 0 ], initialOpen: false },
 							el( 'div', { style: { display: 'grid', gap: '16px' } }, panel[ 1 ].map( control ) )

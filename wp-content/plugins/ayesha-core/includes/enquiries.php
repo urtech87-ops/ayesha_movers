@@ -368,7 +368,7 @@ add_action( 'admin_menu', 'ayesha_core_enquiry_menu_count', 20 );
  */
 function ayesha_core_enquiry_menu_count() {
 	global $menu;
-	if ( ! current_user_can( 'edit_posts' ) || ! is_array( $menu ) ) {
+	if ( ! current_user_can( 'edit_others_posts' ) || ! is_array( $menu ) ) { // Editors and admins: the people who can open enquiries.
 		return;
 	}
 	$new = count(
@@ -510,4 +510,32 @@ function ayesha_core_enquiry_admin_css() {
 .ayesha-status--done{background:#fff;border:1px solid #3f6f6b;color:#3f6f6b}
 .post-type-ayesha_enquiry #misc-publishing-actions,.post-type-ayesha_enquiry #minor-publishing-actions{display:none}
 </style>';
+}
+
+add_filter( 'display_post_states', 'ayesha_core_enquiry_post_states', 10, 2 );
+
+/**
+ * No "— Private" after each reference: every enquiry is private.
+ *
+ * @param array<string, string> $states States.
+ * @param WP_Post               $post   Post.
+ * @return array<string, string>
+ */
+function ayesha_core_enquiry_post_states( $states, $post ) {
+	return AYESHA_CORE_ENQUIRY === $post->post_type ? array() : $states;
+}
+
+add_filter( 'post_updated_messages', 'ayesha_core_enquiry_updated_messages' );
+
+/**
+ * "Enquiry updated." instead of "Post updated." (with no "View post" link).
+ *
+ * @param array<string, array<int, string>> $messages Messages per post type.
+ * @return array<string, array<int, string>>
+ */
+function ayesha_core_enquiry_updated_messages( $messages ) {
+	$updated                         = __( 'Enquiry updated.', 'ayesha-core' );
+	$messages[ AYESHA_CORE_ENQUIRY ] = array_fill( 0, 11, $updated );
+	$messages[ AYESHA_CORE_ENQUIRY ][0] = '';
+	return $messages;
 }
