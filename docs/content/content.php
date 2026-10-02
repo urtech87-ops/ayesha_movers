@@ -1,9 +1,9 @@
 <?php
 /**
- * Build, export or import the page content (Home, About Us, Our Services) and the two synced patterns.
+ * Build, export or import the page content (Home, About Us, Our Services, Contact Us) and the two synced patterns.
  *
  * Run from the WordPress root with WP-CLI:
- *   php wp-cli.phar eval-file <path>/docs/content/content.php build <page>   One page from the theme's patterns (first build; overwrites it). <page> = home, about or services
+ *   php wp-cli.phar eval-file <path>/docs/content/content.php build <page>   One page from the theme's patterns (first build; overwrites it). <page> = home, about, services or contact
  *   php wp-cli.phar eval-file <path>/docs/content/content.php export         Save every page + the synced patterns into docs/content/
  *   php wp-cli.phar eval-file <path>/docs/content/content.php import         Recreate them on another site from docs/content/
  *
@@ -49,11 +49,17 @@ $ayesha_pages = array(
 		'template' => 'page-sections',
 		'patterns' => array( 'services-intro', 'services-list', 'services-questions', 'cta-band' ),
 	),
+	'contact'  => array(
+		'id'       => (int) ( get_page_by_path( 'contact-us' )->ID ?? 0 ),
+		'file'     => 'contact',
+		'template' => 'page-sections',
+		'patterns' => array( 'contact-page' ),
+	),
 );
 
 foreach ( $ayesha_pages as $ayesha_name => $ayesha_page ) {
 	if ( ! $ayesha_page['id'] ) {
-		WP_CLI::error( "Page \"$ayesha_name\" not found (Home must be the static front page; About Us and Our Services need the addresses about-us and our-services)." );
+		WP_CLI::error( "Page \"$ayesha_name\" not found (Home must be the static front page; About Us, Our Services and Contact Us need the addresses about-us, our-services and contact-us)." );
 	}
 }
 
@@ -132,7 +138,7 @@ switch ( $ayesha_mode ) {
 	case 'build':
 		$ayesha_name = $args[1] ?? '';
 		if ( ! isset( $ayesha_pages[ $ayesha_name ] ) ) {
-			WP_CLI::error( 'Say which page to build: home, about or services.' );
+			WP_CLI::error( 'Say which page to build: home, about, services or contact.' );
 		}
 		if ( 'home' === $ayesha_name ) {
 			// The first build also creates the synced patterns from the plain theme blocks.
@@ -179,7 +185,7 @@ switch ( $ayesha_mode ) {
 			file_put_contents( "$ayesha_dir/{$page['file']}-seo.json", wp_json_encode( $seo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . "\n" ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 			file_put_contents( "$ayesha_dir/{$page['file']}.html", get_post_field( 'post_content', $page['id'], 'raw' ) . "\n" ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 		}
-		WP_CLI::success( 'Exported docs/content/home, about and services (.html + -seo.json) and patterns/.' );
+		WP_CLI::success( 'Exported docs/content/home, about, services and contact (.html + -seo.json) and patterns/.' );
 		break;
 
 	case 'import':
