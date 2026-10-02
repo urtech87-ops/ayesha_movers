@@ -48,24 +48,22 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | 1. Setup (WP, CLAUDE.md, PROGRESS.md, git) | phase-1-setup | **Done; approved and merged into main 2026-10-01** |
 | 2. Design plan | phase-2-design | **Done; approved and merged into main 2026-10-01** |
 | 3. Foundation (theme, plugin, header/footer) | phase-3-foundation | **Done; approved and merged into main 2026-10-01 (merge commit 81c86cf)** |
-| 4. Home page | phase-4-home | **In progress**: all tests done except the 3 editor tests (waiting for sign-in) |
+| 4. Home page | phase-4-home | **Done; approved and merged into main 2026-10-02 (fast-forward to f2105b4)** |
 | 5. Our Services + About Us | phase-5-services-about | Not started |
 | 6. Contact Us + quote form + email | phase-6-contact | Not started |
 | 7. Full QA, SEO, performance, handover | phase-7-qa | Not started |
 
 ## Current phase + next step
-- **Current:** Phase 4 – Home page, on branch `phase-4-home` (git worktree `.claude/worktrees/phase-4-home-build-e1b2e8`).
-- **Done:** the whole Phase 4 list, including the editor tests E1–E3 (run by Claude on 2026-10-02, all pass). Branch pushed. **Waiting for the user's approval to merge.**
-- **Local site:** `wp-content/themes/ayesha-movers` and `wp-content/plugins/ayesha-core` in the main checkout are **directory junctions** into the worktree (user-approved 2026-10-01). The original folders were moved, not deleted, to the session scratchpad (`...\scratchpad\main-folders\`). Before merging: remove the junctions with `rmdir` (link only), then merge in the main checkout.
-- **Next step:** user reviews Phase 4. On "approved": remove the two junctions with `rmdir` (link only), merge `phase-4-home` into `main` in the main checkout, push `main`, smoke test, stop.
-- **Service anchors for Phase 5** (the Home page links to them): `/our-services/#house-shifting`, `#packing`, `#furniture`, `#appliances`, `#trucks`, `#cargo`.
-- **Last completed:** Phase 3 (foundation), approved and merged into `main` 2026-10-01 at 81c86cf (fast-forward); smoke test passed (see Test results › Phase 3 › Post-merge smoke test).
-- **Phase 4 notes (carried over):**
-  - Hero number: fluid size from the hero column's container width (design-plan section 4). Test at 320, 375, 768, 1280 and 1920 px, with the real number and with +966 55 123 4567: no overflow, one line on desktop, two lines on mobile.
-  - Hero must look complete with photo 9 removed; photo 9 alt text/caption makes no ownership claim.
-  - The chevron strip's one-time slide-in (design plan section 4) belongs to the hero strip; add it in Phase 4 (reduced motion is already handled globally).
-  - Reviews pattern: give its outer Group the CSS class `ayesha-reviews`; AYESHA Core removes it from the page while "Show reviews section" is off.
-  - Per-service WhatsApp buttons: bind `url` to `whatsapp_url` with `args.message` (see docs/editing-guide.md).
+- **Current:** Phase 5 – Our Services + About Us (not started). Branch `phase-5-services-about`.
+- **Next step:** wait for the Phase 5 prompt; build it following `docs/design-plan.md` (sections 3.2 and 3.3).
+- **Last completed:** Phase 4 (Home page), approved and merged into `main` 2026-10-02 at f2105b4 (fast-forward); smoke test passed (see Test results › Phase 4 › Post-merge smoke test).
+- **Phase 5 notes (carried over from Phase 4):**
+  - The Home page links to these anchors on Our Services; each service H2 there must have the matching id: `#house-shifting`, `#packing`, `#furniture`, `#appliances`, `#trucks`, `#cargo`. The quote form (Phase 6) needs `id="quote"` on Contact Us.
+  - Reuse the synced patterns "CTA band" (`wp_block` 26) and "Where we go" (27): insert them from **Patterns → Ayesha Movers** (the theme patterns insert the synced copy), never as plain copies.
+  - Use the theme helpers in `inc/pattern-parts.php` (`ayesha_theme_section_markup()`, the Questions markup) for new sections; per-service WhatsApp buttons bind `url` to `whatsapp_url` with `args.message` (see docs/editing-guide.md).
+  - Photos: 12 and 14 for Our Services, 15 for About Us (no ownership claims in alt text). Resized copies are WebP automatically; only the first image on a page loads eagerly.
+  - After building a page, back its content up in `docs/content/` (extend `home-content.php` or add a script) and set its title/description in the Search engines panel (design plan section 7).
+  - If Phase 5 is built in a worktree again, use the same junction method and remove the junctions with `rmdir` (link only) before merging.
 
 ## Decisions log
 - 2026-10-01: Project brief written to CLAUDE.md.
@@ -106,6 +104,7 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 - 2026-10-01: Photo 12 is shown from 960px only (user request); hidden on phones and tablets. AYESHA Core now lets only the first content image skip lazy loading (`wp_omit_loading_attr_threshold` = 1, WordPress default 3), because WordPress had loaded photo 12 eagerly, and an eager image is downloaded even when hidden. The hero photo keeps `fetchpriority="high"`.
 - 2026-10-01: "What we do" stacks the lead card and the five rows in one column below 960px (as on phones), so the photo-less two-column layout between 782 and 959px never appears (WordPress puts columns side by side from 782px).
 - 2026-10-02: The user's earlier E1–E3 report ("E1 pass, E2 failed, E3 pass") was a template pasted by mistake; those results were discarded. The user then approved a temporary local admin session created with WP-CLI. Claude ran E1–E3 in the block editor and destroyed the session afterwards (0 sessions left). The session cookie was written to a git-ignored file (no password involved), but the Playwright tool echoed it into the conversation log; it can't be reused, because the session was destroyed on the server.
+- 2026-10-02: User approved Phase 4. The two dev junctions were removed (`rmdir`, links only), the theme and plugin folders restored from git in the main checkout, `phase-4-home` fast-forward merged into `main` (f2105b4), `main` pushed. The copies of the Phase 3 folders that were moved aside at the start of Phase 4 are still in the Phase 4 session's scratch folder; they are identical to git and no longer needed.
 - 2026-10-02: Apache and MySQL were found stopped (after a restart); the user restarted them from the XAMPP Control Panel.
 - 2026-10-01: Outside this session, `phase-1-setup` was renamed to `main` and pushed to origin. `phase-1-setup` was recreated from `main` for the final Phase 1 commit, then fast-forward merged into `main`.
 
@@ -236,3 +235,17 @@ Screenshots: `docs/screenshots/phase-4/` (`full-<width>.png` at 320, 375, 414, 7
 | 26 | Patterns still valid block markup after the fixes | Parse and serialize back unchanged | what-we-do, where-we-go, questions, why-and-questions: round-trip identical (the lead card's `&` now stored as `\u0026`, as the editor saves it) | Pass |
 | 27 | Photo 12 hidden below 960px and not downloaded there | Phones/tablets: hidden, never requested; desktop: shown | Page scrolled from top to bottom while recording image requests. 375 (phone emulation): figure `display: none`, photo 12 never requested; the only image request was photo 9. 768 (tablet emulation): same. 1280: shown, requested and loaded. HTML: hero photo `fetchpriority="high"` without `loading`, photo 12 `loading="lazy"` (before the fix WordPress gave it no `loading` attribute, so it was eager). `full-375.png` re-taken: page 476px shorter. `docs/content/home.html` re-exported: unchanged (CSS and plugin change only, no content change) | Pass |
 | 28 | "What we do" below 960px: one column | Stacked at 782, 860 and 959px; side by side with the photo from 960px | 781 / 782 / 860 / 959px: lead card above the rows, both full width (727 / 728 / 804 / 902px), photo hidden, no horizontal scroll. 960 and 1280px: side by side with the photo (unchanged). Screenshot `what-we-do-860.png` | Pass |
+
+#### Post-merge smoke test (main folder, after merging at f2105b4, 2026-10-02)
+| # | Test | Expected | Actual | Pass/Fail |
+|---|---|---|---|---|
+| S1 | Junctions removed; real folders from git | `themes/ayesha-movers` and `plugins/ayesha-core` are real folders | Both junctions removed with `rmdir` (links only; the worktree's files untouched), folders restored with `git checkout`, then merged: no junctions left, versions 0.4.0 / 0.4.0, main checkout clean | Pass |
+| S2 | Home page | HTTP 200 | 200 (About Us, Our Services, Contact Us also 200); title "Movers and Packers in Bahrain, 24 Hours \| AYESHA Movers" | Pass |
+| S3 | Hero number from Business Info | +973 3444 8236, tap to call | `tel:+97334448236` "+973 3444 8236"; hero buttons `wa.me/97334448236` and `tel:+97334448236` | Pass |
+| S4 | CTA band from Business Info | Heading, number, hours, buttons | "Moving soon? Message us now."; number `tel:+97334448236` "+973 3444 8236"; "Open 24 hours, every day"; Call and WhatsApp buttons with the same number | Pass |
+| S5 | Footer from Business Info | All numbers, email, Instagram, hours | `tel:+97334448236`, `tel:+97336429850`, `tel:+97377360292`, `mailto:ayeshamoversbh786@gmail.com`, Instagram link; "Open 24 hours, every day"; "Also trading as AYESHA Cargo Handling". Sticky bar `tel:` + `wa.me` | Pass |
+| S6 | Theme and plugin active from the main folder | ayesha-movers active, ayesha-core active | Theme `ayesha-movers` from `wp-content/themes/ayesha-movers`; `ayesha-core` active 0.4.0 | Pass |
+| S7 | Reviews hidden | Not on the page | Not in the HTML (toggle off) | Pass |
+| S8 | debug.log | No new entries | 3432 bytes / 25 lines before and after the merge and smoke test. (The last 2 entries, 17:00 UTC 2026-10-02, are "connection refused" warnings from WP-CLI while MySQL was stopped, before the user restarted XAMPP) | Pass |
+| S9 | Pushes | `origin/main` = `origin/phase-4-home` = merge commit | Both f2105b4 before this PROGRESS commit | Pass |
+
