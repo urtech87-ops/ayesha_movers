@@ -165,9 +165,10 @@ function ayesha_theme_service_section_markup( $service ) {
  * @param int    $id        Attachment ID.
  * @param string $size      Image size slug.
  * @param string $class     Extra CSS class ('' for none).
+ * @param string $name      Name shown in the editor's List View ('' for none).
  * @return string Block markup, or '' when the photo is missing.
  */
-function ayesha_theme_image_markup( $id, $size, $class = '' ) {
+function ayesha_theme_image_markup( $id, $size, $class = '', $name = '' ) {
 	$url = wp_get_attachment_image_url( $id, $size );
 	if ( ! $url ) {
 		return '';
@@ -177,6 +178,9 @@ function ayesha_theme_image_markup( $id, $size, $class = '' ) {
 		'sizeSlug'        => $size,
 		'linkDestination' => 'none',
 	);
+	if ( '' !== $name ) {
+		$attrs['metadata'] = array( 'name' => $name );
+	}
 	if ( '' !== $class ) {
 		$attrs['className'] = $class;
 	}

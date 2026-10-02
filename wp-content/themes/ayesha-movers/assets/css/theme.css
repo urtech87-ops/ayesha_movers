@@ -1313,14 +1313,41 @@ a[href^="mailto:"] {
 	margin-block-start: var(--wp--preset--spacing--40);
 }
 
-.ayesha-about-intro__photo figure {
+.ayesha-about-intro__photo figure,
+.ayesha-about-how__photo {
 	margin: 0;
 }
 
-.ayesha-about-intro__photo img {
+.ayesha-about-intro__photo img,
+.ayesha-about-how__photo img {
 	display: block;
 	max-width: 100%;
 	height: auto;
+}
+
+.ayesha-about-how > .ayesha-about-how__photo {
+	margin-block-start: var(--wp--preset--spacing--50);
+}
+
+/* The About photo: beside the heading on computers; after "How we work" on phones and tablets.
+   Image blocks with these classes are never loaded eagerly (AYESHA Core), so the hidden copy is
+   never downloaded. The editor shows both. */
+@media (max-width: 959.98px) {
+	body:not(.editor-styles-wrapper) .ayesha-desktop-only,
+	body:not(.editor-styles-wrapper) .ayesha-about-intro__photo:not(:has(> :not(.ayesha-desktop-only))) {
+		display: none;
+	}
+
+	/* With the photo column gone, the heading column takes the full width (782-959px). */
+	body:not(.editor-styles-wrapper) .ayesha-about-intro__columns > .wp-block-column {
+		flex-basis: 100% !important;
+	}
+}
+
+@media (min-width: 960px) {
+	body:not(.editor-styles-wrapper) .ayesha-mobile-only {
+		display: none;
+	}
 }
 
 /* ---------------------------------------------------------------

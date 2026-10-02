@@ -16,6 +16,13 @@ $ayesha_commitments = array(
 	array( 'Day or night', 'We work 24 hours, so your move can happen at the time that suits you, including at night.' ),
 );
 
+/*
+ * Phones and tablets show the About photo here, after "How we work", instead of above "Who runs it",
+ * so the man in it isn't read as the General Manager (open client question). Computers show the copy
+ * beside the page heading. Both copies are lazy-loaded, so the hidden one is never downloaded.
+ */
+$ayesha_photo = ayesha_theme_image_markup( 15, 'ayesha-photo', 'ayesha-mobile-only ayesha-about-how__photo', 'Photo (phones and tablets only; computers show the copy beside the heading)' );
+
 $ayesha_items = array();
 foreach ( $ayesha_commitments as $ayesha_commitment ) {
 	$ayesha_items[] = '<!-- wp:group {"className":"ayesha-reason","style":{"spacing":{"blockGap":"var:preset|spacing|20"}},"layout":{"type":"default"}} -->
@@ -51,7 +58,7 @@ $ayesha_inner = '<!-- wp:columns {"className":"ayesha-about-team__columns","styl
 
 <!-- wp:group {"metadata":{"name":"Commitments"},"className":"ayesha-reasons","layout":{"type":"default"}} -->
 <div class="wp-block-group ayesha-reasons">' . implode( "\n\n", $ayesha_items ) . '</div>
-<!-- /wp:group --></div>
+<!-- /wp:group -->' . ( '' === $ayesha_photo ? '' : "\n\n" . $ayesha_photo ) . '</div>
 <!-- /wp:column --></div>
 <!-- /wp:columns -->';
 

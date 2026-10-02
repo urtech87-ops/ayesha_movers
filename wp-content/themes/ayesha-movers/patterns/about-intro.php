@@ -23,7 +23,7 @@
 <!-- /wp:column -->
 
 <!-- wp:column {"width":"41.67%","className":"ayesha-about-intro__photo"} -->
-<div class="wp-block-column ayesha-about-intro__photo" style="flex-basis:41.67%"><?php echo ayesha_theme_image_markup( 15, 'ayesha-photo' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in the helper. ?></div>
+<div class="wp-block-column ayesha-about-intro__photo" style="flex-basis:41.67%"><?php echo ayesha_theme_image_markup( 15, 'ayesha-photo', 'ayesha-desktop-only', 'Photo (computers only; phones show the copy after How we work)' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in the helper. ?></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></section>
 <!-- /wp:group -->

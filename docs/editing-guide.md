@@ -182,7 +182,7 @@ As on the Home page: each question is a **Details** block. Answer only with fact
 Open **Pages → About Us**. In **List View**: Page heading (with the photo), Who runs it + How we work, Where we go and the CTA band.
 
 - **Heading, lead paragraph, "Who runs it", "How we work"**: click any text to change it. Each of the four "How we work" points is a small heading with a paragraph under it.
-- **The photo**: click it, then **Replace** (size *Photo (560px)*). On computers it sits beside the heading, on phones under the paragraph. Keep the alt text a plain description of the scene: don't name the man or say whose truck it is until that's confirmed. No caption.
+- **The photo** is in the page twice, on purpose: "Photo (computers only)" beside the heading, and "Photo (phones and tablets only)" after "How we work". Each screen shows one of them and never downloads the other. On phones the photo comes after "How we work" so the man in it isn't taken for the General Manager. To change the photo, replace **both** copies (click each, **Replace**, size *Photo (560px)*), and keep the same alt text on both. Keep the alt text a plain description of the scene: don't name the man or say whose truck it is until that's confirmed. No caption.
 - **Where we go** and the yellow **CTA band** are the shared (synced) sections: edit them with **Edit original** (see section 5). A change shows on every page that uses them.
 - Please don't add a founding year or "years of experience" until the client has confirmed one.
 
