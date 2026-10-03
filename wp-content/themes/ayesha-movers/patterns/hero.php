@@ -1,6 +1,6 @@
 <?php
 /**
- * Title: Home hero (yellow panel with the big number)
+ * Title: Home hero (navy panel with the big number)
  * Slug: ayesha-movers/hero
  * Categories: ayesha-movers
  * Keywords: hero, phone, number, banner, home
@@ -13,8 +13,8 @@ $ayesha_photo = wp_get_attachment_image_url( 9, 'ayesha-photo' );
 $ayesha_alt   = (string) get_post_meta( 9, '_wp_attachment_image_alt', true );
 ?>
 <!-- wp:group {"metadata":{"name":"Hero"},"align":"full","className":"ayesha-hero","style":{"spacing":{"blockGap":"0"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group alignfull ayesha-hero"><!-- wp:group {"metadata":{"name":"Yellow panel"},"className":"is-style-yellow-panel ayesha-hero__panel","layout":{"type":"constrained"}} -->
-<div class="wp-block-group is-style-yellow-panel ayesha-hero__panel"><!-- wp:columns {"className":"ayesha-hero__columns","style":{"spacing":{"blockGap":{"top":"0","left":"var:preset|spacing|50"}}}} -->
+<div class="wp-block-group alignfull ayesha-hero"><!-- wp:group {"metadata":{"name":"Navy panel"},"className":"is-style-teal-panel ayesha-hero__panel","layout":{"type":"constrained"}} -->
+<div class="wp-block-group is-style-teal-panel ayesha-hero__panel"><!-- wp:columns {"className":"ayesha-hero__columns","style":{"spacing":{"blockGap":{"top":"0","left":"var:preset|spacing|50"}}}} -->
 <div class="wp-block-columns ayesha-hero__columns"><!-- wp:column {"metadata":{"name":"Hero text"},"className":"ayesha-hero__text"} -->
 <div class="wp-block-column ayesha-hero__text"><!-- wp:heading {"level":1,"fontSize":"home-h1"} -->
 <h1 class="wp-block-heading has-home-h-1-font-size">Movers and packers in Bahrain, day and night.</h1>

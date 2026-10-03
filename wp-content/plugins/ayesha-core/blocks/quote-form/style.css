@@ -63,13 +63,12 @@
 	padding: 0;
 	counter-increment: aqf-step;
 	font-family: var(--wp--preset--font-family--display, inherit);
-	font-size: var(--wp--preset--font-size--heading-3, 1.75rem);
-	font-stretch: 75%;
+	font-size: var(--wp--preset--font-size--heading-3, 1.5rem);
 	font-weight: 700;
-	line-height: 1.1;
+	line-height: 1.2;
 }
 
-/* A real sequence of three steps, so numbered: the step number in yellow, like the painted number. */
+/* A real sequence of three steps, so numbered: the step number on a gold square. */
 .ayesha-qf__legend::before {
 	content: counter(aqf-step);
 	flex: none;
@@ -79,8 +78,7 @@
 	block-size: 2.5rem;
 	border-radius: var(--wp--custom--radius, 4px);
 	background: var(--aqf-yellow);
-	font-stretch: 62%;
-	font-weight: 800;
+	font-weight: 700;
 }
 
 .ayesha-qf__legend + * {
@@ -406,12 +404,13 @@
 	color: var(--aqf-tarmac);
 }
 
-/* ---- Sent: teal panel, the reference in yellow display type (people read it out on the phone) ---- */
+/* ---- Sent: navy panel, the reference in big gold type (people read it out on the phone) ---- */
 .ayesha-qf__result {
 	padding: var(--aqf-gap) var(--wp--preset--spacing--30, 1rem);
 	border-radius: var(--wp--custom--radius, 4px);
 	background: var(--aqf-teal);
 	color: var(--aqf-concrete);
+	container-type: inline-size;
 }
 
 @media (min-width: 600px) {
@@ -436,14 +435,14 @@
 .ayesha-qf__ref-number {
 	display: block;
 	font-family: var(--wp--preset--font-family--display, inherit);
-	font-size: clamp(2.5rem, 12vw, 4rem);
-	font-stretch: 62%;
-	font-weight: 800;
+	/* One line: the reference (14 characters, about 8.2em in Roboto 700) is sized to the panel width. */
+	font-size: clamp(1.5rem, 11cqi, 3.5rem);
+	font-weight: 700;
 	line-height: 1;
 	letter-spacing: -0.01em;
 	font-variant-numeric: tabular-nums;
 	color: var(--aqf-yellow);
-	overflow-wrap: anywhere;
+	white-space: nowrap;
 }
 
 .ayesha-qf__result .wp-block-buttons {

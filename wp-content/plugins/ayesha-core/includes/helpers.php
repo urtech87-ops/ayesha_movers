@@ -102,23 +102,23 @@ function ayesha_core_link( $url, $text, $blank = false ) {
 }
 
 /**
- * Approximate width of a phone number in em, set in the display face (Archivo 800, wdth 62).
- * Advances measured from the font file in Phase 4, rounded up; unknown characters count wide.
+ * Approximate width of a phone number in em, set in the display face (Roboto 700).
+ * Advances measured from the font file in Phase 7 (digits 0.574em), rounded up; unknown characters count wide.
  *
  * @param string $text Number as shown.
  * @return float
  */
 function ayesha_core_number_em_width( $text ) {
 	$advance = array(
-		' ' => 0.12,
-		'+' => 0.51,
-		'-' => 0.24,
-		'(' => 0.37,
-		')' => 0.37,
+		' ' => 0.25,
+		'+' => 0.55,
+		'-' => 0.4,
+		'(' => 0.36,
+		')' => 0.36,
 	);
 	$width   = 0.0;
 	foreach ( str_split( (string) $text ) as $char ) {
-		$width += ctype_digit( $char ) ? 0.43 : ( $advance[ $char ] ?? 0.6 );
+		$width += ctype_digit( $char ) ? 0.58 : ( $advance[ $char ] ?? 0.65 );
 	}
 	return round( $width, 2 );
 }
@@ -167,7 +167,7 @@ function ayesha_core_value_keys() {
 		'phone_primary'        => array( 'label' => __( 'Main phone number', 'ayesha-core' ), 'kind' => 'text' ),
 		'phone_primary_url'    => array( 'label' => __( 'Main phone: call link (for buttons)', 'ayesha-core' ), 'kind' => 'url' ),
 		'phone_primary_link'   => array( 'label' => __( 'Main phone, tap to call (for text)', 'ayesha-core' ), 'kind' => 'html' ),
-		'phone_primary_big'    => array( 'label' => __( 'Main phone, tap to call, as the big number (hero and yellow band)', 'ayesha-core' ), 'kind' => 'html' ),
+		'phone_primary_big'    => array( 'label' => __( 'Main phone, tap to call, as the big number (hero and gold band)', 'ayesha-core' ), 'kind' => 'html' ),
 		'phone_secondary'      => array( 'label' => __( 'Second mobile number', 'ayesha-core' ), 'kind' => 'text' ),
 		'phone_secondary_url'  => array( 'label' => __( 'Second mobile: call link (for buttons)', 'ayesha-core' ), 'kind' => 'url' ),
 		'phone_secondary_link' => array( 'label' => __( 'Second mobile, tap to call (for text)', 'ayesha-core' ), 'kind' => 'html' ),

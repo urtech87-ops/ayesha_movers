@@ -40,8 +40,8 @@ function ayesha_core_schema_services() {
 			'description' => 'Dyna and 6-wheel trucks for 8 hours or a full day; runs to Mina Salman, Khalifa Bin Salman Port, the airport and courier depots (DHL, Aramex, GLS).',
 		),
 		array(
-			'name'        => 'International cargo',
-			'description' => '20ft and 40ft container loading and unloading, customs documents, and moves to Saudi Arabia, the GCC, the UK, the USA and Canada.',
+			'name'        => 'GCC cargo',
+			'description' => '20ft and 40ft container loading and unloading, customs documents, and moves to Saudi Arabia, the UAE, Kuwait, Qatar and Oman.',
 		),
 	);
 }
@@ -118,7 +118,7 @@ function ayesha_core_schema() {
 	);
 
 	$area_served = array( array( '@type' => 'Country', 'name' => 'Bahrain' ), array( '@type' => 'City', 'name' => 'Manama' ) );
-	foreach ( array( 'Saudi Arabia', 'United Arab Emirates', 'Kuwait', 'Qatar', 'Oman', 'United Kingdom', 'United States', 'Canada' ) as $country ) {
+	foreach ( array( 'Saudi Arabia', 'United Arab Emirates', 'Kuwait', 'Qatar', 'Oman' ) as $country ) {
 		$area_served[] = array( '@type' => 'Country', 'name' => $country );
 	}
 	$schema['areaServed'] = $area_served;

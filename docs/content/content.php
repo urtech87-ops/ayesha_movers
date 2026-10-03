@@ -47,7 +47,7 @@ $ayesha_pages = array(
 		'id'       => (int) ( get_page_by_path( 'our-services' )->ID ?? 0 ),
 		'file'     => 'services',
 		'template' => 'page-sections',
-		'patterns' => array( 'services-intro', 'services-list', 'services-questions', 'cta-band' ),
+		'patterns' => array( 'services-intro', 'services-list', 'services-gallery', 'services-questions', 'cta-band' ),
 	),
 	'contact'  => array(
 		'id'       => (int) ( get_page_by_path( 'contact-us' )->ID ?? 0 ),

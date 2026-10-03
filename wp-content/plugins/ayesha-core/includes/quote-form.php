@@ -71,7 +71,7 @@ function ayesha_core_quote_options() {
 			'villa'  => __( 'Villa', 'ayesha-core' ),
 			'flat'   => __( 'Flat', 'ayesha-core' ),
 			'office' => __( 'Office', 'ayesha-core' ),
-			'cargo'  => __( 'International cargo', 'ayesha-core' ),
+			'cargo'  => __( 'GCC cargo', 'ayesha-core' ),
 			'truck'  => __( 'Truck hire only', 'ayesha-core' ),
 			'other'  => __( 'Other', 'ayesha-core' ),
 		),

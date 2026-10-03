@@ -31,8 +31,7 @@ function ayesha_core_defaults() {
 				'Khalifa Bin Salman Port',
 				'Airport cargo',
 				'Saudi Arabia',
-				'All GCC countries',
-				'UK, USA, Canada and worldwide',
+				'UAE, Kuwait, Qatar and Oman',
 			)
 		),
 		'instagram_url'    => 'https://www.instagram.com/ayesha_movers_packers/',

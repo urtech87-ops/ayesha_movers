@@ -30,7 +30,6 @@ $ayesha_services = array(
 			'Taking away the packing debris',
 		),
 		'message' => $ayesha_message( 'house, villa, flat or office shifting' ),
-		'grey'    => true,
 	),
 	array(
 		'id'      => 'packing',
@@ -57,7 +56,6 @@ $ayesha_services = array(
 			'Setting up new furniture for homes and offices',
 		),
 		'message' => $ayesha_message( 'furniture dismantling and refitting' ),
-		'grey'    => true,
 	),
 	array(
 		'id'      => 'appliances',
@@ -84,22 +82,20 @@ $ayesha_services = array(
 			'Runs to courier depots: DHL, Aramex and GLS',
 		),
 		'message' => $ayesha_message( 'truck hire (Dyna or 6-wheel truck)' ),
-		'grey'    => true,
 		'image'   => ayesha_theme_image_markup( 14, 'ayesha-photo', 'ayesha-svc__photo' ),
 	),
 	array(
 		'id'      => 'cargo',
-		'label'   => 'International cargo',
-		'title'   => 'International cargo',
-		'text'    => 'We load and unload 20ft and 40ft containers and handle the customs documentation for moves to Saudi Arabia, the GCC, the UK, the USA and Canada.',
+		'label'   => 'GCC cargo',
+		'title'   => 'GCC cargo',
+		'text'    => 'We load and unload 20ft and 40ft containers and handle the customs documentation for moves to Saudi Arabia, the UAE, Kuwait, Qatar and Oman.',
 		'items'   => array(
 			'20ft and 40ft container loading',
 			'Container unloading',
 			'Customs documentation',
 			'Moves to Saudi Arabia (KSA) and all GCC countries',
-			'Moves to the UK, the USA, Canada and worldwide',
 		),
-		'message' => $ayesha_message( 'international cargo (20ft or 40ft container)' ),
+		'message' => $ayesha_message( 'GCC cargo (20ft or 40ft container)' ),
 	),
 );
 

@@ -19,4 +19,4 @@ $ayesha_inner = '<!-- wp:columns {"className":"ayesha-why-faq__columns","style":
 <!-- /wp:column --></div>
 <!-- /wp:columns -->';
 
-echo ayesha_theme_section_markup( 'Why people book us + Questions', 'is-style-concrete-panel ayesha-section ayesha-why-faq', $ayesha_inner ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- block markup, escaped where built.
+echo ayesha_theme_section_markup( 'Why people book us + Questions', 'ayesha-section ayesha-why-faq', $ayesha_inner ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- block markup, escaped where built.

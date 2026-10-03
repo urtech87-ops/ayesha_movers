@@ -53,10 +53,10 @@ function ayesha_theme_questions_markup( $faq = null ) {
 	$faq   = $faq ?? array(
 		array( 'Do you take furniture apart and put it back together?', 'Yes. Our carpenters dismantle your furniture before the move and fit them back together in your new home or office. They also take down and put up curtains, and set up new furniture.' ),
 		array( 'Can I hire a truck for 8 hours or a full day?', 'Yes. You can hire a Dyna or a 6-wheel truck for 8 hours or for a full day. We also do runs to Mina Salman, Khalifa Bin Salman Port, the airport and courier depots such as DHL, Aramex and GLS.' ),
-		array( 'Can you move my things to Saudi Arabia?', 'Yes. We move households and offices to Saudi Arabia and the other GCC countries, and to the UK, the USA, Canada and worldwide. We also handle the customs documents.' ),
+		array( 'Can you move my things to Saudi Arabia?', 'Yes. We move households and offices to Saudi Arabia and the other GCC countries: the UAE, Kuwait, Qatar and Oman. We also handle the customs documents.' ),
 		array( 'Can you move us at night?', 'Yes. We work 24 hours, day and night. Tell us the time that suits you.' ),
 		array( 'Do you remove and refit air conditioners and TVs?', 'Yes. We take down and fit split units and other air conditioners, LCD and LED TVs, and curtains and blinds.' ),
-		array( 'Do you load shipping containers?', 'Yes. We load and unload 20ft and 40ft containers and prepare the customs documents for moves abroad.' ),
+		array( 'Do you load shipping containers?', 'Yes. We load and unload 20ft and 40ft containers and prepare the customs documents for moves to Saudi Arabia and the rest of the GCC.' ),
 	);
 	$items = array();
 	foreach ( $faq as $qa ) {
@@ -94,11 +94,11 @@ function ayesha_theme_section_markup( $name, $classes, $inner ) {
  * an optional photo, the "What's included" checklist and an "Ask about this on WhatsApp" button
  * whose prefilled message names the service (in the button's binding, so the client can edit it).
  *
- * @param array{id: string, title: string, text: string, items: string[], message: string, grey?: bool, image?: string} $service Section content.
+ * @param array{id: string, title: string, text: string, items: string[], message: string, image?: string} $service Section content.
  * @return string Block markup.
  */
 function ayesha_theme_service_section_markup( $service ) {
-	$classes = 'ayesha-svc__section' . ( empty( $service['grey'] ) ? '' : ' is-style-concrete-panel' );
+	$classes = 'ayesha-svc__section';
 	$items   = array();
 	foreach ( $service['items'] as $item ) {
 		$items[] = '<!-- wp:list-item -->

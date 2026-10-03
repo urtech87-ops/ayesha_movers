@@ -4,7 +4,7 @@
  * Slug: ayesha-movers/where-we-go
  * Categories: ayesha-movers
  * Keywords: service area, coverage, route, Bahrain, Saudi, GCC
- * Description: The service area as a route from your door to the rest of the world. Shared: inserts the synced pattern "Where we go", so editing it once updates every page.
+ * Description: The service area as a route from your door to the rest of the GCC. Shared: inserts the synced pattern "Where we go", so editing it once updates every page.
  *
  * @package AyeshaMovers
  */
@@ -21,7 +21,7 @@ if ( $ayesha_ref ) {
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>From your door to anywhere in Bahrain, and on to Saudi Arabia, the rest of the GCC and the world. Day or night.</p>
+<p>From your door to anywhere in Bahrain, and on to Saudi Arabia and the rest of the GCC. Day or night.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:list {"className":"ayesha-route"} -->
@@ -42,11 +42,7 @@ if ( $ayesha_ref ) {
 <!-- /wp:list-item -->
 
 <!-- wp:list-item -->
-<li>All GCC countries</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>UK, USA, Canada and worldwide</li>
+<li>UAE, Kuwait, Qatar and Oman</li>
 <!-- /wp:list-item --></ul>
 <!-- /wp:list --></section>
 <!-- /wp:group -->

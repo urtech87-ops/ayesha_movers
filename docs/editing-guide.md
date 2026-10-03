@@ -8,12 +8,12 @@ All contact details live on one page: **Settings → Business Info** (in the bla
 
 | Field | What it changes |
 |---|---|
-| Main phone number | The big number at the top of the Home page and in the yellow band above the footer, every **Call** button, the Call button in the header, the big number in the footer, and the **Call** button in the bar at the bottom of phone screens. The big number resizes itself to fit, even if the new number is longer |
+| Main phone number | The big number at the top of the Home page and in the gold band above the footer, every **Call** button, the gold Call button in the header, the number in the navy bar at the very top (computers), the big number in the footer, and the **Call** button in the bar at the bottom of phone screens. The big number resizes itself to fit, even if the new number is longer |
 | Second mobile number, Office number | The numbers listed in the footer and on the Contact Us page |
 | WhatsApp number | Every WhatsApp button and link: footer, phone bar, the round green button on computers, the WhatsApp row on Contact Us, and the "Send this on WhatsApp too" button after a quote request. **Digits only**, with the country code, e.g. `97334448236` |
 | WhatsApp opening message | The message that is already typed for the visitor when WhatsApp opens. They can change it before sending |
 | Email address | The email shown on the site, **where quote requests are emailed to**, and the sender address of every email the website sends (see section 9) |
-| Opening hours | The hours line in the footer, the yellow band and the Contact Us page |
+| Opening hours | The hours line in the top bar, the footer, the gold band and the Contact Us page |
 | Service areas | One place per line. Kept for later use: the "Where we go" list on the pages is edited in the editor instead (see section 5) |
 | Instagram page | The Instagram link in the footer and on Contact Us |
 | Business address | **Leave empty** until you want an address on the site. When you fill it in, search engines are told about it too |
@@ -30,6 +30,7 @@ Tips:
 Go to **Appearance → Editor**.
 
 - **Patterns → Header** or **Footer**: click the part, then click any text to change it. The Save button is at the top right.
+- **Top info bar** (the thin navy bar above the header, on computers only): the main number, email, opening hours and Instagram. All four come from Business Info, so change them there; you can delete a line you don't want in the bar (select it in List View → Delete).
 - **Navigation**: the menu used in the header and the footer. Add, remove, rename or reorder pages here; both menus update together.
 - **Mobile Call and WhatsApp bar**: the bar at the bottom of phone screens. You can change the button words ("Call", "WhatsApp"). The links come from Business Info.
 - **Footer "Call or WhatsApp" row**: when your WhatsApp number is the same as your main number, the footer shows one row, "Call or WhatsApp". If you set a different WhatsApp number in Business Info, the footer shows "Main number" and "WhatsApp" as two rows instead. In the editor you see all three rows (their names say when each one shows); the website picks the right one by itself.
@@ -57,7 +58,7 @@ Which field to pick:
 | You want | Paragraph, heading or list item (content) | Button words (text) | Button link (url) |
 |---|---|---|---|
 | A number people can tap to call | "Main phone, tap to call (for text)" | "Main phone number" | "Main phone: call link (for buttons)" |
-| The big number (two lines on phones, one on wide screens) | "Main phone, tap to call, as the big number (hero and yellow band)". Give the paragraph the style *Big phone number* | | |
+| The big number (two lines on phones, one on wide screens) | "Main phone, tap to call, as the big number (hero and gold band)". Give the paragraph the style *Big phone number* | | |
 | A WhatsApp chat | "WhatsApp number, tap to chat (for text)" | "WhatsApp number", or type your own words | "WhatsApp: chat link (for buttons)" |
 | Your email | "Email address, tap to write (for text)" | "Email address" | "Email: send link (for buttons)" |
 | Opening hours | "Opening hours" | "Opening hours" | |
@@ -96,12 +97,18 @@ If a block can't be connected, add a **Shortcode** block and type one of these:
 
 To keep every text readable (WCAG AA), the editor offers only safe combinations:
 
-- **Group** block → Styles: *Teal panel*, *Yellow panel*, *Grey panel* (each sets its own text colour).
-- **Button** block → Styles: *Fill* (teal), *WhatsApp green*, *Yellow*, *Outline*, *Text link* (an underlined link with the WhatsApp or phone icon, used for "Ask on WhatsApp" under each service).
-- **Paragraph** → Styles: *Big phone number* (the large condensed number style).
-- **Spacer** → Styles: *Chevron strip* (the yellow and teal tape). Use it only under the Home hero; the footer already has one.
+The site's colours are **navy** and **gold**, and its font is **Roboto**.
 
-Free colour pickers are switched off on purpose: white text on WhatsApp green, or yellow text on white, can't be read by many people.
+- **Group** block → Styles: *Navy panel*, *Gold panel*, *Light grey panel* (each sets its own text colour). On a navy panel, buttons turn gold by themselves.
+- **Button** block → Styles: *Fill* (navy), *WhatsApp green*, *Gold*, *Outline*, *Text link* (an underlined link with the WhatsApp or phone icon, used for "Ask on WhatsApp" under each service).
+- **Paragraph** → Styles: *Big phone number* (the large bold number style).
+- **Spacer** → Styles: *Gold line* (a thin gold rule). It's used under the Home hero; the footer already has one.
+
+**Capital letters:** section headings (and the menu) show in capitals on the site, but type them normally, e.g. "Where we go". The capitals are added by the design, so the words stay easy to edit and read in the editor.
+
+**Icons** next to the services (house, box, sofa, TV, truck, container) and next to "Why people book us" are added by the design: you don't add or pick them. Each service's icon follows its link (e.g. a service that links to `#trucks` gets the truck).
+
+Free colour pickers are switched off on purpose: white text on WhatsApp green, or gold text on white, can't be read by many people.
 
 Ready-made sections are under **Patterns → Ayesha Movers** in the block inserter.
 
@@ -111,7 +118,7 @@ Open **Pages → Home**. Every section is made of normal blocks: click any text,
 
 ### Sections shared with other pages (synced patterns)
 
-Two sections are **synced patterns**: the yellow **CTA band** ("Moving soon? Message us now.") and **Where we go**. They have a purple outline in the editor. Change one once and it changes on every page that uses it.
+Two sections are **synced patterns**: the gold **CTA band** ("Moving soon? Message us now.") and **Where we go**. They have a purple outline in the editor. Change one once and it changes on every page that uses it.
 
 - To edit: click the section, then **Edit original** in the toolbar. Make the change and save. Or open **Appearance → Editor → Patterns → Ayesha Movers**.
 - Don't choose **Detach** unless you want this page to have its own separate copy. A detached copy no longer follows the shared one.
@@ -125,7 +132,7 @@ Two sections are **synced patterns**: the yellow **CTA band** ("Moving soon? Mes
 
 ### Services: the photo under the house-shifting card
 
-The photo under the large grey "House, villa, flat and office shifting" card (the pickup loaded with boxes) is a normal Image block shown at its real size. It appears on computers only; phones and tablets don't show it (or download it), to keep the page short. Click it to replace it (**Replace** in the toolbar) or delete it. Keep the alt text a plain description of what is in the photo.
+The photo under the large "House, villa, flat and office shifting" card (the pickup loaded with boxes) is a normal Image block shown at its real size. It appears on computers only; phones and tablets don't show it (or download it), to keep the page short. Click it to replace it (**Replace** in the toolbar) or delete it. Keep the alt text a plain description of what is in the photo.
 
 ### Services: "Ask on WhatsApp" links
 
@@ -155,7 +162,7 @@ Click **Save**. If you leave them empty, WordPress uses the page name and Google
 
 ## 6. The Our Services page
 
-Open **Pages → Our Services**. In **List View** you'll see: Page heading, Services (with "Jump to a service" and one group per service), Questions and the CTA band.
+Open **Pages → Our Services**. In **List View** you'll see: Page heading, Services (with "Jump to a service" and one group per service), the ads gallery ("Seen on our Facebook and Instagram"), Questions and the CTA band.
 
 ### Change a service
 
@@ -167,11 +174,19 @@ Each service is one group named "Service: …". Click any text to change it:
 - **Ask about this on WhatsApp**: the link comes from Business Info and the chat opens with the service already typed. To change that message, use the code editor (⋮ → **Code editor**), find `"message":"…"` in that button and edit the words between the quotes (see section 3).
 - **The truck photo** (Truck hire): click it, then **Replace**. Keep the alt text a plain description of what is in the photo, and don't say the truck is yours until that's confirmed. (The photo was cropped in the Media Library so the brand name on the cab doesn't show; **Edit image → Restore image** there brings back the full photo.)
 
-The grey and white bands alternate. To make a service grey or white, select its group and pick the **Grey panel** style (or the default style) in the sidebar. The grey band stretches to the screen edges by itself.
+Each service shows as a white card (two side by side on computers), with its icon at the top.
 
 ### The "Jump to a service" list
 
-One list does two jobs: on phones it's a row of buttons under the intro; on computers it's the menu on the left that stays on screen and marks the service you're reading. Each item is a link to a heading's anchor, e.g. `#packing`. If you add a service, copy a service group (⋮ → **Duplicate**), give its heading a new anchor, and add a link to it here.
+A row of small cards with icons under the page heading (2 across on phones, 6 on computers). Each item is a link to a heading's anchor, e.g. `#packing`. If you add a service, copy a service group (⋮ → **Duplicate**), give its heading a new anchor, and add a link to it here.
+
+### The ads gallery: "Seen on our Facebook & Instagram"
+
+A **Gallery** block with your ads, and a button to your Instagram page (its words and link come from Business Info). **The section is hidden on the site until the gallery has at least one picture.**
+
+- **Add or change an ad:** click the gallery → **Add** (or click a picture → **Replace**) → upload the ad. Use a WebP or JPG about 800px wide.
+- **Alt text** (in the right-hand sidebar when a picture is selected): an ad is a picture of text, so type **all the words in the ad** as its alt text (for people who can't see the picture, and for Google).
+- The pictures are not cropped, so the text in each ad stays whole. Don't put an ad in a service card: the small text can't be read on a phone.
 
 ### Questions
 
@@ -183,7 +198,7 @@ Open **Pages → About Us**. In **List View**: Page heading (with the photo), Wh
 
 - **Heading, lead paragraph, "Who runs it", "How we work"**: click any text to change it. Each of the four "How we work" points is a small heading with a paragraph under it.
 - **The photo** is in the page twice, on purpose: "Photo (computers only)" beside the heading, and "Photo (phones and tablets only)" after "How we work". Each screen shows one of them and never downloads the other. On phones the photo comes after "How we work" so the man in it isn't taken for the General Manager. To change the photo, replace **both** copies (click each, **Replace**, size *Photo (560px)*), and keep the same alt text on both. Keep the alt text a plain description of the scene: don't name the man or say whose truck it is until that's confirmed. No caption.
-- **Where we go** and the yellow **CTA band** are the shared (synced) sections: edit them with **Edit original** (see section 5). A change shows on every page that uses them.
+- **Where we go** and the gold **CTA band** are the shared (synced) sections: edit them with **Edit original** (see section 5). A change shows on every page that uses them.
 - Please don't add a founding year or "years of experience" until the client has confirmed one.
 
 Both pages use the template **Page with sections (heading in the page)**: the big heading at the top is a normal Heading block in the page, not the page's title. Renaming the page doesn't change this heading (and doesn't rename the menu item either: that is in **Appearance → Editor → Navigation**). The title and description in Google are set in the **Search engines** panel, as for Home (section 5).

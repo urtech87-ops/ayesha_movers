@@ -87,14 +87,14 @@ add_action( 'wp_head', 'ayesha_theme_head', -1 );
 
 /**
  * Viewport with viewport-fit=cover (so the sticky bar can use the safe-area inset)
- * and a preload for the single font file.
+ * and a preload for the body font (Roboto 400; 500 and 700 load when used).
  */
 function ayesha_theme_head() {
 	remove_action( 'wp_head', '_block_template_viewport_meta_tag', 0 );
 	echo '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />' . "\n";
 	printf(
 		'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
-		esc_url( get_theme_file_uri( 'assets/fonts/archivo-latin-var.woff2' ) )
+		esc_url( get_theme_file_uri( 'assets/fonts/roboto-latin-400.woff2' ) )
 	);
 }
 
@@ -106,20 +106,20 @@ add_action( 'init', 'ayesha_theme_register_styles_and_patterns' );
 function ayesha_theme_register_styles_and_patterns() {
 	$styles = array(
 		'core/group'     => array(
-			'teal-panel'     => __( 'Teal panel', 'ayesha-movers' ),
-			'yellow-panel'   => __( 'Yellow panel', 'ayesha-movers' ),
-			'concrete-panel' => __( 'Grey panel', 'ayesha-movers' ),
+			'teal-panel'     => __( 'Navy panel', 'ayesha-movers' ),
+			'yellow-panel'   => __( 'Gold panel', 'ayesha-movers' ),
+			'concrete-panel' => __( 'Light grey panel', 'ayesha-movers' ),
 		),
 		'core/button'    => array(
 			'whatsapp'  => __( 'WhatsApp green', 'ayesha-movers' ),
-			'yellow'    => __( 'Yellow', 'ayesha-movers' ),
+			'yellow'    => __( 'Gold', 'ayesha-movers' ),
 			'text-link' => __( 'Text link', 'ayesha-movers' ),
 		),
 		'core/paragraph' => array(
 			'display-number' => __( 'Big phone number', 'ayesha-movers' ),
 		),
 		'core/spacer'    => array(
-			'chevron-strip' => __( 'Chevron strip', 'ayesha-movers' ),
+			'chevron-strip' => __( 'Gold line', 'ayesha-movers' ),
 		),
 	);
 	foreach ( $styles as $block => $block_styles ) {

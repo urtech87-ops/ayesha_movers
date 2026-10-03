@@ -36,8 +36,8 @@ $ayesha_row = static function ( $anchor, $title, $text, $service ) use ( $ayesha
 <!-- /wp:group -->';
 };
 ?>
-<!-- wp:group {"metadata":{"name":"What we do"},"tagName":"section","align":"full","className":"ayesha-section ayesha-services","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
-<section class="wp-block-group alignfull ayesha-section ayesha-services" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:heading -->
+<!-- wp:group {"metadata":{"name":"What we do"},"tagName":"section","align":"full","className":"is-style-teal-panel ayesha-section ayesha-services","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull is-style-teal-panel ayesha-section ayesha-services" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:heading -->
 <h2 class="wp-block-heading">What we do</h2>
 <!-- /wp:heading -->
 
@@ -93,7 +93,7 @@ echo $ayesha_row( 'packing', 'Packing and unpacking', 'International-standard pa
 echo $ayesha_row( 'furniture', 'Furniture dismantling and refitting', 'Our carpenters take furniture and curtains down, put them back up, and set up new furniture for homes and offices.', 'furniture dismantling and refitting' ) . "\n\n";
 echo $ayesha_row( 'appliances', 'AC, TV and curtain removal', 'Split units and other air conditioners, LCD and LED TVs, curtains and blinds: taken down and fitted again.', 'AC, TV or curtain removal and fitting' ) . "\n\n";
 echo $ayesha_row( 'trucks', 'Truck hire: 8 hours or a full day', 'Dyna and 6-wheel trucks, including runs to Mina Salman, Khalifa Bin Salman Port, the airport and courier depots.', 'truck hire (Dyna or 6-wheel truck)' ) . "\n\n";
-echo $ayesha_row( 'cargo', 'Container cargo abroad', '20ft and 40ft containers loaded and unloaded, with customs documents, to Saudi Arabia, the GCC, the UK, the USA and Canada.', 'international cargo (20ft or 40ft container)' ) . "\n\n";
+echo $ayesha_row( 'cargo', 'Container cargo to the GCC', '20ft and 40ft containers loaded and unloaded, with customs documents, to Saudi Arabia, the UAE, Kuwait, Qatar and Oman.', 'GCC cargo (20ft or 40ft container)' ) . "\n\n";
 // phpcs:enable
 ?><!-- wp:paragraph {"className":"ayesha-services__all"} -->
 <p class="ayesha-services__all"><a href="<?php echo esc_url( $ayesha_services_url ); ?>">See all services</a></p>

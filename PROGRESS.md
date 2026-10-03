@@ -19,8 +19,8 @@ Main goal: get mobile visitors to WhatsApp or call in one tap, or to send a deta
 | Admin username | `ayesha_admin` (password given in chat once; never stored in any file) |
 | WP-CLI | `D:\xampp\php\php.exe wp-cli.phar <command>` from the project root |
 | wp-config extras | `WP_ENVIRONMENT_TYPE=local`, `WP_DEBUG` on, log to `wp-content/debug.log`, display off, `DISALLOW_FILE_EDIT`, **`AUTOMATIC_UPDATER_DISABLED` = true** (no automatic core/plugin/theme/translation updates, so WordPress stays at 7.1.2 for the whole project). wp-config.php is not in git: re-add these by hand on any new install |
-| Plugins | **AYESHA Core 0.6.0 (active)**, WP Mail Logging 1.17.0 (active), WP Mail SMTP 4.10.0 (inactive; set up at go-live, see `docs/email-setup.md`) |
-| Themes | **AYESHA Movers 0.6.0 (active)**; Twenty Twenty-Five 1.5 (fallback) |
+| Plugins | **AYESHA Core 0.7.0 (active)**, WP Mail Logging 1.17.0 (active), WP Mail SMTP 4.10.0 (inactive; set up at go-live, see `docs/email-setup.md`) |
+| Themes | **AYESHA Movers 0.7.0 (active)**; Twenty Twenty-Five 1.5 (fallback) |
 | Navigation | `wp_navigation` post 4 "Main menu": Home, About Us, Our Services, Contact Us + a bound Call/WhatsApp Buttons block (shown only in the open mobile menu). Used by header and footer. Lives in the database; reference copy in `docs/navigation-main-menu.html` |
 | Business Info | Settings → Business Info (option `ayesha_business`) |
 | Pages | Home (ID 5, static front page), About Us (6), Our Services (7), Contact Us (8). About Us, Our Services and Contact Us use the template "Page with sections (heading in the page)" (`page-sections`): the H1 is a block in the page |
@@ -33,7 +33,7 @@ Main goal: get mobile visitors to WhatsApp or call in one tap, or to send a deta
 ### Media status
 | ID | File | Status | Reason |
 |---|---|---|---|
-| 9 | yellow-box-truck-residential-building | OK | Home hero (560px WebP copy). No caption; alt describes only what's visible |
+| 9 | yellow-box-truck-residential-building | OK (kept for now; **unconfirmed as AYESHA's**) | Home hero (560px WebP copy, 640px original), in a gold frame since Phase 7. No caption; alt describes only what's visible. **Replace with a real AYESHA truck or team photo at least 1600px wide** (client question) |
 | 10 | movers-carrying-white-sofa | **PLACEHOLDER ONLY** | Looks like a stock photo; replace with a real client photo before go-live (or confirm licence) |
 | 11 | white-pickup-truck-cargo-rails | **DO NOT USE** | Shows phone number 0524070463 (not an AYESHA number) |
 | 12 | pickup-loaded-with-household-goods | OK | Home, under the house-shifting card, from 960px only (366 x 480, natural size, WebP, lazy-loaded). Alt describes only what's visible |
@@ -52,25 +52,21 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | 4. Home page | phase-4-home | **Done; approved and merged into main 2026-10-02 (fast-forward to f2105b4)** |
 | 5. Our Services + About Us | phase-5-services-about | **Done; approved and merged into main 2026-10-03 (fast-forward to 7f3e690)** |
 | 6. Contact Us + quote form + email | phase-6-contact | **Done; approved and merged into main 2026-10-03 (fast-forward to 497997f)** |
-| 7. Design refresh + service area (Bahrain and GCC only) | phase-7-design | **In progress: proposal stage** (Part A wording table and Part B design preview, waiting for the user's choice) |
+| 7. Design refresh + service area (Bahrain and GCC only) | phase-7-design | **Built and tested; branch pushed, waiting for approval** (client ads still to add to the gallery) |
 | 8. Full QA, SEO, performance, handover (was Phase 7) | phase-8-qa | On hold until Phase 7 is approved; scope approved 2026-10-03 (see Phase 8 notes) |
 
 ## Current phase + next step
-- **Current:** Phase 7 – Design refresh + service area (**proposal stage, nothing built**). Branch `phase-7-design` after approval.
-  - Part A: coverage is **Bahrain and the GCC only** (Bahrain, Saudi Arabia, UAE, Kuwait, Qatar, Oman); not the UK, USA, Canada, Europe or worldwide. Wording table proposed in chat; waiting for approval.
-  - Part B (changed 2026-10-03; the 3-direction preview was dropped and deleted): **redesign using the ThemeForest "Cargo Hub" demo as a visual reference only** (no copied code, CSS, JS, images, icons or demo text). Rules: keep all existing content (only the Part A fixes change wording); sections that need content we don't have (stats, testimonials, team, blog, pricing, partner logos) are skipped and listed as "needs client content"; every block editable, 0 invalid blocks; **Roboto only**, self-hosted Latin woff2, only the weights used, main weight preloaded, Archivo files removed; colours navy + gold/yellow from the reference and the client's ads, WCAG AA; keep the sticky bar, floating WhatsApp, quote form, bindings, JSON-LD, SEO panel, 404. Client ads `docs/client-ads/ad-1.jpg`…`ad-3.jpg`: not as service-card images; an editable gallery on Our Services, "Seen on our Facebook & Instagram", linking to the Business Info Instagram; WebP at display size, lazy-loaded, alt text = the ad's text.
-  - Deliverables before building: a section map per page, a static preview of Home and Our Services (375 and 1280 screenshots in `docs/screenshots/phase-7-design/`), the Part A table.
-  - Reference studied (2026-10-03): the ThemeForest preview shows a Cloudflare bot check (not bypassed); the theme author's own demo (`demo2.steelthemes.com/cargohub/`, the page the preview frames) opened normally and was studied read-only (Home and Services, 375 and 1280). Its look: navy `#0C1239` + red accent, Montserrat/Open Sans, top info bar, white header with capital menu, photo hero, centred section titles with a short bar, bordered icon cards, navy footer with a deeper copyright bar.
-  - **Static preview built** (`docs/design-preview/`): `build.py` takes the real rendered Home and Our Services (`src/`), removes `theme.css` and the Archivo preload, and loads `theme-new.css` (the candidate new stylesheet). Only additions: the top info bar (Header part), the Part A wording, the new gallery section. Screenshots: `docs/screenshots/phase-7-design/home-1280.png`, `home-375.png`, `home-375-first-screen.png`, `services-1280.png`, `services-375.png`, `services-375-first-screen.png`. No horizontal scroll at 375 or 1280.
-  - **Roboto downloaded** (user asked for self-hosted Roboto): `Roboto[wdth,wght].ttf` (489 KB) + `OFL.txt` from `github.com/google/fonts/ofl/roboto` (Roboto 3.015, SIL OFL 1.1). Made static Latin woff2 files with fontTools: `roboto-latin-400.woff2` 12.1 KB, `-500` 12.5 KB, `-700` 12.6 KB (37 KB in all; Archivo was 56 KB). Now in `docs/design-preview/fonts/`; they move to the theme at build time.
-  - **Still blocked:** the client ads `docs/client-ads/ad-1.jpg`…`ad-3.jpg` are not on disk; the gallery shows placeholders.
-- **Next step:** the user approves the section map, the preview and the Part A wording, and provides the ads; then build on `phase-7-design`, test (0 invalid blocks, axe 0 serious/critical, no horizontal scroll at 375/768/1280, tel:/wa.me/form working), push, stop before merging.
+- **Current:** Phase 7 – Design refresh + service area: **built on `phase-7-design`, tested, pushed; waiting for the user's approval. Not merged.**
+  - **Part A (done):** coverage is **Bahrain and the GCC only** (Bahrain, Saudi Arabia, UAE, Kuwait, Qatar, Oman) everywhere: pages, the synced "Where we go", FAQs, WhatsApp messages, SEO descriptions, JSON-LD `areaServed`, Business Info service areas, the quote form, CLAUDE.md, the design plan, the editing guide and the content backup. "International cargo" is now **"GCC cargo"** (Home row: "Container cargo to the GCC"); anchor `#cargo` kept, so no link changed.
+  - **Part B (done):** redesign after the Cargo Hub demo (visual reference only; studied at `demo2.steelthemes.com/cargohub/`, because the ThemeForest preview is behind a Cloudflare check). Navy `#0C1239` + gold `#F2B705`, **Roboto 400/500/700** self-hosted (Archivo removed), line icons drawn for the site, capitals through CSS only. All 4 pages, the header (new top info bar) and the footer. Approved preview: `docs/design-preview/` (its `theme-new.css` is the pre-build copy; the theme's `assets/css/theme.css` is the live one).
+  - **Ads gallery:** the section "Seen on our Facebook & Instagram" is on Our Services with an empty Gallery block and the Instagram button (from Business Info). It stays hidden on the site until it has a picture. **The ads were not on disk** (`docs/client-ads/` doesn't exist; checked 4 times during the build). When they arrive: WebP at display size (400px) + 2x (800px), lazy-loaded, the full ad text as alt text.
+- **Next step:** the user reviews `phase-7-design` and sends the ads. After approval: remove the junctions (`rmdir`), restore the main checkout's folders, merge into `main`, push, smoke-test. Then Phase 8.
 - **Last completed:** Phase 6 (Contact Us + quote form + email), approved and merged into `main` 2026-10-03 at 497997f (fast-forward); smoke test passed (see Test results › Phase 6 › Post-merge smoke test).
-- **Test data kept on the local site (user decision 2026-10-03):** 14 test enquiries AYM-261003-001 … 014 and WP Mail Logging rows 4–22.
+- **Test data kept on the local site (user decision 2026-10-03):** 15 test enquiries AYM-261003-001 … 015 (015 = "Phase7 Test", sent in Phase 7) and WP Mail Logging rows 4–23.
 - **Phase 8 notes (QA, SEO, performance, handover; scope approved 2026-10-03, carried over from Phase 6):**
   - **axe landmark issue (moderate, `region`, on every page):** the sticky Call/WhatsApp bar (phones, template part `sticky-bar`) and the floating WhatsApp button (desktop, printed by AYESHA Core in `wp_footer`) sit outside a landmark. Fix: give the bar a labelled `nav` or `aside` wrapper (template part `tagName` + `aria-label`) and the floating button an `aside` wrapper with a label; re-run axe on all 4 pages.
   - **Go-live checklist:**
-    - **Delete all test enquiries** (AYM-261003-001 … 014 and any later test requests: Enquiries → select all → Move to Trash → Empty Trash) and the WP Mail Logging test rows.
+    - **Delete all test enquiries** (AYM-261003-001 … 015 and any later test requests: Enquiries → select all → Move to Trash → Empty Trash) and the WP Mail Logging test rows.
     - WP Mail SMTP + Gmail App Password, then a test email and a real test request (`docs/email-setup.md`).
     - Deactivate and delete WP Mail Logging.
     - Exclude `/contact-us/` from any page cache (the form's nonce lasts 24 h).
@@ -160,15 +156,31 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 - 2026-10-03: The planned Phase 7 (QA, SEO, performance, handover) was put on hold and renamed **Phase 8**; the user's answers to its four questions are in the Phase 8 notes above. **New Phase 7: design refresh + service area.** The user doesn't like the current design or the Archivo font; Replaced the same day: the user chose a direction instead, a redesign based on the Cargo Hub demo (see Current phase).
 - 2026-10-03: **Service area corrected by the user: AYESHA works Bahrain to the GCC only** (Bahrain, Saudi Arabia, UAE, Kuwait, Qatar, Oman). Not the UK, USA, Canada, Europe or "worldwide". This overrides the coverage line in CLAUDE.md, the design plan and the current site copy; every mention is to be corrected in Phase 7 after the user approves the wording.
 
+- 2026-10-03: **Phase 7 user decisions:** section map and look approved (navy `#0C1239`, gold `#F2B705`, Roboto 400/500/700 self-hosted, line icons); "GCC cargo" with `#cargo` kept; **don't** add the "We don't move outside the GCC" FAQ line yet (pending client question); fix the CLAUDE.md coverage lines; capitals only through CSS `text-transform` (block text stays normal case); keep photo 9 in the hero for now.
+- 2026-10-03: Phase 7 build choices:
+  - **Palette slugs kept** (`cab-teal`, `box-yellow`, `tarmac`, `concrete`, `paper`) with new colours and names (Navy, Gold, Slate, Light grey, White), and the Group/Button style class names kept (`is-style-teal-panel` = "Navy panel", `is-style-yellow-panel` = "Gold panel", `is-style-concrete-panel` = "Light grey panel", `is-style-yellow` = "Gold", `is-style-chevron-strip` = "Gold line"), so no saved block had to change for colours.
+  - So that each block's style name matches its look, a few **classes were changed in the content** (no words): Home hero panel and "What we do" → Navy panel; the About and Services page headings → Navy panel; grey removed from "Why people book us + Questions" and from three Services sections (now all white cards).
+  - **Icons** are CSS masks chosen from each service's link or anchor (`#house-shifting` = house, `#packing` = box, `#furniture` = sofa, `#appliances` = TV, `#trucks` = truck, `#cargo` = container) and by position for the four reasons, so nothing extra is stored in the pages.
+  - The big-number width table (`ayesha_core_number_em_width`) re-measured for Roboto 700 (digits 0.574em, rounded up to 0.58).
+  - The quote form's reference number is sized to its panel (container query), so "AYM-261003-015" stays on one line at 375px.
+  - The top info bar is hidden below 960px (the sticky bar does that job on phones and tablets).
+  - Contact Us has no separate navy title band (its H1 sits in the left column beside the form): a light grey page with white contact rows (icon in a gold circle) and the form on a white card.
+- 2026-10-03: Database changes made with a one-off WP-CLI script (each replacement had to match an exact count; dry run first; a full database dump was saved to the session scratch folder before it ran): pages 5–7, synced pattern 27, the About and Contact SEO descriptions, Business Info service areas, and the gallery section inserted on Our Services. Temporary admin session for the editor tests: the cookies were written to a scratch file read only by the test browser (never printed), the file was deleted afterwards and all sessions destroyed (0 left).
+
 ## Open questions for the client
 - Price point: the site says "Low rates, with labour included" (his own selling point, no superlative). Confirm the wording
 - How are prices worked out (per truck, per hour, per room)? Needed for an honest FAQ answer; not invented in the plan
 - Is the man in photo 15 the GM or crew, and are the trucks in photos 9, 14, 15 AYESHA's own? (Affects alt text and captions; until confirmed, no caption or alt text claims ownership)
 - Which languages does your team speak? (Needed before adding `availableLanguage` to the JSON-LD or mentioning languages on the site)
 - Founding year / years in business ("decades" vs "Est. 2026")
-- Business address or office location, if he wants one shown
-- Logo (none known; we'll use a wordmark for now)
+- Business address or office location, if he wants one shown. **Can the office address on the flyer go on the site?** (One of the ads shows an office address. Until he says yes, no address is shown)
+- **Official business name and logo:** the ads use three different names and logos. Which one is official? (The site uses the text wordmark "AYESHA Movers & Packers" until then)
 - Real customer reviews (Google/Instagram) to replace placeholders
+- **Coverage: Bahrain to the GCC only?** The user is confirming this with the client. Pending: whether to add the FAQ line "We don't move to countries outside the GCC." (not added; user decision 2026-10-03)
+- **Stats numbers** (moves done, years, trucks, team size) for a stats band like the reference's. Skipped until real numbers exist; never invent them
+- **Service photos:** real photos of each service (packing, furniture, AC/TV, trucks, containers) for the service cards. The ads are not used in the cards (their text can't be read on a phone)
+- **Hero photo:** a real AYESHA truck or team photo **at least 1600px wide**. Photo 9 (640px) is kept for now and is **unconfirmed as AYESHA's**
+- **The 3 ads** (`docs/client-ads/ad-1.jpg` … `ad-3.jpg`) for the "Seen on our Facebook & Instagram" gallery: not received on this machine yet
 - **Photo 9 in the search-engine data:** the JSON-LD `image` (photo 9, the yellow truck) was removed in Phase 3. **Re-add it after the client confirms the truck is his**: change the default of the `ayesha_core_schema_image_id` filter in `wp-content/plugins/ayesha-core/includes/schema.php` from 0 to 9 (or to the ID of a photo he confirms).
 - Gmail App Password for WP Mail SMTP (needed at go-live)
 - Final domain name and hosting
@@ -188,6 +200,8 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 - `wp db query` / `wp db check` fail because `mysql` isn't on the PATH. Use `wp eval` with `$wpdb`, or call `D:\xampp\mysql\bin\mysql.exe -P 3307` directly.
 - In Git Bash, run `export MSYS_NO_PATHCONV=1` before WP-CLI commands (see Phase 1 test notes).
 - `wp rewrite structure --hard` can't regenerate `.htaccess` on this setup. If permalinks change, edit `.htaccess` by hand.
+- **Client ads not on disk (Phase 7):** the ads gallery on Our Services is empty and hidden on the site until the ads arrive in `docs/client-ads/`.
+- axe `region` (moderate) on every page: the sticky bar and the floating WhatsApp button are outside a landmark. Fix planned in Phase 8 (see Phase 8 notes).
 
 ## Test results per phase
 ### Phase 1 (run 2026-10-01)
@@ -431,3 +445,35 @@ Fixes made because of these tests: line breaks in the WhatsApp hand-off (`esc_ur
 | S6 | Form handler from main (a send that saves nothing) | Error shown, nothing saved or emailed | Name left empty: "Your request was not sent / Enter your name", focus on the summary, other values kept. Enquiries still 14, highest mail log id still 22 | Pass |
 | S7 | debug.log | No new entries | 3432 bytes before and after the merge and smoke test | Pass |
 | S8 | Pushes | `main` = `origin/main` = `origin/phase-6-contact` | All 497997f before this PROGRESS commit | Pass |
+
+### Phase 7 (run 2026-10-03)
+Branch `phase-7-design`, worktree with directory junctions (main checkout's theme and plugin folders point into the worktree; originals moved to the session scratch folder). Tested on the local site as a logged-out visitor unless stated.
+
+Screenshots: `docs/screenshots/phase-7-design/`
+- Built site: `site-<page>-<width>.png` for home, about, services, contact at 375, 768 and 1280 (full page; the sticky bar and floating button are hidden in full-page shots because a fixed bar would land mid-page), plus `site-<page>-375-first-screen.png` (first screen with the sticky bar).
+- Editor: `editor-home.png`, `editor-services.png` (the empty ads gallery, ready for upload).
+- Form: `form-rejected-375.png`, `form-sent-375.png`.
+- Approved preview (before the build): `home-*.png`, `services-*.png`.
+
+| # | Test | Expected | Result | Pass/Fail |
+|---|---|---|---|---|
+| 1 | Invalid blocks in the editor (`isValid` on every block, recursive) | 0 | Home 120 blocks, About 31, Our Services 99, Contact 28, CTA band (26) 10, Where we go (27) 9: **0 invalid** each; checked again after the test saves: 0 | Pass |
+| 2 | Template parts, templates, theme patterns through the editor's block parser | 0 invalid | Parts header 13 / footer 33 / sticky-bar 4; templates 404, front-page, index, page, page-sections; all 18 `ayesha-movers/*` patterns incl. the new `services-gallery`: **0 invalid** | Pass |
+| 3 | One test edit per page, saved and reverted (editor) | Edit shows on the site, revert removes it | Home, About, Our Services, Contact: a paragraph + " PHASE7TEST" saved → shown on the page → original text saved → gone | Pass |
+| 4 | No horizontal scroll | 0 px at 375/768/1280 | 0 px on all 4 pages at all 3 widths (12 runs) | Pass |
+| 5 | Nothing covered by the sticky bar (375, 768) | Last footer line above the bar | All 8 runs: copyright line ends 1 px above the bar | Pass |
+| 6 | Nothing covered by the floating WhatsApp button (1280) | No link/button/field under it at the end of the page | All 4 pages: none | Pass |
+| 7 | axe-core 4.13, all 4 pages × 375/768/1280 | 0 serious, 0 critical | **0 serious, 0 critical** in all 12 runs (no colour-contrast issues). Only `region` (moderate, 1 node: the sticky bar or the floating button outside a landmark), already planned for Phase 8 | Pass |
+| 8 | One H1 per page | 1 | 1 on each page | Pass |
+| 9 | tel: links | E.164 | `tel:+97334448236` (top bar, header, hero, CTA, footer, sticky bar), `tel:+97336429850`, `tel:+97377360292` | Pass |
+| 10 | wa.me links | `wa.me/97334448236?text=…` | Default message on every page; per-service messages on Home and Our Services, cargo now "…a price for GCC cargo (20ft or 40ft container)." | Pass |
+| 11 | mailto and Instagram | Business Info values | `mailto:ayeshamoversbh786@gmail.com`; `https://www.instagram.com/ayesha_movers_packers/` (top bar, footer, Contact, gallery button) | Pass |
+| 12 | Service anchors and #quote | Each link lands on its heading | `/our-services/#house-shifting`, `#packing`, `#furniture`, `#appliances`, `#trucks`, `#cargo` ("GCC cargo"): each H2 at 32 px from the top; `/contact-us/#quote`: "Request a detailed quote" at 28 px | Pass |
+| 13 | Quote form: rejection | Not sent, plain message, answers kept | Name left empty → "Your request was not sent. Check these answers: Enter your name"; name field `aria-invalid="true"`; "Juffair" kept | Pass |
+| 14 | Quote form: valid send | Sent, saved, emailed | "Quote request sent", reference **AYM-261003-015** on one line at 375px; enquiry 81 saved (private); email logged: "New quote request AYM-261003-015: GCC cargo, Juffair to Riyadh" (local: logged, not delivered) | Pass |
+| 15 | Business Info change → top bar, header button, footer (then revert) | Values follow the setting | Main phone set to +973 3999 0000 and hours to "… (test)" on the settings page (nonce + capability): top bar, header button, footer and sticky bar showed `tel:+97339990000` / "+973 3999 0000" and the new hours; set back to +973 3444 8236 / "Open 24 hours, every day": all back. Service areas kept the new GCC list | Pass |
+| 16 | Fonts | Roboto only, self-hosted, no Google call | Roboto 400/500/700 loaded from `assets/fonts/` (12.1 / 12.5 / 12.6 KB); 400 preloaded; no `archivo` file or reference left; no request to Google | Pass |
+| 17 | Coverage wording | No UK/USA/Canada/worldwide/abroad/"International cargo" | 0 hits in the rendered pages, the theme, the plugin, the content backup and the editing guide (CLAUDE.md and the design plan name them only to say they are not covered) | Pass |
+| 18 | PHP errors | None | `debug.log` unchanged (3,432 bytes, no entries dated 2026-10-03) | Pass |
+| 19 | Ads gallery | 3 ads, WebP at display size + 2x, lazy, full alt | **Not done: the ads are not on disk.** The section, gallery block and Instagram button are in place; the section is hidden on the site while the gallery is empty | Open |
+

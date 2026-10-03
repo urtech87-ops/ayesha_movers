@@ -15,8 +15,8 @@
 		height: 56px;
 		border-radius: 50%;
 		background: var(--wp--custom--color--chat-green, #25d366);
-		color: var(--wp--preset--color--cab-teal, #0f4d4a);
-		box-shadow: 0 2px 6px rgb(15 77 74 / 0.35);
+		color: var(--wp--preset--color--cab-teal, #0c1239);
+		box-shadow: 0 4px 14px rgb(12 18 57 / 0.3);
 		text-decoration: none;
 	}
 
@@ -24,9 +24,9 @@
 		background: #3ddc77;
 	}
 
-	/* Teal ring with a white gap, visible on white and on the teal footer. */
+	/* Navy ring with a white gap, visible on white and on the navy footer. */
 	.ayesha-wa-float:focus-visible {
-		outline: 3px solid var(--wp--preset--color--cab-teal, #0f4d4a);
+		outline: 3px solid var(--wp--preset--color--cab-teal, #0c1239);
 		outline-offset: 2px;
 		box-shadow: 0 0 0 2px #fff;
 	}

@@ -2,17 +2,17 @@
 Theme Name: AYESHA Movers
 Theme URI: https://github.com/urtech87-ops/ayesha_movers
 Author: AYESHA Movers & Packers
-Description: Block theme for AYESHA Movers & Packers, Bahrain. Colours from the yellow box truck with the teal cab; one font (Archivo variable, self-hosted). Contact details come from the AYESHA Core plugin (Settings > Business Info).
+Description: Block theme for AYESHA Movers & Packers, Bahrain. Navy and gold, one font family (Roboto 400/500/700, self-hosted Latin subsets). Contact details come from the AYESHA Core plugin (Settings > Business Info).
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.0
-Version: 0.6.0
+Version: 0.7.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: ayesha-movers
 Tags: block-theme, full-site-editing
 
-Archivo font: Copyright 2020 The Archivo Project Authors, SIL Open Font License 1.1 (assets/fonts/OFL.txt).
+Roboto font: Copyright 2011 The Roboto Project Authors, SIL Open Font License 1.1 (assets/fonts/OFL.txt).
 */
 
 /* Styles live in theme.json and assets/css/theme.css. */

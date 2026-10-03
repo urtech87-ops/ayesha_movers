@@ -10,15 +10,15 @@
  */
 
 ?>
-<!-- wp:group {"metadata":{"name":"Page heading"},"tagName":"section","align":"full","className":"ayesha-section ayesha-intro ayesha-about-intro","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
-<section class="wp-block-group alignfull ayesha-section ayesha-intro ayesha-about-intro" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:columns {"className":"ayesha-about-intro__columns","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|50"}}}} -->
+<!-- wp:group {"metadata":{"name":"Page heading"},"tagName":"section","align":"full","className":"is-style-teal-panel ayesha-section ayesha-intro ayesha-about-intro","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull is-style-teal-panel ayesha-section ayesha-intro ayesha-about-intro" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:columns {"className":"ayesha-about-intro__columns","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|50"}}}} -->
 <div class="wp-block-columns ayesha-about-intro__columns"><!-- wp:column {"width":"58.33%"} -->
 <div class="wp-block-column" style="flex-basis:58.33%"><!-- wp:heading {"level":1} -->
 <h1 class="wp-block-heading">About AYESHA Movers &amp; Packers</h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"fontSize":"lead"} -->
-<p class="has-lead-font-size">One team for labour, trucks and carpenters. We move homes and offices from door to door, across Bahrain and abroad, day or night.</p>
+<p class="has-lead-font-size">One team for labour, trucks and carpenters. We move homes and offices from door to door, across Bahrain and to Saudi Arabia and the GCC, day or night.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column -->
 

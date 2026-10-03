@@ -2,9 +2,13 @@
 
 Phase 2 deliverable. No theme code yet. Everything here is a plan for Phases 3–7 and can change on your feedback.
 
+> **Phase 7 update (2026-10-03).** Two things in this plan were changed by the user:
+> 1. **Service area: Bahrain to the GCC only** (Bahrain, Saudi Arabia, UAE, Kuwait, Qatar, Oman). Not the UK, USA, Canada, Europe or worldwide. The coverage lines below have been corrected; "International cargo" is now **"GCC cargo"** (anchor `#cargo` kept).
+> 2. **Redesign:** the colours and type in sections 1, 2 and 8 (cab teal, box yellow, Archivo, the chevron strip, the "number painted on the truck" hero) are **replaced**: navy `#0C1239` + gold `#F2B705`, Roboto 400/500/700 (self-hosted Latin subsets), capitals for section titles through CSS only, bordered cards with line icons, a top info bar and a navy footer, after a visual reference the user chose. The layout, content, components and rules in sections 3–7 still apply. See PROGRESS.md (Phase 7) and `docs/design-preview/`.
+
 ## 0. Brief, as I understand it
 
-- **Subject:** a Bahrain crew that moves houses, villas, flats and offices; packs; dismantles and refits furniture; removes and refits ACs, TVs and curtains; rents out Dyna and 6-wheel trucks; and loads 20ft/40ft containers for KSA, the GCC, the UK, the USA and Canada. Open 24 hours.
+- **Subject:** a Bahrain crew that moves houses, villas, flats and offices; packs; dismantles and refits furniture; removes and refits ACs, TVs and curtains; rents out Dyna and 6-wheel trucks; and loads 20ft/40ft containers for KSA and the GCC. Open 24 hours.
 - **Audience:** expats and families in Bahrain and KSA who are moving house, plus small offices. Mostly on a phone, often arriving from a classified ad or Instagram, often in a hurry and mid-move.
 - **Primary job:** one tap to WhatsApp or call. Second job: a detailed quote request for people who want a written price.
 
@@ -138,7 +142,7 @@ Mobile (375 px):
 │ Furniture dismantling...     │
 │ AC, TV and curtain removal   │
 │ Trucks by the hour or day    │
-│ Container cargo abroad       │
+│ Container cargo to the GCC   │
 │ See all services             │
 ├──────────────────────────────┤
 │ How a move works             │  H2 (a real sequence, so numbered)
@@ -154,8 +158,7 @@ Mobile (375 px):
 │ │ Mina Salman, Khalifa port, │
 │ │ airport (list items)       │
 │ │ Saudi Arabia               │
-│ │ GCC countries              │
-│ ● UK, USA, Canada, worldwide │
+│ ● UAE, Kuwait, Qatar, Oman   │
 ├──────────────────────────────┤
 │ Why people book us           │  4 short statements, no icons, no stats
 ├──────────────────────────────┤
@@ -268,8 +271,8 @@ Mobile:
 │ Appliance removal and fixing │
 │ Trucks by the hour or day    │  photo 12 + photo 14; "8 hours or a full
 │  [photo 12]                  │  day"; port + courier depot runs
-│ International cargo         │  20ft / 40ft, customs papers, KSA, GCC,
-│                              │  UK, USA, Canada
+│ GCC cargo                   │  20ft / 40ft, customs papers, KSA and
+│                              │  the GCC
 ├──────────────────────────────┤
 │ Questions (service FAQs)     │
 │▓ CTA band ▓ / footer / [S]   │
@@ -351,7 +354,7 @@ All components are block patterns built from core blocks so the client can edit 
 | **Floating WhatsApp button** | Small plugin-rendered element using the settings value. | **Desktop only (≥ 960 px)**, bottom-right, 56 px round, chat-green with teal icon, accessible label "Chat on WhatsApp". On mobile the sticky bar already has WhatsApp, so the floating button is not shown (two WhatsApp buttons on a phone screen would be clutter). |
 | **Service card** | Pattern: H3 + paragraph + list + "Ask about this on WhatsApp" link. Two variants: **lead** (larger, concrete background, with list) and **row** (title + one line, no box). | Each card's WhatsApp link has the service name in the prefilled message ("Hi, I'd like a price for furniture dismantling and refitting."). Radius 4 px, no shadow. Cards are not all the same size: hierarchy follows importance. |
 | **Process steps** | Pattern: ordered list (`<ol>`), 4 steps. | Numbered because it is a real sequence. Mobile: vertical, numbers in display type at step 2. Desktop: horizontal with a 2 px teal line joining the numbers. |
-| **Service-area block** | Synced pattern: a route line (list with a vertical line and stop dots, styled with CSS). | Stops: Your door → Manama and every city in Bahrain → Mina Salman, Khalifa Bin Salman Port, the airport → Saudi Arabia → all GCC countries → UK, USA, Canada and worldwide. Plain list in the markup, so it reads correctly to screen readers and search engines. |
+| **Service-area block** | Synced pattern: a route line (list with a vertical line and stop dots, styled with CSS). | Stops: Your door → Manama and every city in Bahrain → Mina Salman, Khalifa Bin Salman Port, the airport → Saudi Arabia → UAE, Kuwait, Qatar and Oman. Plain list in the markup, so it reads correctly to screen readers and search engines. |
 | **FAQ** | Core Details blocks (`<details>/<summary>`). | No JavaScript. Question in step 1, 600 weight; a + that turns into − on open. Answers only use client facts; questions we can't answer yet (e.g. how pricing is calculated) are listed as open questions, not invented. Also output as FAQPage JSON-LD in Phase 7. |
 | **Reviews (placeholder)** | Pattern with 3 cards, each clearly labelled "Placeholder: replace with a real customer review", plus a "Show reviews" toggle in the Business Info settings (off by default). | **Hidden on the front end while the toggle is off**, so placeholders never reach visitors. When the client adds real reviews: name, area, date, source (Google/Instagram) and a link to the original. No star graphics unless the source has a star rating. |
 | **CTA band** | Synced pattern. Box-yellow, H2 "Moving soon? Message us now.", the number in display type, WhatsApp + Call buttons. | Appears once per page, just above the footer. |
@@ -363,7 +366,7 @@ All components are block patterns built from core blocks so the client can edit 
 Grouped into short fieldsets so it feels like 3 small steps on one page (no multi-step JavaScript wizard):
 
 1. **About you:** name*, phone/WhatsApp number* (`type=tel`, Bahrain/KSA format hint), email (optional), "Best way to reply" (WhatsApp / call / email).
-2. **Your move:** type of move* (house / villa / flat / office / international cargo / truck hire only / other); moving from (area)*; moving to (area or country)*; preferred date (`type=date`) + "my date is flexible"; property size (studio, 1–5+ bedrooms, villa, office); floor and lift at pickup and drop-off.
+2. **Your move:** type of move* (house / villa / flat / office / GCC cargo / truck hire only / other); moving from (area)*; moving to (area or country)*; preferred date (`type=date`) + "my date is flexible"; property size (studio, 1–5+ bedrooms, villa, office); floor and lift at pickup and drop-off.
 3. **What you need:** checkboxes: packing, unpacking, fragile/crockery packing, furniture dismantling and refitting, AC removal/fitting, TV removal/mounting, curtains and blinds, debris removal, 20ft/40ft container, customs documents. Free-text "Big or special items". Truck hire: Dyna or 6-wheel, 8 hours or full day.
 
 Rules: labels above fields (never placeholder-only), 48 px tall inputs, inline errors in plain words ("Enter a phone number so we can reply"), the submit button says **Send quote request**, and the success message says **Quote request sent** and offers a WhatsApp button with the reference number prefilled, so they can send photos straight away. Honeypot field, nonce, rate limit, sanitised input, saved as a private submission and emailed to the client.
@@ -392,15 +395,15 @@ Site title: **AYESHA Movers & Packers**. Titles ≤ 60 characters, descriptions 
 | Page | Title tag | Meta description | H1 | Target keywords |
 |---|---|---|---|---|
 | Home | Movers and Packers in Bahrain, 24 Hours \| AYESHA Movers | House, flat, villa and office shifting across Bahrain, with packing, carpenters and trucks. Cargo to KSA and GCC. Open 24 hours. WhatsApp +973 3444 8236. | Movers and packers in Bahrain, day and night. | movers Bahrain, packers and movers Manama, house shifting Bahrain |
-| About Us | About AYESHA Movers & Packers, Bahrain | One team for labour, trucks and carpenters. Door-to-door moves across Bahrain and to KSA, the GCC and worldwide, day or night. | About AYESHA Movers & Packers | movers Bahrain, moving company Bahrain |
+| About Us | About AYESHA Movers & Packers, Bahrain | One team for labour, trucks and carpenters. Door-to-door moves across Bahrain and to Saudi Arabia and the GCC, day or night. | About AYESHA Movers & Packers | movers Bahrain, moving company Bahrain |
 | Our Services | House Shifting, Furniture & Cargo Services \| AYESHA | House and office shifting, packing, furniture dismantling and refitting, AC and TV removal, truck hire and container cargo to KSA. | Our services | house shifting Bahrain, furniture dismantling Bahrain, cargo to KSA |
-| Contact Us | Contact AYESHA Movers: Call, WhatsApp or Get a Quote | Call or WhatsApp +973 3444 8236, any time, day or night. Or send a detailed quote request for your move in Bahrain or abroad. | Contact us | packers and movers Manama, movers Bahrain contact |
+| Contact Us | Contact AYESHA Movers: Call, WhatsApp or Get a Quote | Call or WhatsApp +973 3444 8236, any time, day or night. Or send a detailed quote request for your move in Bahrain or to the GCC. | Contact us | packers and movers Manama, movers Bahrain contact |
 
 Keyword placement (natural, no stuffing):
 - **movers Bahrain / packers and movers Manama:** Home H1 and first paragraph; service-area block ("Manama and every city").
 - **house shifting Bahrain:** Services H2 for service 1, Home lead service card.
 - **furniture dismantling Bahrain:** Services H2 "Furniture dismantling and refitting", FAQ question.
-- **cargo to KSA:** Services H2 "International cargo", service-area stop "Saudi Arabia", FAQ "Can you move my things to Saudi Arabia?".
+- **cargo to KSA:** Services H2 "GCC cargo", service-area stop "Saudi Arabia", FAQ "Can you move my things to Saudi Arabia?".
 
 ### JSON-LD (output by `ayesha-core` on every page, values from Business Info settings)
 
@@ -438,10 +441,7 @@ Keyword placement (natural, no stuffing):
     { "@type": "Country", "name": "United Arab Emirates" },
     { "@type": "Country", "name": "Kuwait" },
     { "@type": "Country", "name": "Qatar" },
-    { "@type": "Country", "name": "Oman" },
-    { "@type": "Country", "name": "United Kingdom" },
-    { "@type": "Country", "name": "United States" },
-    { "@type": "Country", "name": "Canada" }
+    { "@type": "Country", "name": "Oman" }
   ],
   "sameAs": ["https://www.instagram.com/ayesha_movers_packers/"],
   "makesOffer": [ "… one Offer/Service per service, generated from the 6 services …" ]

@@ -8,7 +8,7 @@
 - Email: ayeshamoversbh786@gmail.com
 - Instagram: https://www.instagram.com/ayesha_movers_packers/
 - No street address is published. Leave the address field empty in settings and don't show an address on the site until the client provides one.
-- Coverage: all of Bahrain (Manama and every city), Mina Salman port, Khalifa Bin Salman Port, airport cargo; Saudi Arabia (KSA); all GCC countries; international moves to UK, USA, Canada and worldwide.
+- Coverage: all of Bahrain (Manama and every city), Mina Salman port, Khalifa Bin Salman Port, airport cargo; Saudi Arabia (KSA) and the other GCC countries (UAE, Kuwait, Qatar, Oman). Bahrain to the GCC only: NOT the UK, USA, Canada, Europe or "worldwide" (corrected by the user 2026-10-03; still being confirmed with the client).
 - Available 24 hours, day and night.
 - Services:
   1. House, villa, flat and office shifting: packing, loading, unloading, "all house internal settings", removal of packing debris
@@ -16,7 +16,7 @@
   3. Furniture: professional carpenters for dismantling and re-fixing furniture, curtains, and new furniture setups for offices and houses
   4. Appliance removal & fixing: split units / air conditioners, LCD and LED TVs, curtains and blinds
   5. Transportation: Dyna trucks and 6-wheel trucks, rented for 8 hours or a full day; transport to Mina Salman, Khalifa port, the airport, and courier depots (DHL, Aramex, GLS)
-  6. International cargo: 20ft and 40ft container loading and unloading, customs documentation, moves to KSA/GCC/UK/USA/Canada
+  6. GCC cargo (anchor #cargo): 20ft and 40ft container loading and unloading, customs documentation, moves to KSA and the GCC
 - Selling points: lowest rates with labour included, door-to-door, responsible service, labour + trucks + carpenters all from one team.
 - The client says "we have been moving homes for decades". The current site also says "Est. 2026", which conflicts. Do NOT print a founding year or "years of experience" number anywhere; it is an open question for the client.
 - Reviews: there are no real customer reviews yet. NEVER write fake testimonials. The reviews section must ship as clearly marked placeholders that the client replaces with real reviews, and it must be hidden on the front end until it has real content.

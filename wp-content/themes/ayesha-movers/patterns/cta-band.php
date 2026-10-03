@@ -1,10 +1,10 @@
 <?php
 /**
- * Title: Call to action band (yellow, shared)
+ * Title: Call to action band (gold, shared)
  * Slug: ayesha-movers/cta-band
  * Categories: ayesha-movers
  * Keywords: call to action, cta, whatsapp, call, contact
- * Description: The yellow band above the footer: "Moving soon? Message us now.", the main number and the WhatsApp and Call buttons. Shared: inserts the synced pattern "CTA band", so editing it once updates every page.
+ * Description: The gold band above the footer: "Moving soon? Message us now.", the main number and the WhatsApp and Call buttons. Shared: inserts the synced pattern "CTA band", so editing it once updates every page.
  *
  * @package AyeshaMovers
  */
