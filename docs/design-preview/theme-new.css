@@ -1,0 +1,1385 @@
+/*
+ * AYESHA Movers theme styles, Phase 7 redesign (navy + gold, Roboto).
+ * PREVIEW COPY: this file is the candidate for assets/css/theme.css. In the preview the
+ * palette and font variables are set here; in the theme they come from theme.json.
+ * Visual reference: the layout and spacing of a logistics theme (top info bar, white header,
+ * navy service band, centred section titles with a short bar, bordered icon cards,
+ * navy footer). Our own code, icons and content.
+ */
+
+/* ---------------------------------------------------------------
+ * 0. Preview only: what theme.json will provide
+ * ------------------------------------------------------------- */
+@font-face { font-family: "Roboto"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/roboto-latin-400.woff2") format("woff2"); }
+@font-face { font-family: "Roboto"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/roboto-latin-500.woff2") format("woff2"); }
+@font-face { font-family: "Roboto"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/roboto-latin-700.woff2") format("woff2"); }
+
+/* Arial sized to Roboto, so the swap doesn't reflow text. */
+@font-face {
+	font-family: "Roboto Fallback";
+	src: local("Arial"), local("ArialMT");
+	size-adjust: 100.3%;
+	ascent-override: 92.4%;
+	descent-override: 24.3%;
+	line-gap-override: 0%;
+}
+
+:root {
+	/* Palette (theme.json slugs stay the same so no saved block changes: the names change) */
+	--wp--preset--color--cab-teal: #0C1239;   /* Navy */
+	--wp--preset--color--box-yellow: #F2B705; /* Gold */
+	--wp--preset--color--tarmac: #4A5068;     /* Slate (body text) */
+	--wp--preset--color--concrete: #F4F5F8;   /* Mist (light sections) */
+	--wp--preset--color--paper: #FFFFFF;
+	--wp--preset--font-family--body: Roboto, "Roboto Fallback", Arial, sans-serif;
+	--wp--preset--font-family--display: Roboto, "Roboto Fallback", Arial, sans-serif;
+	--wp--custom--radius: 2px;
+}
+
+/* ---------------------------------------------------------------
+ * 1. Tokens and icons (our own simple line icons, drawn for this site)
+ * ------------------------------------------------------------- */
+:root {
+	--ayesha-navy: var(--wp--preset--color--cab-teal);
+	--ayesha-navy-deep: #070B26;
+	--ayesha-gold: var(--wp--preset--color--box-yellow);
+	--ayesha-slate: var(--wp--preset--color--tarmac);
+	--ayesha-mist: var(--wp--preset--color--concrete);
+	--ayesha-line: #E1E4EB;
+	--ayesha-line-dark: rgb(255 255 255 / 0.16);
+	--ayesha-soft: #C5C9DA;
+
+	--ayesha-icon-phone: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z'/></svg>");
+	--ayesha-icon-whatsapp: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 1.8a8.2 8.2 0 1 1-4.2 15.3l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 0 1 12 3.8Z'/><path d='M8.7 7.3c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3 4.9 4.3 2.4 1 2.9.8 3.4.8.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3l-1.9-.9c-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.7-1.6-1.9-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.5-.5-.6-.5h-.5Z'/></svg>");
+	--ayesha-icon-mail: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1 2.4V17h16V7.4l-8 5.3-8-5.3ZM5.8 7 12 11.1 18.2 7H5.8Z'/></svg>");
+	--ayesha-icon-instagram: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.3-3.3a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z'/></svg>");
+	--ayesha-icon-clock: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'><circle cx='12' cy='12' r='9'/><path d='M12 7v5l3 2'/></svg>");
+
+	/* Service icons (line, 1.6 stroke) */
+	--ayesha-icon-house: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'><path d='M3 10.5 12 3l9 7.5'/><path d='M5 9v12h14V9'/><path d='M10 21v-6h4v6'/></svg>");
+	--ayesha-icon-box: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'><path d='M12 3 3 7.5v9L12 21l9-4.5v-9L12 3Z'/><path d='M3 7.5 12 12l9-4.5M12 12v9M7.5 5.3l9 4.5'/></svg>");
+	--ayesha-icon-sofa: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round' stroke-linecap='round'><path d='M5 11V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3'/><path d='M3 12a2 2 0 0 1 4 0v2h10v-2a2 2 0 0 1 4 0v5H3v-5Z'/><path d='M5 17v2M19 17v2'/></svg>");
+	--ayesha-icon-tv: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round' stroke-linecap='round'><rect x='3' y='4' width='18' height='12' rx='1'/><path d='M8 20h8M12 16v4'/></svg>");
+	--ayesha-icon-truck: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'><path d='M2 6h12v11H2zM14 10h4l3 3.5V17h-7'/><circle cx='6' cy='18' r='2' fill='white'/><circle cx='17' cy='18' r='2' fill='white'/></svg>");
+	--ayesha-icon-container: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'><rect x='2.5' y='6' width='19' height='12' rx='.5'/><path d='M6.5 8.5v7M10 8.5v7M13.5 8.5v7M17 8.5v7'/></svg>");
+	--ayesha-icon-tag: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'><path d='M3 12V3h9l9 9-9 9-9-9Z'/><circle cx='7.5' cy='7.5' r='1.5'/></svg>");
+	--ayesha-icon-door: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'><path d='M5 21V3h11v18M3 21h18'/><circle cx='13' cy='12' r='1'/></svg>");
+	--ayesha-icon-team: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'><circle cx='9' cy='8' r='3.5'/><path d='M2.5 20a6.5 6.5 0 0 1 13 0'/><path d='M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14a6.5 6.5 0 0 1 3.5 6'/></svg>");
+	--ayesha-icon-shield: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round' stroke-linecap='round'><path d='M12 3 4.5 6v6c0 4.5 3.2 7.8 7.5 9 4.3-1.2 7.5-4.5 7.5-9V6L12 3Z'/><path d='m8.5 12 2.5 2.5 4.5-5'/></svg>");
+}
+
+/* An icon is a masked box in the current colour. */
+.ayesha-icon,
+:where(.ayesha-service-lead, .ayesha-service-row, .ayesha-svc__section, .ayesha-reason, .ayesha-topbar__item)::before {
+	background: currentColor;
+	-webkit-mask: var(--ayesha-icon, var(--ayesha-icon-box)) center / contain no-repeat;
+	mask: var(--ayesha-icon, var(--ayesha-icon-box)) center / contain no-repeat;
+}
+
+/* Which icon: chosen from the service's link or anchor, so nothing extra is stored in the page. */
+:is(.ayesha-service-lead, .ayesha-service-row):has(a[href$="#house-shifting"]),
+.ayesha-svc__section:has(#house-shifting),
+.ayesha-jump__list a[href="#house-shifting"] { --ayesha-icon: var(--ayesha-icon-house); }
+:is(.ayesha-service-lead, .ayesha-service-row):has(a[href$="#packing"]),
+.ayesha-svc__section:has(#packing),
+.ayesha-jump__list a[href="#packing"] { --ayesha-icon: var(--ayesha-icon-box); }
+:is(.ayesha-service-lead, .ayesha-service-row):has(a[href$="#furniture"]),
+.ayesha-svc__section:has(#furniture),
+.ayesha-jump__list a[href="#furniture"] { --ayesha-icon: var(--ayesha-icon-sofa); }
+:is(.ayesha-service-lead, .ayesha-service-row):has(a[href$="#appliances"]),
+.ayesha-svc__section:has(#appliances),
+.ayesha-jump__list a[href="#appliances"] { --ayesha-icon: var(--ayesha-icon-tv); }
+:is(.ayesha-service-lead, .ayesha-service-row):has(a[href$="#trucks"]),
+.ayesha-svc__section:has(#trucks),
+.ayesha-jump__list a[href="#trucks"] { --ayesha-icon: var(--ayesha-icon-truck); }
+:is(.ayesha-service-lead, .ayesha-service-row):has(a[href$="#cargo"]),
+.ayesha-svc__section:has(#cargo),
+.ayesha-jump__list a[href="#cargo"] { --ayesha-icon: var(--ayesha-icon-container); }
+
+/* ---------------------------------------------------------------
+ * 2. Type: Roboto 400 / 500 / 700. Section titles in capitals with a short gold bar.
+ * ------------------------------------------------------------- */
+body {
+	-webkit-text-size-adjust: 100%;
+	color: var(--ayesha-slate);
+	font-family: var(--wp--preset--font-family--body);
+	font-size: 1.0625rem;
+	line-height: 1.65;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: var(--ayesha-navy);
+	font-family: var(--wp--preset--font-family--display);
+	font-stretch: 100%;
+	letter-spacing: 0;
+}
+
+h1 {
+	font-size: clamp(2.125rem, 1.6rem + 2.2vw, 3.25rem);
+	font-weight: 700;
+	line-height: 1.12;
+	text-transform: uppercase;
+}
+
+h2 {
+	font-size: clamp(1.625rem, 1.4rem + 0.9vw, 2.125rem);
+	font-weight: 700;
+	line-height: 1.2;
+	text-transform: uppercase;
+	letter-spacing: 0.01em;
+}
+
+h3 {
+	font-size: 1.25rem;
+	font-weight: 500;
+	line-height: 1.3;
+}
+
+.has-lead-font-size {
+	font-size: 1.1875rem !important;
+	line-height: 1.6;
+}
+
+h3.has-lead-font-size {
+	font-size: 1.1875rem !important;
+	line-height: 1.3;
+}
+
+strong, b { font-weight: 500; color: var(--ayesha-navy); }
+
+a[href^="tel:"],
+.is-style-display-number {
+	font-variant-numeric: tabular-nums;
+}
+
+p, li { overflow-wrap: break-word; }
+a[href^="mailto:"] { overflow-wrap: anywhere; }
+
+a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
+
+.is-style-display-number {
+	font-family: var(--wp--preset--font-family--display);
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: -0.01em;
+	color: var(--ayesha-navy);
+}
+
+.is-style-display-number:not([class*="-font-size"]) {
+	font-size: clamp(1.75rem, 1.5rem + 1vw, 2.375rem);
+}
+
+.is-style-display-number a { color: inherit; text-decoration: none; }
+.is-style-display-number a:hover { text-decoration: underline; text-decoration-thickness: 0.06em; }
+
+/* The section-title bar: a 56 x 3 gold rule under the heading. */
+.ayesha-section > h2,
+.ayesha-why > h2,
+.ayesha-questions > h2,
+.ayesha-intro > h1 {
+	position: relative;
+	padding-block-end: 1rem;
+}
+
+.ayesha-section > h2::after,
+.ayesha-why > h2::after,
+.ayesha-questions > h2::after,
+.ayesha-intro > h1::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 56px;
+	height: 3px;
+	background: var(--ayesha-gold);
+}
+
+/* Centred titles (How a move works, Where we go, the gallery, Services FAQ), as on the reference. */
+:is(.ayesha-how, .ayesha-where, .ayesha-gallery, .ayesha-svc-faq) > h2 {
+	text-align: center;
+	margin-inline: auto !important;
+}
+
+:is(.ayesha-how, .ayesha-where, .ayesha-gallery, .ayesha-svc-faq) > h2::after {
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+:is(.ayesha-where) > p {
+	text-align: center;
+	margin-inline: auto !important;
+}
+
+/* ---------------------------------------------------------------
+ * 3. Layout
+ * ------------------------------------------------------------- */
+.wp-site-blocks > * { margin-block-start: 0; }
+
+.wp-site-blocks {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	min-height: 100svh;
+}
+
+.wp-site-blocks > main,
+.wp-site-blocks > .ayesha-main { flex: 1 0 auto; }
+
+:where(p, .wp-block-list, .wp-block-details) { max-inline-size: 68ch; }
+
+.is-layout-constrained > :is(p, .wp-block-list, .wp-block-details):not(.alignwide):not(.alignfull) {
+	margin-left: max(0px, calc((100% - var(--wp--style--global--content-size)) / 2)) !important;
+	margin-right: auto !important;
+}
+
+.wp-block-post-content > .alignfull { margin-block-start: 0; }
+.ayesha-section :is(h2, h3) { margin-block-start: 0; }
+
+/* ---------------------------------------------------------------
+ * 4. Focus: navy ring with a white gap on light backgrounds, gold ring on navy.
+ * ------------------------------------------------------------- */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible,
+.wp-element-button:focus-visible {
+	outline: 3px solid var(--ayesha-navy);
+	outline-offset: 2px;
+	box-shadow: 0 0 0 2px #fff;
+}
+
+:is(.is-style-teal-panel, .ayesha-topbar, .ayesha-services, .ayesha-hero__panel, .ayesha-intro) :focus-visible,
+:is(.is-style-teal-panel, .ayesha-topbar, .ayesha-services, .ayesha-hero__panel, .ayesha-intro) .wp-element-button:focus-visible {
+	outline-color: var(--ayesha-gold);
+	box-shadow: none;
+}
+
+.ayesha-service-lead :focus-visible,
+.ayesha-service-lead .wp-element-button:focus-visible {
+	outline-color: var(--ayesha-navy);
+}
+
+.skip-link.screen-reader-text:focus { background: #fff; color: var(--ayesha-navy); }
+
+/* ---------------------------------------------------------------
+ * 5. Buttons: 48px, square-ish (2px), Roboto 500. Icons from the link type.
+ *    Pairs: white on navy, navy on gold, navy on WhatsApp green.
+ * ------------------------------------------------------------- */
+.wp-block-button__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	min-height: 48px;
+	box-sizing: border-box;
+	padding: 0.75rem 1.5rem;
+	border-radius: 2px;
+	background: var(--ayesha-navy);
+	color: #fff;
+	font-family: var(--wp--preset--font-family--body);
+	font-size: 1rem;
+	font-weight: 500;
+	letter-spacing: 0.01em;
+	text-decoration: none;
+	transition: background-color 150ms ease, color 150ms ease;
+}
+
+.wp-block-button__link:hover { background: #1E2660; color: #fff; }
+
+.wp-block-button__link:is([href^="tel:"], [href*="wa.me/"], [href*="instagram.com"])::before {
+	content: "";
+	flex: none;
+	width: 1.25rem;
+	height: 1.25rem;
+	background: currentColor;
+	-webkit-mask: var(--ayesha-icon-phone) center / contain no-repeat;
+	mask: var(--ayesha-icon-phone) center / contain no-repeat;
+}
+
+.wp-block-button__link[href*="wa.me/"]::before { -webkit-mask-image: var(--ayesha-icon-whatsapp); mask-image: var(--ayesha-icon-whatsapp); }
+.wp-block-button__link[href*="instagram.com"]::before { -webkit-mask-image: var(--ayesha-icon-instagram); mask-image: var(--ayesha-icon-instagram); }
+
+.wp-block-button.is-style-whatsapp .wp-block-button__link { background: #25D366; color: var(--ayesha-navy); }
+.wp-block-button.is-style-whatsapp .wp-block-button__link:hover { background: #3DDC77; color: var(--ayesha-navy); }
+
+.wp-block-button.is-style-yellow .wp-block-button__link,
+.is-style-teal-panel .wp-block-button:not(.is-style-whatsapp):not(.is-style-outline) .wp-block-button__link {
+	background: var(--ayesha-gold);
+	color: var(--ayesha-navy);
+}
+
+.wp-block-button.is-style-yellow .wp-block-button__link:hover,
+.is-style-teal-panel .wp-block-button:not(.is-style-whatsapp):not(.is-style-outline) .wp-block-button__link:hover {
+	background: #FFC929;
+	color: var(--ayesha-navy);
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link {
+	background: transparent;
+	color: currentColor;
+	border: 2px solid currentColor;
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link:hover { background: var(--ayesha-navy); color: #fff; border-color: var(--ayesha-navy); }
+
+/* "Text link": underlined, with the icon, still 48px tall. */
+.wp-block-button.is-style-text-link .wp-block-button__link,
+.wp-block-button.is-style-text-link .wp-block-button__link:hover {
+	background: transparent;
+	color: currentColor;
+	padding-inline: 0;
+	font-weight: 500;
+	text-decoration: underline;
+	text-underline-offset: 0.25em;
+}
+
+.wp-block-button.is-style-text-link .wp-block-button__link:hover { text-decoration-thickness: 2px; }
+
+/* ---------------------------------------------------------------
+ * 6. Panels (Group block styles). Same class names; new colours and names in the editor:
+ *    teal-panel = Navy panel, yellow-panel = Gold panel, concrete-panel = Light grey panel.
+ * ------------------------------------------------------------- */
+.is-style-teal-panel { background: var(--ayesha-navy); color: var(--ayesha-soft); }
+.is-style-teal-panel :is(h1, h2, h3, h4, strong) { color: #fff; }
+.is-style-teal-panel a { color: #fff; }
+.is-style-teal-panel :is(.wp-block-site-title, .is-style-display-number) { color: var(--ayesha-gold); }
+
+.is-style-yellow-panel { background: var(--ayesha-gold); color: var(--ayesha-navy); }
+.is-style-yellow-panel :is(h1, h2, h3, p) { color: var(--ayesha-navy); }
+
+.is-style-concrete-panel { background: var(--ayesha-mist); color: var(--ayesha-slate); }
+
+/* The old chevron strip becomes a thin gold rule (the block stays; the client can delete it). */
+.wp-block-spacer.is-style-chevron-strip {
+	height: 4px !important;
+	margin-block: 0 !important;
+	background: var(--ayesha-gold);
+}
+
+/* ---------------------------------------------------------------
+ * 7. Top info bar (navy, 960px and up): main number, email, hours, Instagram.
+ *    A group in the Header template part; every value is bound to Business Info.
+ * ------------------------------------------------------------- */
+.ayesha-topbar {
+	background: var(--ayesha-navy);
+	color: var(--ayesha-soft);
+	font-size: 0.875rem;
+}
+
+.ayesha-topbar__inner {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0 1.75rem;
+	min-height: 44px;
+}
+
+.ayesha-topbar__item {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin: 0 !important;
+}
+
+.ayesha-topbar__item::before {
+	content: "";
+	flex: none;
+	width: 15px;
+	height: 15px;
+	color: var(--ayesha-gold);
+	background: var(--ayesha-gold);
+}
+
+.ayesha-topbar__item:has(a[href^="tel:"]) { --ayesha-icon: var(--ayesha-icon-phone); }
+.ayesha-topbar__item:has(a[href^="mailto:"]) { --ayesha-icon: var(--ayesha-icon-mail); }
+.ayesha-topbar__item--hours { --ayesha-icon: var(--ayesha-icon-clock); }
+.ayesha-topbar__item:has(a[href*="instagram.com"]) { --ayesha-icon: var(--ayesha-icon-instagram); margin-inline-start: auto !important; }
+
+.ayesha-topbar a { color: #fff; text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; }
+.ayesha-topbar a:hover { text-decoration: underline; }
+
+@media (max-width: 959.98px) {
+	.ayesha-topbar { display: none; }
+}
+
+/* ---------------------------------------------------------------
+ * 8. Header: white, 84px on computers, wordmark left, menu in capitals, gold Call button.
+ * ------------------------------------------------------------- */
+.ayesha-header {
+	background: #fff;
+	border-bottom: 1px solid var(--ayesha-line);
+}
+
+.ayesha-header__bar {
+	min-height: 68px;
+	gap: 1rem;
+}
+
+@media (min-width: 960px) {
+	.ayesha-header__bar { min-height: 84px; }
+}
+
+.ayesha-header .wp-block-site-title {
+	margin: 0;
+	padding-block: 0.5rem;
+	font-size: 1.25rem;
+	font-weight: 700;
+	line-height: 1.1;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+	color: var(--ayesha-navy);
+}
+
+.ayesha-header .wp-block-site-title a { color: inherit; text-decoration: none; }
+
+/* The "& Packers" part reads lighter: the wordmark is one Site Title block, so this is the whole title in navy. */
+
+.ayesha-header__actions { gap: 0.5rem; }
+
+@media (min-width: 960px) {
+	.ayesha-header__actions { gap: 2rem; }
+}
+
+.ayesha-header__call .wp-block-button__link {
+	white-space: nowrap;
+	background: var(--ayesha-gold);
+	color: var(--ayesha-navy);
+	font-weight: 700;
+}
+
+.ayesha-header__call .wp-block-button__link:hover { background: #FFC929; color: var(--ayesha-navy); }
+
+.ayesha-nav .wp-block-navigation-item__content {
+	display: inline-flex;
+	align-items: center;
+	min-height: 48px;
+	color: var(--ayesha-navy);
+	font-size: 0.9375rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	text-decoration: none;
+}
+
+/* Current page and hover: a 3px gold bar under the word. */
+@media (min-width: 960px) {
+	.ayesha-nav .wp-block-navigation-item__content { position: relative; }
+
+	.ayesha-nav .wp-block-navigation-item__content::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 6px;
+		height: 3px;
+		background: var(--ayesha-gold);
+		transform: scaleX(0);
+		transition: transform 150ms ease;
+	}
+
+	.ayesha-nav .wp-block-navigation-item__content:hover::after,
+	.ayesha-nav [aria-current="page"]::after { transform: scaleX(1); }
+
+	.ayesha-nav [aria-current="page"] { font-weight: 700; }
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container-open,
+.ayesha-nav .wp-block-navigation__responsive-container-close {
+	width: 48px;
+	height: 48px;
+	align-items: center;
+	justify-content: center;
+	color: var(--ayesha-navy);
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container-close { display: flex; top: 8px; right: 8px; }
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open {
+	--navigation-layout-justification-setting: flex-start;
+	--navigation-layout-justify: flex-start;
+	padding: 1rem;
+	text-align: left;
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-content {
+	align-items: flex-start;
+	padding-top: 3.5rem;
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container {
+	align-items: stretch;
+	gap: 0;
+	width: 100%;
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item {
+	border-bottom: 1px solid var(--ayesha-line);
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content {
+	width: 100%;
+	min-height: 56px;
+	font-size: 1.125rem;
+	font-weight: 700;
+}
+
+@media (max-width: 959.98px) {
+	.ayesha-header__call { order: -1; }
+
+	.ayesha-header__call .wp-block-button__link {
+		width: 48px;
+		height: 48px;
+		padding: 0;
+		font-size: 0;
+		gap: 0;
+	}
+
+	.ayesha-header__call .wp-block-button__link::before { width: 22px; height: 22px; }
+
+	.ayesha-header .wp-block-site-title { font-size: 1.0625rem; }
+}
+
+@media (min-width: 600px) and (max-width: 959.98px) {
+	.ayesha-nav .wp-block-navigation__responsive-container-open:not(.always-shown) { display: flex; }
+	.ayesha-nav .wp-block-navigation__responsive-container:not(.hidden-by-default):not(.is-menu-open) { display: none; }
+}
+
+/* ---------------------------------------------------------------
+ * 9. Footer: navy, gold rule on top, small capitals for the menu, a deeper navy copyright bar.
+ * ------------------------------------------------------------- */
+.ayesha-footer__body {
+	padding-block: 4rem 0;
+	font-size: 0.9375rem;
+}
+
+.ayesha-footer .wp-block-site-title {
+	font-size: 1.375rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+	color: #fff !important;
+}
+
+.ayesha-footer__label {
+	margin-block: 0;
+	color: var(--ayesha-soft);
+	font-size: 0.875rem;
+}
+
+.ayesha-footer__contacts > * + * { margin-block-start: 0; }
+
+.ayesha-footer__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	column-gap: 0.5rem;
+	border-bottom: 1px solid var(--ayesha-line-dark);
+}
+
+.ayesha-footer__row > p { margin-block: 0 !important; font-weight: 500; }
+.ayesha-footer__row > .ayesha-footer__label { flex: 0 0 5.5rem; font-weight: 400; }
+.ayesha-footer__row a { display: inline-flex; align-items: center; min-height: 44px; color: #fff; text-decoration: none; }
+.ayesha-footer__row a:hover { text-decoration: underline; }
+
+.ayesha-footer__row--main { display: block; padding-block-end: 0.75rem; }
+.ayesha-footer__row--main .is-style-display-number { color: var(--ayesha-gold); font-size: clamp(1.75rem, 1.5rem + 1vw, 2.25rem); }
+.ayesha-footer__row--main .is-style-display-number a { color: var(--ayesha-gold); }
+
+.ayesha-footer .wp-block-navigation .wp-block-navigation-item__content {
+	min-height: 44px;
+	color: #fff;
+	font-size: 0.875rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	text-decoration: none;
+}
+
+.ayesha-footer .wp-block-navigation .wp-block-navigation-item__content:hover { color: var(--ayesha-gold); }
+
+/* The copyright line sits in a deeper navy bar across the full width. */
+.ayesha-footer__small {
+	margin-block-start: 3rem !important;
+	padding-block: 1.25rem;
+	border-top: 1px solid var(--ayesha-line-dark);
+	box-shadow: 0 0 0 100vmax var(--ayesha-navy-deep);
+	clip-path: inset(0 -100vmax);
+	background: var(--ayesha-navy-deep);
+	font-size: 0.875rem;
+	max-inline-size: none !important;
+}
+
+.ayesha-footer__body { overflow-x: clip; }
+
+@media (max-width: 781.98px) {
+	.ayesha-footer__body { padding-block: 3rem 0; }
+	.ayesha-footer__about > * + * { margin-block-start: 0.25rem; }
+	.ayesha-footer__row a[href^="mailto:"] { font-size: 0.875rem; }
+
+	.ayesha-footer__nav .wp-block-navigation__container {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		column-gap: 1rem;
+		width: 100%;
+	}
+
+	.ayesha-footer__small { margin-block-start: 2rem !important; }
+}
+
+/* ---------------------------------------------------------------
+ * 10. Sticky mobile Call | WhatsApp bar (under 960px): navy and WhatsApp green.
+ * ------------------------------------------------------------- */
+.ayesha-sticky-bar {
+	position: fixed;
+	inset-inline: 0;
+	bottom: 0;
+	z-index: 100;
+	margin: 0 !important;
+	padding: 0 0 env(safe-area-inset-bottom);
+	background: var(--ayesha-navy);
+	border-top: 3px solid var(--ayesha-gold);
+}
+
+.ayesha-sticky-bar .wp-block-buttons,
+.ayesha-menu-actions.wp-block-buttons {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 0;
+	width: 100%;
+	margin: 0;
+}
+
+:is(.ayesha-sticky-bar, .ayesha-menu-actions) .wp-block-button { flex: 1 1 50%; width: 50%; margin: 0; }
+
+:is(.ayesha-sticky-bar, .ayesha-menu-actions) .wp-block-button__link {
+	width: 100%;
+	height: 56px;
+	border-radius: 0;
+	font-size: 1.0625rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+:is(.ayesha-sticky-bar, .ayesha-menu-actions) .wp-block-button__link:focus-visible {
+	outline: 3px solid var(--ayesha-gold);
+	outline-offset: -6px;
+	box-shadow: none;
+}
+
+:is(.ayesha-sticky-bar, .ayesha-menu-actions) .is-style-whatsapp .wp-block-button__link:focus-visible { outline-color: var(--ayesha-navy); }
+
+.ayesha-menu-actions.wp-block-buttons { display: none; }
+
+.ayesha-nav .is-menu-open .ayesha-menu-actions.wp-block-buttons {
+	display: flex;
+	position: fixed;
+	inset-inline: 0;
+	bottom: 0;
+	z-index: 2;
+	padding-bottom: env(safe-area-inset-bottom);
+	background: var(--ayesha-navy);
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open {
+	padding-bottom: calc(56px + env(safe-area-inset-bottom) + 1rem);
+}
+
+@media (max-width: 959.98px) {
+	body { padding-bottom: calc(59px + env(safe-area-inset-bottom)); }
+	.wp-site-blocks { min-height: calc(100svh - 59px - env(safe-area-inset-bottom)); }
+	.ayesha-typing body { padding-bottom: 0; }
+	.ayesha-typing .ayesha-sticky-bar { display: none; }
+}
+
+@media (min-width: 960px) {
+	.ayesha-sticky-bar { display: none; }
+}
+
+.editor-styles-wrapper .ayesha-sticky-bar { position: static; display: block; }
+.editor-styles-wrapper { padding-bottom: 0; }
+
+/* Floating WhatsApp button (AYESHA Core): navy icon on green, navy ring. */
+.ayesha-wa-float { color: var(--ayesha-navy) !important; box-shadow: 0 4px 14px rgb(12 18 57 / 0.3) !important; }
+
+/* ---------------------------------------------------------------
+ * 11. Home
+ * ------------------------------------------------------------- */
+
+/* ---- The big number ---- */
+.is-style-display-number:has(> .ayesha-number) {
+	container: ayesha-number / inline-size;
+	max-inline-size: none;
+	font-size: 1rem;
+	line-height: 1;
+}
+
+.ayesha-number {
+	display: block;
+	width: fit-content;
+	max-inline-size: 100%;
+	font-size: min(var(--ayesha-number-max-narrow, 4rem), calc(94cqi / var(--ayesha-number-w2, 3.6)));
+	line-height: 1;
+	white-space: nowrap;
+}
+
+.ayesha-number > span { display: block; }
+
+@container ayesha-number (min-width: 420px) {
+	.ayesha-number { font-size: min(var(--ayesha-number-max, 5rem), calc(96cqi / var(--ayesha-number-w1, 5.5))); }
+	.ayesha-number > span { display: inline; }
+}
+
+/* ---- Hero: navy panel, white capitals, gold number, framed photo ---- */
+.ayesha-hero { overflow-x: clip; }
+
+.ayesha-hero__panel.is-style-yellow-panel {
+	position: relative;
+	background:
+		linear-gradient(120deg, rgb(255 255 255 / 0.05) 0 38%, transparent 38%),
+		var(--ayesha-navy);
+	color: var(--ayesha-soft);
+	padding-block: 3rem 3rem;
+}
+
+@media (min-width: 960px) {
+	.ayesha-hero__panel.is-style-yellow-panel { padding-block: 5.5rem 5.5rem; }
+}
+
+.ayesha-hero__columns { margin-block: 0; align-items: center !important; gap: 2.5rem 4rem !important; }
+
+.ayesha-hero h1 {
+	margin-block: 0;
+	color: #fff;
+	font-size: clamp(2rem, 1.35rem + 2.9vw, 3.5rem) !important;
+	line-height: 1.1;
+}
+
+.ayesha-hero .is-style-display-number {
+	--ayesha-number-max: 4.5rem;
+	--ayesha-number-max-narrow: 3.25rem;
+	margin-block: 1.5rem 0;
+	color: var(--ayesha-gold);
+}
+
+.ayesha-hero .has-lead-font-size { color: var(--ayesha-soft); margin-block-start: 1.25rem; }
+
+.ayesha-hero .wp-block-button:not(.is-style-whatsapp) .wp-block-button__link {
+	background: transparent;
+	color: #fff;
+	border: 2px solid #fff;
+}
+
+.ayesha-hero .wp-block-button:not(.is-style-whatsapp) .wp-block-button__link:hover { background: #fff; color: var(--ayesha-navy); }
+
+.ayesha-hero__buttons { margin-block-start: 2rem !important; }
+
+.ayesha-hero__quote-link a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 48px;
+	color: var(--ayesha-gold);
+	font-weight: 500;
+	text-decoration-thickness: 1px;
+}
+
+.ayesha-hero__photo figure { margin: 0; position: relative; }
+
+/* The photo sits in a gold frame offset to the bottom right. */
+.ayesha-hero__photo img {
+	display: block;
+	width: 100%;
+	max-width: 560px;
+	height: auto;
+	box-shadow: 14px 14px 0 var(--ayesha-gold);
+}
+
+.ayesha-hero__photo:not(:has(img)) { display: none; }
+
+@media (max-width: 781.98px) {
+	.ayesha-hero__photo { padding-inline-end: 14px; }
+}
+
+@media (min-width: 782px) {
+	.wp-block-columns.ayesha-hero__columns > .wp-block-column.ayesha-hero__photo:has(img) { flex: 0 1 44%; max-width: 560px; }
+}
+
+@media (min-width: 960px) {
+	.ayesha-hero__text > .ayesha-hero__buttons { display: inline-flex; vertical-align: middle; }
+
+	.ayesha-hero__text > .ayesha-hero__quote-link {
+		display: inline-block;
+		margin-block-start: 2rem !important;
+		margin-inline-start: 1.5rem !important;
+		line-height: 1;
+		vertical-align: middle;
+	}
+}
+
+/* ---- What we do: a navy band of bordered icon cards (lead card in white) ---- */
+.ayesha-services {
+	background: var(--ayesha-navy);
+	color: var(--ayesha-soft);
+}
+
+.ayesha-services > h2 { color: #fff; }
+
+.ayesha-services__columns { gap: 1.5rem 2rem !important; margin-block-start: 2.5rem !important; }
+
+:is(.ayesha-service-lead, .ayesha-service-row) h3 a { color: inherit; text-decoration: none; }
+:is(.ayesha-service-lead, .ayesha-service-row) h3 a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
+
+.ayesha-service-lead.is-style-concrete-panel {
+	position: relative;
+	padding: 2rem;
+	background: #fff;
+	color: var(--ayesha-slate);
+	border-top: 4px solid var(--ayesha-gold);
+	border-radius: 2px;
+}
+
+.ayesha-service-lead > * { margin-block: 0; }
+.ayesha-service-lead > * + * { margin-block-start: 1rem; }
+
+.ayesha-service-lead::before {
+	content: "";
+	display: block;
+	width: 52px;
+	height: 52px;
+	margin-block-end: 1.25rem;
+	color: var(--ayesha-navy);
+	background: var(--ayesha-navy);
+}
+
+.ayesha-service-lead h3 { font-size: 1.5rem; font-weight: 700; }
+.ayesha-service-lead__label { color: var(--ayesha-navy); font-weight: 500; }
+.ayesha-service-lead > .ayesha-service-lead__label + .ayesha-checklist { margin-block-start: 0.5rem; }
+
+.ayesha-services__rows > * { margin-block: 0; }
+.ayesha-services__rows > * + * { margin-block-start: 1rem; }
+
+.ayesha-service-row {
+	position: relative;
+	padding: 1.25rem 1.25rem 0.5rem 5rem;
+	border: 1px solid var(--ayesha-line-dark);
+	border-radius: 2px;
+	transition: border-color 150ms ease;
+}
+
+.ayesha-service-row:hover { border-color: var(--ayesha-gold); }
+
+.ayesha-service-row::before {
+	content: "";
+	position: absolute;
+	left: 1.25rem;
+	top: 1.35rem;
+	width: 40px;
+	height: 40px;
+	background: var(--ayesha-gold);
+}
+
+.ayesha-service-row > * { margin-block: 0; }
+.ayesha-service-row > * + * { margin-block-start: 0.375rem; }
+.ayesha-service-row h3 { color: #fff; }
+.ayesha-service-row .wp-block-button__link { color: #fff !important; }
+
+.ayesha-services__all a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 48px;
+	color: var(--ayesha-gold);
+	font-weight: 500;
+}
+
+.ayesha-services__photo { margin-block: 1.5rem 0; }
+.ayesha-services__photo img { display: block; max-width: 100%; height: auto; }
+
+@media (max-width: 959.98px) {
+	body:not(.editor-styles-wrapper) .ayesha-services__photo { display: none; }
+}
+
+@media (min-width: 782px) and (max-width: 959.98px) {
+	.wp-block-columns.ayesha-services__columns { flex-wrap: wrap !important; }
+	.wp-block-columns.ayesha-services__columns > .wp-block-column { flex-basis: 100% !important; }
+}
+
+/* The tick list */
+.ayesha-checklist { list-style: none; padding-inline-start: 0; }
+.ayesha-checklist > li { position: relative; padding-inline-start: 1.875rem; }
+.ayesha-checklist > li + li { margin-block-start: 0.5rem; }
+
+.ayesha-checklist > li::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0.3em;
+	width: 1.125rem;
+	height: 1.125rem;
+	border-radius: 50%;
+	background: var(--ayesha-gold);
+}
+
+.ayesha-checklist > li::after {
+	content: "";
+	position: absolute;
+	left: 0.39rem;
+	top: calc(0.3em + 0.22rem);
+	width: 0.3rem;
+	height: 0.55rem;
+	border: solid var(--ayesha-navy);
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+}
+
+/* ---- How a move works: four numbered circles joined by a dashed line ---- */
+.ayesha-how > h2 { margin-block-end: 3rem !important; }
+
+.ayesha-steps {
+	counter-reset: ayesha-step;
+	list-style: none;
+	padding-inline-start: 0;
+	max-inline-size: none !important;
+	margin-inline: 0 !important;
+}
+
+.ayesha-steps > li {
+	position: relative;
+	counter-increment: ayesha-step;
+	padding-inline-start: 5rem;
+	min-height: 64px;
+}
+
+.ayesha-steps > li + li { margin-block-start: 2rem; }
+
+.ayesha-steps > li::before {
+	content: counter(ayesha-step);
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: grid;
+	place-items: center;
+	width: 60px;
+	height: 60px;
+	box-sizing: border-box;
+	border: 2px solid var(--ayesha-line);
+	border-radius: 50%;
+	background: #fff;
+	color: var(--ayesha-navy);
+	font-size: 1.375rem;
+	font-weight: 700;
+	line-height: 1;
+	box-shadow: inset 0 0 0 5px #fff, inset 0 0 0 7px var(--ayesha-gold);
+}
+
+.ayesha-steps strong {
+	display: block;
+	margin-block-end: 0.375rem;
+	color: var(--ayesha-navy);
+	font-size: 1.1875rem;
+	font-weight: 500;
+	line-height: 1.3;
+}
+
+@media (min-width: 960px) {
+	.ayesha-steps {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		column-gap: 2.5rem;
+		text-align: center;
+	}
+
+	.ayesha-steps > li { padding-inline-start: 0; padding-block-start: 5.5rem; }
+	.ayesha-steps > li + li { margin-block-start: 0; }
+
+	.ayesha-steps > li::before {
+		left: 50%;
+		width: 76px;
+		height: 76px;
+		transform: translateX(-50%);
+		font-size: 1.625rem;
+	}
+
+	.ayesha-steps > li:not(:last-child)::after {
+		content: "";
+		position: absolute;
+		top: 38px;
+		left: calc(50% + 50px);
+		right: calc(-50% - 2.5rem + 50px);
+		border-top: 2px dashed #C9CDD8;
+	}
+}
+
+/* ---- Where we go: the route line ---- */
+.ayesha-route {
+	list-style: none;
+	padding-inline-start: 0;
+	margin-block: 0;
+	color: var(--ayesha-navy);
+	font-weight: 500;
+}
+
+.ayesha-route > li { position: relative; padding: 0 0 1.25rem 2.25rem; }
+
+.ayesha-route > li::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0.3em;
+	width: 16px;
+	height: 16px;
+	box-sizing: border-box;
+	border: 3px solid var(--ayesha-gold);
+	border-radius: 50%;
+	background: #fff;
+}
+
+.ayesha-route > li:is(:first-child, :last-child)::before { background: var(--ayesha-navy); border-color: var(--ayesha-navy); }
+
+.ayesha-route > li:not(:last-child)::after {
+	content: "";
+	position: absolute;
+	left: 7px;
+	top: calc(0.3em + 16px);
+	bottom: 0;
+	width: 2px;
+	background: var(--ayesha-line);
+}
+
+.ayesha-route > li:last-child { padding-block-end: 0; }
+
+.ayesha-where > .ayesha-route {
+	margin-block-start: 3rem;
+	max-inline-size: var(--wp--style--global--content-size);
+}
+
+@media (min-width: 960px) {
+	.ayesha-route {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: minmax(0, 1fr);
+		column-gap: 1rem;
+		text-align: center;
+	}
+
+	.ayesha-route > li { padding: 2.25rem 0 0; }
+	.ayesha-route > li::before { top: 0; left: 50%; width: 20px; height: 20px; transform: translateX(-50%); }
+
+	.ayesha-route > li:not(:last-child)::after {
+		top: 9px;
+		left: calc(50% + 14px);
+		right: calc(-50% - 1rem + 14px);
+		bottom: auto;
+		width: auto;
+		height: 2px;
+	}
+}
+
+/* ---- Reviews (placeholders; hidden by AYESHA Core until switched on) ---- */
+.ayesha-reviews__note, .ayesha-review__source { color: var(--ayesha-slate); font-size: 0.875rem; }
+
+.ayesha-review {
+	height: 100%;
+	box-sizing: border-box;
+	padding: 1.75rem;
+	border: 2px dashed #C9CDD8;
+	border-radius: 2px;
+	background: #fff;
+}
+
+.ayesha-review > * { margin-block: 0; }
+.ayesha-review > * + * { margin-block-start: 1rem; }
+.ayesha-review__flag { font-size: 0.875rem; font-weight: 700; }
+.ayesha-review__quote { font-size: 1.1875rem; line-height: 1.5; }
+.ayesha-review__who { font-weight: 500; color: var(--ayesha-navy); }
+
+/* ---- Why people book us (icon list) + Questions (grey box), side by side ---- */
+.ayesha-why-faq.is-style-concrete-panel { background: #fff; }
+.ayesha-why-faq__columns { gap: 3rem 4rem !important; }
+
+.ayesha-reasons { display: grid; gap: 1.75rem; margin-block-start: 2.5rem !important; }
+.ayesha-reasons > * { margin-block: 0 !important; }
+
+.ayesha-reason {
+	position: relative;
+	min-height: 64px;
+	padding-inline-start: 5rem;
+}
+
+.ayesha-reason::before {
+	content: "";
+	position: absolute;
+	left: 18px;
+	top: 18px;
+	width: 28px;
+	height: 28px;
+	background: var(--ayesha-navy);
+}
+
+/* The ring around each icon */
+.ayesha-reason::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 64px;
+	height: 64px;
+	box-sizing: border-box;
+	border: 2px solid var(--ayesha-line);
+	border-radius: 50%;
+}
+
+.ayesha-reason:nth-child(4n+1) { --ayesha-icon: var(--ayesha-icon-tag); }
+.ayesha-reason:nth-child(4n+2) { --ayesha-icon: var(--ayesha-icon-door); }
+.ayesha-reason:nth-child(4n+3) { --ayesha-icon: var(--ayesha-icon-team); }
+.ayesha-reason:nth-child(4n+4) { --ayesha-icon: var(--ayesha-icon-shield); }
+
+.ayesha-reason > * { margin-block: 0; }
+.ayesha-reason > * + * { margin-block-start: 0.25rem; }
+
+.ayesha-questions { position: relative; }
+
+/* Home: the questions sit in a grey box, like the reference's quote box. */
+.ayesha-why-faq .ayesha-questions {
+	padding: 2.5rem 2rem;
+	background: var(--ayesha-mist);
+	border-radius: 2px;
+	align-self: flex-start;
+}
+
+.ayesha-why-faq .ayesha-faq { margin-block-start: 2rem !important; }
+
+.ayesha-faq > .wp-block-details {
+	margin-block: 0;
+	background: #fff;
+	border: 1px solid var(--ayesha-line);
+	border-radius: 2px;
+}
+
+.ayesha-faq > .wp-block-details + .wp-block-details { margin-block-start: 0.625rem; }
+.ayesha-faq > .wp-block-details[open] { border-color: var(--ayesha-navy); }
+
+.ayesha-faq summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	min-height: 48px;
+	padding: 0.875rem 1.25rem;
+	color: var(--ayesha-navy);
+	font-size: 1.0625rem;
+	font-weight: 500;
+	line-height: 1.35;
+	list-style: none;
+	cursor: pointer;
+}
+
+.ayesha-faq summary::-webkit-details-marker { display: none; }
+
+/* A gold square with a navy plus that turns into a minus. */
+.ayesha-faq summary::after {
+	content: "+";
+	flex: none;
+	display: grid;
+	place-items: center;
+	width: 28px;
+	height: 28px;
+	border-radius: 2px;
+	background: var(--ayesha-gold);
+	color: var(--ayesha-navy);
+	font-size: 1.25rem;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.ayesha-faq details[open] > summary::after { content: "\2212"; }
+
+.ayesha-faq .wp-block-details > :not(summary) { margin: 0; padding: 0 1.25rem 1.25rem; }
+
+/* ---- CTA band (gold) ---- */
+.ayesha-cta { --ayesha-number-max: 4.5rem; --ayesha-number-max-narrow: 3.25rem; }
+.ayesha-cta__columns { margin-block: 0; }
+.ayesha-cta .wp-block-column > * { margin-block: 0; }
+.ayesha-cta .wp-block-column > * + * { margin-block-start: 1rem; }
+.ayesha-cta h2 { padding: 0 !important; }
+.ayesha-cta h2::after { display: none; }
+.ayesha-cta .is-style-display-number { color: var(--ayesha-navy); }
+
+/* ---------------------------------------------------------------
+ * 12. Inner pages: a navy title band (H1 + lead), then the content.
+ * ------------------------------------------------------------- */
+.ayesha-intro {
+	background:
+		linear-gradient(120deg, rgb(255 255 255 / 0.05) 0 38%, transparent 38%),
+		var(--ayesha-navy);
+	color: var(--ayesha-soft);
+	padding-block: 4rem 3.5rem !important;
+}
+
+.ayesha-intro h1 { margin-block: 0; color: #fff; }
+.ayesha-intro .wp-block-heading + p { margin-block-start: 1.5rem; }
+
+/* ---- Our Services: icon cards to jump, then the six services as cards ---- */
+.ayesha-svc {
+	overflow-x: clip;
+	background: var(--ayesha-mist);
+	padding-block: 3rem 4rem;
+}
+
+.ayesha-svc__grid > *, .ayesha-svc__sections > * { margin-block: 0; }
+
+.ayesha-jump { padding-block-end: 2.5rem; }
+.ayesha-jump > * { margin-block: 0; }
+
+.ayesha-jump__label {
+	margin-block-end: 1rem !important;
+	color: var(--ayesha-navy);
+	font-weight: 500;
+}
+
+.ayesha-jump__list {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.75rem;
+	padding-inline-start: 0;
+	list-style: none;
+	max-inline-size: none !important;
+}
+
+@media (min-width: 600px) { .ayesha-jump__list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .ayesha-jump__list { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+
+.ayesha-jump__list a {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	min-height: 64px;
+	box-sizing: border-box;
+	height: 100%;
+	padding: 0.75rem 1rem;
+	border: 1px solid var(--ayesha-line);
+	border-bottom: 3px solid var(--ayesha-line);
+	border-radius: 2px;
+	background: #fff;
+	color: var(--ayesha-navy);
+	font-weight: 500;
+	line-height: 1.25;
+	text-decoration: none;
+}
+
+.ayesha-jump__list a::before {
+	content: "";
+	flex: none;
+	width: 28px;
+	height: 28px;
+	background: var(--ayesha-navy);
+	-webkit-mask: var(--ayesha-icon) center / contain no-repeat;
+	mask: var(--ayesha-icon) center / contain no-repeat;
+}
+
+.ayesha-jump__list a:hover,
+.ayesha-jump__list a[aria-current] { border-bottom-color: var(--ayesha-gold); }
+
+/* The six services: white cards, two across on computers. */
+.ayesha-svc__sections { display: grid; gap: 1.25rem; }
+
+@media (min-width: 960px) {
+	.ayesha-svc__sections { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+}
+
+.ayesha-svc__section,
+.ayesha-svc__section.is-style-concrete-panel {
+	position: relative;
+	box-sizing: border-box;
+	padding: 2rem 1.5rem !important;
+	background: #fff;
+	border: 1px solid var(--ayesha-line);
+	border-top: 4px solid var(--ayesha-navy);
+	border-radius: 2px;
+	border-image: none;
+	color: var(--ayesha-slate);
+}
+
+@media (min-width: 600px) {
+	.ayesha-svc__section,
+	.ayesha-svc__section.is-style-concrete-panel { padding: 2.25rem 2.25rem 2rem !important; }
+}
+
+.ayesha-svc__section::before {
+	content: "";
+	display: block;
+	width: 48px;
+	height: 48px;
+	margin-block-end: 1.25rem;
+	background: var(--ayesha-navy);
+}
+
+.ayesha-svc__section > * { margin-block: 0; }
+.ayesha-svc__section > * + * { margin-block-start: 1rem; }
+
+.ayesha-svc__section h2 {
+	scroll-margin-block-start: 2rem;
+	font-size: 1.5rem;
+	font-weight: 700;
+	text-transform: none;
+	letter-spacing: 0;
+}
+
+.ayesha-svc__section > .ayesha-svc__label { margin-block-start: 1.5rem; color: var(--ayesha-navy); font-weight: 500; }
+.ayesha-svc__section > .ayesha-svc__label + .ayesha-checklist { margin-block-start: 0.5rem; }
+.ayesha-svc__section > .wp-block-buttons { margin-block-start: 1.5rem; }
+.ayesha-svc__photo { margin-block-start: 1.25rem !important; }
+.ayesha-svc__photo img { display: block; max-width: 100%; height: auto; }
+
+/* ---- Gallery: "Seen on our Facebook & Instagram" ---- */
+.ayesha-gallery > h2 { margin-block-end: 2.5rem !important; }
+
+.ayesha-gallery__grid {
+	display: grid !important;
+	grid-template-columns: 1fr;
+	gap: 1.25rem !important;
+}
+
+@media (min-width: 600px) { .ayesha-gallery__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.ayesha-gallery__grid > .wp-block-image { margin: 0 !important; width: auto !important; }
+
+.ayesha-gallery__grid img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border: 1px solid var(--ayesha-line);
+	border-radius: 2px;
+}
+
+.ayesha-gallery > .wp-block-buttons { justify-content: center; margin-block-start: 2rem; }
+
+/* ---- Services questions: centred, one column ---- */
+.ayesha-svc-faq > .ayesha-faq { max-inline-size: 820px; margin-inline: auto !important; margin-block-start: 2.5rem !important; }
+
+/* ---- About Us ---- */
+.ayesha-about-intro__columns, .ayesha-about-team__columns { margin-block: 0; }
+.ayesha-about-intro__columns .wp-block-column > *, .ayesha-about-team__columns .wp-block-column > * { margin-block: 0; }
+.ayesha-about-team__columns .wp-block-column > * + * { margin-block-start: 1rem; }
+.ayesha-about-how > .ayesha-reasons { margin-block-start: 1.75rem; }
+.ayesha-about-intro__photo figure, .ayesha-about-how__photo { margin: 0; }
+.ayesha-about-intro__photo img, .ayesha-about-how__photo img { display: block; max-width: 100%; height: auto; }
+.ayesha-about-how > .ayesha-about-how__photo { margin-block-start: 3rem; }
+
+@media (max-width: 959.98px) {
+	body:not(.editor-styles-wrapper) .ayesha-desktop-only,
+	body:not(.editor-styles-wrapper) .ayesha-about-intro__photo:not(:has(> :not(.ayesha-desktop-only))) { display: none; }
+	body:not(.editor-styles-wrapper) .ayesha-about-intro__columns > .wp-block-column { flex-basis: 100% !important; }
+}
+
+@media (min-width: 960px) {
+	body:not(.editor-styles-wrapper) .ayesha-mobile-only { display: none; }
+}
+
+/* ---------------------------------------------------------------
+ * 13. Motion and print
+ * ------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+@media print {
+	.ayesha-sticky-bar, .ayesha-nav, .ayesha-topbar { display: none !important; }
+	body { padding-bottom: 0; }
+}

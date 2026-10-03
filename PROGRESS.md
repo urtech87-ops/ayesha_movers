@@ -52,14 +52,22 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | 4. Home page | phase-4-home | **Done; approved and merged into main 2026-10-02 (fast-forward to f2105b4)** |
 | 5. Our Services + About Us | phase-5-services-about | **Done; approved and merged into main 2026-10-03 (fast-forward to 7f3e690)** |
 | 6. Contact Us + quote form + email | phase-6-contact | **Done; approved and merged into main 2026-10-03 (fast-forward to 497997f)** |
-| 7. Full QA, SEO, performance, handover | phase-7-qa | Not started |
+| 7. Design refresh + service area (Bahrain and GCC only) | phase-7-design | **In progress: proposal stage** (Part A wording table and Part B design preview, waiting for the user's choice) |
+| 8. Full QA, SEO, performance, handover (was Phase 7) | phase-8-qa | On hold until Phase 7 is approved; scope approved 2026-10-03 (see Phase 8 notes) |
 
 ## Current phase + next step
-- **Current:** Phase 7 – Full QA, SEO, performance, handover (**not started**). Branch `phase-7-qa`.
-- **Next step:** wait for the user's go-ahead and the Phase 7 prompt.
+- **Current:** Phase 7 – Design refresh + service area (**proposal stage, nothing built**). Branch `phase-7-design` after approval.
+  - Part A: coverage is **Bahrain and the GCC only** (Bahrain, Saudi Arabia, UAE, Kuwait, Qatar, Oman); not the UK, USA, Canada, Europe or worldwide. Wording table proposed in chat; waiting for approval.
+  - Part B (changed 2026-10-03; the 3-direction preview was dropped and deleted): **redesign using the ThemeForest "Cargo Hub" demo as a visual reference only** (no copied code, CSS, JS, images, icons or demo text). Rules: keep all existing content (only the Part A fixes change wording); sections that need content we don't have (stats, testimonials, team, blog, pricing, partner logos) are skipped and listed as "needs client content"; every block editable, 0 invalid blocks; **Roboto only**, self-hosted Latin woff2, only the weights used, main weight preloaded, Archivo files removed; colours navy + gold/yellow from the reference and the client's ads, WCAG AA; keep the sticky bar, floating WhatsApp, quote form, bindings, JSON-LD, SEO panel, 404. Client ads `docs/client-ads/ad-1.jpg`…`ad-3.jpg`: not as service-card images; an editable gallery on Our Services, "Seen on our Facebook & Instagram", linking to the Business Info Instagram; WebP at display size, lazy-loaded, alt text = the ad's text.
+  - Deliverables before building: a section map per page, a static preview of Home and Our Services (375 and 1280 screenshots in `docs/screenshots/phase-7-design/`), the Part A table.
+  - Reference studied (2026-10-03): the ThemeForest preview shows a Cloudflare bot check (not bypassed); the theme author's own demo (`demo2.steelthemes.com/cargohub/`, the page the preview frames) opened normally and was studied read-only (Home and Services, 375 and 1280). Its look: navy `#0C1239` + red accent, Montserrat/Open Sans, top info bar, white header with capital menu, photo hero, centred section titles with a short bar, bordered icon cards, navy footer with a deeper copyright bar.
+  - **Static preview built** (`docs/design-preview/`): `build.py` takes the real rendered Home and Our Services (`src/`), removes `theme.css` and the Archivo preload, and loads `theme-new.css` (the candidate new stylesheet). Only additions: the top info bar (Header part), the Part A wording, the new gallery section. Screenshots: `docs/screenshots/phase-7-design/home-1280.png`, `home-375.png`, `home-375-first-screen.png`, `services-1280.png`, `services-375.png`, `services-375-first-screen.png`. No horizontal scroll at 375 or 1280.
+  - **Roboto downloaded** (user asked for self-hosted Roboto): `Roboto[wdth,wght].ttf` (489 KB) + `OFL.txt` from `github.com/google/fonts/ofl/roboto` (Roboto 3.015, SIL OFL 1.1). Made static Latin woff2 files with fontTools: `roboto-latin-400.woff2` 12.1 KB, `-500` 12.5 KB, `-700` 12.6 KB (37 KB in all; Archivo was 56 KB). Now in `docs/design-preview/fonts/`; they move to the theme at build time.
+  - **Still blocked:** the client ads `docs/client-ads/ad-1.jpg`…`ad-3.jpg` are not on disk; the gallery shows placeholders.
+- **Next step:** the user approves the section map, the preview and the Part A wording, and provides the ads; then build on `phase-7-design`, test (0 invalid blocks, axe 0 serious/critical, no horizontal scroll at 375/768/1280, tel:/wa.me/form working), push, stop before merging.
 - **Last completed:** Phase 6 (Contact Us + quote form + email), approved and merged into `main` 2026-10-03 at 497997f (fast-forward); smoke test passed (see Test results › Phase 6 › Post-merge smoke test).
 - **Test data kept on the local site (user decision 2026-10-03):** 14 test enquiries AYM-261003-001 … 014 and WP Mail Logging rows 4–22.
-- **Phase 7 notes (carried over from Phase 6):**
+- **Phase 8 notes (QA, SEO, performance, handover; scope approved 2026-10-03, carried over from Phase 6):**
   - **axe landmark issue (moderate, `region`, on every page):** the sticky Call/WhatsApp bar (phones, template part `sticky-bar`) and the floating WhatsApp button (desktop, printed by AYESHA Core in `wp_footer`) sit outside a landmark. Fix: give the bar a labelled `nav` or `aside` wrapper (template part `tagName` + `aria-label`) and the floating button an `aside` wrapper with a label; re-run axe on all 4 pages.
   - **Go-live checklist:**
     - **Delete all test enquiries** (AYM-261003-001 … 014 and any later test requests: Enquiries → select all → Move to Trash → Empty Trash) and the WP Mail Logging test rows.
@@ -68,7 +76,13 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
     - Exclude `/contact-us/` from any page cache (the form's nonce lasts 24 h).
     - If the site goes behind Cloudflare or another proxy, switch the rate limit to the real visitor IP header first.
     - Turn off "Discourage search engines" and revisit `AUTOMATIC_UPDATER_DISABLED` (see earlier phases).
-  - If Phase 7 is built in a worktree again, use the same junction method and remove the junctions with `rmdir` (links only) before merging.
+  - **User answers to the Phase 8 proposal (2026-10-03):**
+    1. **Favicon:** yes, but make it after the redesign, in the new colours.
+    2. **og:image:** a simple wordmark card in the new colours.
+    3. **Backups and the move to the live host:** manual steps in `docs/go-live.md`, written two ways: WP-CLI, and phpMyAdmin + file copy (the host may not have WP-CLI). No plugin for now.
+    4. **Proxy-IP filter** (off by default) **and a `nocache` header on Contact Us:** approved.
+  - Rest of the approved Phase 8 scope: full cross-page QA at 375/768/1280 (layout, links, tel:/wa.me, Business Info values, headings, focus, keyboard, axe serious/critical = 0); editor check (0 invalid blocks, edits save); performance basics (image sizes/formats, lazy loading except the hero, `fetchpriority` on the hero, no unused assets per page, Lighthouse); SEO basics (titles, descriptions, one H1, alt text, canonical, sitemap tested with search engines briefly allowed, robots, favicon, Open Graph, FAQPage JSON-LD); `docs/go-live.md`.
+  - If Phase 7 or 8 is built in a worktree again, use the same junction method and remove the junctions with `rmdir` (links only) before merging.
 
 ## Decisions log
 - 2026-10-01: Project brief written to CLAUDE.md.
@@ -142,6 +156,9 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 - 2026-10-03: Rate limit confirmed as built, no change needed: no cookie and nothing client-side (0 uses of `setcookie`, `$_COOKIE`, localStorage or sessionStorage in AYESHA Core). The visitor is identified by `REMOTE_ADDR`, hashed with HMAC-SHA256 keyed with `wp_salt( 'nonce' )`; the hash (first 32 hex characters) is only the transient's name (`ayesha_qf_rl_<hash>`). The transient's value is the list of send times in the last hour (no IP), and it expires 1 hour after the last send. Verified in the database: one row `_transient_ayesha_qf_rl_ff576d66…` = two Unix timestamps, with its timeout row. The 6th-request block was tested in Phase 6 test 12.
 
 - 2026-10-03: User approved Phase 6. The two dev junctions were removed (`rmdir`, links only; the worktree's 33 theme and 21 plugin files untouched), the theme and plugin folders restored from git in the main checkout, `phase-6-contact` fast-forward merged into `main` (497997f), `main` pushed. The copies of the original folders moved aside at the start of Phase 6 are in the Phase 6 session's scratch folder; they are identical to `main` at 3b29b63 and no longer needed.
+
+- 2026-10-03: The planned Phase 7 (QA, SEO, performance, handover) was put on hold and renamed **Phase 8**; the user's answers to its four questions are in the Phase 8 notes above. **New Phase 7: design refresh + service area.** The user doesn't like the current design or the Archivo font; Replaced the same day: the user chose a direction instead, a redesign based on the Cargo Hub demo (see Current phase).
+- 2026-10-03: **Service area corrected by the user: AYESHA works Bahrain to the GCC only** (Bahrain, Saudi Arabia, UAE, Kuwait, Qatar, Oman). Not the UK, USA, Canada, Europe or "worldwide". This overrides the coverage line in CLAUDE.md, the design plan and the current site copy; every mention is to be corrected in Phase 7 after the user approves the wording.
 
 ## Open questions for the client
 - Price point: the site says "Low rates, with labour included" (his own selling point, no superlative). Confirm the wording
