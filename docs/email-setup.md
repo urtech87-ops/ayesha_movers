@@ -85,6 +85,7 @@ Then test the real form:
 
 ## 4. Other go-live checks for the form
 
+- **Delete all test enquiries** before the site goes live: the 14 test requests AYM-261003-001 to AYM-261003-014 from Phase 6 (names like "Sara Test", "Rate Test 1", "Fatima Final Test", one full of `<script>` test text), plus any test requests sent while setting up email. **Enquiries** → tick the box at the top of the list → **Bulk actions → Move to Trash** → **Apply**, then open **Trash** and click **Empty Trash**. If the database is copied from the local site, do this on the live site too. (The reference counter restarts at 001 each day, so the first real request of a day is AYM-…-001 again.)
 - **WP Mail Logging** is for the local site only. On the live site, deactivate and delete it (**Plugins**), unless you decide to keep a log; then remember it stores a copy of every customer's details.
 - **Page caching**: if the host or a caching plugin caches pages, exclude the Contact Us page (`/contact-us/`) from the cache. The form contains a security code that expires after a day; a cached copy older than that makes every request fail with "The form was open for a long time and expired".
 - **Behind Cloudflare or another proxy**: the "5 requests per hour" limit counts by visitor IP address. Behind a proxy every visitor can appear with the proxy's address, so the limit would be shared by everyone. If the site is put behind a proxy, ask for the limit to be switched to the visitor's real IP header first.
