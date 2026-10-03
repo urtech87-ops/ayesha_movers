@@ -116,15 +116,23 @@ function ayesha_core_quote_email_button( $url, $label, $bg, $color ) {
  * @return array{subject: string, html: string, text: string}
  */
 function ayesha_core_quote_admin_email( array $data, $reference, $post_id ) {
-	$move    = ayesha_core_quote_label( 'move_type', $data['move_type'] ?? '' );
-	$subject = sprintf(
-		/* translators: 1: reference, 2: type of move, 3: from, 4: to. */
-		__( 'New quote request %1$s: %2$s, %3$s to %4$s', 'ayesha-core' ),
-		$reference,
-		$move,
-		$data['from'] ?? '',
-		$data['to'] ?? ''
-	);
+	if ( ayesha_core_quote_is_short( $data ) ) {
+		$subject = sprintf(
+			/* translators: 1: reference, 2: customer name. */
+			__( 'New quote request %1$s from %2$s', 'ayesha-core' ),
+			$reference,
+			$data['name'] ?? ''
+		);
+	} else {
+		$subject = sprintf(
+			/* translators: 1: reference, 2: type of move, 3: from, 4: to. */
+			__( 'New quote request %1$s: %2$s, %3$s to %4$s', 'ayesha-core' ),
+			$reference,
+			ayesha_core_quote_label( 'move_type', $data['move_type'] ?? '' ),
+			$data['from'] ?? '',
+			$data['to'] ?? ''
+		);
+	}
 	$e164     = (string) ( $data['phone_e164'] ?? '' );
 	$wa       = '' === $e164 ? '' : 'https://wa.me/' . ltrim( $e164, '+' );
 	$edit_url = admin_url( 'post.php?post=' . (int) $post_id . '&action=edit' );

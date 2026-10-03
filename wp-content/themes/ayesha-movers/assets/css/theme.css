@@ -1476,26 +1476,6 @@ section.ayesha-questions > .ayesha-faq { max-inline-size: 820px; margin-inline: 
 	outline-offset: 2px;
 }
 
-/* The Facebook line under the form intro (shown while the contact details are off). */
-.ayesha-contact__social a {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.625rem;
-	min-height: 44px;
-	color: var(--ayesha-navy);
-	font-weight: 500;
-}
-
-.ayesha-contact__social a::before {
-	content: "";
-	flex: none;
-	width: 1.375rem;
-	height: 1.375rem;
-	background: var(--ayesha-navy);
-	-webkit-mask: var(--ayesha-icon-facebook) center / contain no-repeat;
-	mask: var(--ayesha-icon-facebook) center / contain no-repeat;
-}
-
 /* Contact details switched off (Business Info): no rows column, so the heading and the form share one
    centred column. Front end only; the editor still shows the hidden blocks so they can be edited. */
 body:not(.editor-styles-wrapper) .wp-block-columns.ayesha-contact__columns:not(:has(.ayesha-contact__rows)) {

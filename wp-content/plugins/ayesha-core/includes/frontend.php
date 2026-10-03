@@ -106,8 +106,7 @@ add_filter( 'render_block', 'ayesha_core_contact_conditional_blocks', 10, 2 );
 
 /**
  * "Show contact details on Contact Us" (Business Info): blocks with the class
- * "ayesha-if-contact-details" show only while it is on; "ayesha-unless-contact-details" only while
- * it is off (e.g. the Facebook line under the form intro, which the contact rows already include).
+ * "ayesha-if-contact-details" (the opening hours and the contact rows) show only while it is on.
  * The blocks stay in the page, so the client can switch the details back on at any time.
  *
  * @param string $content Block HTML.
@@ -116,18 +115,10 @@ add_filter( 'render_block', 'ayesha_core_contact_conditional_blocks', 10, 2 );
  */
 function ayesha_core_contact_conditional_blocks( $content, $block ) {
 	$class = $block['attrs']['className'] ?? '';
-	if ( '' === $class || false === strpos( $class, 'contact-details' ) ) {
+	if ( '' === $class || ! in_array( 'ayesha-if-contact-details', preg_split( '/\s+/', $class ), true ) ) {
 		return $content;
 	}
-	$classes = preg_split( '/\s+/', $class );
-	$on      = (bool) ayesha_core_setting( 'show_contact' );
-	if ( in_array( 'ayesha-if-contact-details', $classes, true ) && ! $on ) {
-		return '';
-	}
-	if ( in_array( 'ayesha-unless-contact-details', $classes, true ) && $on ) {
-		return '';
-	}
-	return $content;
+	return ayesha_core_setting( 'show_contact' ) ? $content : '';
 }
 
 add_filter( 'render_block', 'ayesha_core_hide_empty_social', 10, 2 );

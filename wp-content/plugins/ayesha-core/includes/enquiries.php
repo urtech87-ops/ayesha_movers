@@ -160,7 +160,7 @@ function ayesha_core_enquiry_columns( $columns ) {
 		'aq_name'     => __( 'Name', 'ayesha-core' ),
 		'aq_phone'    => __( 'Phone', 'ayesha-core' ),
 		'aq_move'     => __( 'Move type', 'ayesha-core' ),
-		'aq_route'    => __( 'From → to', 'ayesha-core' ),
+		'aq_route'    => __( 'From → to (or message)', 'ayesha-core' ),
 		'aq_when'     => __( 'Preferred date', 'ayesha-core' ),
 		'aq_status'   => __( 'Status', 'ayesha-core' ),
 	);
@@ -185,13 +185,19 @@ function ayesha_core_enquiry_column( $column, $post_id ) {
 			echo $e164 ? ayesha_core_link( 'tel:' . $e164, (string) ( $data['phone'] ?? $e164 ) ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in the helper.
 			break;
 		case 'aq_move':
-			echo esc_html( ayesha_core_quote_label( 'move_type', $data['move_type'] ?? '' ) );
+			// Short form (part 1 only): no move details were asked.
+			echo esc_html( ayesha_core_quote_is_short( $data ) ? '—' : ayesha_core_quote_label( 'move_type', $data['move_type'] ?? '' ) );
 			break;
 		case 'aq_route':
-			echo esc_html( ( $data['from'] ?? '' ) . ' → ' . ( $data['to'] ?? '' ) );
+			if ( ayesha_core_quote_is_short( $data ) ) {
+				$message = (string) ( $data['message'] ?? '' );
+				echo esc_html( '' === $message ? '—' : ( mb_strlen( $message ) > 60 ? mb_substr( $message, 0, 60 ) . '…' : $message ) );
+			} else {
+				echo esc_html( ( $data['from'] ?? '' ) . ' → ' . ( $data['to'] ?? '' ) );
+			}
 			break;
 		case 'aq_when':
-			echo esc_html( ayesha_core_quote_date_text( $data ) );
+			echo esc_html( ayesha_core_quote_is_short( $data ) ? '—' : ayesha_core_quote_date_text( $data ) );
 			break;
 		case 'aq_status':
 			$status = ayesha_core_enquiry_status( $post_id );

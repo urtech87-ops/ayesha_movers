@@ -19,6 +19,8 @@
 			[ 'labelEmail', __( 'Email label', 'ayesha-core' ) ],
 			[ 'hintEmail', __( 'Email help text', 'ayesha-core' ), true ],
 			[ 'labelReply', __( '"Best way to reply" label', 'ayesha-core' ) ],
+			[ 'labelMessage', __( '"Tell us about your move" label', 'ayesha-core' ) ],
+			[ 'hintMessage', __( '"Tell us about your move" help text', 'ayesha-core' ), true ],
 		] ],
 		[ __( 'Part 2: Your move', 'ayesha-core' ), [
 			[ 'legendMove', __( 'Heading of part 2', 'ayesha-core' ) ],
@@ -90,6 +92,19 @@
 				el(
 					be.InspectorControls,
 					null,
+					el( c.PanelBody, { title: __( 'Form parts', 'ayesha-core' ), initialOpen: true },
+						el( c.ToggleControl, {
+							label: __( 'Show parts 2 and 3 (Your move, What you need)', 'ayesha-core' ),
+							help: props.attributes.showMoveParts
+								? __( 'The full form: about you, the move and the services.', 'ayesha-core' )
+								: __( 'Only part 1 (about you, with the "Tell us about your move" box). Parts 2 and 3 are kept and come back when you switch this on.', 'ayesha-core' ),
+							checked: !! props.attributes.showMoveParts,
+							onChange: function ( value ) {
+								props.setAttributes( { showMoveParts: value } );
+							},
+							__nextHasNoMarginBottom: true,
+						} )
+					),
 					panels.map( function ( panel, i ) {
 						return el( c.PanelBody, { key: i, title: panel[ 0 ], initialOpen: false },
 							el( 'div', { style: { display: 'grid', gap: '16px' } }, panel[ 1 ].map( control ) )

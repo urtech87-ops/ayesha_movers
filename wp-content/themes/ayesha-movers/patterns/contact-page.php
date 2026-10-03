@@ -67,11 +67,7 @@ $ayesha_rows = array(
 <p>Takes about 3 minutes. We reply on WhatsApp or by phone.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"facebook_link","label":"AYESHA Movers on Facebook"}}},"name":"Facebook (shown while the contact details are off)"},"className":"ayesha-contact__social ayesha-unless-contact-details"} -->
-<p class="ayesha-contact__social ayesha-unless-contact-details"><a href="https://www.facebook.com/ayeshamoversbahrain/" target="_blank" rel="noopener" aria-label="AYESHA Movers on Facebook">AYESHA Movers on Facebook</a></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:ayesha/quote-form /--></div>
+<!-- wp:ayesha/quote-form {"showMoveParts":false} /--></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></section>
 <!-- /wp:group -->

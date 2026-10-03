@@ -85,6 +85,12 @@
 	clear: both;
 }
 
+/* Only part 1 on the form: no step number, so no step looks missing. */
+.ayesha-qf--single .ayesha-qf__legend::before {
+	content: none;
+	display: none;
+}
+
 .ayesha-qf__step > .ayesha-qf__field + .ayesha-qf__field {
 	margin-block-start: var(--aqf-gap);
 }

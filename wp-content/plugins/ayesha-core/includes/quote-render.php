@@ -21,7 +21,7 @@ function ayesha_core_quote_render( $attributes ) {
 	// An emptied label falls back to its original words (the line under the button may be empty).
 	$a = $attributes;
 	foreach ( WP_Block_Type_Registry::get_instance()->get_registered( 'ayesha/quote-form' )->attributes as $key => $schema ) {
-		if ( 'privacyNote' !== $key && '' === trim( (string) ( $a[ $key ] ?? '' ) ) ) {
+		if ( 'string' === ( $schema['type'] ?? '' ) && 'privacyNote' !== $key && '' === trim( (string) ( $a[ $key ] ?? '' ) ) ) {
 			$a[ $key ] = $schema['default'] ?? '';
 		}
 	}
@@ -31,7 +31,9 @@ function ayesha_core_quote_render( $attributes ) {
 		? ayesha_core_quote_render_success( $a, $state, $page )
 		: ayesha_core_quote_render_form( $a, $state && 'error' === ( $state['type'] ?? '' ) ? $state : null, $page );
 
-	return '<div ' . get_block_wrapper_attributes( array( 'class' => 'ayesha-qf' ) ) . '>' . $inner . '</div>';
+	// One part only (parts 2 and 3 switched off): no step numbers, so no step looks missing.
+	$class = 'ayesha-qf' . ( empty( $a['showMoveParts'] ) ? ' ayesha-qf--single' : '' );
+	return '<div ' . get_block_wrapper_attributes( array( 'class' => $class ) ) . '>' . $inner . '</div>';
 }
 
 /**
@@ -77,6 +79,7 @@ function ayesha_core_quote_render_form( array $a, $state, $page ) {
 			'phone'         => '',
 			'email'         => '',
 			'reply'         => 'whatsapp',
+			'message'       => '',
 			'move_type'     => '',
 			'from'          => '',
 			'to'            => '',
@@ -129,10 +132,43 @@ function ayesha_core_quote_render_form( array $a, $state, $page ) {
 		)
 	);
 	$html .= ayesha_core_quote_choices( 'reply', 'radio', $a['labelReply'], '', $o['reply'], array( $v['reply'] ), $e, false, 'row' );
+	$html .= ayesha_core_quote_textarea( 'message', $a['labelMessage'], $a['hintMessage'], $v['message'], $e, AYESHA_CORE_QUOTE_MESSAGE_MAX );
 	$html .= '</fieldset>';
 
+	// Parts 2 and 3 are left out entirely while "Show parts 2 and 3" is off: nothing hidden to fill in or validate.
+	if ( ! empty( $a['showMoveParts'] ) ) {
+		$html .= ayesha_core_quote_render_move_parts( $a, $v, $e, $o );
+	}
+
+	// Spam checks: nonce, the time the form was opened, and a field people never see.
+	$html .= '<input type="hidden" name="ayesha_qf" value="1">'
+		. '<input type="hidden" name="_aqnonce" value="' . esc_attr( wp_create_nonce( 'ayesha_quote_form' ) ) . '">'
+		. '<input type="hidden" name="aq_t" value="' . esc_attr( ayesha_core_quote_timer_token() ) . '">'
+		. '<div class="ayesha-qf__hp" aria-hidden="true"><label for="aqf-website">' . esc_html__( 'Leave this field empty', 'ayesha-core' ) . '</label>'
+		. '<input type="text" id="aqf-website" name="aq_website" value="" tabindex="-1" autocomplete="off"></div>';
+
+	$html .= '<div class="ayesha-qf__submit"><button type="submit" class="wp-element-button ayesha-qf__button">' . esc_html( $a['submitText'] ) . '</button>';
+	if ( '' !== trim( (string) $a['privacyNote'] ) ) {
+		$html .= '<p class="ayesha-qf__privacy">' . esc_html( $a['privacyNote'] ) . '</p>';
+	}
+	$html .= '</div></form>';
+
+	return $html;
+}
+
+/**
+ * Parts 2 (Your move) and 3 (What you need). Left out of the form while the block's
+ * "Show parts 2 and 3" is off.
+ *
+ * @param array $a Attributes.
+ * @param array $v Values.
+ * @param array $e Errors by field.
+ * @param array $o Choices.
+ * @return string
+ */
+function ayesha_core_quote_render_move_parts( array $a, array $v, array $e, array $o ) {
 	// 2. Your move.
-	$html .= '<fieldset class="ayesha-qf__step"><legend class="ayesha-qf__legend">' . esc_html( $a['legendMove'] ) . '</legend>';
+	$html  = '<fieldset class="ayesha-qf__step"><legend class="ayesha-qf__legend">' . esc_html( $a['legendMove'] ) . '</legend>';
 	$html .= ayesha_core_quote_choices( 'move_type', 'radio', $a['labelMoveType'], '', $o['move_type'], array( $v['move_type'] ), $e, true, 'pairs' );
 	$html .= ayesha_core_quote_input( 'from', $a['labelFrom'], $a['hintFrom'], $v['from'], $e, true, array( 'autocomplete' => 'off' ) );
 	$html .= ayesha_core_quote_input( 'to', $a['labelTo'], $a['hintTo'], $v['to'], $e, true, array( 'autocomplete' => 'off' ) );
@@ -165,19 +201,6 @@ function ayesha_core_quote_render_form( array $a, $state, $page ) {
 	$html .= ayesha_core_quote_choices( 'truck', 'radio', $a['labelTruck'], '', $o['truck'], array( $v['truck'] ), $e, false, 'row' );
 	$html .= ayesha_core_quote_choices( 'truck_time', 'radio', $a['labelTruckTime'], '', $o['truck_time'], array( $v['truck_time'] ), $e, false, 'row' );
 	$html .= '</fieldset>';
-
-	// Spam checks: nonce, the time the form was opened, and a field people never see.
-	$html .= '<input type="hidden" name="ayesha_qf" value="1">'
-		. '<input type="hidden" name="_aqnonce" value="' . esc_attr( wp_create_nonce( 'ayesha_quote_form' ) ) . '">'
-		. '<input type="hidden" name="aq_t" value="' . esc_attr( ayesha_core_quote_timer_token() ) . '">'
-		. '<div class="ayesha-qf__hp" aria-hidden="true"><label for="aqf-website">' . esc_html__( 'Leave this field empty', 'ayesha-core' ) . '</label>'
-		. '<input type="text" id="aqf-website" name="aq_website" value="" tabindex="-1" autocomplete="off"></div>';
-
-	$html .= '<div class="ayesha-qf__submit"><button type="submit" class="wp-element-button ayesha-qf__button">' . esc_html( $a['submitText'] ) . '</button>';
-	if ( '' !== trim( (string) $a['privacyNote'] ) ) {
-		$html .= '<p class="ayesha-qf__privacy">' . esc_html( $a['privacyNote'] ) . '</p>';
-	}
-	$html .= '</div></form>';
 
 	return $html;
 }
@@ -294,9 +317,10 @@ function ayesha_core_quote_input( $key, $label, $hint, $value, array $errors, $r
  * @param string $hint   Hint.
  * @param string $value  Value.
  * @param array  $errors Errors.
+ * @param int    $max    Maximum length (0: none; the server checks it too).
  * @return string
  */
-function ayesha_core_quote_textarea( $key, $label, $hint, $value, array $errors ) {
+function ayesha_core_quote_textarea( $key, $label, $hint, $value, array $errors, $max = 0 ) {
 	$id    = 'aqf-' . $key;
 	$error = (string) ( $errors[ $key ] ?? '' );
 	list( $messages, $describe ) = ayesha_core_quote_messages( $id, $hint, $error );
@@ -304,6 +328,7 @@ function ayesha_core_quote_textarea( $key, $label, $hint, $value, array $errors 
 		. '<label class="ayesha-qf__label" for="' . esc_attr( $id ) . '">' . esc_html( $label ) . '</label>'
 		. $messages
 		. '<textarea class="ayesha-qf__input ayesha-qf__textarea" id="' . esc_attr( $id ) . '" name="aq[' . esc_attr( $key ) . ']" rows="4"'
+		. ( $max ? ' maxlength="' . (int) $max . '"' : '' )
 		. ( $describe ? ' aria-describedby="' . esc_attr( $describe ) . '"' : '' )
 		. ( $error ? ' aria-invalid="true"' : '' ) . '>' . esc_textarea( $value ) . '</textarea>'
 		. '</div>';

@@ -15,6 +15,7 @@
 		"customClassName": false
 	},
 	"attributes": {
+		"showMoveParts": { "type": "boolean", "default": true },
 		"legendYou": { "type": "string", "default": "About you" },
 		"legendMove": { "type": "string", "default": "Your move" },
 		"legendNeeds": { "type": "string", "default": "What you need" },
@@ -24,6 +25,8 @@
 		"labelEmail": { "type": "string", "default": "Email" },
 		"hintEmail": { "type": "string", "default": "Optional. We send a copy of your request here." },
 		"labelReply": { "type": "string", "default": "Best way to reply" },
+		"labelMessage": { "type": "string", "default": "Tell us about your move" },
+		"hintMessage": { "type": "string", "default": "Optional. For example what you are moving, from where to where, and when." },
 		"labelMoveType": { "type": "string", "default": "Type of move" },
 		"labelFrom": { "type": "string", "default": "Moving from" },
 		"hintFrom": { "type": "string", "default": "Area or city, e.g. Juffair" },

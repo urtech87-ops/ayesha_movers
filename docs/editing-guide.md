@@ -19,7 +19,7 @@ All contact details live on one page: **Settings → Business Info** (in the bla
 | Facebook page | The Facebook link in the top bar, the footer and on Contact Us (read out as "AYESHA Movers on Facebook"). **Leave it empty to hide every Facebook link** on the site |
 | Business address | **Leave empty** until you want an address on the site. When you fill it in, search engines are told about it too |
 | Show reviews section | Leave **off** until the example reviews have been replaced with real customer reviews. While it is off, the reviews section is hidden from visitors |
-| Show contact details on Contact Us | **Off** for now: Contact Us shows only the heading and the quote form (with a Facebook link under the form's first line). Switch it **on** to show the opening hours and the rows with the numbers, email, Instagram and Facebook beside the form again. Nothing is deleted while it is off |
+| Show contact details on Contact Us | **On**: the opening hours and the rows with the numbers, email, Instagram and Facebook show beside the quote form. Switch it **off** to show only the heading and the form. Nothing is deleted while it is off |
 
 Click **Save business info**. The change appears everywhere on the site straight away; you don't need to edit any page.
 
@@ -210,7 +210,7 @@ Both pages use the template **Page with sections (heading in the page)**: the bi
 Open **Pages → Contact Us**. In **List View**: Contact → Columns → the left column (heading, opening hours, **Contact rows**) and the right column (**Request a detailed quote**, one line of text, and the **Quote request form**). On computers the left column stays on screen while the form scrolls; on phones it comes first and the form follows.
 
 - **Heading and the line under "Request a detailed quote"**: click and type.
-- **Show or hide the hours and contact rows:** Settings → Business Info → **Show contact details on Contact Us**. While it's off, visitors see only the form, but the hours and rows stay in the page and you can still edit them here (the editor always shows them). The line "AYESHA Movers on Facebook" under the form's first line shows only while the details are off (the rows already have Facebook).
+- **Show or hide the hours and contact rows:** Settings → Business Info → **Show contact details on Contact Us** (on now). While it's off, visitors see only the heading and the form, but the hours and rows stay in the page and you can still edit them here (the editor always shows them).
 - **Opening hours and the contact rows** come from **Settings → Business Info** (see section 1): you can't type in the numbers, email or Instagram name here. Each row has a small label above the value ("WhatsApp", "Mobile", "Office", …); click a label to change its words. The whole row is the link, and its icon (phone, WhatsApp, envelope, Instagram) is chosen by the site from the kind of link.
 - To remove a row, select its group in List View (e.g. "Office") and delete it. To add one, duplicate a row (⋮ → **Duplicate**) and connect the copy's value to another Business Info field (section 3: Attributes → content).
 - **Keep the heading "Request a detailed quote" and its HTML anchor `quote`** (Advanced in the sidebar): the Home page's "Send a detailed quote request" link points to `/contact-us/#quote`.
@@ -218,6 +218,12 @@ Open **Pages → Contact Us**. In **List View**: Contact → Columns → the lef
 - The page's title and description in Google are in the **Search engines** panel, as for Home (section 5).
 
 ### The quote form
+
+**Short form or full form.** Click the form; at the top of the sidebar, **Form parts → Show parts 2 and 3** switches between:
+- **Off (now):** only part 1, "About you": name, phone, email, best way to reply, and the optional box **Tell us about your move** (up to 1,000 characters). No step numbers are shown. The move and service questions are not asked, not required, and don't appear in the emails, in Enquiries or in the WhatsApp message.
+- **On:** the full form with the three numbered parts (About you, Your move, What you need). The "Tell us about your move" box stays in part 1.
+
+Click **Save** after switching. The words of parts 2 and 3 stay in their panels while they're switched off.
 
 Click the form and look in the right-hand sidebar (Block tab). The panels **Part 1: About you**, **Part 2: Your move**, **Part 3: What you need** and **Button and messages** hold every word on the form: the three part headings, each label and help line, the button ("Send quote request"), the line under the button, and the message shown after sending ("Quote request sent" and the "Send this on WhatsApp too" button). Type, then click **Save**. If you empty a field, the original words come back (except the line under the button, which can be left empty to hide it).
 

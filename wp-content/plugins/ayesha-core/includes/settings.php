@@ -133,7 +133,7 @@ function ayesha_core_fields() {
 		'show_contact'     => array(
 			'label' => __( 'Show contact details on Contact Us', 'ayesha-core' ),
 			'type'  => 'checkbox',
-			'help'  => __( 'The opening hours and the rows with the numbers, email and social links beside the quote form. When this is off, Contact Us shows only the form (the details stay in the page, ready to switch back on).', 'ayesha-core' ),
+			'help'  => __( 'The opening hours and the rows with the numbers, email and social links beside the quote form. When this is off, Contact Us shows only the heading and the form (the details stay in the page, ready to switch back on).', 'ayesha-core' ),
 		),
 	);
 }

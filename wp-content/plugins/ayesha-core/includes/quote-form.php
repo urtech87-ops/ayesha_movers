@@ -18,6 +18,67 @@ const AYESHA_CORE_QUOTE_MIN_SECONDS = 3;
 /** Successful requests allowed per IP address per hour. */
 const AYESHA_CORE_QUOTE_PER_HOUR = 5;
 
+/** Longest "Tell us about your move" message, in characters. */
+const AYESHA_CORE_QUOTE_MESSAGE_MAX = 1000;
+
+/**
+ * Empty values for every field of parts 2 and 3 (used when those parts are switched off).
+ *
+ * @return array<string, mixed>
+ */
+function ayesha_core_quote_move_defaults() {
+	return array(
+		'move_type'     => '',
+		'from'          => '',
+		'to'            => '',
+		'date'          => '',
+		'flexible'      => false,
+		'size'          => '',
+		'pickup_floor'  => '',
+		'pickup_lift'   => '',
+		'dropoff_floor' => '',
+		'dropoff_lift'  => '',
+		'services'      => array(),
+		'items'         => '',
+		'truck'         => 'none',
+		'truck_time'    => '',
+	);
+}
+
+/**
+ * Whether the quote form on a page shows parts 2 and 3 (the block's "Show parts 2 and 3" setting).
+ * Read from the saved page, so a visitor can't switch the required fields off by editing the form.
+ *
+ * @param int $post_id Page with the form.
+ * @return bool True when there is no form on the page or the setting is on (the full form).
+ */
+function ayesha_core_quote_full_form( $post_id ) {
+	$find = static function ( array $blocks ) use ( &$find ) {
+		foreach ( $blocks as $block ) {
+			if ( 'ayesha/quote-form' === ( $block['blockName'] ?? '' ) ) {
+				return $block;
+			}
+			$inner = $find( $block['innerBlocks'] ?? array() );
+			if ( $inner ) {
+				return $inner;
+			}
+		}
+		return null;
+	};
+	$block = $post_id ? $find( parse_blocks( (string) get_post_field( 'post_content', $post_id, 'raw' ) ) ) : null;
+	return null === $block || ! array_key_exists( 'showMoveParts', (array) $block['attrs'] ) || ! empty( $block['attrs']['showMoveParts'] );
+}
+
+/**
+ * Whether an enquiry came from the short form (part 1 only).
+ *
+ * @param array $data Values.
+ * @return bool
+ */
+function ayesha_core_quote_is_short( array $data ) {
+	return 'short' === ( $data['parts'] ?? '' );
+}
+
 add_action( 'init', 'ayesha_core_register_quote_block' );
 
 /**
@@ -223,10 +284,15 @@ function ayesha_core_quote_today() {
 /**
  * Check and clean every field.
  *
- * @param array $raw Unslashed $_POST['aq'].
+ * With $full false (the block's "Show parts 2 and 3" is off), only part 1 is read: the move and
+ * service fields are ignored, never required and stored empty, and the enquiry is marked
+ * 'parts' => 'short' so the admin screen, the emails and the WhatsApp text leave them out.
+ *
+ * @param array $raw  Unslashed $_POST['aq'].
+ * @param bool  $full Whether parts 2 and 3 are on the form.
  * @return array{0: array, 1: array<string, string>} Clean values (as typed where invalid, so the form can show them again) and errors by field.
  */
-function ayesha_core_quote_validate( array $raw ) {
+function ayesha_core_quote_validate( array $raw, $full = true ) {
 	$options = ayesha_core_quote_options();
 	$errors  = array();
 	$pick    = static function ( $key, $list ) use ( $raw, $options ) {
@@ -240,6 +306,8 @@ function ayesha_core_quote_validate( array $raw ) {
 		'phone_e164'    => '',
 		'email'         => ayesha_core_quote_line( $raw['email'] ?? '', 120 ),
 		'reply'         => $pick( 'reply', 'reply' ),
+		'message'       => ayesha_core_quote_lines( $raw['message'] ?? '' ),
+		'parts'         => $full ? 'all' : 'short',
 		'move_type'     => $pick( 'move_type', 'move_type' ),
 		'from'          => ayesha_core_quote_line( $raw['from'] ?? '', 120 ),
 		'to'            => ayesha_core_quote_line( $raw['to'] ?? '', 120 ),
@@ -269,6 +337,10 @@ function ayesha_core_quote_validate( array $raw ) {
 			$data['services'][] = (string) $service;
 		}
 	}
+	if ( ! $full ) {
+		// Parts 2 and 3 are not on the form: whatever was posted for them is dropped.
+		$data = array_merge( $data, ayesha_core_quote_move_defaults() );
+	}
 
 	if ( '' === $data['name'] ) {
 		$errors['name'] = __( 'Enter your name', 'ayesha-core' );
@@ -289,6 +361,16 @@ function ayesha_core_quote_validate( array $raw ) {
 		$errors['email'] = __( 'Enter an email address like name@example.com, or leave it empty', 'ayesha-core' );
 	} elseif ( '' === $data['email'] && 'email' === $data['reply'] ) {
 		$errors['email'] = __( 'Enter your email address, or choose WhatsApp or a phone call as the way to reply', 'ayesha-core' );
+	}
+
+	if ( mb_strlen( $data['message'] ) > AYESHA_CORE_QUOTE_MESSAGE_MAX ) {
+		/* translators: %s: maximum number of characters. */
+		$errors['message'] = sprintf( __( 'Keep this under %s characters. You can send photos and more details on WhatsApp afterwards', 'ayesha-core' ), number_format_i18n( AYESHA_CORE_QUOTE_MESSAGE_MAX ) );
+		$data['message']   = mb_substr( $data['message'], 0, 2 * AYESHA_CORE_QUOTE_MESSAGE_MAX );
+	}
+
+	if ( ! $full ) {
+		return array( $data, $errors );
 	}
 
 	if ( '' === $data['move_type'] ) {
@@ -329,6 +411,7 @@ function ayesha_core_quote_error_targets() {
 		'name'      => 'aqf-name',
 		'phone'     => 'aqf-phone',
 		'email'     => 'aqf-email',
+		'message'   => 'aqf-message',
 		'move_type' => 'aqf-move_type-house',
 		'from'      => 'aqf-from',
 		'to'        => 'aqf-to',
@@ -418,7 +501,7 @@ function ayesha_core_quote_handle() {
 
 	// phpcs:disable WordPress.Security.NonceVerification.Missing -- the nonce is one of the checks below; every value is validated.
 	$raw = isset( $_POST['aq'] ) && is_array( $_POST['aq'] ) ? wp_unslash( $_POST['aq'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitised field by field in ayesha_core_quote_validate().
-	list( $data, $errors ) = ayesha_core_quote_validate( $raw );
+	list( $data, $errors ) = ayesha_core_quote_validate( $raw, ayesha_core_quote_full_form( $page_id ) );
 
 	$nonce   = isset( $_POST['_aqnonce'] ) ? sanitize_key( wp_unslash( $_POST['_aqnonce'] ) ) : '';
 	$honey   = isset( $_POST['aq_website'] ) ? trim( (string) wp_unslash( $_POST['aq_website'] ) ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- only tested for emptiness.
@@ -471,7 +554,7 @@ function ayesha_core_quote_handle() {
 		array(
 			'type'      => 'success',
 			'reference' => $reference,
-			'values'    => array_intersect_key( $data, array_flip( array( 'name', 'move_type', 'from', 'to', 'date', 'flexible', 'email' ) ) ),
+			'values'    => array_intersect_key( $data, array_flip( array( 'name', 'move_type', 'from', 'to', 'date', 'flexible', 'email', 'message', 'parts' ) ) ),
 		),
 		30 * MINUTE_IN_SECONDS
 	);
@@ -596,21 +679,34 @@ function ayesha_core_quote_rows( array $data ) {
 		$truck .= ', ' . ayesha_core_quote_label( 'truck_time', $data['truck_time'] );
 	}
 	$none = __( 'Not given', 'ayesha-core' );
-	return array(
+	$rows = array(
 		array( __( 'Name', 'ayesha-core' ), (string) ( $data['name'] ?? '' ) ),
 		array( __( 'Phone / WhatsApp', 'ayesha-core' ), (string) ( $data['phone'] ?? '' ) ),
 		array( __( 'Email', 'ayesha-core' ), '' !== ( $data['email'] ?? '' ) ? (string) $data['email'] : $none ),
 		array( __( 'Best way to reply', 'ayesha-core' ), ayesha_core_quote_label( 'reply', $data['reply'] ?? 'whatsapp' ) ),
-		array( __( 'Type of move', 'ayesha-core' ), ayesha_core_quote_label( 'move_type', $data['move_type'] ?? '' ) ),
-		array( __( 'Moving from', 'ayesha-core' ), (string) ( $data['from'] ?? '' ) ),
-		array( __( 'Moving to', 'ayesha-core' ), (string) ( $data['to'] ?? '' ) ),
-		array( __( 'Preferred date', 'ayesha-core' ), ayesha_core_quote_date_text( $data ) ),
-		array( __( 'Property size', 'ayesha-core' ), ayesha_core_quote_label( 'size', $data['size'] ?? '' ) ?: $none ),
-		array( __( 'At pickup', 'ayesha-core' ), ayesha_core_quote_floor_text( $data['pickup_floor'] ?? '', $data['pickup_lift'] ?? '' ) ),
-		array( __( 'At drop-off', 'ayesha-core' ), ayesha_core_quote_floor_text( $data['dropoff_floor'] ?? '', $data['dropoff_lift'] ?? '' ) ),
-		array( __( 'Services', 'ayesha-core' ), $services ? implode( ', ', $services ) : __( 'None ticked', 'ayesha-core' ) ),
-		array( __( 'Big or special items', 'ayesha-core' ), '' !== ( $data['items'] ?? '' ) ? (string) $data['items'] : $none ),
-		array( __( 'Truck hire', 'ayesha-core' ), $truck ),
+	);
+	// The message is optional: its row only appears when the customer wrote something.
+	if ( '' !== (string) ( $data['message'] ?? '' ) ) {
+		$rows[] = array( __( 'About the move', 'ayesha-core' ), (string) $data['message'] );
+	}
+	// Short form: parts 2 and 3 were not asked, so they are not listed at all.
+	if ( ayesha_core_quote_is_short( $data ) ) {
+		return $rows;
+	}
+	return array_merge(
+		$rows,
+		array(
+			array( __( 'Type of move', 'ayesha-core' ), ayesha_core_quote_label( 'move_type', $data['move_type'] ?? '' ) ),
+			array( __( 'Moving from', 'ayesha-core' ), (string) ( $data['from'] ?? '' ) ),
+			array( __( 'Moving to', 'ayesha-core' ), (string) ( $data['to'] ?? '' ) ),
+			array( __( 'Preferred date', 'ayesha-core' ), ayesha_core_quote_date_text( $data ) ),
+			array( __( 'Property size', 'ayesha-core' ), ayesha_core_quote_label( 'size', $data['size'] ?? '' ) ?: $none ),
+			array( __( 'At pickup', 'ayesha-core' ), ayesha_core_quote_floor_text( $data['pickup_floor'] ?? '', $data['pickup_lift'] ?? '' ) ),
+			array( __( 'At drop-off', 'ayesha-core' ), ayesha_core_quote_floor_text( $data['dropoff_floor'] ?? '', $data['dropoff_lift'] ?? '' ) ),
+			array( __( 'Services', 'ayesha-core' ), $services ? implode( ', ', $services ) : __( 'None ticked', 'ayesha-core' ) ),
+			array( __( 'Big or special items', 'ayesha-core' ), '' !== ( $data['items'] ?? '' ) ? (string) $data['items'] : $none ),
+			array( __( 'Truck hire', 'ayesha-core' ), $truck ),
+		)
 	);
 }
 
@@ -651,13 +747,22 @@ function ayesha_core_quote_whatsapp_message( $reference, array $values ) {
 		sprintf( __( 'Reference: %s', 'ayesha-core' ), $reference ),
 		/* translators: %s: customer name. */
 		sprintf( __( 'Name: %s', 'ayesha-core' ), $values['name'] ?? '' ),
-		/* translators: %s: type of move. */
-		sprintf( __( 'Move: %s', 'ayesha-core' ), ayesha_core_quote_label( 'move_type', $values['move_type'] ?? '' ) ),
-		/* translators: 1: from, 2: to. */
-		sprintf( __( 'From %1$s to %2$s', 'ayesha-core' ), $values['from'] ?? '', $values['to'] ?? '' ),
-		/* translators: %s: preferred date. */
-		sprintf( __( 'Date: %s', 'ayesha-core' ), ayesha_core_quote_date_text( $values ) ),
-		__( 'I can send photos of my things here.', 'ayesha-core' ),
 	);
+	if ( ! ayesha_core_quote_is_short( $values ) ) {
+		/* translators: %s: type of move. */
+		$lines[] = sprintf( __( 'Move: %s', 'ayesha-core' ), ayesha_core_quote_label( 'move_type', $values['move_type'] ?? '' ) );
+		/* translators: 1: from, 2: to. */
+		$lines[] = sprintf( __( 'From %1$s to %2$s', 'ayesha-core' ), $values['from'] ?? '', $values['to'] ?? '' );
+		/* translators: %s: preferred date. */
+		$lines[] = sprintf( __( 'Date: %s', 'ayesha-core' ), ayesha_core_quote_date_text( $values ) );
+	}
+	$message = trim( (string) ( $values['message'] ?? '' ) );
+	if ( '' !== $message ) {
+		// Kept short: a wa.me link has to fit in a URL. The full message is in the email and in WordPress.
+		$short = mb_strlen( $message ) > 300 ? rtrim( mb_substr( $message, 0, 300 ) ) . '…' : $message;
+		/* translators: %s: the customer's message about the move. */
+		$lines[] = sprintf( __( 'About my move: %s', 'ayesha-core' ), $short );
+	}
+	$lines[] = __( 'I can send photos of my things here.', 'ayesha-core' );
 	return implode( "\n", $lines );
 }
