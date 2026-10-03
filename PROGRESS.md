@@ -51,18 +51,24 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | 3. Foundation (theme, plugin, header/footer) | phase-3-foundation | **Done; approved and merged into main 2026-10-01 (merge commit 81c86cf)** |
 | 4. Home page | phase-4-home | **Done; approved and merged into main 2026-10-02 (fast-forward to f2105b4)** |
 | 5. Our Services + About Us | phase-5-services-about | **Done; approved and merged into main 2026-10-03 (fast-forward to 7f3e690)** |
-| 6. Contact Us + quote form + email | phase-6-contact | **Built and tested; waiting for approval (not merged)** |
+| 6. Contact Us + quote form + email | phase-6-contact | **Done; approved and merged into main 2026-10-03 (fast-forward to 497997f)** |
 | 7. Full QA, SEO, performance, handover | phase-7-qa | Not started |
 
 ## Current phase + next step
-- **Current:** Phase 6 – Contact Us + quote form + email: **built and tested, pushed to `origin/phase-6-contact`, waiting for your approval. Not merged.**
-- **Next step:** you review (Contact Us page, a test request, Enquiries in the dashboard, `docs/email-setup.md`, the Phase 6 tests below). On approval: remove the two dev junctions (`rmdir`, links only), restore the folders from git in the main checkout, merge `phase-6-contact` into `main`, push `main`, smoke-test.
-- **Last completed:** Phase 5 (Our Services + About Us), approved and merged into `main` 2026-10-03 at 7f3e690.
-- **Dev setup during Phase 6:** `wp-content/themes/ayesha-movers` and `wp-content/plugins/ayesha-core` in the main checkout are **directory junctions** into the worktree `.claude/worktrees/phase-6-contact-f475a2`. The original folders (45 files, identical to `main` at 3b29b63) were moved to this session's scratch folder, not deleted.
-- **Test data kept on the local site (user decision 2026-10-03):** 14 test enquiries AYM-261003-001 … 014 (names like "Sara Test", "Rate Test 1", and one with the XSS test text) and the matching WP Mail Logging rows 4–22. **Go-live checklist: delete all test enquiries** (Enquiries → select all → Move to Trash → Empty Trash; also in `docs/email-setup.md` section 4) and the WP Mail Logging rows.
-- **Phase 7 notes (from Phase 6):**
-  - axe "region" (moderate, best practice) on every page: the sticky Call/WhatsApp bar (phones) and the floating WhatsApp button (desktop) sit outside a landmark. Fix: give the bar's template part a labelled `nav`/`aside` wrapper, and the floating button an `aside` wrapper.
-  - Go-live: **delete all test enquiries** (AYM-261003-001 … 014 and any later test requests); WP Mail SMTP + Gmail App Password (`docs/email-setup.md`); deactivate WP Mail Logging; exclude `/contact-us/` from any page cache (the form's nonce lasts 24 h); if the site goes behind Cloudflare or another proxy, switch the rate limit to the real visitor IP header first.
+- **Current:** Phase 7 – Full QA, SEO, performance, handover (**not started**). Branch `phase-7-qa`.
+- **Next step:** wait for the user's go-ahead and the Phase 7 prompt.
+- **Last completed:** Phase 6 (Contact Us + quote form + email), approved and merged into `main` 2026-10-03 at 497997f (fast-forward); smoke test passed (see Test results › Phase 6 › Post-merge smoke test).
+- **Test data kept on the local site (user decision 2026-10-03):** 14 test enquiries AYM-261003-001 … 014 and WP Mail Logging rows 4–22.
+- **Phase 7 notes (carried over from Phase 6):**
+  - **axe landmark issue (moderate, `region`, on every page):** the sticky Call/WhatsApp bar (phones, template part `sticky-bar`) and the floating WhatsApp button (desktop, printed by AYESHA Core in `wp_footer`) sit outside a landmark. Fix: give the bar a labelled `nav` or `aside` wrapper (template part `tagName` + `aria-label`) and the floating button an `aside` wrapper with a label; re-run axe on all 4 pages.
+  - **Go-live checklist:**
+    - **Delete all test enquiries** (AYM-261003-001 … 014 and any later test requests: Enquiries → select all → Move to Trash → Empty Trash) and the WP Mail Logging test rows.
+    - WP Mail SMTP + Gmail App Password, then a test email and a real test request (`docs/email-setup.md`).
+    - Deactivate and delete WP Mail Logging.
+    - Exclude `/contact-us/` from any page cache (the form's nonce lasts 24 h).
+    - If the site goes behind Cloudflare or another proxy, switch the rate limit to the real visitor IP header first.
+    - Turn off "Discourage search engines" and revisit `AUTOMATIC_UPDATER_DISABLED` (see earlier phases).
+  - If Phase 7 is built in a worktree again, use the same junction method and remove the junctions with `rmdir` (links only) before merging.
 
 ## Decisions log
 - 2026-10-01: Project brief written to CLAUDE.md.
@@ -134,6 +140,8 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 
 - 2026-10-03: User decisions on Phase 6: (1) no yellow CTA band on Contact Us (wireframe kept); (2) the 14 test enquiries stay for now, and "Delete all test enquiries" is on the go-live checklist (`docs/email-setup.md` section 4, and the Phase 7 notes above); (3) nothing else followed the cut-off line in the Phase 6 prompt (the user's reply still contained the template text "[paste the missing items here]"; read as nothing missing).
 - 2026-10-03: Rate limit confirmed as built, no change needed: no cookie and nothing client-side (0 uses of `setcookie`, `$_COOKIE`, localStorage or sessionStorage in AYESHA Core). The visitor is identified by `REMOTE_ADDR`, hashed with HMAC-SHA256 keyed with `wp_salt( 'nonce' )`; the hash (first 32 hex characters) is only the transient's name (`ayesha_qf_rl_<hash>`). The transient's value is the list of send times in the last hour (no IP), and it expires 1 hour after the last send. Verified in the database: one row `_transient_ayesha_qf_rl_ff576d66…` = two Unix timestamps, with its timeout row. The 6th-request block was tested in Phase 6 test 12.
+
+- 2026-10-03: User approved Phase 6. The two dev junctions were removed (`rmdir`, links only; the worktree's 33 theme and 21 plugin files untouched), the theme and plugin folders restored from git in the main checkout, `phase-6-contact` fast-forward merged into `main` (497997f), `main` pushed. The copies of the original folders moved aside at the start of Phase 6 are in the Phase 6 session's scratch folder; they are identical to `main` at 3b29b63 and no longer needed.
 
 ## Open questions for the client
 - Price point: the site says "Low rates, with labour included" (his own selling point, no superlative). Confirm the wording
@@ -394,3 +402,15 @@ Screenshots: `docs/screenshots/phase-6/` (`contact-375.png` with phone emulation
 | 23 | debug.log | Nothing new | 3432 bytes before and after; the last entry is from 2026-10-02 17:00 UTC (before this session) | Pass |
 
 Fixes made because of these tests: line breaks in the WhatsApp hand-off (`esc_url` removed `%0A`), the date field's focus ring, mid-word breaks in the move-type tiles at 375, an impossible date being sent back to the date field, the error summary's bullet alignment, the label covering the radio/tick box (clicks still worked, but the box sat under the label's click area), "— Private" after each reference and "Post updated." on the enquiry screen.
+
+#### Post-merge smoke test (main folder, after merging at 497997f, 2026-10-03)
+| # | Test | Expected | Actual | Pass/Fail |
+|---|---|---|---|---|
+| S1 | Junctions removed; real folders from git | `themes/ayesha-movers` and `plugins/ayesha-core` are real folders | Both junctions removed with `rmdir` (links only; worktree still has its 33 theme and 21 plugin files), folders restored with `git checkout`, `main` fast-forwarded: no link type, 33 / 21 files, versions 0.6.0 / 0.6.0, main checkout clean | Pass |
+| S2 | All 4 pages | HTTP 200 | `/`, `/about-us/`, `/our-services/`, `/contact-us/`: 200 | Pass |
+| S3 | Theme and plugin active from the main folder | ayesha-movers, ayesha-core | `ayesha-movers` 0.6.0 from `wp-content/themes/ayesha-movers`; `ayesha-core` 0.6.0 active from `wp-content/plugins/ayesha-core`; block `ayesha/quote-form` registered | Pass |
+| S4 | Contact Us page | Title, heading anchor, rows, form | `<title>` "Contact AYESHA Movers: Call, WhatsApp or Get a Quote"; one `id="quote"`; 6 contact rows; the form; `tel:+97334448236` and `wa.me/97334448236` links from Business Info | Pass |
+| S5 | Home → `/contact-us/#quote` (375, phone emulation) | Lands on the form | H2 26 px from the top of the screen; form styles loaded | Pass |
+| S6 | Form handler from main (a send that saves nothing) | Error shown, nothing saved or emailed | Name left empty: "Your request was not sent / Enter your name", focus on the summary, other values kept. Enquiries still 14, highest mail log id still 22 | Pass |
+| S7 | debug.log | No new entries | 3432 bytes before and after the merge and smoke test | Pass |
+| S8 | Pushes | `main` = `origin/main` = `origin/phase-6-contact` | All 497997f before this PROGRESS commit | Pass |
