@@ -102,6 +102,22 @@ function ayesha_core_link( $url, $text, $blank = false ) {
 }
 
 /**
+ * The Facebook link: opens in a new tab, with the accessible name "AYESHA Movers on Facebook".
+ * The visible words should be part of that name (e.g. "Facebook" or "AYESHA Movers"), so speech
+ * users can say what they see. Empty when no Facebook page is set.
+ *
+ * @param string $url  Facebook page URL.
+ * @param string $text Visible words.
+ * @return string Safe HTML.
+ */
+function ayesha_core_facebook_link( $url, $text ) {
+	if ( '' === $url ) {
+		return '';
+	}
+	return '<a href="' . esc_url( $url, array( 'https' ) ) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__( 'AYESHA Movers on Facebook', 'ayesha-core' ) . '">' . esc_html( $text ) . '</a>';
+}
+
+/**
  * Approximate width of a phone number in em, set in the display face (Roboto 700).
  * Advances measured from the font file in Phase 7 (digits 0.574em), rounded up; unknown characters count wide.
  *
@@ -184,6 +200,8 @@ function ayesha_core_value_keys() {
 		'instagram_handle'     => array( 'label' => __( 'Instagram name', 'ayesha-core' ), 'kind' => 'text' ),
 		'instagram_url'        => array( 'label' => __( 'Instagram: page link (for buttons)', 'ayesha-core' ), 'kind' => 'url' ),
 		'instagram_link'       => array( 'label' => __( 'Instagram name, tap to open (for text)', 'ayesha-core' ), 'kind' => 'html' ),
+		'facebook_url'         => array( 'label' => __( 'Facebook: page link (for buttons)', 'ayesha-core' ), 'kind' => 'url' ),
+		'facebook_link'        => array( 'label' => __( 'Facebook, tap to open (for text)', 'ayesha-core' ), 'kind' => 'html' ),
 		'service_areas'        => array( 'label' => __( 'Service areas (one per line)', 'ayesha-core' ), 'kind' => 'html' ),
 		'address'              => array( 'label' => __( 'Business address', 'ayesha-core' ), 'kind' => 'html' ),
 		'copyright'            => array( 'label' => __( 'Copyright line with the current year', 'ayesha-core' ), 'kind' => 'text' ),
@@ -245,6 +263,10 @@ function ayesha_core_value( $key, $args = array() ) {
 			return (string) $s['instagram_url'];
 		case 'instagram_link':
 			return ayesha_core_link( (string) $s['instagram_url'], $label ?? ayesha_core_instagram_handle( $s['instagram_url'] ), true );
+		case 'facebook_url':
+			return (string) $s['facebook_url'];
+		case 'facebook_link':
+			return ayesha_core_facebook_link( (string) $s['facebook_url'], $label ?? __( 'Facebook', 'ayesha-core' ) );
 		case 'service_areas':
 			$lines = array_filter( array_map( 'trim', preg_split( '/\R/', (string) $s['service_areas'] ) ) );
 			return implode( '<br>', array_map( 'esc_html', $lines ) );

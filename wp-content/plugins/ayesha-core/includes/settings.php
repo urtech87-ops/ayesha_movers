@@ -35,8 +35,10 @@ function ayesha_core_defaults() {
 			)
 		),
 		'instagram_url'    => 'https://www.instagram.com/ayesha_movers_packers/',
+		'facebook_url'     => 'https://www.facebook.com/ayeshamoversbahrain/',
 		'address'          => '',
 		'show_reviews'     => 0,
+		'show_contact'     => 1,
 	);
 }
 
@@ -113,6 +115,11 @@ function ayesha_core_fields() {
 			'type'  => 'url',
 			'help'  => __( 'The full link, starting with https://', 'ayesha-core' ),
 		),
+		'facebook_url'     => array(
+			'label' => __( 'Facebook page', 'ayesha-core' ),
+			'type'  => 'url',
+			'help'  => __( 'The full link, starting with https://. Leave empty to hide every Facebook link on the site.', 'ayesha-core' ),
+		),
 		'address'          => array(
 			'label' => __( 'Business address', 'ayesha-core' ),
 			'type'  => 'textarea',
@@ -122,6 +129,11 @@ function ayesha_core_fields() {
 			'label' => __( 'Show reviews section', 'ayesha-core' ),
 			'type'  => 'checkbox',
 			'help'  => __( 'Only switch this on after the example reviews have been replaced with real customer reviews.', 'ayesha-core' ),
+		),
+		'show_contact'     => array(
+			'label' => __( 'Show contact details on Contact Us', 'ayesha-core' ),
+			'type'  => 'checkbox',
+			'help'  => __( 'The opening hours and the rows with the numbers, email and social links beside the quote form. When this is off, Contact Us shows only the form (the details stay in the page, ready to switch back on).', 'ayesha-core' ),
 		),
 	);
 }
@@ -172,7 +184,15 @@ function ayesha_core_sanitize( $input ) {
 	}
 	$clean['instagram_url'] = $instagram;
 
+	$facebook = isset( $input['facebook_url'] ) ? esc_url_raw( trim( $input['facebook_url'] ), array( 'https' ) ) : '';
+	if ( '' !== trim( $input['facebook_url'] ?? '' ) && '' === $facebook ) {
+		add_settings_error( AYESHA_CORE_OPTION, 'facebook_url', __( 'The Facebook link must start with https://. The previous link was kept.', 'ayesha-core' ) );
+		$facebook = $old['facebook_url'];
+	}
+	$clean['facebook_url'] = $facebook;
+
 	$clean['show_reviews'] = empty( $input['show_reviews'] ) ? 0 : 1;
+	$clean['show_contact'] = empty( $input['show_contact'] ) ? 0 : 1;
 
 	return array_intersect_key( $clean, $defaults );
 }

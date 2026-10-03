@@ -7,6 +7,7 @@
 - Office: +973 7736 0292
 - Email: ayeshamoversbh786@gmail.com
 - Instagram: https://www.instagram.com/ayesha_movers_packers/
+- Facebook: https://www.facebook.com/ayeshamoversbahrain/ (given by the user 2026-10-03)
 - No street address is published. Leave the address field empty in settings and don't show an address on the site until the client provides one.
 - Coverage: all of Bahrain (Manama and every city), Mina Salman port, Khalifa Bin Salman Port, airport cargo; Saudi Arabia (KSA) and the other GCC countries (UAE, Kuwait, Qatar, Oman). Bahrain to the GCC only: NOT the UK, USA, Canada, Europe or "worldwide" (corrected by the user 2026-10-03; still being confirmed with the client).
 - Available 24 hours, day and night.

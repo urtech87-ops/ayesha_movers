@@ -18,14 +18,15 @@
  * @param string $html  Fallback link HTML (what the editor stores; the site shows the live value).
  * @return string
  */
-$ayesha_row = static function ( $name, $label, $key, $html ) {
-	$classes = 'ayesha-contact__row' . ( 'whatsapp_link' === $key ? ' ayesha-contact__row--whatsapp' : '' );
+$ayesha_row = static function ( $name, $label, $key, $html, $link_text = '' ) {
+	$classes = 'ayesha-contact__row' . ( 'whatsapp_link' === $key ? ' ayesha-contact__row--whatsapp' : '' ) . ( 'facebook_link' === $key ? ' ayesha-if-facebook' : '' );
+	$args    = '"key":"' . esc_attr( $key ) . '"' . ( '' === $link_text ? '' : ',"label":"' . esc_attr( $link_text ) . '"' );
 	return '<!-- wp:group {"metadata":{"name":"' . esc_attr( $name ) . '"},"className":"' . $classes . '","style":{"spacing":{"blockGap":"0"}},"layout":{"type":"default"}} -->
 <div class="wp-block-group ' . $classes . '"><!-- wp:paragraph {"className":"ayesha-contact__label"} -->
 <p class="ayesha-contact__label">' . esc_html( $label ) . '</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"className":"ayesha-contact__value","metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"' . esc_attr( $key ) . '"}}},"name":"' . esc_attr( $name ) . ' (from Business Info)"}} -->
+<!-- wp:paragraph {"className":"ayesha-contact__value","metadata":{"bindings":{"content":{"source":"ayesha/business","args":{' . $args . '}}},"name":"' . esc_attr( $name ) . ' (from Business Info)"}} -->
 <p class="ayesha-contact__value">' . $html . '</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->';
@@ -38,6 +39,7 @@ $ayesha_rows = array(
 	$ayesha_row( 'Office', 'Office', 'phone_office_link', '<a href="tel:+97377360292">+973 7736 0292</a>' ),
 	$ayesha_row( 'Email', 'Email', 'email_link', '<a href="mailto:ayeshamoversbh786@gmail.com">ayeshamoversbh786@gmail.com</a>' ),
 	$ayesha_row( 'Instagram', 'Instagram', 'instagram_link', '<a href="https://www.instagram.com/ayesha_movers_packers/" target="_blank" rel="noopener">@ayesha_movers_packers</a>' ),
+	$ayesha_row( 'Facebook', 'Facebook', 'facebook_link', '<a href="https://www.facebook.com/ayeshamoversbahrain/" target="_blank" rel="noopener" aria-label="AYESHA Movers on Facebook">AYESHA Movers</a>', 'AYESHA Movers' ),
 );
 ?>
 <!-- wp:group {"metadata":{"name":"Contact"},"tagName":"section","align":"full","className":"ayesha-section ayesha-intro ayesha-contact","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
@@ -47,12 +49,12 @@ $ayesha_rows = array(
 <h1 class="wp-block-heading">Contact us</h1>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"fontSize":"lead","metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"hours"}}},"name":"Opening hours"}} -->
-<p class="has-lead-font-size">Open 24 hours, every day</p>
+<!-- wp:paragraph {"className":"ayesha-if-contact-details","fontSize":"lead","metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"hours"}}},"name":"Opening hours"}} -->
+<p class="ayesha-if-contact-details has-lead-font-size">Open 24 hours, every day</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:group {"metadata":{"name":"Contact rows"},"className":"ayesha-contact__rows","layout":{"type":"default"}} -->
-<div class="wp-block-group ayesha-contact__rows"><?php echo implode( "\n\n", $ayesha_rows ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- block markup built above. ?></div>
+<!-- wp:group {"metadata":{"name":"Contact rows (shown when Business Info > Show contact details is on)"},"className":"ayesha-contact__rows ayesha-if-contact-details","layout":{"type":"default"}} -->
+<div class="wp-block-group ayesha-contact__rows ayesha-if-contact-details"><?php echo implode( "\n\n", $ayesha_rows ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- block markup built above. ?></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->
 
@@ -63,6 +65,10 @@ $ayesha_rows = array(
 
 <!-- wp:paragraph -->
 <p>Takes about 3 minutes. We reply on WhatsApp or by phone.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"facebook_link","label":"AYESHA Movers on Facebook"}}},"name":"Facebook (shown while the contact details are off)"},"className":"ayesha-contact__social ayesha-unless-contact-details"} -->
+<p class="ayesha-contact__social ayesha-unless-contact-details"><a href="https://www.facebook.com/ayeshamoversbahrain/" target="_blank" rel="noopener" aria-label="AYESHA Movers on Facebook">AYESHA Movers on Facebook</a></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:ayesha/quote-form /--></div>

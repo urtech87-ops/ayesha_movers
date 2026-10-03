@@ -131,8 +131,9 @@ function ayesha_core_schema() {
 		);
 	}
 
-	if ( '' !== $s['instagram_url'] ) {
-		$schema['sameAs'] = array( $s['instagram_url'] );
+	$same_as = array_values( array_filter( array( $s['instagram_url'], $s['facebook_url'] ) ) );
+	if ( $same_as ) {
+		$schema['sameAs'] = $same_as;
 	}
 
 	$schema['makesOffer'] = array_map(

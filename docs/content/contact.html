@@ -5,12 +5,12 @@
 <h1 class="wp-block-heading">Contact us</h1>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"hours"}}},"name":"Opening hours"},"fontSize":"lead"} -->
-<p class="has-lead-font-size">Open 24 hours, every day</p>
+<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"hours"}}},"name":"Opening hours"},"className":"ayesha-if-contact-details","fontSize":"lead"} -->
+<p class="ayesha-if-contact-details has-lead-font-size">Open 24 hours, every day</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:group {"metadata":{"name":"Contact rows"},"className":"ayesha-contact__rows","layout":{"type":"default"}} -->
-<div class="wp-block-group ayesha-contact__rows"><!-- wp:group {"metadata":{"name":"WhatsApp"},"className":"ayesha-contact__row ayesha-contact__row\u002d\u002dwhatsapp","style":{"spacing":{"blockGap":"0"}},"layout":{"type":"default"}} -->
+<!-- wp:group {"metadata":{"name":"Contact rows (shown when Business Info > Show contact details is on)"},"className":"ayesha-contact__rows ayesha-if-contact-details","layout":{"type":"default"}} -->
+<div class="wp-block-group ayesha-contact__rows ayesha-if-contact-details"><!-- wp:group {"metadata":{"name":"WhatsApp"},"className":"ayesha-contact__row ayesha-contact__row\u002d\u002dwhatsapp","style":{"spacing":{"blockGap":"0"}},"layout":{"type":"default"}} -->
 <div class="wp-block-group ayesha-contact__row ayesha-contact__row--whatsapp"><!-- wp:paragraph {"className":"ayesha-contact__label"} -->
 <p class="ayesha-contact__label">WhatsApp</p>
 <!-- /wp:paragraph -->
@@ -68,6 +68,16 @@
 <!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"instagram_link"}}},"name":"Instagram (from Business Info)"},"className":"ayesha-contact__value"} -->
 <p class="ayesha-contact__value"><a href="https://www.instagram.com/ayesha_movers_packers/" target="_blank" rel="noopener">@ayesha_movers_packers</a></p>
 <!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"metadata":{"name":"Facebook"},"className":"ayesha-contact__row ayesha-if-facebook","style":{"spacing":{"blockGap":"0"}},"layout":{"type":"default"}} -->
+<div class="wp-block-group ayesha-contact__row ayesha-if-facebook"><!-- wp:paragraph {"className":"ayesha-contact__label"} -->
+<p class="ayesha-contact__label">Facebook</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"facebook_link","label":"AYESHA Movers"}}},"name":"Facebook (from Business Info)"},"className":"ayesha-contact__value"} -->
+<p class="ayesha-contact__value"><a href="https://www.facebook.com/ayeshamoversbahrain/" target="_blank" rel="noopener" aria-label="AYESHA Movers on Facebook">AYESHA Movers</a></p>
+<!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->
@@ -79,6 +89,10 @@
 
 <!-- wp:paragraph -->
 <p>Takes about 3 minutes. We reply on WhatsApp or by phone.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"facebook_link","label":"AYESHA Movers on Facebook"}}},"name":"Facebook (shown while the contact details are off)"},"className":"ayesha-contact__social ayesha-unless-contact-details"} -->
+<p class="ayesha-contact__social ayesha-unless-contact-details"><a href="https://www.facebook.com/ayeshamoversbahrain/" target="_blank" rel="noopener" aria-label="AYESHA Movers on Facebook">AYESHA Movers on Facebook</a></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:ayesha/quote-form /--></div>

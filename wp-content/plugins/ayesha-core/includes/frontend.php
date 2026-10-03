@@ -101,3 +101,64 @@ function ayesha_core_hide_reviews( $content, $block ) {
 	}
 	return ayesha_core_setting( 'show_reviews' ) ? $content : '';
 }
+
+add_filter( 'render_block', 'ayesha_core_contact_conditional_blocks', 10, 2 );
+
+/**
+ * "Show contact details on Contact Us" (Business Info): blocks with the class
+ * "ayesha-if-contact-details" show only while it is on; "ayesha-unless-contact-details" only while
+ * it is off (e.g. the Facebook line under the form intro, which the contact rows already include).
+ * The blocks stay in the page, so the client can switch the details back on at any time.
+ *
+ * @param string $content Block HTML.
+ * @param array  $block   Parsed block.
+ * @return string
+ */
+function ayesha_core_contact_conditional_blocks( $content, $block ) {
+	$class = $block['attrs']['className'] ?? '';
+	if ( '' === $class || false === strpos( $class, 'contact-details' ) ) {
+		return $content;
+	}
+	$classes = preg_split( '/\s+/', $class );
+	$on      = (bool) ayesha_core_setting( 'show_contact' );
+	if ( in_array( 'ayesha-if-contact-details', $classes, true ) && ! $on ) {
+		return '';
+	}
+	if ( in_array( 'ayesha-unless-contact-details', $classes, true ) && $on ) {
+		return '';
+	}
+	return $content;
+}
+
+add_filter( 'render_block', 'ayesha_core_hide_empty_social', 10, 2 );
+
+/**
+ * A block bound to a Facebook or Instagram field is removed when that link is empty in
+ * Business Info, so the site never shows an empty row or a dead link. Its parent row
+ * (a group with the class "ayesha-if-facebook" / "ayesha-if-instagram") goes too.
+ *
+ * @param string $content Block HTML.
+ * @param array  $block   Parsed block.
+ * @return string
+ */
+function ayesha_core_hide_empty_social( $content, $block ) {
+	$empty = array(
+		'facebook'  => '' === (string) ayesha_core_setting( 'facebook_url' ),
+		'instagram' => '' === (string) ayesha_core_setting( 'instagram_url' ),
+	);
+	$class = $block['attrs']['className'] ?? '';
+	foreach ( $empty as $network => $is_empty ) {
+		if ( $is_empty && '' !== $class && in_array( 'ayesha-if-' . $network, preg_split( '/\s+/', $class ), true ) ) {
+			return '';
+		}
+	}
+	foreach ( (array) ( $block['attrs']['metadata']['bindings'] ?? array() ) as $binding ) {
+		$key = (string) ( $binding['args']['key'] ?? '' );
+		foreach ( $empty as $network => $is_empty ) {
+			if ( $is_empty && str_starts_with( $key, $network . '_' ) ) {
+				return '';
+			}
+		}
+	}
+	return $content;
+}
