@@ -62,4 +62,4 @@ $ayesha_inner = '<!-- wp:columns {"className":"ayesha-about-team__columns","styl
 <!-- /wp:column --></div>
 <!-- /wp:columns -->';
 
-echo ayesha_theme_section_markup( 'Who runs it + How we work', 'is-style-concrete-panel ayesha-section ayesha-about-team', $ayesha_inner ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- block markup, escaped where built.
+echo ayesha_theme_section_markup( 'Who runs it + How we work', 'ayesha-section ayesha-about-team', $ayesha_inner ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- block markup, escaped where built.

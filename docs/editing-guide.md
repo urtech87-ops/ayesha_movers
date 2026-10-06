@@ -132,9 +132,14 @@ Two sections are **synced patterns**: the gold **CTA band** ("Moving soon? Messa
 - **WhatsApp us** and **Call** take their links from Business Info. You can change the button words.
 - **The photo is optional.** To remove it, click the photo and delete it (the ⋮ menu → **Delete**). The text then fills the whole width; nothing else needs to change. To add a photo back, click the empty photo column → **+** → **Image** and pick a photo from the Media Library, size *Photo (560px)*. Don't write a caption or alt text that says the truck is yours until that is confirmed.
 
-### Services: the photo under the house-shifting card
+### What we do: the six service cards
 
-The photo under the large "House, villa, flat and office shifting" card (the pickup loaded with boxes) is a normal Image block shown at its real size. It appears on computers only; phones and tablets don't show it (or download it), to keep the page short. Click it to replace it (**Replace** in the toolbar) or delete it. Keep the alt text a plain description of what is in the photo.
+"What we do" shows the six services as equal cards (three across on computers, one under the other on phones). Each card is a group named "Service: …" in List View with three blocks: the title (it links to that service on the Our Services page), one paragraph and the "Ask on WhatsApp" link. The icon in the gold circle is added by the design and follows the title's link (e.g. a title that links to `…/our-services/#trucks` gets the truck), so keep each link pointing at its service.
+
+- **Change a text:** click it and type.
+- **Add or remove a service:** select a card in List View → ⋮ → **Duplicate** (or **Delete**). Point the new title's link at the right anchor on Our Services.
+- **See all services** under the cards is a normal button.
+- The longer "Every move includes" list and the pickup photo are no longer on Home (since Phase 7): the list is on the Our Services page; the photo is still in the Media Library.
 
 ### Services: "Ask on WhatsApp" links
 

@@ -15,8 +15,8 @@ if ( $ayesha_ref ) {
 	return;
 }
 ?>
-<!-- wp:group {"metadata":{"name":"Where we go"},"tagName":"section","align":"full","className":"ayesha-section ayesha-where","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
-<section class="wp-block-group alignfull ayesha-section ayesha-where" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:heading -->
+<!-- wp:group {"metadata":{"name":"Where we go"},"tagName":"section","align":"full","className":"is-style-concrete-panel ayesha-section ayesha-where","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull is-style-concrete-panel ayesha-section ayesha-where" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:heading -->
 <h2 class="wp-block-heading">Where we go</h2>
 <!-- /wp:heading -->
 

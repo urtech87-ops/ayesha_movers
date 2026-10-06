@@ -67,7 +67,8 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
     - B (suggested instead of "01–06 numbers", because the services are not a sequence): navy band, house shifting as a wide feature card with its list in two columns **and photo 12** beside it (computers; hidden on phones, as now), then the other five as bordered icon cards in one row. List and photo **stay**.
     - C: two columns, left heading + intro + gold "See all services" button + photo 12 in a gold frame (computers only); right six compact cards 2×3 with the icon in a white circle. List **not on Home**; photo 12 **stays** (moves to the left column). The intro sentence is **proposed new wording** ("Labour, trucks and carpenters from one team, for moves across Bahrain and to the GCC."), not in the content yet.
     - All three keep the heading, the six titles linking to `/our-services/#house-shifting` … `#cargo`, their texts and the "Ask on WhatsApp" links (the lead card's green "Ask about this on WhatsApp" becomes a text link in A and C). No "Read more →" link added: it would be new words next to a title that already links to the service.
-- **Next step:** the user picks a "What we do" option; then build it (editable blocks), re-test (0 invalid blocks, axe 0 serious/critical, no horizontal scroll at 375/768/1280, all service links), update PROGRESS.md, push `phase-7-design`, stop before merging. After approval: remove the junctions (`rmdir`), restore the main checkout's folders, merge into `main`, push, smoke-test. Then Phase 8.
+  - **Fifth round (2026-10-06): option A built.** Home "What we do" is six equal cards on light grey (3 × 2 on computers, 2 across from 640px, 1 on phones): icon in a gold circle (from the title's `#anchor`), centred title linking to its Our Services section, the same text, "Ask on WhatsApp" at the foot of the card; cards lift on hover (pointer devices, not with reduced motion); "See all services" is an outline button. As noted for A: the house-shifting card's "Every move includes" list and photo 12 are **no longer on Home** (the list is on Our Services; photo 12 stays in the Media Library), and its green "Ask about this on WhatsApp" button is now the same "Ask on WhatsApp" link as the others (same message). Every title, text, link and WhatsApp message was checked identical before saving. **Side effect fixed:** with "What we do" now light grey, the bands were re-alternated with style classes only (no words): Home "How a move works" → white, synced "Where we go" → Light grey panel, About "Who runs it + How we work" → white.
+- **Next step:** the user reviews `phase-7-design`; after approval: remove the junctions (`rmdir`), restore the main checkout's folders, merge into `main`, push, smoke-test. Then Phase 8.
 - **Last completed:** Phase 6 (Contact Us + quote form + email), approved and merged into `main` 2026-10-03 at 497997f (fast-forward); smoke test passed (see Test results › Phase 6 › Post-merge smoke test).
 - **Test data kept on the local site (user decision 2026-10-03):** 19 test enquiries AYM-261003-001 … 019 (015–019 sent in Phase 7: "Phase7 Test", "Phase7b Test", "Short NoMsg Test", "Short Msg <b>Test</b>", "Full Form Test") and WP Mail Logging rows 4–28 (row 27 went to the made-up address shorttest@example.com; locally nothing is delivered).
 - **Phase 8 notes (QA, SEO, performance, handover; scope approved 2026-10-03, carried over from Phase 6):**
@@ -185,6 +186,8 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
   - **"Tell us about your move"**: optional textarea in part 1 (in both modes), `maxlength` 1000 in the browser and checked on the server (same message style as "Big or special items"), cleaned like the other text fields and escaped everywhere it's shown. Emails/admin show it as "About the move" only when given; the WhatsApp text adds "About my move: …" (first 300 characters, so the wa.me link stays short).
   - Single-part form: the gold step number is hidden (`.ayesha-qf--single`); the legend "About you" stays.
   - Noticed, not changed: the heading "Request a detailed quote" and "Takes about 3 minutes" were written for the full form; with part 1 only you may want shorter wording (editable in the page).
+
+- 2026-10-06: Phase 7 fifth round: user chose **option A** for Home "What we do". Built as plain blocks: section (Light grey panel) → heading → group "Service cards" (`ayesha-services__grid`) → six groups `ayesha-service-card` (heading with link, paragraph, Buttons with a text-link WhatsApp button) → Buttons "See all services" (outline). Old classes `ayesha-service-lead`, `ayesha-service-row`, `ayesha-services__columns/__rows/__photo` and their CSS removed. Pattern `what-we-do.php` rewritten to the same structure. The section was swapped in the database by a WP-CLI script that compared the old and new headings (7), paragraphs (6) and WhatsApp messages (6) and saved only when all were identical; a database dump was taken first.
 
 ## Open questions for the client
 - Price point: the site says "Low rates, with labour included" (his own selling point, no superlative). Confirm the wording
@@ -532,4 +535,18 @@ Screenshots added/updated: `site-*-{375,768,1280}.png`, `site-*-375-first-screen
 | C12 | Horizontal scroll; sticky bar / floating button | 0 px; nothing covered | 0 px in all 12 runs; footer clear of the bar; floating button over no control | Pass |
 | C13 | PHP errors | None | `debug.log` unchanged (no new entries) | Pass |
 | C14 | Gallery | — | Not testable: no ads; the section stays hidden | Open |
+
+#### Phase 7, fifth round (What we do option A; run 2026-10-06)
+Screenshots: `docs/screenshots/phase-7-design/what-we-do/built-375.png`, `built-768.png`, `built-1280.png` (the built section), `editor-home-what-we-do.png`, and `site-*-{375,768,1280}.png` / `site-*-375-first-screen.png` retaken for all 4 pages. Previews of A, B, C kept in `what-we-do/option-*.png`.
+
+| # | Test | Expected | Result | Pass/Fail |
+|---|---|---|---|---|
+| D1 | Content unchanged | Same heading, titles, texts, links, messages | Script check before saving: 7 headings, 6 paragraphs, 6 WhatsApp messages identical; on the site the six messages are "…a price for house, villa, flat or office shifting." … "…GCC cargo (20ft or 40ft container)." | Pass |
+| D2 | Service links | Each card title lands on its Our Services heading | `#house-shifting`, `#packing`, `#furniture`, `#appliances`, `#trucks`, `#cargo`: each heading 32 px from the top; "See all services" → `/our-services/` | Pass |
+| D3 | Invalid blocks | 0 | Home 112, About 31, Our Services 99, Contact 31, CTA band 10, Where we go 9 blocks: 0 invalid; template parts and all 17 theme patterns: 0 invalid | Pass |
+| D4 | Editable | A card edit saves and shows | A card paragraph + " PHASE7ATEST" saved → shown on Home → reverted → gone | Pass |
+| D5 | axe, 4 pages × 375/768/1280 | 0 serious/critical | 0 serious, 0 critical in all 12 runs (only the known moderate `region`) | Pass |
+| D6 | Horizontal scroll; sticky bar / floating button | 0 px; nothing covered | 0 px in all 12 runs; footer clear of the bar; floating button over no control | Pass |
+| D7 | Icons | One per card, from the link | 6/6 cards show their icon (house, box, sofa, TV, truck, container) | Pass |
+| D8 | Contact Us wording (fourth round) | New heading and line, `#quote` kept | "Request a free quote" (`id="quote"`), "Takes under a minute. We'll call or WhatsApp you back." | Pass |
 

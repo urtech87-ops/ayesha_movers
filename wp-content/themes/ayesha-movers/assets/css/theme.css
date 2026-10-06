@@ -53,29 +53,29 @@
 
 /* An icon is a masked box in the current colour. */
 .ayesha-icon,
-:where(.ayesha-service-lead, .ayesha-service-row, .ayesha-svc__section, .ayesha-reason, .ayesha-topbar__item)::before {
+:where(.ayesha-svc__section, .ayesha-reason, .ayesha-topbar__item)::before {
 	background: currentColor;
 	-webkit-mask: var(--ayesha-icon, var(--ayesha-icon-box)) center / contain no-repeat;
 	mask: var(--ayesha-icon, var(--ayesha-icon-box)) center / contain no-repeat;
 }
 
 /* Which icon: chosen from the service's link or anchor, so nothing extra is stored in the page. */
-:is(.ayesha-service-lead, .ayesha-service-row):has(a[href$="#house-shifting"]),
+.ayesha-service-card:has(a[href$="#house-shifting"]),
 .ayesha-svc__section:has(#house-shifting),
 .ayesha-jump__list a[href="#house-shifting"] { --ayesha-icon: var(--ayesha-icon-house); }
-:is(.ayesha-service-lead, .ayesha-service-row):has(a[href$="#packing"]),
+.ayesha-service-card:has(a[href$="#packing"]),
 .ayesha-svc__section:has(#packing),
 .ayesha-jump__list a[href="#packing"] { --ayesha-icon: var(--ayesha-icon-box); }
-:is(.ayesha-service-lead, .ayesha-service-row):has(a[href$="#furniture"]),
+.ayesha-service-card:has(a[href$="#furniture"]),
 .ayesha-svc__section:has(#furniture),
 .ayesha-jump__list a[href="#furniture"] { --ayesha-icon: var(--ayesha-icon-sofa); }
-:is(.ayesha-service-lead, .ayesha-service-row):has(a[href$="#appliances"]),
+.ayesha-service-card:has(a[href$="#appliances"]),
 .ayesha-svc__section:has(#appliances),
 .ayesha-jump__list a[href="#appliances"] { --ayesha-icon: var(--ayesha-icon-tv); }
-:is(.ayesha-service-lead, .ayesha-service-row):has(a[href$="#trucks"]),
+.ayesha-service-card:has(a[href$="#trucks"]),
 .ayesha-svc__section:has(#trucks),
 .ayesha-jump__list a[href="#trucks"] { --ayesha-icon: var(--ayesha-icon-truck); }
-:is(.ayesha-service-lead, .ayesha-service-row):has(a[href$="#cargo"]),
+.ayesha-service-card:has(a[href$="#cargo"]),
 .ayesha-svc__section:has(#cargo),
 .ayesha-jump__list a[href="#cargo"] { --ayesha-icon: var(--ayesha-icon-container); }
 
@@ -809,82 +809,98 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 	}
 }
 
-/* ---- What we do: a navy band of bordered icon cards (lead card in white) ---- */
+/* ---- What we do: six equal cards on light grey (3 x 2 on computers) ---- */
+.ayesha-services > h2 { text-align: center; margin-inline: auto !important; }
+.ayesha-services > h2::after { left: 50%; transform: translateX(-50%); }
 
-.ayesha-services__columns { gap: 1.5rem 2rem !important; margin-block-start: 2.5rem !important; }
-
-:is(.ayesha-service-lead, .ayesha-service-row) h3 a { color: inherit; text-decoration: none; }
-:is(.ayesha-service-lead, .ayesha-service-row) h3 a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
-
-.ayesha-service-lead {
-	position: relative;
-	padding: 2rem;
-	border-top: 4px solid var(--ayesha-gold);
-	border-radius: 2px;
+.ayesha-services__grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.5rem;
+	max-inline-size: none !important;
+	margin-block-start: 3rem !important;
 }
 
-.ayesha-service-lead > * { margin-block: 0; }
-.ayesha-service-lead > * + * { margin-block-start: 1rem; }
+@media (min-width: 640px) { .ayesha-services__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .ayesha-services__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
-.ayesha-service-lead::before {
+.ayesha-services__grid > * { margin-block: 0 !important; }
+
+.ayesha-service-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 2.5rem 1.75rem 1.5rem;
+	background: #fff;
+	border: 1px solid var(--ayesha-line);
+	border-bottom: 3px solid transparent;
+	border-radius: 2px;
+	color: var(--ayesha-slate);
+	text-align: center;
+	transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.ayesha-service-card > * { margin-block: 0; }
+.ayesha-service-card > * + * { margin-block-start: 0.75rem; }
+
+/* The icon: a gold circle (::before) with the service's line icon on it (::after). */
+.ayesha-service-card::before {
 	content: "";
-	display: block;
-	width: 52px;
-	height: 52px;
-	margin-block-end: 1.25rem;
-	color: var(--ayesha-navy);
-	background: var(--ayesha-navy);
+	flex: none;
+	width: 76px;
+	height: 76px;
+	margin-block-end: 0.75rem;
+	border-radius: 50%;
+	background: var(--ayesha-gold);
+	-webkit-mask: none;
+	mask: none;
 }
 
-.ayesha-service-lead h3 { font-size: 1.5rem; font-weight: 700; }
-.ayesha-service-lead__label { color: var(--ayesha-navy); font-weight: 500; }
-.ayesha-service-lead > .ayesha-service-lead__label + .ayesha-checklist { margin-block-start: 0.5rem; }
-
-.ayesha-services__rows > * { margin-block: 0; }
-.ayesha-services__rows > * + * { margin-block-start: 1rem; }
-
-.ayesha-service-row {
-	position: relative;
-	padding: 1.25rem 1.25rem 0.5rem 5rem;
-	border: 1px solid var(--ayesha-line-dark);
-	border-radius: 2px;
-	transition: border-color 150ms ease;
-}
-
-.ayesha-service-row:hover { border-color: var(--ayesha-gold); }
-
-.ayesha-service-row::before {
+.ayesha-service-card::after {
 	content: "";
 	position: absolute;
-	left: 1.25rem;
-	top: 1.35rem;
-	width: 40px;
-	height: 40px;
-	background: var(--ayesha-gold);
+	top: calc(2.5rem + 20px);
+	left: calc(50% - 18px);
+	width: 36px;
+	height: 36px;
+	background: var(--ayesha-navy);
+	-webkit-mask: var(--ayesha-icon, var(--ayesha-icon-box)) center / contain no-repeat;
+	mask: var(--ayesha-icon, var(--ayesha-icon-box)) center / contain no-repeat;
 }
 
-.ayesha-service-row > * { margin-block: 0; }
-.ayesha-service-row > * + * { margin-block-start: 0.375rem; }
-.ayesha-service-row h3 { color: #fff; }
-
-.ayesha-services__all a {
-	display: inline-flex;
-	align-items: center;
-	min-height: 48px;
-	color: var(--ayesha-gold);
-	font-weight: 500;
+.ayesha-service-card h3,
+.ayesha-service-card h3.has-lead-font-size {
+	font-size: 1.25rem !important;
+	font-weight: 700;
+	line-height: 1.3;
 }
 
-.ayesha-services__photo { margin-block: 1.5rem 0; }
-.ayesha-services__photo img { display: block; max-width: 100%; height: auto; }
+.ayesha-service-card h3 a { color: inherit; text-decoration: none; }
+.ayesha-service-card h3 a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
 
-@media (max-width: 959.98px) {
-	body:not(.editor-styles-wrapper) .ayesha-services__photo { display: none; }
+/* The WhatsApp link sits at the foot of the card, so the links line up across a row. */
+.ayesha-service-card > .wp-block-buttons {
+	justify-content: center;
+	margin-block-start: auto;
+	padding-block-start: 0.5rem;
 }
 
-@media (min-width: 782px) and (max-width: 959.98px) {
-	.wp-block-columns.ayesha-services__columns { flex-wrap: wrap !important; }
-	.wp-block-columns.ayesha-services__columns > .wp-block-column { flex-basis: 100% !important; }
+/* Lifts on hover (pointer devices only; never with reduced motion). */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+	.ayesha-service-card:hover {
+		transform: translateY(-6px);
+		box-shadow: 0 14px 30px rgb(12 18 57 / 0.12);
+		border-bottom-color: var(--ayesha-gold);
+	}
+}
+
+.ayesha-service-card:focus-within { border-bottom-color: var(--ayesha-gold); }
+
+.ayesha-services__all {
+	justify-content: center;
+	margin-block-start: 2.5rem !important;
 }
 
 /* The tick list */
