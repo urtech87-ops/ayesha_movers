@@ -155,3 +155,26 @@ function ayesha_theme_synced_pattern_id( $slug ) {
 	$post = get_page_by_path( $slug, OBJECT, 'wp_block' );
 	return ( $post && 'publish' === $post->post_status ) ? (int) $post->ID : 0;
 }
+
+add_filter( 'render_block_core/image', 'ayesha_theme_lazy_footer_logo', 10, 2 );
+
+/**
+ * The footer logo is a theme file (no Media Library size), so WordPress doesn't lazy-load it.
+ * It is far below the first screen: load it lazily. A logo picked from the Media Library
+ * instead already gets this from WordPress.
+ *
+ * @param string $html  Rendered block.
+ * @param array  $block Parsed block.
+ * @return string
+ */
+function ayesha_theme_lazy_footer_logo( $html, $block ) {
+	if ( ! str_contains( $block['attrs']['className'] ?? '', 'ayesha-footer__logo' ) ) {
+		return $html;
+	}
+	$tags = new WP_HTML_Tag_Processor( $html );
+	if ( $tags->next_tag( 'img' ) && null === $tags->get_attribute( 'loading' ) ) {
+		$tags->set_attribute( 'loading', 'lazy' );
+		$html = $tags->get_updated_html();
+	}
+	return $html;
+}

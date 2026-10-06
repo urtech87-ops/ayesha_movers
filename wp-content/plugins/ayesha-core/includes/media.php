@@ -20,6 +20,11 @@ function ayesha_core_webp_sub_sizes( $formats ) {
 	if ( ! wp_image_editor_supports( array( 'mime_type' => 'image/webp' ) ) ) {
 		return $formats;
 	}
+	// Site icon sizes stay PNG: some phones don't accept a WebP home-screen icon.
+	// phpcs:ignore WordPress.Security.NonceVerification.Missing -- read only; WordPress checks the crop request itself.
+	if ( wp_doing_ajax() && isset( $_POST['context'] ) && 'site-icon' === $_POST['context'] ) {
+		return $formats;
+	}
 	$formats['image/jpeg'] = 'image/webp';
 	$formats['image/png']  = 'image/webp';
 	return $formats;
