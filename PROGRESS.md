@@ -70,6 +70,7 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
   - **Fifth round (2026-10-06): option A built.** Home "What we do" is six equal cards on light grey (3 × 2 on computers, 2 across from 640px, 1 on phones): icon in a gold circle (from the title's `#anchor`), centred title linking to its Our Services section, the same text, "Ask on WhatsApp" at the foot of the card; cards lift on hover (pointer devices, not with reduced motion); "See all services" is an outline button. As noted for A: the house-shifting card's "Every move includes" list and photo 12 are **no longer on Home** (the list is on Our Services; photo 12 stays in the Media Library), and its green "Ask about this on WhatsApp" button is now the same "Ask on WhatsApp" link as the others (same message). Every title, text, link and WhatsApp message was checked identical before saving. **Side effect fixed:** with "What we do" now light grey, the bands were re-alternated with style classes only (no words): Home "How a move works" → white, synced "Where we go" → Light grey panel, About "Who runs it + How we work" → white.
   - **Sixth round (2026-10-06):** "Best way to reply" removed from the Contact Us form (new block setting **Form parts → Ask "Best way to reply"**, off on Contact Us; the question is kept and comes back when switched on), and the choice tiles aligned across the whole form: every tile has the same 1px edge, the selected one a 2px navy edge drawn inside plus a light tint, the text keeps its weight (so the tile no longer grows), and tiles in a row are equal width.
   - **Seventh round (2026-10-06, user screenshot of Home on a wide screen):** two Home blocks left the 1200px content column on screens wider than 1280px: the "What we do" card grid (full screen width) and the "How a move works" steps (started at the column but ran to the right edge). Both CSS rules fixed; every block on all 4 pages now stays within the header's column at 375, 768, 1280, 1440, 1920 and 2560px.
+  - **Eighth round (2026-10-06, "follow site-home-1920.png" = Services cards like Home):** the six Our Services cards now use Home's card look: white on light grey, icon in a gold circle, centred title and text, the "What's included" list as a centred block with left-aligned ticks, the WhatsApp button at the foot of the card (lined up across each row), hover lift; 3 across from 1100px, 2 from 640px, 1 on phones. CSS only; no content or anchors changed.
 - **Next step:** the user reviews `phase-7-design`; after approval: remove the junctions (`rmdir`), restore the main checkout's folders, merge into `main`, push, smoke-test. Then Phase 8.
 - **Last completed:** Phase 6 (Contact Us + quote form + email), approved and merged into `main` 2026-10-03 at 497997f (fast-forward); smoke test passed (see Test results › Phase 6 › Post-merge smoke test).
 - **Test data kept on the local site (user decision 2026-10-03):** 19 test enquiries AYM-261003-001 … 019 and AYM-261006-001 (015–019 and 261006-001 sent in Phase 7: "Phase7 Test", "Phase7b Test", "Short NoMsg Test", "Short Msg <b>Test</b>", "Full Form Test") and WP Mail Logging rows 4–28 (row 27 went to the made-up address shorttest@example.com; locally nothing is delivered).
@@ -575,4 +576,15 @@ Screenshots: `site-{home,about,services,contact}-1920.png`.
 | F1 | Every child of every constrained container inside the header's column (left and right edge) | Nothing outside | Before (1920): What we do grid 24–1881 px, steps 352–1881 px, column 352–1552. After: nothing outside on all 4 pages at 375, 768, 1280, 1440, 1920 and 2560 (the footer's copyright bar is full width on purpose; its text starts at the column) | Pass |
 | F2 | Horizontal scroll | 0 px | 0 px on all 4 pages at all 6 widths | Pass |
 | F3 | axe at 1920 | 0 serious/critical | Only the known moderate `region` on all 4 pages | Pass |
+
+#### Phase 7, eighth round (Services cards like Home; run 2026-10-06)
+Screenshots: `services-cards-{375,768,1280,1920}.png`, `site-services-{375,768,1280,1920}.png`.
+
+| # | Test | Expected | Result | Pass/Fail |
+|---|---|---|---|---|
+| G1 | Grid inside the column | Same edges as the header | 375: 16–344, 768: 19–733, 1280: 32–1232, 1920: 352–1552 px (= header column) | Pass |
+| G2 | Cards per row; buttons lined up | 1 / 2 / 3 / 3 | 375: 1 per row, 768: 2, 1280 and 1920: 3; WhatsApp buttons share one bottom line in every row | Pass |
+| G3 | Icons | One per card | 6/6 | Pass |
+| G4 | Anchors | `#house-shifting` … `#cargo` land on their headings | All 6 at 32 px from the top | Pass |
+| G5 | Horizontal scroll; axe | 0 px; 0 serious/critical | 0 px at 375/768/1280/1920; only the known moderate `region` | Pass |
 

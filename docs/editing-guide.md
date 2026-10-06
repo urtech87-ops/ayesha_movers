@@ -181,7 +181,7 @@ Each service is one group named "Service: …". Click any text to change it:
 - **Ask about this on WhatsApp**: the link comes from Business Info and the chat opens with the service already typed. To change that message, use the code editor (⋮ → **Code editor**), find `"message":"…"` in that button and edit the words between the quotes (see section 3).
 - **The truck photo** (Truck hire): click it, then **Replace**. Keep the alt text a plain description of what is in the photo, and don't say the truck is yours until that's confirmed. (The photo was cropped in the Media Library so the brand name on the cab doesn't show; **Edit image → Restore image** there brings back the full photo.)
 
-Each service shows as a white card (two side by side on computers), with its icon at the top.
+Each service shows as a white card like the ones on Home (three across on wide screens, two on tablets, one on phones), with its icon in a gold circle at the top and the WhatsApp button at the foot of the card.
 
 ### The "Jump to a service" list
 
