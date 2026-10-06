@@ -20,6 +20,11 @@
 		text-decoration: none;
 	}
 
+	/* The glyph in black on WhatsApp green (WhatsApp brand colours; 10.6:1). */
+	.ayesha-wa-float svg {
+		color: #000;
+	}
+
 	.ayesha-wa-float:hover {
 		background: #3ddc77;
 	}

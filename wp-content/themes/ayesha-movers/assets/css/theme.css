@@ -285,6 +285,11 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 .wp-block-button.is-style-whatsapp .wp-block-button__link { background: #25D366; color: var(--ayesha-navy); }
 .wp-block-button.is-style-whatsapp .wp-block-button__link:hover { background: #3DDC77; color: var(--ayesha-navy); }
 
+/* WhatsApp glyph in WhatsApp's brand colours (green, white or black only); the words keep their colour.
+   Black on WhatsApp green (10.6:1); WhatsApp green on white for the text links (the words name the link). */
+.wp-block-button.is-style-whatsapp .wp-block-button__link[href*="wa.me/"]::before { background: #000; }
+.wp-block-button.is-style-text-link .wp-block-button__link[href*="wa.me/"]::before { background: #25D366; }
+
 .wp-block-button.is-style-yellow .wp-block-button__link,
 .is-style-teal-panel .wp-block-button:not(.is-style-whatsapp):not(.is-style-outline):not(.is-style-text-link) .wp-block-button__link {
 	background: var(--ayesha-gold);
@@ -1553,7 +1558,7 @@ section.ayesha-questions > .ayesha-faq { max-inline-size: 820px; margin-inline: 
 	mask: var(--ayesha-icon-phone) center / contain no-repeat;
 }
 
-.ayesha-contact__row:has(a[href*="wa.me/"])::before { -webkit-mask-image: var(--ayesha-icon-whatsapp); mask-image: var(--ayesha-icon-whatsapp); }
+.ayesha-contact__row:has(a[href*="wa.me/"])::before { -webkit-mask-image: var(--ayesha-icon-whatsapp); mask-image: var(--ayesha-icon-whatsapp); background: #000; }
 .ayesha-contact__row:has(a[href^="mailto:"])::before { -webkit-mask-image: var(--ayesha-icon-mail); mask-image: var(--ayesha-icon-mail); }
 .ayesha-contact__row:has(a[href*="instagram.com"])::before { -webkit-mask-image: var(--ayesha-icon-instagram); mask-image: var(--ayesha-icon-instagram); }
 .ayesha-contact__row:has(a[href*="facebook.com"])::before { -webkit-mask-image: var(--ayesha-icon-facebook); mask-image: var(--ayesha-icon-facebook); }
