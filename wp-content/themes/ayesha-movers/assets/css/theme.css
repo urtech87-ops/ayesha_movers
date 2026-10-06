@@ -1405,6 +1405,71 @@ section.ayesha-questions > .ayesha-faq { max-inline-size: 820px; margin-inline: 
 	body:not(.editor-styles-wrapper) .ayesha-mobile-only { display: none; }
 }
 
+/* "Who runs it" + "How we work": one centred column like Home's "What we do" (no empty half beside
+   the short "Who runs it"), and the four commitments as cards with the icon in a gold circle. */
+.wp-block-columns.ayesha-about-team__columns {
+	flex-direction: column;
+	flex-wrap: nowrap !important;
+	align-items: stretch !important;
+	gap: 3.5rem !important;
+}
+
+.wp-block-columns.ayesha-about-team__columns > .wp-block-column { flex-basis: auto !important; width: 100%; }
+
+.ayesha-about-team h2 { text-align: center; }
+.ayesha-about-team h2::after { left: 50%; transform: translateX(-50%); }
+.ayesha-about-who > p { margin-inline: auto !important; max-inline-size: 60ch; text-align: center; }
+
+.ayesha-about-how > .ayesha-reasons {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.5rem;
+	margin-block-start: 2.5rem !important;
+}
+
+@media (min-width: 640px) { .ayesha-about-how > .ayesha-reasons { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .ayesha-about-how > .ayesha-reasons { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.ayesha-about-how .ayesha-reason {
+	position: relative;
+	min-height: 0;
+	box-sizing: border-box;
+	padding: calc(2.25rem + 76px + 1rem) 1.5rem 2rem;
+	background: #fff;
+	border: 1px solid var(--ayesha-line);
+	border-bottom: 3px solid transparent;
+	border-radius: 2px;
+	text-align: center;
+	transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+/* The gold circle (::after) and the icon on it (::before). */
+.ayesha-about-how .ayesha-reason::after {
+	top: 2.25rem;
+	left: calc(50% - 38px);
+	width: 76px;
+	height: 76px;
+	border: 0;
+	background: var(--ayesha-gold);
+}
+
+.ayesha-about-how .ayesha-reason::before {
+	z-index: 1;
+	top: calc(2.25rem + 20px);
+	left: calc(50% - 18px);
+	width: 36px;
+	height: 36px;
+}
+
+.ayesha-about-how .ayesha-reason h3 { font-size: 1.1875rem !important; font-weight: 700; }
+.ayesha-about-how .ayesha-reason > * + * { margin-block-start: 0.5rem; }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+	.ayesha-about-how .ayesha-reason:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgb(12 18 57 / 0.12); border-bottom-color: var(--ayesha-gold); }
+}
+
+.ayesha-about-how > .ayesha-about-how__photo { margin-inline: auto; }
+
 
 /* ---- Contact Us: contact rows (left) and the quote form (right), on light grey ---- */
 .ayesha-contact {
@@ -1553,6 +1618,14 @@ body:not(.editor-styles-wrapper) .ayesha-contact__columns:not(:has(.ayesha-conta
 
 @media (min-width: 960px) and (min-height: 640px) {
 	.ayesha-contact__aside { position: sticky; top: 1.75rem; align-self: flex-start; }
+}
+
+/* Phones and tablets: "How a move works" and "Where we go" show their steps and stops as a
+   left-aligned list, so their title and intro line up on the left as well (centred from 960px). */
+@media (max-width: 959.98px) {
+	:is(.ayesha-how, .ayesha-where) > h2,
+	.ayesha-where > p { text-align: left !important; margin-inline: 0 !important; }
+	:is(.ayesha-how, .ayesha-where) > h2::after { left: 0 !important; transform: none !important; }
 }
 
 /* ---------------------------------------------------------------

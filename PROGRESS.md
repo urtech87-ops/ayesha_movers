@@ -71,6 +71,7 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
   - **Sixth round (2026-10-06):** "Best way to reply" removed from the Contact Us form (new block setting **Form parts → Ask "Best way to reply"**, off on Contact Us; the question is kept and comes back when switched on), and the choice tiles aligned across the whole form: every tile has the same 1px edge, the selected one a 2px navy edge drawn inside plus a light tint, the text keeps its weight (so the tile no longer grows), and tiles in a row are equal width.
   - **Seventh round (2026-10-06, user screenshot of Home on a wide screen):** two Home blocks left the 1200px content column on screens wider than 1280px: the "What we do" card grid (full screen width) and the "How a move works" steps (started at the column but ran to the right edge). Both CSS rules fixed; every block on all 4 pages now stays within the header's column at 375, 768, 1280, 1440, 1920 and 2560px.
   - **Eighth round (2026-10-06, "follow site-home-1920.png" = Services cards like Home):** the six Our Services cards now use Home's card look: white on light grey, icon in a gold circle, centred title and text, the "What's included" list as a centred block with left-aligned ticks, the WhatsApp button at the foot of the card (lined up across each row), hover lift; 3 across from 1100px, 2 from 640px, 1 on phones. CSS only; no content or anchors changed.
+  - **Ninth round (2026-10-06, About Us check):** "Who runs it" + "How we work" made one centred column (on computers the short "Who runs it" left a large empty half beside "How we work"); the four commitments are now cards like Home's (icon in a gold circle, centred, hover lift; 4 across from 1100px, 2 from 640px, 1 on phones). Phones and tablets: "How a move works" and "Where we go" (Home and About) now put their title and intro on the left, in line with their left-aligned list (centred from 960px). CSS only.
 - **Next step:** the user reviews `phase-7-design`; after approval: remove the junctions (`rmdir`), restore the main checkout's folders, merge into `main`, push, smoke-test. Then Phase 8.
 - **Last completed:** Phase 6 (Contact Us + quote form + email), approved and merged into `main` 2026-10-03 at 497997f (fast-forward); smoke test passed (see Test results › Phase 6 › Post-merge smoke test).
 - **Test data kept on the local site (user decision 2026-10-03):** 19 test enquiries AYM-261003-001 … 019 and AYM-261006-001 (015–019 and 261006-001 sent in Phase 7: "Phase7 Test", "Phase7b Test", "Short NoMsg Test", "Short Msg <b>Test</b>", "Full Form Test") and WP Mail Logging rows 4–28 (row 27 went to the made-up address shorttest@example.com; locally nothing is delivered).
@@ -587,4 +588,13 @@ Screenshots: `services-cards-{375,768,1280,1920}.png`, `site-services-{375,768,1
 | G3 | Icons | One per card | 6/6 | Pass |
 | G4 | Anchors | `#house-shifting` … `#cargo` land on their headings | All 6 at 32 px from the top | Pass |
 | G5 | Horizontal scroll; axe | 0 px; 0 serious/critical | 0 px at 375/768/1280/1920; only the known moderate `region` | Pass |
+
+#### Phase 7, ninth round (About Us; run 2026-10-06)
+Screenshots: `site-about-{375,768,1280,1920}.png`, `site-home-{375,768,1280,1920}.png`.
+
+| # | Test | Expected | Result | Pass/Fail |
+|---|---|---|---|---|
+| H1 | Commitment cards per row | 1 / 2 / 4 / 4 | 375: 4 rows of 1, 768: 2 rows of 2, 1280 and 1920: 1 row of 4 | Pass |
+| H2 | Inside the header's column | Nothing outside | About and Home at 375, 768, 1280, 1920: nothing outside | Pass |
+| H3 | Horizontal scroll; axe | 0 px; 0 serious/critical | 0 px; only the known moderate `region` (About and Home, 4 widths) | Pass |
 
