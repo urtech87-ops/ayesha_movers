@@ -4,7 +4,7 @@
  * Slug: ayesha-movers/contact-page
  * Categories: ayesha-movers
  * Keywords: contact, phone, whatsapp, email, quote, form
- * Description: The Contact Us page: the page heading (H1), the opening hours, a row for each way to reach the team (all from Settings → Business Info) and the quote request form under the heading "Request a detailed quote" (anchor "quote", which the Home page links to). On computers the contact rows stay on screen while the form scrolls.
+ * Description: The Contact Us page: a navy band with the page heading (H1) and the opening hours, then a row for each way to reach the team (all from Settings → Business Info) and the quote request form under the heading "Request a free quote" (anchor "quote", which the Home page links to). On computers the contact rows stay on screen while the form scrolls.
  *
  * @package AyeshaMovers
  */
@@ -42,18 +42,20 @@ $ayesha_rows = array(
 	$ayesha_row( 'Facebook', 'Facebook', 'facebook_link', '<a href="https://www.facebook.com/ayeshamoversbahrain/" target="_blank" rel="noopener" aria-label="AYESHA Movers on Facebook">AYESHA Movers</a>', 'AYESHA Movers' ),
 );
 ?>
-<!-- wp:group {"metadata":{"name":"Contact"},"tagName":"section","align":"full","className":"ayesha-section ayesha-intro ayesha-contact","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
-<section class="wp-block-group alignfull ayesha-section ayesha-intro ayesha-contact" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:columns {"className":"ayesha-contact__columns","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|50","left":"var:preset|spacing|50"}}}} -->
-<div class="wp-block-columns ayesha-contact__columns"><!-- wp:column {"width":"41.67%","className":"ayesha-contact__aside"} -->
-<div class="wp-block-column ayesha-contact__aside" style="flex-basis:41.67%"><!-- wp:heading {"level":1} -->
+<!-- wp:group {"metadata":{"name":"Page heading"},"tagName":"section","align":"full","className":"is-style-teal-panel ayesha-section ayesha-intro ayesha-contact-intro","layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull is-style-teal-panel ayesha-section ayesha-intro ayesha-contact-intro"><!-- wp:heading {"level":1} -->
 <h1 class="wp-block-heading">Contact us</h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"ayesha-if-contact-details","fontSize":"lead","metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"hours"}}},"name":"Opening hours"}} -->
 <p class="ayesha-if-contact-details has-lead-font-size">Open 24 hours, every day</p>
-<!-- /wp:paragraph -->
+<!-- /wp:paragraph --></section>
+<!-- /wp:group -->
 
-<!-- wp:group {"metadata":{"name":"Contact rows (shown when Business Info > Show contact details is on)"},"className":"ayesha-contact__rows ayesha-if-contact-details","layout":{"type":"default"}} -->
+<!-- wp:group {"metadata":{"name":"Contact"},"tagName":"section","align":"full","className":"ayesha-section ayesha-contact","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull ayesha-section ayesha-contact" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:columns {"className":"ayesha-contact__columns","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|50","left":"var:preset|spacing|50"}}}} -->
+<div class="wp-block-columns ayesha-contact__columns"><!-- wp:column {"width":"41.67%","className":"ayesha-contact__aside"} -->
+<div class="wp-block-column ayesha-contact__aside" style="flex-basis:41.67%"><!-- wp:group {"metadata":{"name":"Contact rows (shown when Business Info > Show contact details is on)"},"className":"ayesha-contact__rows ayesha-if-contact-details","layout":{"type":"default"}} -->
 <div class="wp-block-group ayesha-contact__rows ayesha-if-contact-details"><?php echo implode( "\n\n", $ayesha_rows ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- block markup built above. ?></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->

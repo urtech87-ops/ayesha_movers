@@ -72,6 +72,7 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
   - **Seventh round (2026-10-06, user screenshot of Home on a wide screen):** two Home blocks left the 1200px content column on screens wider than 1280px: the "What we do" card grid (full screen width) and the "How a move works" steps (started at the column but ran to the right edge). Both CSS rules fixed; every block on all 4 pages now stays within the header's column at 375, 768, 1280, 1440, 1920 and 2560px.
   - **Eighth round (2026-10-06, "follow site-home-1920.png" = Services cards like Home):** the six Our Services cards now use Home's card look: white on light grey, icon in a gold circle, centred title and text, the "What's included" list as a centred block with left-aligned ticks, the WhatsApp button at the foot of the card (lined up across each row), hover lift; 3 across from 1100px, 2 from 640px, 1 on phones. CSS only; no content or anchors changed.
   - **Ninth round (2026-10-06, About Us check):** "Who runs it" + "How we work" made one centred column (on computers the short "Who runs it" left a large empty half beside "How we work"); the four commitments are now cards like Home's (icon in a gold circle, centred, hover lift; 4 across from 1100px, 2 from 640px, 1 on phones). Phones and tablets: "How a move works" and "Where we go" (Home and About) now put their title and intro on the left, in line with their left-aligned list (centred from 960px). CSS only.
+  - **Tenth round (2026-10-06, "make Contact Us beautiful"):** Contact Us now opens with a navy title band like the other pages ("Contact us" with the gold bar and the opening hours with a gold clock); the contact rows became one white card (rows divided by thin lines, WhatsApp the green first row) beside the form card; both cards have a gold top edge and a soft shadow and overlap the band by 72px (48px on phones). The H1 and the hours block moved into a new "Page heading" section (words unchanged, the hours keep the "Show contact details" rule); the rest is CSS.
 - **Next step:** the user reviews `phase-7-design`; after approval: remove the junctions (`rmdir`), restore the main checkout's folders, merge into `main`, push, smoke-test. Then Phase 8.
 - **Last completed:** Phase 6 (Contact Us + quote form + email), approved and merged into `main` 2026-10-03 at 497997f (fast-forward); smoke test passed (see Test results › Phase 6 › Post-merge smoke test).
 - **Test data kept on the local site (user decision 2026-10-03):** 19 test enquiries AYM-261003-001 … 019 and AYM-261006-001 (015–019 and 261006-001 sent in Phase 7: "Phase7 Test", "Phase7b Test", "Short NoMsg Test", "Short Msg <b>Test</b>", "Full Form Test") and WP Mail Logging rows 4–28 (row 27 went to the made-up address shorttest@example.com; locally nothing is delivered).
@@ -597,4 +598,15 @@ Screenshots: `site-about-{375,768,1280,1920}.png`, `site-home-{375,768,1280,1920
 | H1 | Commitment cards per row | 1 / 2 / 4 / 4 | 375: 4 rows of 1, 768: 2 rows of 2, 1280 and 1920: 1 row of 4 | Pass |
 | H2 | Inside the header's column | Nothing outside | About and Home at 375, 768, 1280, 1920: nothing outside | Pass |
 | H3 | Horizontal scroll; axe | 0 px; 0 serious/critical | 0 px; only the known moderate `region` (About and Home, 4 widths) | Pass |
+
+#### Phase 7, tenth round (Contact Us redesign; run 2026-10-06)
+Screenshots: `site-contact-{375,768,1280,1920}.png`, `contact-first-screen-{375,1920}.png`, `editor-contact.png`.
+
+| # | Test | Expected | Result | Pass/Fail |
+|---|---|---|---|---|
+| I1 | Cards overlap the band | Yes | 1280/1920: cards start 72 px above the band's bottom; 375/768: 48 px. (First attempt didn't overlap: the cards' negative margin collapsed through the grey section; fixed with `display: flow-root`) | Pass |
+| I2 | Inside the header's column | Same edges | Heading, rows card and form card inside the column at all 4 widths (1920: rows 352–839, form 871–1552; column 352–1552) | Pass |
+| I3 | Contact rows | All 7, links unchanged | 7 rows (WhatsApp, 2 × Mobile, Office, Email, Instagram, Facebook) | Pass |
+| I4 | Invalid blocks | 0 | Home 112, About 31, Our Services 99, Contact 32 blocks: 0 invalid; theme patterns 0 invalid | Pass |
+| I5 | Horizontal scroll; axe | 0 px; 0 serious/critical | 0 px at 375/768/1280/1920; only the known moderate `region` | Pass |
 

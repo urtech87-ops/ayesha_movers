@@ -212,7 +212,7 @@ Both pages use the template **Page with sections (heading in the page)**: the bi
 
 ## 8. The Contact Us page
 
-Open **Pages → Contact Us**. In **List View**: Contact → Columns → the left column (heading, opening hours, **Contact rows**) and the right column (**Request a free quote**, one line of text, and the **Quote request form**). On computers the left column stays on screen while the form scrolls; on phones it comes first and the form follows.
+Open **Pages → Contact Us**. In **List View**: **Page heading** (the navy band with "Contact us" and the opening hours), then **Contact** → Columns → the left column (**Contact rows**, shown as one white card) and the right column (**Request a free quote**, one line of text, and the **Quote request form**). On computers the two cards sit side by side and slightly overlap the navy band; the rows card stays on screen while the form scrolls. On phones the rows card comes first and the form follows.
 
 - **Heading and the line under "Request a free quote"**: click and type.
 - **Show or hide the hours and contact rows:** Settings → Business Info → **Show contact details on Contact Us** (on now). While it's off, visitors see only the heading and the form, but the hours and rows stay in the page and you can still edit them here (the editor always shows them).

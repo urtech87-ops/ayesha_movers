@@ -1620,6 +1620,95 @@ body:not(.editor-styles-wrapper) .ayesha-contact__columns:not(:has(.ayesha-conta
 	.ayesha-contact__aside { position: sticky; top: 1.75rem; align-self: flex-start; }
 }
 
+/* ---- Contact Us layout (Phase 7): a navy band with the heading and the hours, then the contact
+   rows card and the form card side by side, pulled up so they overlap the band. ---- */
+.ayesha-intro.ayesha-contact-intro.is-style-teal-panel { padding-block: 4rem 7rem !important; }
+.ayesha-contact-intro > * { margin-block: 0; }
+
+/* The opening hours under the heading, with a gold clock. */
+.ayesha-contact-intro > p {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	margin-block-start: 1.5rem !important;
+	color: var(--ayesha-soft);
+}
+
+.ayesha-contact-intro > p::before {
+	content: "";
+	flex: none;
+	width: 1.375rem;
+	height: 1.375rem;
+	background: var(--ayesha-gold);
+	-webkit-mask: var(--ayesha-icon-clock) center / contain no-repeat;
+	mask: var(--ayesha-icon-clock) center / contain no-repeat;
+}
+
+.ayesha-contact.ayesha-section {
+	/* flow-root: the cards' negative top margin pulls the cards up, not the whole grey section. */
+	display: flow-root;
+	padding-block: 0 5rem !important;
+}
+
+/* Both cards: a gold top edge (a navy one would vanish against the band they overlap). */
+.ayesha-contact .ayesha-contact__aside,
+.ayesha-contact .ayesha-contact__form { border-top-color: var(--ayesha-gold); box-shadow: 0 10px 30px rgb(12 18 57 / 0.08); }
+
+.wp-block-columns.ayesha-contact__columns {
+	position: relative;
+	z-index: 1;
+	margin-block-start: -4.5rem !important;
+	gap: 1.5rem 2rem !important;
+}
+
+/* The rows card: white, navy top edge like the form card, rows divided by thin lines. */
+.ayesha-contact__aside {
+	box-sizing: border-box;
+	align-self: flex-start;
+	padding: 0.75rem 1.25rem;
+	background: #fff;
+	border: 1px solid var(--ayesha-line);
+	border-top: 4px solid var(--ayesha-navy);
+	border-radius: 2px;
+}
+
+@media (min-width: 600px) { .ayesha-contact__aside { padding: 1rem 1.75rem; } }
+
+.ayesha-contact__aside .ayesha-contact__rows { gap: 0; margin-block-start: 0 !important; }
+
+.ayesha-contact__aside .ayesha-contact__row {
+	padding: 0.875rem 0;
+	border: 0;
+	border-bottom: 1px solid var(--ayesha-line);
+	border-radius: 0;
+	background: transparent;
+}
+
+.ayesha-contact__aside .ayesha-contact__row:last-child { border-bottom: 0; }
+.ayesha-contact__aside .ayesha-contact__row::before { left: 0.6875rem; }
+
+/* WhatsApp stays the green, rounded first row. */
+.ayesha-contact__aside .ayesha-contact__row--whatsapp {
+	margin-block: 0.5rem 0.375rem;
+	padding-inline: 0.875rem;
+	border: 0;
+	border-radius: 2px;
+	background: #25D366;
+}
+
+.ayesha-contact__aside .ayesha-contact__row--whatsapp::before { left: calc(0.875rem + 0.6875rem); }
+.ayesha-contact__aside .ayesha-contact__row--whatsapp:hover { background: #3DDC77; }
+.ayesha-contact__aside .ayesha-contact__row:not(.ayesha-contact__row--whatsapp):hover { background: var(--ayesha-mist); }
+
+/* With "Show contact details" off the rows card is empty: hide it (front end only). */
+body:not(.editor-styles-wrapper) .ayesha-contact__aside:not(:has(.ayesha-contact__rows)) { display: none; }
+
+@media (max-width: 781.98px) {
+	.ayesha-intro.ayesha-contact-intro.is-style-teal-panel { padding-block: 3rem 5.5rem !important; }
+	.wp-block-columns.ayesha-contact__columns { margin-block-start: -3rem !important; }
+	.ayesha-contact__aside { align-self: stretch; }
+}
+
 /* Phones and tablets: "How a move works" and "Where we go" show their steps and stops as a
    left-aligned list, so their title and intro line up on the left as well (centred from 960px). */
 @media (max-width: 959.98px) {
