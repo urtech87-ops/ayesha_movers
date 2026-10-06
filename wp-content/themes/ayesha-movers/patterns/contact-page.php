@@ -16,10 +16,13 @@
  * @param string $label Visible label.
  * @param string $key   Business Info key (a *_link key).
  * @param string $html  Fallback link HTML (what the editor stores; the site shows the live value).
+ * @param string $link_text Own link words (binding "label"), or '' for the value itself.
+ * @param string $extra     Extra classes, e.g. ayesha-if-whatsapp-same / ayesha-if-whatsapp-differs (same rule as the footer).
+ * @param string $after     Extra block markup inside the row, after the value.
  * @return string
  */
-$ayesha_row = static function ( $name, $label, $key, $html, $link_text = '' ) {
-	$classes = 'ayesha-contact__row' . ( 'whatsapp_link' === $key ? ' ayesha-contact__row--whatsapp' : '' ) . ( 'facebook_link' === $key ? ' ayesha-if-facebook' : '' );
+$ayesha_row = static function ( $name, $label, $key, $html, $link_text = '', $extra = '', $after = '' ) {
+	$classes = 'ayesha-contact__row' . ( 'whatsapp_link' === $key ? ' ayesha-contact__row--whatsapp' : '' ) . ( 'facebook_link' === $key ? ' ayesha-if-facebook' : '' ) . ( '' === $extra ? '' : ' ' . $extra );
 	$args    = '"key":"' . esc_attr( $key ) . '"' . ( '' === $link_text ? '' : ',"label":"' . esc_attr( $link_text ) . '"' );
 	return '<!-- wp:group {"metadata":{"name":"' . esc_attr( $name ) . '"},"className":"' . $classes . '","style":{"spacing":{"blockGap":"0"}},"layout":{"type":"default"}} -->
 <div class="wp-block-group ' . $classes . '"><!-- wp:paragraph {"className":"ayesha-contact__label"} -->
@@ -28,13 +31,21 @@ $ayesha_row = static function ( $name, $label, $key, $html, $link_text = '' ) {
 
 <!-- wp:paragraph {"className":"ayesha-contact__value","metadata":{"bindings":{"content":{"source":"ayesha/business","args":{' . $args . '}}},"name":"' . esc_attr( $name ) . ' (from Business Info)"}} -->
 <p class="ayesha-contact__value">' . $html . '</p>
-<!-- /wp:paragraph --></div>
+<!-- /wp:paragraph -->' . $after . '</div>
 <!-- /wp:group -->';
 };
 
+// The small "or call" link inside the combined row (tap the row = WhatsApp).
+$ayesha_or_call = '
+
+<!-- wp:paragraph {"className":"ayesha-contact__alt","metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"phone_primary_link","label":"or call"}}},"name":"Or call (main number, from Business Info)"}} -->
+<p class="ayesha-contact__alt"><a href="tel:+97334448236">or call</a></p>
+<!-- /wp:paragraph -->';
+
 $ayesha_rows = array(
-	$ayesha_row( 'WhatsApp', 'WhatsApp', 'whatsapp_link', '<a href="https://wa.me/97334448236">+973 3444 8236</a>' ),
-	$ayesha_row( 'Mobile (main number)', 'Mobile', 'phone_primary_link', '<a href="tel:+97334448236">+973 3444 8236</a>' ),
+	$ayesha_row( 'Call or WhatsApp (shown when the WhatsApp number is the main number)', 'Call or WhatsApp', 'whatsapp_link', '<a href="https://wa.me/97334448236">+973 3444 8236</a>', '', 'ayesha-if-whatsapp-same', $ayesha_or_call ),
+	$ayesha_row( 'WhatsApp (shown when it is a different number from the main number)', 'WhatsApp', 'whatsapp_link', '<a href="https://wa.me/97334448236">+973 3444 8236</a>', '', 'ayesha-if-whatsapp-differs' ),
+	$ayesha_row( 'Mobile (main number) (shown when WhatsApp is a different number)', 'Mobile', 'phone_primary_link', '<a href="tel:+97334448236">+973 3444 8236</a>', '', 'ayesha-if-whatsapp-differs' ),
 	$ayesha_row( 'Mobile (second number)', 'Mobile', 'phone_secondary_link', '<a href="tel:+97336429850">+973 3642 9850</a>' ),
 	$ayesha_row( 'Office', 'Office', 'phone_office_link', '<a href="tel:+97377360292">+973 7736 0292</a>' ),
 	$ayesha_row( 'Email', 'Email', 'email_link', '<a href="mailto:ayeshamoversbh786@gmail.com">ayeshamoversbh786@gmail.com</a>' ),

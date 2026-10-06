@@ -73,6 +73,7 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
   - **Eighth round (2026-10-06, "follow site-home-1920.png" = Services cards like Home):** the six Our Services cards now use Home's card look: white on light grey, icon in a gold circle, centred title and text, the "What's included" list as a centred block with left-aligned ticks, the WhatsApp button at the foot of the card (lined up across each row), hover lift; 3 across from 1100px, 2 from 640px, 1 on phones. CSS only; no content or anchors changed.
   - **Ninth round (2026-10-06, About Us check):** "Who runs it" + "How we work" made one centred column (on computers the short "Who runs it" left a large empty half beside "How we work"); the four commitments are now cards like Home's (icon in a gold circle, centred, hover lift; 4 across from 1100px, 2 from 640px, 1 on phones). Phones and tablets: "How a move works" and "Where we go" (Home and About) now put their title and intro on the left, in line with their left-aligned list (centred from 960px). CSS only.
   - **Tenth round (2026-10-06, "make Contact Us beautiful"):** Contact Us now opens with a navy title band like the other pages ("Contact us" with the gold bar and the opening hours with a gold clock); the contact rows became one white card (rows divided by thin lines, WhatsApp the green first row) beside the form card; both cards have a gold top edge and a soft shadow and overlap the band by 72px (48px on phones). The H1 and the hours block moved into a new "Page heading" section (words unchanged, the hours keep the "Show contact details" rule); the rest is CSS.
+  - **Eleventh round (2026-10-06, before merging):** the main number no longer shows twice on Contact Us. Same rule as the footer: when the WhatsApp number equals the main number, the card has one green **"Call or WhatsApp"** row (tap = WhatsApp, plus a small **"or call"** tel: link inside the row), and the "Mobile (main number)" row is hidden; when they differ, the "WhatsApp" and "Mobile" rows show. Rows carry `ayesha-if-whatsapp-same` / `ayesha-if-whatsapp-differs` (AYESHA Core removes the one that doesn't apply). `docs/content/contact.html` re-exported.
 - **Next step:** the user reviews `phase-7-design`; after approval: remove the junctions (`rmdir`), restore the main checkout's folders, merge into `main`, push, smoke-test. Then Phase 8.
 - **Last completed:** Phase 6 (Contact Us + quote form + email), approved and merged into `main` 2026-10-03 at 497997f (fast-forward); smoke test passed (see Test results › Phase 6 › Post-merge smoke test).
 - **Test data kept on the local site (user decision 2026-10-03):** 19 test enquiries AYM-261003-001 … 019 and AYM-261006-001 (015–019 and 261006-001 sent in Phase 7: "Phase7 Test", "Phase7b Test", "Short NoMsg Test", "Short Msg <b>Test</b>", "Full Form Test") and WP Mail Logging rows 4–28 (row 27 went to the made-up address shorttest@example.com; locally nothing is delivered).
@@ -609,4 +610,15 @@ Screenshots: `site-contact-{375,768,1280,1920}.png`, `contact-first-screen-{375,
 | I3 | Contact rows | All 7, links unchanged | 7 rows (WhatsApp, 2 × Mobile, Office, Email, Instagram, Facebook) | Pass |
 | I4 | Invalid blocks | 0 | Home 112, About 31, Our Services 99, Contact 32 blocks: 0 invalid; theme patterns 0 invalid | Pass |
 | I5 | Horizontal scroll; axe | 0 px; 0 serious/critical | 0 px at 375/768/1280/1920; only the known moderate `region` | Pass |
+
+#### Phase 7, eleventh round ("Call or WhatsApp" row; run 2026-10-06)
+Screenshots: `contact-card-same-{375,1920}.png`, `contact-card-differ-{375,1920}.png`, `site-contact-{375,1920}.png`, `contact-first-screen-{375,1920}.png`.
+
+| # | Test | Expected | Result | Pass/Fail |
+|---|---|---|---|---|
+| J1 | Same number (current setting), 375 and 1920 | One "Call or WhatsApp" row, no repeated "Mobile" | 6 rows: Call or WhatsApp (`wa.me/97334448236` + "or call" `tel:+97334448236`), Mobile +973 3642 9850, Office, Email, Instagram, Facebook | Pass |
+| J2 | Tap targets in the combined row | Row = WhatsApp, "or call" = phone | `elementFromPoint` on the row → `wa.me/97334448236`; on "or call" → `tel:+97334448236` (it sits above the row's tap area) | Pass |
+| J3 | Different WhatsApp number (set to 97336429850 for the test, then restored to 97334448236) | Both rows | 7 rows: WhatsApp (`wa.me/97336429850`), Mobile (`tel:+97334448236`), Mobile, Office, Email, Instagram, Facebook; footer switched to "Main number" too | Pass |
+| J4 | Invalid blocks | 0 | Home 112, About 31, Our Services 99, Contact 36 blocks: 0 invalid; theme patterns 0 invalid | Pass |
+| J5 | Horizontal scroll; axe | 0 px; 0 serious/critical | 0 px at 375 and 1920; only the known moderate `region` | Pass |
 

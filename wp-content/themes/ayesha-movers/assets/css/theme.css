@@ -1700,6 +1700,42 @@ body:not(.editor-styles-wrapper) .ayesha-contact__columns:not(:has(.ayesha-conta
 .ayesha-contact__aside .ayesha-contact__row--whatsapp:hover { background: #3DDC77; }
 .ayesha-contact__aside .ayesha-contact__row:not(.ayesha-contact__row--whatsapp):hover { background: var(--ayesha-mist); }
 
+/* "Call or WhatsApp" row (WhatsApp number = main number): the row opens WhatsApp; the small
+   "or call" link under the number dials it. It sits above the row's tap area so it can be tapped. */
+.ayesha-contact__row > .ayesha-contact__alt {
+	position: relative;
+	z-index: 3;
+	grid-column: 2;
+	margin: 0.125rem 0 0 !important;
+	font-size: 0.9375rem;
+	line-height: 1.2;
+}
+
+/* Three lines in this row (label, number, "or call"): the icon circle spans all of them. */
+.ayesha-contact__row:has(> .ayesha-contact__alt)::after { grid-row: 1 / span 3; }
+
+.ayesha-contact__alt a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	min-height: 32px;
+	color: var(--ayesha-navy);
+	font-weight: 500;
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+}
+
+.ayesha-contact__alt a::before {
+	content: "";
+	width: 0.9375rem;
+	height: 0.9375rem;
+	background: currentColor;
+	-webkit-mask: var(--ayesha-icon-phone) center / contain no-repeat;
+	mask: var(--ayesha-icon-phone) center / contain no-repeat;
+}
+
+.ayesha-contact__alt a:focus-visible { outline: 3px solid var(--ayesha-navy); outline-offset: 2px; box-shadow: 0 0 0 2px #fff; }
+
 /* With "Show contact details" off the rows card is empty: hide it (front end only). */
 body:not(.editor-styles-wrapper) .ayesha-contact__aside:not(:has(.ayesha-contact__rows)) { display: none; }
 
