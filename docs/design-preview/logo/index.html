@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logo options</title>
+<style>
+@font-face { font-family: Roboto; font-weight: 400; src: url("../fonts/roboto-latin-400.woff2") format("woff2"); }
+@font-face { font-family: Roboto; font-weight: 700; src: url("../fonts/roboto-latin-700.woff2") format("woff2"); }
+:root { --navy: #0C1239; --gold: #F2B705; --slate: #4A5068; --mist: #F4F5F8; --line: #E1E4EB; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--mist); color: var(--slate); font: 16px/1.6 Roboto, Arial, sans-serif; }
+main { max-width: 1240px; margin: 0 auto; padding: 32px 16px 80px; }
+h1, h2, h3 { color: var(--navy); line-height: 1.2; margin: 0 0 8px; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; margin-top: 56px; padding-top: 24px; border-top: 4px solid var(--gold); }
+h3 { font-size: 1rem; margin-top: 24px; }
+p { max-width: 68ch; margin: 0 0 12px; }
+.row { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+.tile { background: #fff; border: 1px solid var(--line); padding: 20px; }
+.tile.navy { background: var(--navy); border-color: var(--navy); }
+.tile img.big { height: 96px; display: block; }
+.frame { border: 1px solid var(--line); background: #fff; overflow: hidden; }
+.frame iframe { border: 0; display: block; }
+.phone iframe { width: 375px; }
+.desk { width: 768px; height: calc(var(--h) * 0.6); }
+.desk iframe { width: 1280px; height: var(--h); transform: scale(0.6); transform-origin: 0 0; }
+.cap { font-size: 0.875rem; margin: 4px 0 0; }
+.sizes { display: flex; gap: 20px; align-items: end; }
+.sizes figure { margin: 0; text-align: center; font-size: 0.8125rem; }
+canvas.zoom { width: 128px; height: 128px; image-rendering: pixelated; border: 1px solid var(--line); display: block; }
+</style>
+</head>
+<body>
+<main>
+<h1>AYESHA Movers &amp; Packers: three logo options</h1>
+<p>Each option is drawn from carton boxes, in navy, gold and white, with the name on two lines: "AYESHA Movers" over "&amp; Packers". The frames below are the real Home page with only the logo swapped in (header at 375px and 1280px, then the footer). The site itself has not changed.</p>
+<p>All text is converted to outlines from the site's own font (Roboto), so the files need no font. Sizes: 44px tall on phones (it can shrink to about 40px on 320px phones so the header stays on one row), 56px on computers and in the footer.</p>
+
+<section id="a">
+<h2>Option A: one carton, tape over the lid</h2>
+<p>One carton seen from a three-quarter angle, the gold tape running along the lid seam and down the front. "AYESHA" bold, "Movers" medium, "&amp; Packers" regular, all navy (white in the footer).</p>
+<div data-variant="a"></div>
+</section>
+
+<section id="b">
+<h2>Option B: three stacked cartons</h2>
+<p>Two navy cartons with gold tape, a gold carton on top. "&amp; Packers" is in gold: on navy it is the site's gold; on white it is a darker gold (#8A6500, 5.3:1), because the site's gold on white is only 1.8:1 and fails AA for text.</p>
+<div data-variant="b"></div>
+</section>
+
+<section id="c">
+<h2>Option C: the open carton that is also a home</h2>
+<p>My own idea: an open carton whose two lid flaps lean together into a roof, so the box you pack is also the home you move, with "&amp; Packers" printed on a strip of gold packing tape (navy on gold, 9.9:1).</p>
+<div data-variant="c"></div>
+</section>
+</main>
+
+<template id="variant">
+<h3>Logo files: header (navy on white) and footer (on navy)</h3>
+<div class="row">
+<div class="tile"><img class="big" data-src="logo-{v}-header.svg" alt=""></div>
+<div class="tile navy"><img class="big" data-src="logo-{v}-footer.svg" alt=""></div>
+</div>
+<h3>Mark only, and as the favicon (navy tile) at 48, 32 and 16px; the 16px icon enlarged 8 times on the right</h3>
+<div class="row">
+<div class="tile sizes">
+<figure><img data-src="mark-{v}.svg" width="48" height="48" alt=""><figcaption>48</figcaption></figure>
+<figure><img data-src="mark-{v}.svg" width="32" height="32" alt=""><figcaption>32</figcaption></figure>
+<figure><img data-src="mark-{v}.svg" width="16" height="16" alt=""><figcaption>16</figcaption></figure>
+</div>
+<div class="tile navy sizes" style="color:#C5C9DA">
+<figure><img data-src="mark-{v}-footer.svg" width="48" height="48" alt=""><figcaption>48</figcaption></figure>
+<figure><img data-src="mark-{v}-footer.svg" width="32" height="32" alt=""><figcaption>32</figcaption></figure>
+</div>
+<div class="tile sizes">
+<figure><img data-src="favicon-{v}.svg" width="48" height="48" alt=""><figcaption>48</figcaption></figure>
+<figure><img data-src="favicon-{v}.svg" width="32" height="32" alt=""><figcaption>32</figcaption></figure>
+<figure><img data-src="favicon-{v}.svg" width="16" height="16" alt=""><figcaption>16</figcaption></figure>
+<figure><canvas class="zoom" width="16" height="16" data-fav="favicon-{v}.svg"></canvas><figcaption>16px pixels, x8</figcaption></figure>
+</div>
+</div>
+<h3>In the header: phone (375px) and computer (1280px, shown at 60%)</h3>
+<div class="row">
+<div><div class="frame phone"><iframe data-src="variant-{v}.html" height="69" title="Option {V}, header at 375px" scrolling="no"></iframe></div><p class="cap">375px</p></div>
+<div><div class="frame desk" style="--h:130px"><iframe data-src="variant-{v}.html" title="Option {V}, header at 1280px" scrolling="no"></iframe></div><p class="cap">1280px</p></div>
+</div>
+<h3>In the footer: phone and computer</h3>
+<div class="row">
+<div><div class="frame phone"><iframe data-src="variant-{v}.html#footer" height="420" title="Option {V}, footer at 375px"></iframe></div><p class="cap">375px</p></div>
+<div><div class="frame desk" style="--h:420px"><iframe data-src="variant-{v}.html#footer" title="Option {V}, footer at 1280px"></iframe></div><p class="cap">1280px</p></div>
+</div>
+</template>
+
+<script>
+const tpl = document.getElementById('variant').innerHTML;
+document.querySelectorAll('[data-variant]').forEach((box) => {
+	const v = box.dataset.variant;
+	box.innerHTML = tpl.replaceAll('{v}', v).replaceAll('{V}', v.toUpperCase());
+	box.querySelectorAll('[data-src]').forEach((el) => { el.src = el.dataset.src; });
+	box.querySelectorAll('canvas[data-fav]').forEach((c) => {
+		const img = new Image();
+		img.onload = () => c.getContext('2d').drawImage(img, 0, 0, 16, 16);
+		img.src = c.dataset.fav;
+	});
+});
+</script>
+</body>
+</html>
