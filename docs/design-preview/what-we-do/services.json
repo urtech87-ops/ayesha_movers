@@ -1,0 +1,59 @@
+{
+ "h2": "What we do",
+ "lead": {
+  "href": "http://localhost/ayesha-movers/our-services/#house-shifting",
+  "title": "House, villa, flat and office shifting",
+  "text": "House shifting from door to door, anywhere in Bahrain. The price includes the crew who pack, carry and load.",
+  "label": "Every move includes:",
+  "items": [
+   "Packing your things",
+   "Loading and unloading",
+   "Setting up the rooms in your new home",
+   "Taking away the packing debris"
+  ],
+  "wa": "https://wa.me/97334448236?text=Hi%20AYESHA%20Movers%20%26%20Packers%2C%20I%27d%20like%20a%20price%20for%20house%2C%20villa%2C%20flat%20or%20office%20shifting.",
+  "wa_text": "Ask about this on WhatsApp"
+ },
+ "photo": "<figure class=\"wp-block-image size-full ayesha-services__photo\"><img loading=\"lazy\" decoding=\"async\" width=\"366\" height=\"480\" src=\"http://localhost/ayesha-movers/wp-content/uploads/2026/10/pickup-loaded-with-household-goods.webp\" alt=\"Small white pickup truck loaded with boxes and furniture outside a building\" class=\"wp-image-12\" srcset=\"http://localhost/ayesha-movers/wp-content/uploads/2026/10/pickup-loaded-with-household-goods.webp 366w, http://localhost/ayesha-movers/wp-content/uploads/2026/10/pickup-loaded-with-household-goods-229x300.webp 229w\" sizes=\"auto, (max-width: 366px) 100vw, 366px\" /></figure>",
+ "rows": [
+  {
+   "href": "http://localhost/ayesha-movers/our-services/#packing",
+   "title": "Packing and unpacking",
+   "text": "International-standard packing, with special packing for fragile items and crockery.",
+   "wa": "https://wa.me/97334448236?text=Hi%20AYESHA%20Movers%20%26%20Packers%2C%20I%27d%20like%20a%20price%20for%20packing%20and%20unpacking.",
+   "wa_text": "Ask on WhatsApp"
+  },
+  {
+   "href": "http://localhost/ayesha-movers/our-services/#furniture",
+   "title": "Furniture dismantling and refitting",
+   "text": "Our carpenters take furniture and curtains down, put them back up, and set up new furniture for homes and offices.",
+   "wa": "https://wa.me/97334448236?text=Hi%20AYESHA%20Movers%20%26%20Packers%2C%20I%27d%20like%20a%20price%20for%20furniture%20dismantling%20and%20refitting.",
+   "wa_text": "Ask on WhatsApp"
+  },
+  {
+   "href": "http://localhost/ayesha-movers/our-services/#appliances",
+   "title": "AC, TV and curtain removal",
+   "text": "Split units and other air conditioners, LCD and LED TVs, curtains and blinds: taken down and fitted again.",
+   "wa": "https://wa.me/97334448236?text=Hi%20AYESHA%20Movers%20%26%20Packers%2C%20I%27d%20like%20a%20price%20for%20AC%2C%20TV%20or%20curtain%20removal%20and%20fitting.",
+   "wa_text": "Ask on WhatsApp"
+  },
+  {
+   "href": "http://localhost/ayesha-movers/our-services/#trucks",
+   "title": "Truck hire: 8 hours or a full day",
+   "text": "Dyna and 6-wheel trucks, including runs to Mina Salman, Khalifa Bin Salman Port, the airport and courier depots.",
+   "wa": "https://wa.me/97334448236?text=Hi%20AYESHA%20Movers%20%26%20Packers%2C%20I%27d%20like%20a%20price%20for%20truck%20hire%20%28Dyna%20or%206-wheel%20truck%29.",
+   "wa_text": "Ask on WhatsApp"
+  },
+  {
+   "href": "http://localhost/ayesha-movers/our-services/#cargo",
+   "title": "Container cargo to the GCC",
+   "text": "20ft and 40ft containers loaded and unloaded, with customs documents, to Saudi Arabia, the UAE, Kuwait, Qatar and Oman.",
+   "wa": "https://wa.me/97334448236?text=Hi%20AYESHA%20Movers%20%26%20Packers%2C%20I%27d%20like%20a%20price%20for%20GCC%20cargo%20%2820ft%20or%2040ft%20container%29.",
+   "wa_text": "Ask on WhatsApp"
+  }
+ ],
+ "all": {
+  "href": "http://localhost/ayesha-movers/our-services/",
+  "text": "See all services"
+ }
+}

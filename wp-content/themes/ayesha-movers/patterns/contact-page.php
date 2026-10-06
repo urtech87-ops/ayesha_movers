@@ -60,11 +60,11 @@ $ayesha_rows = array(
 
 <!-- wp:column {"width":"58.33%","className":"ayesha-contact__form"} -->
 <div class="wp-block-column ayesha-contact__form" style="flex-basis:58.33%"><!-- wp:heading -->
-<h2 class="wp-block-heading" id="quote">Request a detailed quote</h2>
+<h2 class="wp-block-heading" id="quote">Request a free quote</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Takes about 3 minutes. We reply on WhatsApp or by phone.</p>
+<p>Takes under a minute. We'll call or WhatsApp you back.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:ayesha/quote-form {"showMoveParts":false} /--></div>

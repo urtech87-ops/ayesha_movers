@@ -1,0 +1,221 @@
+/* Preview styles for the three "What we do" options (on top of the live theme.css). */
+
+/* Icons, chosen from the service link (data-icon here; in the build: the link's #anchor, as now). */
+[data-icon="house"] { --ayesha-icon: var(--ayesha-icon-house); }
+[data-icon="box"] { --ayesha-icon: var(--ayesha-icon-box); }
+[data-icon="sofa"] { --ayesha-icon: var(--ayesha-icon-sofa); }
+[data-icon="tv"] { --ayesha-icon: var(--ayesha-icon-tv); }
+[data-icon="truck"] { --ayesha-icon: var(--ayesha-icon-truck); }
+[data-icon="container"] { --ayesha-icon: var(--ayesha-icon-container); }
+
+.wwd .wwd-card > *, .wwd .wwd-feature__text > * { margin-block: 0; }
+.wwd .wwd-card h3 a, .wwd .wwd-feature h3 a { color: inherit; text-decoration: none; }
+.wwd .wwd-card h3 a:hover, .wwd .wwd-feature h3 a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
+.wwd .wwd-all { margin-block-start: 2.5rem; }
+
+/* ===================== A: six equal cards ===================== */
+.wwd--a { background: var(--ayesha-mist); }
+.wwd--a > h2 { text-align: center; margin-inline: auto !important; }
+.wwd--a > h2::after { left: 50%; transform: translateX(-50%); }
+
+.wwd-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.5rem;
+	margin-block-start: 3rem !important;
+}
+
+@media (min-width: 640px) { .wwd-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .wwd-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.wwd-card--a {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 2.5rem 1.75rem 1.5rem;
+	background: #fff;
+	border: 1px solid var(--ayesha-line);
+	border-bottom: 3px solid transparent;
+	border-radius: 2px;
+	text-align: center;
+	transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.wwd-card--a > * + * { margin-block-start: 0.75rem !important; }
+
+/* The icon in a gold circle. */
+.wwd-card--a::before {
+	content: "";
+	width: 76px;
+	height: 76px;
+	margin-block-end: 0.75rem;
+	border-radius: 50%;
+	background: var(--ayesha-gold);
+}
+
+.wwd-card--a::after {
+	content: "";
+	position: absolute;
+	top: calc(2.5rem + 20px);
+	left: calc(50% - 18px);
+	width: 36px;
+	height: 36px;
+	background: var(--ayesha-navy);
+	-webkit-mask: var(--ayesha-icon) center / contain no-repeat;
+	mask: var(--ayesha-icon) center / contain no-repeat;
+}
+
+.wwd-card--a h3 { font-size: 1.25rem; font-weight: 700; }
+.wwd-card--a .wp-block-buttons { justify-content: center; margin-block-start: auto !important; padding-block-start: 0.5rem; }
+
+/* Lifts on hover (pointer devices only; not with reduced motion). */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+	.wwd-card--a:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgb(12 18 57 / 0.12); border-bottom-color: var(--ayesha-gold); }
+}
+
+.wwd--a .wwd-all { justify-content: center; }
+
+/* ===================== B: navy, feature card + row of five ===================== */
+.wwd--b > h2 { color: #fff; }
+
+.wwd-feature {
+	position: relative;
+	margin-block-start: 2.5rem !important;
+	background: #fff;
+	border-top: 4px solid var(--ayesha-gold);
+	border-radius: 2px;
+	overflow: hidden;
+}
+
+.wwd-feature__cols { margin: 0 !important; gap: 0 !important; align-items: stretch !important; }
+
+.wwd-feature__text { padding: 2rem 1.5rem; color: var(--ayesha-slate); }
+.wwd-feature__text > * + * { margin-block-start: 1rem !important; }
+.wwd-feature__text::before {
+	content: "";
+	display: block;
+	width: 52px;
+	height: 52px;
+	margin-block-end: 1.25rem;
+	background: var(--ayesha-navy);
+	-webkit-mask: var(--ayesha-icon-house) center / contain no-repeat;
+	mask: var(--ayesha-icon-house) center / contain no-repeat;
+}
+.wwd-feature h3 { font-size: 1.625rem; font-weight: 700; color: var(--ayesha-navy) !important; }
+.wwd-feature h3 a { color: var(--ayesha-navy) !important; }
+.wwd-feature .ayesha-service-lead__label { color: var(--ayesha-navy); font-weight: 500; margin-block-start: 1.5rem !important; }
+.wwd-feature .ayesha-checklist { margin-block-start: 0.5rem !important; }
+
+@media (min-width: 640px) {
+	.wwd-feature .ayesha-checklist { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.5rem; }
+	.wwd-feature .ayesha-checklist > li + li { margin-block-start: 0; }
+	.wwd-feature .ayesha-checklist > li { margin-block-end: 0.5rem; }
+	.wwd-feature__text { padding: 2.5rem; }
+}
+
+.wwd-feature__photo { display: none; }
+.wwd-feature__photo figure { margin: 0 !important; height: 100%; }
+.wwd-feature__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+@media (min-width: 960px) {
+	.wwd-feature__text { flex: 1 1 62% !important; padding: 3rem; }
+	.wwd-feature__photo { display: block; flex: 0 0 38% !important; }
+}
+
+.wwd-row {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1rem;
+	margin-block-start: 1.5rem !important;
+}
+
+@media (min-width: 640px) { .wwd-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .wwd-row { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+
+.wwd-card--b {
+	display: flex;
+	flex-direction: column;
+	padding: 1.5rem 1.25rem 0.75rem;
+	border: 1px solid var(--ayesha-line-dark);
+	border-radius: 2px;
+	transition: border-color 150ms ease;
+}
+.wwd-card--b:hover { border-color: var(--ayesha-gold); }
+.wwd-card--b > * + * { margin-block-start: 0.5rem !important; }
+.wwd-card--b::before {
+	content: "";
+	width: 40px;
+	height: 40px;
+	margin-block-end: 0.75rem;
+	background: var(--ayesha-gold);
+	-webkit-mask: var(--ayesha-icon) center / contain no-repeat;
+	mask: var(--ayesha-icon) center / contain no-repeat;
+}
+.wwd-card--b h3 { color: #fff; font-size: 1.125rem; font-weight: 700; }
+.wwd-card--b p { color: var(--ayesha-soft); font-size: 0.9375rem; }
+.wwd-card--b .wp-block-buttons { margin-block-start: auto !important; }
+.wwd--b .wwd-all { justify-content: flex-end; margin-block-start: 1.25rem; }
+.wwd--b .wwd-all .wp-block-button__link { color: var(--ayesha-gold) !important; }
+
+/* ===================== C: split, intro left + 2 x 3 cards right ===================== */
+.wwd--c { background: #fff; }
+.wwd-split { margin: 0 !important; gap: 2.5rem 4rem !important; }
+.wwd-split__left > * { margin-block: 0; }
+.wwd-split__left > * + * { margin-block-start: 1.5rem !important; }
+.wwd-split__left h2 { position: relative; padding-block-end: 1rem; }
+.wwd-split__left h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 56px; height: 3px; background: var(--ayesha-gold); }
+.wwd-intro { font-size: 1.1875rem; line-height: 1.6; color: var(--ayesha-slate); }
+.wwd--c .wwd-all { margin-block-start: 1.75rem !important; }
+.wwd-split__photo { margin-block-start: 2.5rem !important; }
+.wwd-split__photo img { box-shadow: 12px 12px 0 var(--ayesha-gold); max-width: 100%; height: auto; }
+
+@media (max-width: 959.98px) {
+	.wwd-split { flex-direction: column; }
+	.wwd-split > .wp-block-column { flex-basis: 100% !important; }
+	body:not(.editor-styles-wrapper) .wwd-split__photo { display: none; }
+}
+
+@media (min-width: 960px) {
+	.wwd-split__left { flex: 0 0 34% !important; }
+	.wwd-split__right { flex: 1 1 auto !important; }
+}
+
+.wwd-grid2 { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+@media (min-width: 640px) { .wwd-grid2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.wwd-card--c {
+	display: grid;
+	grid-template-columns: 52px minmax(0, 1fr);
+	column-gap: 1rem;
+	align-content: start;
+	padding: 1.5rem 1.25rem 0.5rem;
+	background: var(--ayesha-mist);
+	border-left: 3px solid var(--ayesha-gold);
+	border-radius: 2px;
+}
+.wwd-card--c > * { grid-column: 2; margin-block: 0 !important; }
+.wwd-card--c > * + * { margin-block-start: 0.375rem !important; }
+.wwd-card--c::before {
+	content: "";
+	grid-column: 1;
+	grid-row: 1 / span 3;
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	background: #fff;
+}
+.wwd-card--c::after {
+	content: "";
+	position: absolute;
+	width: 26px;
+	height: 26px;
+	margin: 13px 0 0 13px;
+	background: var(--ayesha-navy);
+	-webkit-mask: var(--ayesha-icon) center / contain no-repeat;
+	mask: var(--ayesha-icon) center / contain no-repeat;
+}
+.wwd-card--c { position: relative; }
+.wwd-card--c::after { top: 1.5rem; left: 1.25rem; margin: 13px; }
+.wwd-card--c h3 { font-size: 1.0625rem; font-weight: 700; color: var(--ayesha-navy); }
+.wwd-card--c p { font-size: 0.9375rem; line-height: 1.55; }

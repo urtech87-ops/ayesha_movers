@@ -207,13 +207,13 @@ Both pages use the template **Page with sections (heading in the page)**: the bi
 
 ## 8. The Contact Us page
 
-Open **Pages → Contact Us**. In **List View**: Contact → Columns → the left column (heading, opening hours, **Contact rows**) and the right column (**Request a detailed quote**, one line of text, and the **Quote request form**). On computers the left column stays on screen while the form scrolls; on phones it comes first and the form follows.
+Open **Pages → Contact Us**. In **List View**: Contact → Columns → the left column (heading, opening hours, **Contact rows**) and the right column (**Request a free quote**, one line of text, and the **Quote request form**). On computers the left column stays on screen while the form scrolls; on phones it comes first and the form follows.
 
-- **Heading and the line under "Request a detailed quote"**: click and type.
+- **Heading and the line under "Request a free quote"**: click and type.
 - **Show or hide the hours and contact rows:** Settings → Business Info → **Show contact details on Contact Us** (on now). While it's off, visitors see only the heading and the form, but the hours and rows stay in the page and you can still edit them here (the editor always shows them).
 - **Opening hours and the contact rows** come from **Settings → Business Info** (see section 1): you can't type in the numbers, email or Instagram name here. Each row has a small label above the value ("WhatsApp", "Mobile", "Office", …); click a label to change its words. The whole row is the link, and its icon (phone, WhatsApp, envelope, Instagram) is chosen by the site from the kind of link.
 - To remove a row, select its group in List View (e.g. "Office") and delete it. To add one, duplicate a row (⋮ → **Duplicate**) and connect the copy's value to another Business Info field (section 3: Attributes → content).
-- **Keep the heading "Request a detailed quote" and its HTML anchor `quote`** (Advanced in the sidebar): the Home page's "Send a detailed quote request" link points to `/contact-us/#quote`.
+- **Keep the heading "Request a free quote" and its HTML anchor `quote`** (Advanced in the sidebar): the Home page's "Send a detailed quote request" link points to `/contact-us/#quote`.
 - There is no address and no map, on purpose. When an address is confirmed, it can be added here as a paragraph connected to Business Info → Business address.
 - The page's title and description in Google are in the **Search engines** panel, as for Home (section 5).
 
