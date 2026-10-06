@@ -8,12 +8,64 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * WhatsApp glyph (speech bubble with handset), coloured with currentColor.
+ * The WhatsApp glyph's path, read from assets/img/whatsapp.svg (Simple Icons, CC0; source and
+ * licence in assets/img/whatsapp.txt). Every WhatsApp icon on the site comes from this one file.
  *
+ * @return string Path data, or '' if the file is missing.
+ */
+function ayesha_core_whatsapp_glyph_path() {
+	static $path = null;
+	if ( null === $path ) {
+		$svg  = (string) file_get_contents( AYESHA_CORE_DIR . 'assets/img/whatsapp.svg' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local plugin file.
+		$path = preg_match( '/<path d="([^"]+)"/', $svg, $m ) ? $m[1] : '';
+	}
+	return $path;
+}
+
+/**
+ * The glyph as an SVG document, coloured with currentColor.
+ * The viewBox adds 2 units of empty space on each side of the glyph's 24-unit box (the shape is not
+ * changed), so the icon shows at the same size as the previous one in the same space.
+ *
+ * @param string $attrs Extra attributes for the <svg> tag.
  * @return string
  */
-function ayesha_core_whatsapp_icon() {
-	return '<svg aria-hidden="true" focusable="false" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 1.8a8.2 8.2 0 1 1-4.2 15.3l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 0 1 12 3.8Z"/><path d="M8.7 7.3c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3 4.9 4.3 2.4 1 2.9.8 3.4.8.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3l-1.9-.9c-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.7-1.6-1.9-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.5-.5-.6-.5h-.5Z"/></svg>';
+function ayesha_core_whatsapp_svg( $attrs = '' ) {
+	return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 28 28" fill="currentColor"' . $attrs . '><path d="' . esc_attr( ayesha_core_whatsapp_glyph_path() ) . '"/></svg>';
+}
+
+/**
+ * Inline WhatsApp icon (floating button). Decorative: the link carries the accessible name.
+ *
+ * @param int $size Width and height in px.
+ * @return string
+ */
+function ayesha_core_whatsapp_icon( $size = 28 ) {
+	return ayesha_core_whatsapp_svg( sprintf( ' aria-hidden="true" focusable="false" width="%1$d" height="%1$d"', (int) $size ) );
+}
+
+/**
+ * The same glyph as the CSS variable --ayesha-icon-whatsapp. The theme draws it as a mask filled
+ * with the text colour (currentColor) on every WhatsApp button and on the Contact Us WhatsApp row.
+ *
+ * @return string CSS.
+ */
+function ayesha_core_whatsapp_icon_css() {
+	if ( '' === ayesha_core_whatsapp_glyph_path() ) {
+		return '';
+	}
+	return ':root{--ayesha-icon-whatsapp:url("data:image/svg+xml,' . rawurlencode( ayesha_core_whatsapp_svg() ) . '")}';
+}
+
+add_action( 'enqueue_block_assets', 'ayesha_core_icon_styles' );
+
+/**
+ * Print the icon variable on the site and inside the block editor, so both show the same icon.
+ */
+function ayesha_core_icon_styles() {
+	wp_register_style( 'ayesha-core-icons', false, array(), AYESHA_CORE_VERSION );
+	wp_enqueue_style( 'ayesha-core-icons' );
+	wp_add_inline_style( 'ayesha-core-icons', ayesha_core_whatsapp_icon_css() );
 }
 
 add_action( 'wp_enqueue_scripts', 'ayesha_core_frontend_assets' );
