@@ -817,7 +817,6 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 1.5rem;
-	max-inline-size: none !important;
 	margin-block-start: 3rem !important;
 }
 
@@ -938,8 +937,9 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 	counter-reset: ayesha-step;
 	list-style: none;
 	padding-inline-start: 0;
-	max-inline-size: none !important;
-	margin-inline: 0 !important;
+	/* The full content column (the general rule would stop a list at 68 characters and keep it left). */
+	max-inline-size: var(--wp--style--global--content-size) !important;
+	margin-inline: auto !important;
 }
 
 .ayesha-steps > li {
