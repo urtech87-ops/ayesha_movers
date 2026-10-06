@@ -19,8 +19,8 @@ Main goal: get mobile visitors to WhatsApp or call in one tap, or to send a deta
 | Admin username | `ayesha_admin` (password given in chat once; never stored in any file) |
 | WP-CLI | `D:\xampp\php\php.exe wp-cli.phar <command>` from the project root |
 | wp-config extras | `WP_ENVIRONMENT_TYPE=local`, `WP_DEBUG` on, log to `wp-content/debug.log`, display off, `DISALLOW_FILE_EDIT`, **`AUTOMATIC_UPDATER_DISABLED` = true** (no automatic core/plugin/theme/translation updates, so WordPress stays at 7.1.2 for the whole project). wp-config.php is not in git: re-add these by hand on any new install |
-| Plugins | **AYESHA Core 0.7.0 (active)**, WP Mail Logging 1.17.0 (active), WP Mail SMTP 4.10.0 (inactive; set up at go-live, see `docs/email-setup.md`) |
-| Themes | **AYESHA Movers 0.7.0 (active)**; Twenty Twenty-Five 1.5 (fallback) |
+| Plugins | **AYESHA Core 0.7.1 (active)**, WP Mail Logging 1.17.0 (active), WP Mail SMTP 4.10.0 (inactive; set up at go-live, see `docs/email-setup.md`) |
+| Themes | **AYESHA Movers 0.7.1 (active)**; Twenty Twenty-Five 1.5 (fallback) |
 | Navigation | `wp_navigation` post 4 "Main menu": Home, About Us, Our Services, Contact Us + a bound Call/WhatsApp Buttons block (shown only in the open mobile menu). Used by header and footer. Lives in the database; reference copy in `docs/navigation-main-menu.html` |
 | Business Info | Settings → Business Info (option `ayesha_business`) |
 | Pages | Home (ID 5, static front page), About Us (6), Our Services (7), Contact Us (8). About Us, Our Services and Contact Us use the template "Page with sections (heading in the page)" (`page-sections`): the H1 is a block in the page |
@@ -53,13 +53,17 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | 5. Our Services + About Us | phase-5-services-about | **Done; approved and merged into main 2026-10-03 (fast-forward to 7f3e690)** |
 | 6. Contact Us + quote form + email | phase-6-contact | **Done; approved and merged into main 2026-10-03 (fast-forward to 497997f)** |
 | 7. Design refresh + service area (Bahrain and GCC only) | phase-7-design | **Done; approved and merged into main 2026-10-06 (fast-forward to e5d9310)** (client ads still pending) |
-| 7b. Logo (carton mark, two-line name), favicon + share image | phase-7b-logo | **In progress: option A chosen and built; stopped mid-phase (usage limit) before the last tests** |
+| 7b. Logo (carton mark, two-line name), favicon + share image | phase-7b-logo | **Done; waiting for the user's approval** (not merged) |
 | 8. Full QA, SEO, performance, handover (was Phase 7) | phase-8-qa | On hold until Phase 7 is approved; scope approved 2026-10-03 (see Phase 8 notes) |
 
 ## Current phase + next step
-- **Phase 7b status (2026-10-06, stopped mid-phase: usage limit):** the user chose **option A**. Done: header = core Site Logo block (Media 104, 739x168 PNG because SVG uploads are off in WordPress; `site_logo` = 104; 44px phones / 40px at 320 / 56px from 960px); footer = Image block from the theme pattern `ayesha-movers/footer-logo` (theme file `assets/img/logo-footer.png`, lazy-loaded by a `render_block` filter in functions.php; same image also in Media as 105), because WordPress has one site logo and the footer needs the white version; site icon = Media 106 (512px PNG, PNG sizes 32–270, set in Site Identity) + SVG icon printed by AYESHA Core only while that icon is set; share image 1200x630 built by AYESHA Core with GD (`includes/brand.php`, Roboto Bold TTF in the plugin) from the Business Info main number, rebuilt when the number changes or with the "Rebuild share image" button on Business Info; optional "Own share image" field; og:image/width/height/alt on every page. Also fixed: every Business Info tick box showed the reviews wording as its label. Plugin and theme 0.7.1. Database dump before the changes: Phase 7b session scratch folder.
+- **Current: Phase 7b (logo) done 2026-10-06, branch `phase-7b-logo`, waiting for the user's approval (not merged).** The user chose **option A**. Done: header = core Site Logo block (Media 104, 739x168 PNG because SVG uploads are off in WordPress; `site_logo` = 104; 44px phones / 40px at 320 / 56px from 960px); footer = Image block from the theme pattern `ayesha-movers/footer-logo` (theme file `assets/img/logo-footer.png`, lazy-loaded by a `render_block` filter in functions.php; same image also in Media as 105), because WordPress has one site logo and the footer needs the white version; site icon = Media 106 (512px PNG, PNG sizes 32–270, set in Site Identity) + SVG icon printed by AYESHA Core only while that icon is set; share image 1200x630 built by AYESHA Core with GD (`includes/brand.php`, Roboto Bold TTF in the plugin) from the Business Info main number, rebuilt when the number changes or with the "Rebuild share image" button on Business Info; optional "Own share image" field; og:image/width/height/alt on every page. Also fixed: every Business Info tick box showed the reviews wording as its label. Plugin and theme 0.7.1. Database dump before the changes: Phase 7b session scratch folder.
   - Tests passed: header on one row with no sideways scroll on all 4 pages at 320/375/414/768/1280/1920; logo sharp at 2x; logo link to Home with focus ring and name "AYESHA Movers & Packers"; footer logo contrast; icons and share image return 200; og tags on all 4 pages; hero still eager/fetchpriority high; editor: header 14 blocks, footer 36 blocks, 0 invalid; php -l clean; debug.log no new lines. Temporary admin session destroyed (0 sessions).
-  - **Still to do:** Site Editor replace-and-revert test of the logo; Lighthouse mobile Home after (before: Performance 93–94, Accessibility 100, Best Practices 100, SEO 66); axe; editing guide (logo, favicon, share image); push; stop for approval. Dev junctions still in place.
+  - Finished after the restart: Site Editor replace-and-restore of the header logo and the footer logo, Lighthouse mobile on Home, axe on all 4 pages, the share image's automatic rebuild, the editing guide (section 2, "The logo, the browser-tab icon and the share image", and the "Own share image" row in the Business Info table). Results in Test results › Phase 7b.
+  - The footer test saved a database copy of the Footer (wp_template_part 107); it was deleted afterwards (= Reset), so header and footer come from the theme files again. Site logo is back to 104.
+  - **Favicon and Open Graph image were planned for Phase 8; they are done here.** Phase 8 still checks the other Open Graph tags (og:title, og:description) if wanted.
+  - Dev junctions still in place (removed with `rmdir` before the merge).
+- **Next step:** the user reviews Phase 7b; on "approved": remove the junctions, merge `phase-7b-logo` into `main`, push main, smoke test, update PROGRESS, push, confirm.
 - **Earlier (options round):** Phase 7b (logo), branch `phase-7b-logo`, stopped for the user's choice of logo (2026-10-06). `docs/client-logos/` doesn't exist, so the logo was designed from scratch. Three options, all carton marks with the name on two lines ("AYESHA Movers" / "& Packers"), navy/gold/white:
   - **A:** one carton in a three-quarter view, gold tape along the lid seam and down the front; "AYESHA" bold, "Movers" medium, "& Packers" regular, all navy (white in the footer).
   - **B:** three stacked cartons (two navy with gold tape, a gold one on top); "& Packers" in gold: the site gold on navy, a darker gold **#8A6500** on white (5.33:1), because #F2B705 on white is 1.82:1 and fails AA.
@@ -213,6 +217,13 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 
 - 2026-10-06: User approved Phase 7 (after the "Call or WhatsApp" fix). The two dev junctions were removed (`rmdir`, links only; the worktree's 36 theme and 21 plugin files untouched), the theme and plugin folders restored from git in the main checkout (`git checkout --`), `phase-7-design` fast-forward merged into `main` (83430fb → e5d9310), `main` pushed; `origin/main` = `origin/phase-7-design` = e5d9310 before this PROGRESS commit. Database dumps taken before each Phase 7 database change are in the Phase 7 session's scratch folder (not in git).
 
+- 2026-10-06: **Phase 7b (logo).** No client logo files (`docs/client-logos/` doesn't exist), so three options were designed; the user chose **A** (one carton in a three-quarter view with gold tape; "AYESHA" bold, "Movers" medium, "& Packers" regular). Text outlined from the theme's Roboto (fontTools, with Roboto's kerning); sources in `docs/brand/` and `docs/design-preview/logo/` (`build.py`, `preview.py`).
+- 2026-10-06: Logo in the Media Library as a **PNG** (739 × 168, 3.5× the 48px design): WordPress doesn't allow SVG uploads, and enabling them safely would need an SVG sanitiser (no extra plugins). WordPress saved the main file and its sizes as WebP (AYESHA Core's WebP rule); checked sharp at 2×.
+- 2026-10-06: **Footer logo is an Image block, not a second Site Logo block**: WordPress has one site logo per site, and the footer needs the white-and-gold version. It comes from the theme pattern `ayesha-movers/footer-logo` (theme file `assets/img/logo-footer.png`, so no `localhost` address is stored in theme files); the theme's `render_block` filter adds `loading="lazy"` (WordPress only lazy-loads images with width/height).
+- 2026-10-06: Site icon: 512px PNG with PNG sizes 32–270 (made as PNG, not WebP: some phones don't accept a WebP home-screen icon; AYESHA Core now also keeps Site Identity crops as PNG). The SVG icon link is printed only while the site icon attachment has the meta `_ayesha_svg_icon`, so a new icon chosen by the client is never overridden.
+- 2026-10-06: Share image drawn by AYESHA Core with GD (Roboto Bold TTF bundled in the plugin, OFL) into `uploads/ayesha/share-image-<digits>.png`; rebuilt when the Business Info main number changes or with **Rebuild share image**; optional **Own share image** URL field. og:image, og:image:width/height/alt on every front-end page.
+- 2026-10-06: Fixed a Phase 7 bug found while editing Business Info: every tick box had the label "Show the reviews section on the website"; each now shows its own label.
+
 ## Open questions for the client
 - Price point: the site says "Low rates, with labour included" (his own selling point, no superlative). Confirm the wording
 - How are prices worked out (per truck, per hour, per room)? Needed for an honest FAQ answer; not invented in the plan
@@ -220,7 +231,7 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 - Which languages does your team speak? (Needed before adding `availableLanguage` to the JSON-LD or mentioning languages on the site)
 - Founding year / years in business ("decades" vs "Est. 2026")
 - Business address or office location, if he wants one shown. **Can the office address on the flyer go on the site?** (One of the ads shows an office address. Until he says yes, no address is shown)
-- **Official business name and logo:** the ads use three different names and logos. Which one is official? (The site uses the text wordmark "AYESHA Movers & Packers" until then)
+- **Official business name and logo:** the ads use three different names and logos. Which one is official? (The site now uses the new carton logo A designed in Phase 7b; the client should confirm it or send his own)
 - Real customer reviews (Google/Instagram) to replace placeholders
 - **Coverage: Bahrain to the GCC only?** The user is confirming this with the client. Pending: whether to add the FAQ line "We don't move to countries outside the GCC." (not added; user decision 2026-10-03)
 - **Stats numbers** (moves done, years, trucks, team size) for a stats band like the reference's. Skipped until real numbers exist; never invent them
@@ -648,3 +659,21 @@ Screenshots: `contact-card-same-{375,1920}.png`, `contact-card-differ-{375,1920}
 | S5 | debug.log | No new entries | 3,432 bytes before and after; no entries dated 2026-10-06 | Pass |
 | S6 | Pushes | `main` = `origin/main`; branch on origin | `main` = `origin/main` = `origin/phase-7-design` = e5d9310 before this PROGRESS commit | Pass |
 
+### Phase 7b: logo, favicon, share image (run 2026-10-06)
+| # | Test | Expected | Result | Pass/Fail |
+|---|---|---|---|---|
+| L1 | Header on one row, no sideways scroll | All 4 pages at 320/375/414/768/1280/1920 | All 24 pass. Logo 40px tall at 320 (shrinks to fit), 44px at 375–768, 56px at 1280/1920; bar 68 / 84px as before | Pass |
+| L2 | Logo sharp on a 2× screen | Crisp edges | 2× screenshots at 1280 and 375: crisp (browser picks the 560px WebP copy) | Pass |
+| L3 | Logo link + focus ring | Link to Home, visible focus | `<a rel="home">` to Home, accessible name "AYESHA Movers & Packers" (img alt), reached by Tab after the top bar; 3px navy ring with white gap | Pass |
+| L4 | Footer logo contrast | AA on navy | White 18.08:1, gold tape 9.95:1 on #0C1239; lazy-loaded, 56px | Pass |
+| L5 | Favicon in the browser tab | Icon loads | 32 and 192px PNG + SVG load (200) in the in-app browser; apple-touch-icon 180 and msapplication 270 present | Pass |
+| L6 | og:image | Tag present, image loads | og:image + width 1200 + height 630 + alt on all 4 pages; image 200 image/png (33.7 KB) | Pass |
+| L7 | Share image rebuilds | New image when the main number changes | Number changed to +973 1234 5678 → `share-image-97312345678.png`; back → `share-image-97334448236.png`, old file removed. Business Info box: Rebuild button with nonce, "Built with the number +973 3444 8236" | Pass |
+| L8 | Editor: invalid blocks | 0 | Header 14 blocks, footer 36 blocks, 0 invalid | Pass |
+| L9 | Replace header logo in Site Editor | Works and reverts | Replace → Media Library → Media 105 → Save: site showed logo-footer; Replace → 104 → Save: site shows logo-header again, alt kept; `site_logo` = 104 | Pass |
+| L10 | Replace footer logo in Site Editor | Works and reverts | Replace → 104 → Save: footer showed logo-header; Replace → 105 → Save: white/gold logo back (alt kept, lazy, 56px). The saved footer copy (post 107) was then deleted (= Reset): footer from the theme file again | Pass |
+| L11 | Lighthouse mobile, Home | Same or better than before (Perf 93–94, A11y 100, BP 100, SEO 66) | 3 runs: 94 / 92 / 94, 100, 100, 66 (noindex). LCP 2.7 s, CLS 0, TBT 0–130 ms; page 325 KiB (was 341). Report `docs/lighthouse/phase-7b/home-mobile.report.html` | Pass |
+| L12 | axe-core 4.13, all 4 pages at 375 and 1280 | 0 serious/critical | 0 serious, 0 critical; only the known moderate `region` (sticky bar / floating button, planned for Phase 8) | Pass |
+| L13 | Hero loading | Unchanged | Home hero photo still eager + fetchpriority high; header logo has no lazy/fetchpriority | Pass |
+| L14 | php -l, debug.log | Clean | All changed PHP files clean; debug.log unchanged (25 lines, last entry 2026-10-02) | Pass |
+| L15 | Temporary admin session | Destroyed | 0 sessions; storage-state file deleted; cookie never printed | Pass |

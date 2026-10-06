@@ -20,6 +20,7 @@ All contact details live on one page: **Settings → Business Info** (in the bla
 | Business address | **Leave empty** until you want an address on the site. When you fill it in, search engines are told about it too |
 | Show reviews section | Leave **off** until the example reviews have been replaced with real customer reviews. While it is off, the reviews section is hidden from visitors |
 | Show contact details on Contact Us | **On**: the opening hours and the rows with the numbers, email, Instagram and Facebook show beside the quote form. Switch it **off** to show only the heading and the form. Nothing is deleted while it is off |
+| Own share image (optional) | Leave **empty** to use the share image the site builds for you (see section 2, "The share image"). Paste a picture's File URL here to use your own instead |
 
 Click **Save business info**. The change appears everywhere on the site straight away; you don't need to edit any page.
 
@@ -39,6 +40,36 @@ Go to **Appearance → Editor**.
 - **Call and WhatsApp in the phone menu**: the Main menu (Navigation) ends with two buttons, Call and WhatsApp. They appear only when the menu is opened on a phone, at the bottom of the screen. You can change their words; the links come from Business Info.
 
 Made a mistake? In the Editor, open the part, click the three dots (⋮) at the top right and choose **Reset** to go back to the original design.
+
+### The logo, the browser-tab icon and the share image
+
+The logo has two versions: **navy** for the white header and **white and gold** for the navy footer. Both are in **Media → Library** ("AYESHA Movers & Packers logo (header, navy)" and "… (footer, white and gold)"). The original drawings (SVG) and large copies are kept with the website's files, in `docs/brand/`, if a designer ever needs them.
+
+**Header logo** (the Site Logo block):
+1. **Appearance → Editor → Patterns → Header**. Click the logo.
+2. In the toolbar above it, click **Replace → Open Media Library**, pick or upload the new logo and click **Select**.
+3. Click **Save** (WordPress may ask you to confirm the "Site" change: click **Save** again).
+- The logo always keeps the header's height (44 pixels on phones, 56 on computers) and becomes as wide as its shape needs, so use a **wide logo with little empty space around it**, at least 3 times bigger than shown (e.g. 740 × 170 pixels). A PNG with a see-through background works best.
+- The logo is a link to the Home page. Its description for screen readers comes from the picture's **Alternative Text** in Media → Library; keep it "AYESHA Movers & Packers".
+- To put the original back: same steps, pick "AYESHA Movers & Packers logo (header, navy)".
+
+**Footer logo** (an Image block, because the footer needs the white version):
+1. **Appearance → Editor → Patterns → Footer**. Click the logo.
+2. **Replace → Open Media Library**, pick the new logo, **Select**, then **Save**.
+- Use a version that reads on navy (white or light colours). Fill in its Alternative Text in the sidebar ("AYESHA Movers & Packers").
+- To put the original back: pick "AYESHA Movers & Packers logo (footer, white and gold)", or use **Reset** on the Footer (⋮ menu). Reset also undoes any other change you made to the footer.
+
+**Browser-tab icon** (also used when someone saves the site to their phone's home screen):
+1. Go to **Settings → General** and find **Site Icon**.
+2. Click **Change site icon**, pick or upload a **square** picture of at least **512 × 512 pixels**, crop if asked, and click **Save Changes**.
+- The current icon is "AYESHA Movers & Packers site icon" (the carton on a navy square). In the header's Site Logo block, leave **"Use as site icon"** off: the icon is the carton alone, not the whole logo. When you choose another icon, the site also stops using the sharp SVG copy of the old one by itself.
+- Browsers keep old icons for a while: if the tab still shows the old one, close and reopen the tab.
+
+**The share image** (the picture shown when someone shares a link to the site on WhatsApp, Facebook and similar apps): the logo on navy with your main phone number in gold.
+- It **rebuilds itself when you change the main phone number** in Settings → Business Info and click **Save business info**.
+- To rebuild it by hand (e.g. after the website moves to a new server): **Settings → Business Info**, scroll to **Share image** at the bottom, click **Rebuild share image**. The picture there shows the current share image and the number it was built with.
+- To use your own picture instead: upload it in **Media → Library** (1200 × 630 pixels is best), open it, click **Copy URL to clipboard**, paste it into **Own share image** on Business Info and save. Empty the field to go back to the built image.
+- WhatsApp and Facebook remember a link's picture for a few days. A new number shows in new shares sooner because the picture has a new file name, but links shared before keep the old picture.
 
 ## 3. Showing a phone number, WhatsApp link or email inside a page
 
