@@ -16,6 +16,7 @@
 	},
 	"attributes": {
 		"showMoveParts": { "type": "boolean", "default": true },
+		"askReply": { "type": "boolean", "default": true },
 		"legendYou": { "type": "string", "default": "About you" },
 		"legendMove": { "type": "string", "default": "Your move" },
 		"legendNeeds": { "type": "string", "default": "What you need" },

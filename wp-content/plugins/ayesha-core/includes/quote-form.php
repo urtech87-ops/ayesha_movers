@@ -46,13 +46,28 @@ function ayesha_core_quote_move_defaults() {
 }
 
 /**
- * Whether the quote form on a page shows parts 2 and 3 (the block's "Show parts 2 and 3" setting).
- * Read from the saved page, so a visitor can't switch the required fields off by editing the form.
+ * The quote form block's settings on a page, read from the saved page (so a visitor can't switch
+ * required fields off by editing the form): "Show parts 2 and 3" and "Ask 'Best way to reply'".
+ * Both are on when there is no form on the page or a setting was never changed.
  *
  * @param int $post_id Page with the form.
- * @return bool True when there is no form on the page or the setting is on (the full form).
+ * @return array{full: bool, reply: bool}
  */
-function ayesha_core_quote_full_form( $post_id ) {
+function ayesha_core_quote_form_settings( $post_id ) {
+	$attrs = ayesha_core_quote_form_attrs( $post_id );
+	return array(
+		'full'  => ! array_key_exists( 'showMoveParts', $attrs ) || ! empty( $attrs['showMoveParts'] ),
+		'reply' => ! array_key_exists( 'askReply', $attrs ) || ! empty( $attrs['askReply'] ),
+	);
+}
+
+/**
+ * The saved attributes of the first quote form block on a page (empty when there is none).
+ *
+ * @param int $post_id Page.
+ * @return array
+ */
+function ayesha_core_quote_form_attrs( $post_id ) {
 	$find = static function ( array $blocks ) use ( &$find ) {
 		foreach ( $blocks as $block ) {
 			if ( 'ayesha/quote-form' === ( $block['blockName'] ?? '' ) ) {
@@ -66,7 +81,7 @@ function ayesha_core_quote_full_form( $post_id ) {
 		return null;
 	};
 	$block = $post_id ? $find( parse_blocks( (string) get_post_field( 'post_content', $post_id, 'raw' ) ) ) : null;
-	return null === $block || ! array_key_exists( 'showMoveParts', (array) $block['attrs'] ) || ! empty( $block['attrs']['showMoveParts'] );
+	return $block ? (array) $block['attrs'] : array();
 }
 
 /**
@@ -288,11 +303,15 @@ function ayesha_core_quote_today() {
  * service fields are ignored, never required and stored empty, and the enquiry is marked
  * 'parts' => 'short' so the admin screen, the emails and the WhatsApp text leave them out.
  *
- * @param array $raw  Unslashed $_POST['aq'].
- * @param bool  $full Whether parts 2 and 3 are on the form.
+ * With $ask_reply false ("Ask 'Best way to reply'" is off), the reply choice is not asked: it is
+ * stored empty and left out of the emails and the admin screen.
+ *
+ * @param array $raw       Unslashed $_POST['aq'].
+ * @param bool  $full      Whether parts 2 and 3 are on the form.
+ * @param bool  $ask_reply Whether "Best way to reply" is on the form.
  * @return array{0: array, 1: array<string, string>} Clean values (as typed where invalid, so the form can show them again) and errors by field.
  */
-function ayesha_core_quote_validate( array $raw, $full = true ) {
+function ayesha_core_quote_validate( array $raw, $full = true, $ask_reply = true ) {
 	$options = ayesha_core_quote_options();
 	$errors  = array();
 	$pick    = static function ( $key, $list ) use ( $raw, $options ) {
@@ -323,7 +342,9 @@ function ayesha_core_quote_validate( array $raw, $full = true ) {
 		'truck'         => $pick( 'truck', 'truck' ),
 		'truck_time'    => $pick( 'truck_time', 'truck_time' ),
 	);
-	if ( '' === $data['reply'] ) {
+	if ( ! $ask_reply ) {
+		$data['reply'] = '';
+	} elseif ( '' === $data['reply'] ) {
 		$data['reply'] = 'whatsapp';
 	}
 	if ( '' === $data['truck'] ) {
@@ -501,7 +522,8 @@ function ayesha_core_quote_handle() {
 
 	// phpcs:disable WordPress.Security.NonceVerification.Missing -- the nonce is one of the checks below; every value is validated.
 	$raw = isset( $_POST['aq'] ) && is_array( $_POST['aq'] ) ? wp_unslash( $_POST['aq'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitised field by field in ayesha_core_quote_validate().
-	list( $data, $errors ) = ayesha_core_quote_validate( $raw, ayesha_core_quote_full_form( $page_id ) );
+	$form                  = ayesha_core_quote_form_settings( $page_id );
+	list( $data, $errors ) = ayesha_core_quote_validate( $raw, $form['full'], $form['reply'] );
 
 	$nonce   = isset( $_POST['_aqnonce'] ) ? sanitize_key( wp_unslash( $_POST['_aqnonce'] ) ) : '';
 	$honey   = isset( $_POST['aq_website'] ) ? trim( (string) wp_unslash( $_POST['aq_website'] ) ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- only tested for emptiness.
@@ -683,8 +705,12 @@ function ayesha_core_quote_rows( array $data ) {
 		array( __( 'Name', 'ayesha-core' ), (string) ( $data['name'] ?? '' ) ),
 		array( __( 'Phone / WhatsApp', 'ayesha-core' ), (string) ( $data['phone'] ?? '' ) ),
 		array( __( 'Email', 'ayesha-core' ), '' !== ( $data['email'] ?? '' ) ? (string) $data['email'] : $none ),
-		array( __( 'Best way to reply', 'ayesha-core' ), ayesha_core_quote_label( 'reply', $data['reply'] ?? 'whatsapp' ) ),
 	);
+	// Only when the form asked it (old enquiries without the key always had it).
+	$reply = array_key_exists( 'reply', $data ) ? (string) $data['reply'] : 'whatsapp';
+	if ( '' !== $reply ) {
+		$rows[] = array( __( 'Best way to reply', 'ayesha-core' ), ayesha_core_quote_label( 'reply', $reply ) );
+	}
 	// The message is optional: its row only appears when the customer wrote something.
 	if ( '' !== (string) ( $data['message'] ?? '' ) ) {
 		$rows[] = array( __( 'About the move', 'ayesha-core' ), (string) $data['message'] );

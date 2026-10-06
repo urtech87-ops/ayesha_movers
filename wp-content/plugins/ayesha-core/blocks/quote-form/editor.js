@@ -103,7 +103,20 @@
 								props.setAttributes( { showMoveParts: value } );
 							},
 							__nextHasNoMarginBottom: true,
-						} )
+						} ),
+						el( 'div', { style: { marginTop: '16px' } },
+							el( c.ToggleControl, {
+								label: __( 'Ask "Best way to reply" (WhatsApp, phone call or email)', 'ayesha-core' ),
+								help: props.attributes.askReply
+									? __( 'The customer picks how you should reply.', 'ayesha-core' )
+									: __( 'Not asked: you choose how to reply. The question comes back when you switch this on.', 'ayesha-core' ),
+								checked: !! props.attributes.askReply,
+								onChange: function ( value ) {
+									props.setAttributes( { askReply: value } );
+								},
+								__nextHasNoMarginBottom: true,
+							} )
+						)
 					),
 					panels.map( function ( panel, i ) {
 						return el( c.PanelBody, { key: i, title: panel[ 0 ], initialOpen: false },

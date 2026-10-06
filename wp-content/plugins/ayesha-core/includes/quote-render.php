@@ -131,7 +131,9 @@ function ayesha_core_quote_render_form( array $a, $state, $page ) {
 			'spellcheck'   => 'false',
 		)
 	);
-	$html .= ayesha_core_quote_choices( 'reply', 'radio', $a['labelReply'], '', $o['reply'], array( $v['reply'] ), $e, false, 'row' );
+	if ( ! empty( $a['askReply'] ) ) {
+		$html .= ayesha_core_quote_choices( 'reply', 'radio', $a['labelReply'], '', $o['reply'], array( '' !== $v['reply'] ? $v['reply'] : 'whatsapp' ), $e, false, 'row' );
+	}
 	$html .= ayesha_core_quote_textarea( 'message', $a['labelMessage'], $a['hintMessage'], $v['message'], $e, AYESHA_CORE_QUOTE_MESSAGE_MAX );
 	$html .= '</fieldset>';
 

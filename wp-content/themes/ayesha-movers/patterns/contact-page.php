@@ -67,7 +67,7 @@ $ayesha_rows = array(
 <p>Takes under a minute. We'll call or WhatsApp you back.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:ayesha/quote-form {"showMoveParts":false} /--></div>
+<!-- wp:ayesha/quote-form {"showMoveParts":false,"askReply":false} /--></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></section>
 <!-- /wp:group -->

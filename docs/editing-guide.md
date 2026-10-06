@@ -225,8 +225,10 @@ Open **Pages → Contact Us**. In **List View**: Contact → Columns → the lef
 ### The quote form
 
 **Short form or full form.** Click the form; at the top of the sidebar, **Form parts → Show parts 2 and 3** switches between:
-- **Off (now):** only part 1, "About you": name, phone, email, best way to reply, and the optional box **Tell us about your move** (up to 1,000 characters). No step numbers are shown. The move and service questions are not asked, not required, and don't appear in the emails, in Enquiries or in the WhatsApp message.
+- **Off (now):** only part 1, "About you": name, phone, email, best way to reply (if asked, see below), and the optional box **Tell us about your move** (up to 1,000 characters). No step numbers are shown. The move and service questions are not asked, not required, and don't appear in the emails, in Enquiries or in the WhatsApp message.
 - **On:** the full form with the three numbered parts (About you, Your move, What you need). The "Tell us about your move" box stays in part 1.
+
+**Ask "Best way to reply"** (in the same Form parts panel) shows or hides the WhatsApp / Phone call / Email choice. It's **off** on Contact Us now: you decide how to reply, and the emails and Enquiries don't show the line.
 
 Click **Save** after switching. The words of parts 2 and 3 stay in their panels while they're switched off.
 
