@@ -24,6 +24,10 @@ function ayesha_theme_setup() {
 	remove_theme_support( 'core-block-patterns' );
 	// Photos are shown at their natural size (the originals are 640px wide): one 560px copy for the Home hero.
 	add_image_size( 'ayesha-photo', 560, 0 );
+	// Home banner photos: three widths for srcset (the banner block picks one by screen size).
+	add_image_size( 'ayesha-banner-768', 768, 0 );
+	add_image_size( 'ayesha-banner-1280', 1280, 0 );
+	add_image_size( 'ayesha-banner-1920', 1920, 0 );
 }
 
 add_filter( 'image_size_names_choose', 'ayesha_theme_image_size_names' );
@@ -35,7 +39,8 @@ add_filter( 'image_size_names_choose', 'ayesha_theme_image_size_names' );
  * @return array<string, string>
  */
 function ayesha_theme_image_size_names( $sizes ) {
-	$sizes['ayesha-photo'] = __( 'Photo (560px)', 'ayesha-movers' );
+	$sizes['ayesha-photo']       = __( 'Photo (560px)', 'ayesha-movers' );
+	$sizes['ayesha-banner-1920'] = __( 'Banner (full width)', 'ayesha-movers' );
 	return $sizes;
 }
 
@@ -67,6 +72,30 @@ function ayesha_theme_assets() {
 			'strategy'  => 'defer',
 		)
 	);
+
+	// Scroll reveals and the Services dropdown keys. Reveals run only with "Page animations" on (AYESHA Core).
+	wp_enqueue_script(
+		'ayesha-menu',
+		get_theme_file_uri( 'assets/js/menu.js' ),
+		array(),
+		ayesha_theme_asset_version( 'assets/js/menu.js' ),
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
+	if ( ! function_exists( 'ayesha_core_animations_enabled' ) || ayesha_core_animations_enabled() ) {
+		wp_enqueue_script(
+			'ayesha-reveal',
+			get_theme_file_uri( 'assets/js/reveal.js' ),
+			array(),
+			ayesha_theme_asset_version( 'assets/js/reveal.js' ),
+			array(
+				'in_footer' => true,
+				'strategy'  => 'defer',
+			)
+		);
+	}
 
 	// Our Services: marks the current service in the "Jump to a service" menu. Only on pages that have it.
 	if ( is_singular() && str_contains( (string) get_post_field( 'post_content', get_queried_object_id() ), 'ayesha-jump' ) ) {

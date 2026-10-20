@@ -39,6 +39,7 @@ function ayesha_core_defaults() {
 		'address'          => '',
 		'show_reviews'     => 0,
 		'show_contact'     => 1,
+		'animations'       => 1,
 		'share_image_url'  => '',
 	);
 }
@@ -136,6 +137,11 @@ function ayesha_core_fields() {
 			'type'  => 'checkbox',
 			'help'  => __( 'The opening hours and the rows with the numbers, email and social links beside the quote form. When this is off, Contact Us shows only the heading and the form (the details stay in the page, ready to switch back on).', 'ayesha-core' ),
 		),
+		'animations'       => array(
+			'label' => __( 'Page animations', 'ayesha-core' ),
+			'type'  => 'checkbox',
+			'help'  => __( 'On: the words on the Home banner come in gently and its photo zooms in very slowly, and headings and cards fade in once as people scroll to them. Off: everything is shown still. Visitors who ask their device for less motion never see the animations either way.', 'ayesha-core' ),
+		),
 		'share_image_url'  => array(
 			'label' => __( 'Own share image (optional)', 'ayesha-core' ),
 			'type'  => 'url',
@@ -199,6 +205,7 @@ function ayesha_core_sanitize( $input ) {
 
 	$clean['show_reviews'] = empty( $input['show_reviews'] ) ? 0 : 1;
 	$clean['show_contact'] = empty( $input['show_contact'] ) ? 0 : 1;
+	$clean['animations']   = empty( $input['animations'] ) ? 0 : 1;
 
 	$share = isset( $input['share_image_url'] ) ? esc_url_raw( trim( $input['share_image_url'] ), array( 'http', 'https' ) ) : '';
 	if ( '' !== trim( $input['share_image_url'] ?? '' ) && '' === $share ) {

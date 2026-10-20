@@ -205,3 +205,28 @@ function ayesha_core_hide_empty_social( $content, $block ) {
 	}
 	return $content;
 }
+
+/**
+ * "Page animations" in Business Info (on by default).
+ *
+ * @return bool
+ */
+function ayesha_core_animations_enabled() {
+	return (bool) ayesha_core_setting( 'animations' );
+}
+
+add_filter( 'body_class', 'ayesha_core_motion_body_class' );
+
+/**
+ * The class "ayesha-motion" on <body> switches the animations on in the CSS (the banner's entrance
+ * and photo zoom, the scroll reveals). The CSS also checks prefers-reduced-motion.
+ *
+ * @param string[] $classes Body classes.
+ * @return string[]
+ */
+function ayesha_core_motion_body_class( $classes ) {
+	if ( ayesha_core_animations_enabled() ) {
+		$classes[] = 'ayesha-motion';
+	}
+	return $classes;
+}

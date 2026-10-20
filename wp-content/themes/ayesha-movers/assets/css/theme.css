@@ -62,22 +62,28 @@
 /* Which icon: chosen from the service's link or anchor, so nothing extra is stored in the page. */
 .ayesha-service-card:has(a[href$="#house-shifting"]),
 .ayesha-svc__section:has(#house-shifting),
-.ayesha-jump__list a[href="#house-shifting"] { --ayesha-icon: var(--ayesha-icon-house); }
+.ayesha-jump__list a[href="#house-shifting"],
+.ayesha-nav .wp-block-navigation__submenu-container a[href$="#house-shifting"] { --ayesha-icon: var(--ayesha-icon-house); }
 .ayesha-service-card:has(a[href$="#packing"]),
 .ayesha-svc__section:has(#packing),
-.ayesha-jump__list a[href="#packing"] { --ayesha-icon: var(--ayesha-icon-box); }
+.ayesha-jump__list a[href="#packing"],
+.ayesha-nav .wp-block-navigation__submenu-container a[href$="#packing"] { --ayesha-icon: var(--ayesha-icon-box); }
 .ayesha-service-card:has(a[href$="#furniture"]),
 .ayesha-svc__section:has(#furniture),
-.ayesha-jump__list a[href="#furniture"] { --ayesha-icon: var(--ayesha-icon-sofa); }
+.ayesha-jump__list a[href="#furniture"],
+.ayesha-nav .wp-block-navigation__submenu-container a[href$="#furniture"] { --ayesha-icon: var(--ayesha-icon-sofa); }
 .ayesha-service-card:has(a[href$="#appliances"]),
 .ayesha-svc__section:has(#appliances),
-.ayesha-jump__list a[href="#appliances"] { --ayesha-icon: var(--ayesha-icon-tv); }
+.ayesha-jump__list a[href="#appliances"],
+.ayesha-nav .wp-block-navigation__submenu-container a[href$="#appliances"] { --ayesha-icon: var(--ayesha-icon-tv); }
 .ayesha-service-card:has(a[href$="#trucks"]),
 .ayesha-svc__section:has(#trucks),
-.ayesha-jump__list a[href="#trucks"] { --ayesha-icon: var(--ayesha-icon-truck); }
+.ayesha-jump__list a[href="#trucks"],
+.ayesha-nav .wp-block-navigation__submenu-container a[href$="#trucks"] { --ayesha-icon: var(--ayesha-icon-truck); }
 .ayesha-service-card:has(a[href$="#cargo"]),
 .ayesha-svc__section:has(#cargo),
-.ayesha-jump__list a[href="#cargo"] { --ayesha-icon: var(--ayesha-icon-container); }
+.ayesha-jump__list a[href="#cargo"],
+.ayesha-nav .wp-block-navigation__submenu-container a[href$="#cargo"] { --ayesha-icon: var(--ayesha-icon-container); }
 
 /* ---------------------------------------------------------------
  * 2. Type: Roboto 400 / 500 / 700. Section titles in capitals with a short gold bar.
@@ -441,14 +447,46 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 	.ayesha-header__actions { gap: 2rem; }
 }
 
+/* Gold is kept for the one main action, "Free quote". The Call button is a navy outline icon on
+   phones and tablets, hidden from 960px (no room beside the menu) and the number with a phone icon
+   from 1200px. */
 .ayesha-header__call .wp-block-button__link {
 	white-space: nowrap;
-	background: var(--ayesha-gold);
+	background: #fff;
 	color: var(--ayesha-navy);
+	border: 2px solid var(--ayesha-navy);
 	font-weight: 700;
 }
 
-.ayesha-header__call .wp-block-button__link:hover { background: #FFC929; color: var(--ayesha-navy); }
+.ayesha-header__call .wp-block-button__link:hover { background: var(--ayesha-navy); color: #fff; }
+
+.ayesha-header__quote .wp-block-button__link {
+	white-space: nowrap;
+	padding-inline: 1.25rem;
+	font-weight: 700;
+}
+
+@media (max-width: 599.98px) {
+	.ayesha-header .wp-block-buttons.ayesha-header__quote { display: none; }
+}
+
+/* Phones and tablets: Call, Free quote, then the menu button. */
+@media (max-width: 959.98px) {
+	.ayesha-header__actions > .ayesha-nav { order: 1; }
+	.ayesha-header__quote .wp-block-button__link { min-height: 48px; padding-inline: 1rem; }
+}
+
+@media (min-width: 960px) and (max-width: 1199.98px) {
+	.ayesha-header__call { display: none; }
+}
+
+@media (min-width: 1200px) {
+	.ayesha-header__call .wp-block-button__link { border: 0; background: transparent; padding-inline: 0.25rem; }
+	.ayesha-header__call .wp-block-button__link::before { color: var(--ayesha-navy); }
+	.ayesha-header__call .wp-block-button__link:hover { background: transparent; color: var(--ayesha-navy); text-decoration: underline; text-underline-offset: 0.25em; }
+	.ayesha-header__actions { gap: 1.5rem; }
+	.ayesha-header__actions > .ayesha-nav { margin-inline-end: 0.5rem; }
+}
 
 .ayesha-nav .wp-block-navigation-item__content {
 	display: inline-flex;
@@ -542,6 +580,132 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 	.ayesha-nav .wp-block-navigation__responsive-container-open:not(.always-shown) { display: flex; }
 	.ayesha-nav .wp-block-navigation__responsive-container:not(.hidden-by-default):not(.is-menu-open) { display: none; }
 }
+
+/* ---- "Our Services" dropdown (Navigation block submenu, edited in Appearance → Editor → Navigation).
+   Computers: opens on hover or with the arrow button (Enter, Space, Arrow Down; Esc closes); each
+   service has its icon. Phone menu: the services are a sub-list that opens with the arrow button. ---- */
+.ayesha-nav .wp-block-navigation-submenu__toggle {
+	display: grid;
+	place-items: center;
+	width: 32px;
+	height: 48px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--ayesha-navy);
+	cursor: pointer;
+}
+
+.ayesha-nav .wp-block-navigation-submenu__toggle svg {
+	width: 12px;
+	height: 12px;
+	stroke: currentColor;
+	transition: transform 150ms ease;
+}
+
+.ayesha-nav .wp-block-navigation-submenu__toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+.ayesha-nav .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+	gap: 0.75rem;
+	text-transform: none;
+	letter-spacing: 0;
+	font-size: 0.9375rem;
+}
+
+.ayesha-nav .wp-block-navigation__submenu-container .wp-block-navigation-item__content::before {
+	content: "";
+	flex: none;
+	width: 22px;
+	height: 22px;
+	background: var(--ayesha-navy);
+	-webkit-mask: var(--ayesha-icon, var(--ayesha-icon-box)) center / contain no-repeat;
+	mask: var(--ayesha-icon, var(--ayesha-icon-box)) center / contain no-repeat;
+}
+
+.ayesha-nav .wp-block-navigation__submenu-container .wp-block-navigation-item__content::after { display: none; }
+
+@media (min-width: 960px) {
+	.ayesha-nav .wp-block-navigation-submenu > .wp-block-navigation-item__content { padding-inline-end: 0; }
+
+	.ayesha-nav .wp-block-navigation__submenu-container {
+		left: -1rem !important;
+		min-width: 22rem !important;
+		padding: 0.5rem 0 !important;
+		border: 1px solid var(--ayesha-line) !important;
+		border-top: 3px solid var(--ayesha-gold) !important;
+		border-radius: 2px;
+		background: #fff !important;
+		box-shadow: 0 18px 40px rgb(12 18 57 / 0.14);
+	}
+
+	.ayesha-nav .wp-block-navigation__submenu-container .wp-block-navigation-item { width: 100%; }
+
+	.ayesha-nav .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 0.5rem 1.25rem !important;
+		font-weight: 500;
+	}
+
+	.ayesha-nav .wp-block-navigation__submenu-container .wp-block-navigation-item__content:hover,
+	.ayesha-nav .wp-block-navigation__submenu-container .wp-block-navigation-item__content:focus-visible {
+		background: var(--ayesha-mist);
+		text-decoration: underline;
+		text-underline-offset: 0.25em;
+	}
+
+	.ayesha-nav .wp-block-navigation__submenu-container .wp-block-navigation-item__content:focus-visible { outline-offset: -3px; box-shadow: none; }
+}
+
+/* Phone menu: "Our Services" and its arrow button on one row; the services open below it. */
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item.wp-block-navigation-submenu {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-submenu > .wp-block-navigation-item__content { flex: 1 1 0; width: auto !important; }
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__submenu-container {
+	align-items: stretch !important;
+	width: 100%;
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+	justify-content: flex-start;
+	padding-block: 0 !important;
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-submenu__toggle {
+	display: grid !important;
+	width: 56px;
+	height: 56px;
+	border-left: 1px solid var(--ayesha-line);
+}
+
+.ayesha-nav .is-menu-open .wp-block-navigation-submenu__toggle svg { width: 16px; height: 16px; }
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-submenu > .wp-block-navigation__submenu-container {
+	display: none !important;
+	flex-basis: 100%;
+	padding: 0 0 0.5rem 0.75rem !important;
+	gap: 0 !important;
+}
+
+.ayesha-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-submenu__toggle[aria-expanded="true"] + .wp-block-navigation__submenu-container { display: flex !important; }
+
+.ayesha-nav .is-menu-open .wp-block-navigation__submenu-container .wp-block-navigation-item { border-bottom: 0 !important; }
+
+.ayesha-nav .is-menu-open .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+	min-height: 48px !important;
+	font-size: 1rem !important;
+	font-weight: 500 !important;
+}
+
+/* The footer menu lists the pages only. */
+.ayesha-footer__nav :is(.wp-block-navigation__submenu-container, .wp-block-navigation-submenu__toggle) { display: none !important; }
 
 /* ---------------------------------------------------------------
  * 9. Footer: navy, gold rule on top, small capitals for the menu, a deeper navy copyright bar.
@@ -722,96 +886,7 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 	.ayesha-number > span { display: inline; }
 }
 
-/* ---- Hero: navy panel, white capitals, gold number, framed photo ---- */
-.ayesha-hero { overflow-x: clip; }
-
-.ayesha-hero__panel {
-	position: relative;
-	padding-block: 3rem;
-}
-
-/* A faint diagonal light on the navy, the one decorative touch in the hero. */
-.ayesha-hero__panel.is-style-teal-panel,
-.ayesha-intro.is-style-teal-panel {
-	background:
-		linear-gradient(120deg, rgb(255 255 255 / 0.05) 0 38%, transparent 38%),
-		var(--ayesha-navy);
-}
-
-@media (min-width: 960px) {
-	.ayesha-hero__panel { padding-block: 5.5rem; }
-}
-
-.ayesha-hero__columns { margin-block: 0; align-items: center !important; gap: 2.5rem 4rem !important; }
-
-.ayesha-hero h1 {
-	margin-block: 0;
-	color: #fff;
-	font-size: clamp(2rem, 1.35rem + 2.9vw, 3.5rem) !important;
-	line-height: 1.1;
-}
-
-.ayesha-hero .is-style-display-number {
-	--ayesha-number-max: 4.5rem;
-	--ayesha-number-max-narrow: 3.25rem;
-	margin-block: 1.5rem 0;
-	color: var(--ayesha-gold);
-}
-
-.ayesha-hero .has-lead-font-size { color: var(--ayesha-soft); margin-block-start: 1.25rem; }
-
-/* The hero's Call button is a white outline (as approved in the preview). */
-.ayesha-hero .is-style-teal-panel .wp-block-button:not(.is-style-whatsapp):not(.is-style-text-link) .wp-block-button__link {
-	background: transparent;
-	color: #fff;
-	border: 2px solid #fff;
-}
-
-.ayesha-hero .is-style-teal-panel .wp-block-button:not(.is-style-whatsapp):not(.is-style-text-link) .wp-block-button__link:hover { background: #fff; color: var(--ayesha-navy); }
-
-.ayesha-hero__buttons { margin-block-start: 2rem !important; }
-
-.ayesha-hero__quote-link a {
-	display: inline-flex;
-	align-items: center;
-	min-height: 48px;
-	color: var(--ayesha-gold);
-	font-weight: 500;
-	text-decoration-thickness: 1px;
-}
-
-.ayesha-hero__photo figure { margin: 0; position: relative; }
-
-/* The photo sits in a gold frame offset to the bottom right. */
-.ayesha-hero__photo img {
-	display: block;
-	width: 100%;
-	max-width: 560px;
-	height: auto;
-	box-shadow: 14px 14px 0 var(--ayesha-gold);
-}
-
-.ayesha-hero__photo:not(:has(img)) { display: none; }
-
-@media (max-width: 781.98px) {
-	.ayesha-hero__photo { padding-inline-end: 14px; }
-}
-
-@media (min-width: 782px) {
-	.wp-block-columns.ayesha-hero__columns > .wp-block-column.ayesha-hero__photo:has(img) { flex: 0 1 44%; max-width: 560px; }
-}
-
-@media (min-width: 960px) {
-	.ayesha-hero__text > .ayesha-hero__buttons { display: inline-flex; vertical-align: middle; }
-
-	.ayesha-hero__text > .ayesha-hero__quote-link {
-		display: inline-block;
-		margin-block-start: 2rem !important;
-		margin-inline-start: 1.5rem !important;
-		line-height: 1;
-		vertical-align: middle;
-	}
-}
+/* ---- Hero: the banner slider (block "ayesha/hero-slider") is styled in AYESHA Core's blocks/hero-slider/style.css. ---- */
 
 /* ---- What we do: six equal cards on light grey (3 x 2 on computers) ---- */
 .ayesha-services > h2 { text-align: center; margin-inline: auto !important; }
@@ -1758,7 +1833,24 @@ body:not(.editor-styles-wrapper) .ayesha-contact__aside:not(:has(.ayesha-contact
 }
 
 /* ---------------------------------------------------------------
- * 13. Motion and print
+ * 13. Scroll reveals (assets/js/reveal.js adds .ayesha-reveal only to what starts below the first
+ *     screen, so without JavaScript nothing is hidden). Opacity and transform only: no layout shift.
+ * ------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+	.ayesha-motion .ayesha-reveal {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	.ayesha-motion .ayesha-reveal.is-revealed {
+		opacity: 1;
+		transform: none;
+		transition: opacity 600ms ease, transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
+	}
+}
+
+/* ---------------------------------------------------------------
+ * 14. Motion and print
  * ------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
 	*, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
@@ -1766,5 +1858,6 @@ body:not(.editor-styles-wrapper) .ayesha-contact__aside:not(:has(.ayesha-contact
 
 @media print {
 	.ayesha-sticky-bar, .ayesha-nav, .ayesha-topbar { display: none !important; }
+	.ayesha-reveal { opacity: 1 !important; transform: none !important; }
 	body { padding-bottom: 0; }
 }

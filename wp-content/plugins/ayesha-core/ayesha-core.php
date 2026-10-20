@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name:       AYESHA Core
- * Description:       Business Info settings, Block Bindings, the quote form and Enquiries, shortcodes, structured data, search-engine titles, the share image and SVG tab icon, WebP image sizes and mail settings for the AYESHA Movers & Packers website.
- * Version:           0.7.3
+ * Description:       Business Info settings, Block Bindings, the quote form and Enquiries, shortcodes, structured data, search-engine titles, the share image and SVG tab icon, the Home banner slider, the page-animations switch, WebP image sizes and mail settings for the AYESHA Movers & Packers website.
+ * Version:           0.8.0
  * Requires at least: 6.9
  * Requires PHP:      8.0
  * Author:            AYESHA Movers & Packers
@@ -14,7 +14,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'AYESHA_CORE_VERSION', '0.7.3' );
+define( 'AYESHA_CORE_VERSION', '0.8.0' );
 define( 'AYESHA_CORE_FILE', __FILE__ );
 define( 'AYESHA_CORE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AYESHA_CORE_URL', plugin_dir_url( __FILE__ ) );
@@ -38,6 +38,7 @@ require_once AYESHA_CORE_DIR . 'includes/enquiries.php';
 require_once AYESHA_CORE_DIR . 'includes/quote-form.php';
 require_once AYESHA_CORE_DIR . 'includes/quote-render.php';
 require_once AYESHA_CORE_DIR . 'includes/quote-mail.php';
+require_once AYESHA_CORE_DIR . 'includes/hero-slider.php';
 
 register_activation_hook( __FILE__, 'ayesha_core_activate' );
 

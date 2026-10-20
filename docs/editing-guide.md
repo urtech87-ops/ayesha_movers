@@ -8,18 +8,19 @@ All contact details live on one page: **Settings → Business Info** (in the bla
 
 | Field | What it changes |
 |---|---|
-| Main phone number | The big number at the top of the Home page and in the gold band above the footer, every **Call** button, the gold Call button in the header, the number in the navy bar at the very top (computers), the big number in the footer, and the **Call** button in the bar at the bottom of phone screens. The big number resizes itself to fit, even if the new number is longer |
+| Main phone number | The "Or call" line on every Home banner slide, the big number in the gold band above the footer, every **Call** button, the Call button in the header (the number itself on wide computer screens), the number in the navy bar at the very top (computers), the big number in the footer, and the **Call** button in the bar at the bottom of phone screens. The big number resizes itself to fit, even if the new number is longer |
 | Second mobile number, Office number | The numbers listed in the footer and on the Contact Us page |
 | WhatsApp number | Every WhatsApp button and link: footer, phone bar, the round green button on computers, the WhatsApp row on Contact Us, and the "Send this on WhatsApp too" button after a quote request. **Digits only**, with the country code, e.g. `97334448236` |
 | WhatsApp opening message | The message that is already typed for the visitor when WhatsApp opens. They can change it before sending |
 | Email address | The email shown on the site, **where quote requests are emailed to**, and the sender address of every email the website sends (see section 9) |
-| Opening hours | The hours line in the top bar, the footer, the gold band and the Contact Us page |
+| Opening hours | The hours line in the top bar, the small line above the heading on the first Home banner slide, the footer, the gold band and the Contact Us page |
 | Service areas | One place per line. Kept for later use: the "Where we go" list on the pages is edited in the editor instead (see section 5) |
 | Instagram page | The Instagram link in the top bar, the footer, on Contact Us and under the ads gallery |
 | Facebook page | The Facebook link in the top bar, the footer and on Contact Us (read out as "AYESHA Movers on Facebook"). **Leave it empty to hide every Facebook link** on the site |
 | Business address | **Leave empty** until you want an address on the site. When you fill it in, search engines are told about it too |
 | Show reviews section | Leave **off** until the example reviews have been replaced with real customer reviews. While it is off, the reviews section is hidden from visitors |
 | Show contact details on Contact Us | **On**: the opening hours and the rows with the numbers, email, Instagram and Facebook show beside the quote form. Switch it **off** to show only the heading and the form. Nothing is deleted while it is off |
+| Page animations | **On** (now): the words on the Home banner come in gently when the page opens, the banner photo zooms in very slowly, and section headings and cards fade in once as people scroll down to them. Switch it **off** to show everything still. Visitors who have asked their phone or computer for less motion never see the animations either way. (The banner can still change slides by itself; see section 5) |
 | Own share image (optional) | Leave **empty** to use the share image the site builds for you (see section 2, "The share image"). Paste a picture's File URL here to use your own instead |
 
 Click **Save business info**. The change appears everywhere on the site straight away; you don't need to edit any page.
@@ -33,8 +34,10 @@ Tips:
 Go to **Appearance → Editor**.
 
 - **Patterns → Header** or **Footer**: click the part, then click any text to change it. The Save button is at the top right.
-- **Top info bar** (the thin navy bar above the header, on computers only): the main number, email, opening hours and Instagram. All four come from Business Info, so change them there; you can delete a line you don't want in the bar (select it in List View → Delete).
+- **Top info bar** (the thin navy bar above the header, on computers only; phones have the Call/WhatsApp bar at the bottom instead): the main number, email and opening hours on the left, Instagram and Facebook on the right. All of them come from Business Info, so change them there; you can delete a line you don't want in the bar (select it in List View → Delete).
 - **Navigation**: the menu used in the header and the footer. Add, remove, rename or reorder pages here; both menus update together.
+- **The "Our Services" dropdown**: in the Navigation, "Our Services" holds six links, one per service, each pointing at its part of the Our Services page (`…/our-services/#house-shifting`, `#packing`, `#furniture`, `#appliances`, `#trucks`, `#cargo`). Click a link to rename it or change where it goes; use **+** inside "Our Services" to add one. The icon beside each service is added by the design from its `#…` link. On computers the list opens when the mouse is over "Our Services" or with the small arrow beside it (keyboard: Enter, Space or Arrow Down; Esc closes it); in the phone menu the arrow opens the services as a sub-list. The footer menu shows the pages only.
+- **"Free quote" button** (gold, right of the header): a normal button that links to the quote form (`/contact-us/#quote`). Click it to change its words. It shows on computers and tablets; on phones the banner's "Get a free quote" button and the bottom bar do that job. The **Call** button beside it shows the main number on wide computer screens, a phone icon on phones and tablets, and is hidden on narrower computer screens where the menu needs the room.
 - **Mobile Call and WhatsApp bar**: the bar at the bottom of phone screens. You can change the button words ("Call", "WhatsApp"). The links come from Business Info.
 - **Footer "Call or WhatsApp" row**: when your WhatsApp number is the same as your main number, the footer shows one row, "Call or WhatsApp". If you set a different WhatsApp number in Business Info, the footer shows "Main number" and "WhatsApp" as two rows instead. In the editor you see all three rows (their names say when each one shows); the website picks the right one by itself.
 - **Call and WhatsApp in the phone menu**: the Main menu (Navigation) ends with two buttons, Call and WhatsApp. They appear only when the menu is opened on a phone, at the bottom of the screen. You can change their words; the links come from Business Info.
@@ -135,7 +138,7 @@ The site's colours are **navy** and **gold**, and its font is **Roboto**.
 - **Group** block → Styles: *Navy panel*, *Gold panel*, *Light grey panel* (each sets its own text colour). On a navy panel, buttons turn gold by themselves.
 - **Button** block → Styles: *Fill* (navy), *WhatsApp green*, *Gold*, *Outline*, *Text link* (an underlined link with the WhatsApp or phone icon, used for "Ask on WhatsApp" under each service).
 - **Paragraph** → Styles: *Big phone number* (the large bold number style).
-- **Spacer** → Styles: *Gold line* (a thin gold rule). It's used under the Home hero; the footer already has one.
+- **Spacer** → Styles: *Gold line* (a thin gold rule). The footer has one; the Home banner has its own gold edge built in.
 
 **Capital letters:** section headings (and the menu) show in capitals on the site, but type them normally, e.g. "Where we go". The capitals are added by the design, so the words stay easy to edit and read in the editor.
 
@@ -147,7 +150,7 @@ Ready-made sections are under **Patterns → Ayesha Movers** in the block insert
 
 ## 5. The Home page
 
-Open **Pages → Home**. Every section is made of normal blocks: click any text, button or photo to change it, then click **Save**. Open **List View** (the icon with three lines at the top left) to see the sections by name: Hero, What we do, How a move works, Where we go, Reviews, Why people book us + Questions, CTA band.
+Open **Pages → Home**. Every section is made of normal blocks: click any text, button or photo to change it, then click **Save**. Open **List View** (the icon with three lines at the top left) to see the sections by name: Banner (with its slides), What we do, How a move works, Where we go, Reviews, Why people book us + Questions, CTA band.
 
 ### Sections shared with other pages (synced patterns)
 
@@ -157,11 +160,19 @@ Two sections are **synced patterns**: the gold **CTA band** ("Moving soon? Messa
 - Don't choose **Detach** unless you want this page to have its own separate copy. A detached copy no longer follows the shared one.
 - To add one to another page: **+** (block inserter) → **Patterns** → **Ayesha Movers** → "Call to action band" or "Where we go".
 
-### The hero (top of the page)
+### The banner (top of the page)
 
-- **The big number** comes from Settings → Business Info → Main phone number. You can't type in it. It is two lines on phones ("+973" / "3444 8236") and one line on wide screens, and it resizes itself to fit.
-- **WhatsApp us** and **Call** take their links from Business Info. You can change the button words.
-- **The photo is optional.** To remove it, click the photo and delete it (the ⋮ menu → **Delete**). The text then fills the whole width; nothing else needs to change. To add a photo back, click the empty photo column → **+** → **Image** and pick a photo from the Media Library, size *Photo (560px)*. Don't write a caption or alt text that says the truck is yours until that is confirmed.
+The banner is a **Banner slider** block with up to **3 slides**. In the editor the slides are shown one under the other ("Slide 1", "Slide 2", …), each on navy with its photo on top, so you can click anything in them. On the site they take turns in one banner.
+
+**Each slide** has: the **photo**, a **small line** above the heading (after the gold tape mark), the **heading**, **one line of text**, the buttons **Get a free quote** (gold, goes to the quote form) and **WhatsApp us**, and the line **Or call +973 …**.
+- **Change words:** click and type. On slide 1 the small line is your opening hours from Business Info (change them there). The number in "Or call" comes from Business Info → Main phone number; you can change the words "Or call".
+- **Change a photo:** click the photo → **Replace** → pick or upload it. Use a **wide photo at least 1920 pixels wide**; WordPress makes the smaller copies itself. In the sidebar keep the size **Banner (full width)** and write **Alternative text** that only describes what is in the picture (don't say the people or trucks are yours unless they are). The navy shade over the photo is part of the design and keeps the white words readable on any photo, so you don't need to darken photos yourself. The people in a photo stand best on the **right**, because the words cover the left side on computers.
+- **The current photos are stock photos** (from Pexels, free to use; details in `docs/image-credits.md`). Replace them with your own photos of your team and trucks when you have them.
+- **Headings:** slide 1's heading is the page's main heading (**H1**); the other slides use **H2** and look the same. Keep it that way (a page should have one H1).
+- **WhatsApp us** opens the chat with a message: slide 1 the general one from Business Info, slide 2 asks about truck hire, slide 3 about packing. To change a message, see "Services: Ask on WhatsApp links" below (code editor, `"message"`).
+- **Add, remove or reorder slides:** open **List View**, select a "Slide" inside "Banner", then ⋮ → **Duplicate** / **Delete**, or drag it. At most 3. With only 1 slide it becomes a still banner (no arrows or dots).
+- **Settings** (click "Banner" in List View, then the sidebar): **Change slides by themselves** (on now), **Time per slide** (6, 6.5 or 7 seconds) and the name read out by screen readers ("Highlights"). The slides stop changing while the mouse is over the banner or a button in it has keyboard focus, and visitors can press **Pause** beside the dots. For visitors who ask their device for less motion they never change by themselves.
+- **Animations** (the words coming in, the slow photo zoom, the fade-in of sections lower down): switch them off in Settings → Business Info → **Page animations**.
 
 ### What we do: the six service cards
 

@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ayesha/hero-slide",
+	"title": "Banner slide",
+	"category": "media",
+	"icon": "format-image",
+	"description": "One slide of the banner: a photo (shown behind the words, with a navy shade so the white text stays readable) and its text and buttons.",
+	"parent": [ "ayesha/hero-slider" ],
+	"textdomain": "ayesha-core",
+	"supports": {
+		"html": false,
+		"customClassName": false,
+		"reusable": false
+	},
+	"editorScript": "ayesha-hero-slider-editor"
+}

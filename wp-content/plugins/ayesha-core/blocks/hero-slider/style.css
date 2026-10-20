@@ -1,0 +1,368 @@
+/*
+ * Banner slider (Home). Front end: the slides share one grid cell, so the banner is as tall as its
+ * tallest slide with or without JavaScript (no layout shift when the script starts). The photo
+ * covers the slide under a navy shade; every word on it is white.
+ *
+ * Contrast (measured in Phase 7c): the shade is at least 66% navy everywhere text can sit
+ * (phones and tablets: the whole slide; computers: from the left edge to 200px right of the
+ * centre). White text on a pure white pixel under 62% navy is already 4.5:1, so the text passes
+ * WCAG AA on any photo the client chooses, not only on the current ones.
+ */
+
+/* ---------- Front end ---------- */
+section.ayesha-slider {
+	--ayesha-shade: 12 18 57; /* navy #0C1239 as RGB */
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	margin-block: 0;
+	background: var(--ayesha-navy, #0c1239);
+	color: #fff;
+	border-bottom: 4px solid var(--ayesha-gold, #f2b705);
+}
+
+section.ayesha-slider .ayesha-slider__track {
+	display: grid;
+}
+
+section.ayesha-slider .wp-block-ayesha-hero-slide {
+	grid-area: 1 / 1;
+	position: relative;
+	display: flex;
+	align-items: center;
+	min-height: 34rem;
+	margin: 0;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 700ms ease, visibility 0s linear 700ms;
+}
+
+section.ayesha-slider .wp-block-ayesha-hero-slide.is-active {
+	z-index: 1;
+	opacity: 1;
+	visibility: visible;
+	transition: opacity 700ms ease;
+}
+
+/* The photo fills the slide behind the words. */
+section.ayesha-slider .ayesha-slide__image {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	margin: 0 !important;
+	max-inline-size: none;
+	overflow: hidden;
+}
+
+section.ayesha-slider .ayesha-slide__image img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	max-width: none;
+	object-fit: cover;
+	object-position: 62% 50%;
+	transform: scale(1.06);
+}
+
+section.ayesha-slider .is-active .ayesha-slide__image img {
+	transform: none;
+}
+
+/* The navy shade: even on phones and tablets (the words cover the whole photo), darker at the
+   bottom behind the controls. */
+section.ayesha-slider .wp-block-ayesha-hero-slide::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background: linear-gradient(180deg, rgb(var(--ayesha-shade) / 0.66) 0, rgb(var(--ayesha-shade) / 0.66) 55%, rgb(var(--ayesha-shade) / 0.86) 100%);
+	pointer-events: none;
+}
+
+@media (min-width: 960px) {
+	section.ayesha-slider .wp-block-ayesha-hero-slide {
+		min-height: clamp(35rem, 72vh, 44rem);
+	}
+
+	/* Computers: dark on the left where the words are, lighter on the right where the photo shows. */
+	section.ayesha-slider .wp-block-ayesha-hero-slide::before {
+		background:
+			linear-gradient(0deg, rgb(var(--ayesha-shade) / 0.55) 0, rgb(var(--ayesha-shade) / 0) 9rem),
+			linear-gradient(90deg, rgb(var(--ayesha-shade) / 0.88) 0, rgb(var(--ayesha-shade) / 0.7) calc(50% + 200px), rgb(var(--ayesha-shade) / 0.26) 100%);
+	}
+}
+
+/* The words: inside the site's 1200px column, at most 40rem wide. */
+section.ayesha-slider .ayesha-slide__content {
+	position: relative;
+	z-index: 2;
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0;
+	padding-block: 3rem 7rem;
+	padding-inline: max(var(--wp--style--root--padding-left, 1rem), calc((100% - var(--wp--style--global--content-size, 1200px)) / 2));
+}
+
+@media (min-width: 960px) {
+	section.ayesha-slider .ayesha-slide__content { padding-block: 4.5rem 7.5rem; }
+}
+
+section.ayesha-slider .ayesha-slide__content > * {
+	max-inline-size: 40rem;
+	margin-block: 0;
+	margin-inline: 0 !important;
+	color: #fff;
+}
+
+/* Small line above the heading, after a short strip of gold packing tape. */
+section.ayesha-slider .ayesha-slide__eyebrow {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	font-size: 1rem;
+	font-weight: 500;
+	line-height: 1.4;
+	letter-spacing: 0.01em;
+}
+
+section.ayesha-slider .ayesha-slide__eyebrow::before {
+	content: "";
+	flex: none;
+	width: 34px;
+	height: 10px;
+	background: var(--ayesha-gold, #f2b705);
+	/* Torn tape ends. */
+	clip-path: polygon(0 0, 100% 0, 92% 30%, 100% 60%, 94% 100%, 0 100%, 7% 70%, 0 40%);
+}
+
+section.ayesha-slider .ayesha-slide__eyebrow a { color: inherit; }
+
+section.ayesha-slider .ayesha-slide__title {
+	margin-block-start: 1rem;
+	color: #fff;
+	font-size: clamp(2.125rem, 1.25rem + 3.6vw, 3.75rem) !important;
+	font-weight: 700;
+	line-height: 1.06;
+	letter-spacing: -0.005em;
+	text-transform: uppercase;
+	text-wrap: balance;
+	padding: 0;
+}
+
+section.ayesha-slider .ayesha-slide__title::after { display: none; }
+
+section.ayesha-slider .ayesha-slide__text {
+	margin-block-start: 1.25rem;
+	font-size: 1.1875rem;
+	line-height: 1.55;
+	max-inline-size: 34rem;
+}
+
+section.ayesha-slider .ayesha-slide__buttons {
+	gap: 0.75rem;
+	margin-block-start: 2rem;
+}
+
+section.ayesha-slider .ayesha-slide__buttons .wp-block-button__link { min-width: 11rem; font-weight: 700; }
+
+@media (max-width: 599.98px) {
+	section.ayesha-slider .ayesha-slide__buttons { flex-direction: column; align-items: stretch; }
+	section.ayesha-slider .ayesha-slide__buttons .wp-block-button { width: 100%; }
+	section.ayesha-slider .ayesha-slide__buttons .wp-block-button__link { width: 100%; }
+}
+
+/* "Or call +973 …": a smaller tap-to-call line under the buttons. */
+section.ayesha-slider .ayesha-slide__phone {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0 0.4rem;
+	margin-block-start: 1.25rem;
+	font-size: 1.0625rem;
+}
+
+section.ayesha-slider .ayesha-slide__phone > p { margin: 0; max-inline-size: none; color: #fff; }
+
+section.ayesha-slider .ayesha-slide__phone a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	min-height: 44px;
+	color: #fff;
+	font-weight: 700;
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.25em;
+}
+
+section.ayesha-slider .ayesha-slide__phone a::before {
+	content: "";
+	width: 1.125rem;
+	height: 1.125rem;
+	background: var(--ayesha-gold, #f2b705);
+	-webkit-mask: var(--ayesha-icon-phone) center / contain no-repeat;
+	mask: var(--ayesha-icon-phone) center / contain no-repeat;
+}
+
+section.ayesha-slider .ayesha-slide__phone a:hover { text-decoration-thickness: 2px; }
+
+section.ayesha-slider :focus-visible {
+	outline: 3px solid var(--ayesha-gold, #f2b705) !important;
+	outline-offset: 2px;
+	box-shadow: none !important;
+}
+
+/* ---------- Controls: previous, the tape dots, Pause, next ---------- */
+section.ayesha-slider .ayesha-slider__controls {
+	position: absolute;
+	inset-inline: 0;
+	bottom: 1.25rem;
+	z-index: 3;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding-inline: var(--wp--style--root--padding-left, 1rem);
+}
+
+section.ayesha-slider .ayesha-slider__controls[hidden] { display: none; }
+
+section.ayesha-slider .ayesha-slider__btn {
+	display: grid;
+	place-items: center;
+	width: 48px;
+	height: 48px;
+	padding: 0;
+	border: 1px solid rgb(255 255 255 / 0.6);
+	border-radius: 2px;
+	background: rgb(var(--ayesha-shade) / 0.6);
+	color: #fff;
+	cursor: pointer;
+	transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+section.ayesha-slider .ayesha-slider__btn:hover {
+	background: var(--ayesha-gold, #f2b705);
+	border-color: var(--ayesha-gold, #f2b705);
+	color: var(--ayesha-navy, #0c1239);
+}
+
+section.ayesha-slider .ayesha-slider__icon-play,
+section.ayesha-slider.is-stopped .ayesha-slider__icon-pause { display: none; }
+section.ayesha-slider.is-stopped .ayesha-slider__icon-play { display: block; }
+
+section.ayesha-slider .ayesha-slider__dots { display: flex; align-items: center; }
+
+/* Each dot is a 44px button with a strip of tape in it; the current one is longer and fills gold
+   while the slide is shown (it shows how long until the next slide). */
+section.ayesha-slider .ayesha-slider__dot {
+	display: grid;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+}
+
+section.ayesha-slider .ayesha-slider__tape {
+	position: relative;
+	display: block;
+	width: 26px;
+	height: 6px;
+	overflow: hidden;
+	background: rgb(255 255 255 / 0.75);
+	transition: width 250ms ease;
+}
+
+section.ayesha-slider .ayesha-slider__dot:hover .ayesha-slider__tape { background: #fff; }
+
+section.ayesha-slider .ayesha-slider__dot[aria-current] { width: 56px; }
+section.ayesha-slider .ayesha-slider__dot[aria-current] .ayesha-slider__tape { width: 44px; background: rgb(255 255 255 / 0.45); }
+
+section.ayesha-slider .ayesha-slider__dot[aria-current] .ayesha-slider__tape::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: var(--ayesha-gold, #f2b705);
+	transform-origin: left center;
+}
+
+section.ayesha-slider.is-playing.is-restart .ayesha-slider__dot[aria-current] .ayesha-slider__tape::after {
+	animation: ayesha-tape-fill var(--ayesha-slide-time, 6500ms) linear both;
+}
+
+@keyframes ayesha-tape-fill {
+	from { transform: scaleX(0); }
+	to { transform: scaleX(1); }
+}
+
+/* ---------- Motion (only with "Page animations" on in Business Info, never with reduced motion) ----------
+   On load and on every slide change: the words come up in turn (under 0.9 s in all); the heading
+   moves but is never transparent, so it is painted at once. The photo zooms in very slowly. */
+@media (prefers-reduced-motion: no-preference) {
+	.ayesha-motion section.ayesha-slider .is-active .ayesha-slide__content > * {
+		animation: ayesha-slide-rise 560ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+	}
+
+	.ayesha-motion section.ayesha-slider .is-active .ayesha-slide__content > .ayesha-slide__title {
+		animation-name: ayesha-slide-rise-solid;
+	}
+
+	.ayesha-motion section.ayesha-slider .is-active .ayesha-slide__content > :nth-child(2) { animation-delay: 70ms; }
+	.ayesha-motion section.ayesha-slider .is-active .ayesha-slide__content > :nth-child(3) { animation-delay: 140ms; }
+	.ayesha-motion section.ayesha-slider .is-active .ayesha-slide__content > :nth-child(4) { animation-delay: 210ms; }
+	.ayesha-motion section.ayesha-slider .is-active .ayesha-slide__content > :nth-child(n+5) { animation-delay: 280ms; }
+
+	.ayesha-motion section.ayesha-slider .is-active .ayesha-slide__image img {
+		animation: ayesha-slide-zoom 7000ms ease-out both;
+	}
+}
+
+@keyframes ayesha-slide-rise {
+	from { opacity: 0; transform: translateY(20px); }
+	to { opacity: 1; transform: none; }
+}
+
+@keyframes ayesha-slide-rise-solid {
+	from { transform: translateY(20px); }
+	to { transform: none; }
+}
+
+@keyframes ayesha-slide-zoom {
+	from { transform: none; }
+	to { transform: scale(1.06); }
+}
+
+/* ---------- Editor: the slides one under the other, each on navy with its photo on top ---------- */
+.ayesha-slider--editor {
+	counter-reset: ayesha-slide;
+}
+
+.ayesha-slider--editor > .wp-block-ayesha-hero-slide,
+.ayesha-slider--editor .block-editor-inner-blocks .wp-block-ayesha-hero-slide {
+	counter-increment: ayesha-slide;
+	padding: 2.25rem 1.5rem 1.5rem;
+	margin-block: 0 1rem;
+	background: var(--ayesha-navy, #0c1239);
+	color: #fff;
+}
+
+.ayesha-slider--editor .wp-block-ayesha-hero-slide::before {
+	content: "Slide " counter(ayesha-slide);
+	display: block;
+	margin-block-end: 0.75rem;
+	color: var(--ayesha-gold, #f2b705);
+	font-size: 0.8125rem;
+	font-weight: 700;
+}
+
+.ayesha-slider--editor .ayesha-slide__image img {
+	width: 100%;
+	max-height: 220px;
+	object-fit: cover;
+}
+
+.ayesha-slider--editor :is(.ayesha-slide__title, .ayesha-slide__eyebrow, .ayesha-slide__text, .ayesha-slide__phone p, .ayesha-slide__phone a) { color: #fff; }
+.ayesha-slider--editor .ayesha-slide__title { text-transform: uppercase; }
