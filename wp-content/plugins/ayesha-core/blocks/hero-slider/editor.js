@@ -55,6 +55,7 @@
 							label: __( 'Time per slide', 'ayesha-core' ),
 							value: String( a.interval ),
 							options: [
+								{ label: __( '5 seconds', 'ayesha-core' ), value: '5000' },
 								{ label: __( '6 seconds', 'ayesha-core' ), value: '6000' },
 								{ label: __( '6.5 seconds', 'ayesha-core' ), value: '6500' },
 								{ label: __( '7 seconds', 'ayesha-core' ), value: '7000' },

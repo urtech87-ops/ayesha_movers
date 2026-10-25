@@ -80,7 +80,7 @@ function ayesha_core_hero_slider_render( $attributes, $content, $block ) {
 	$id       = wp_unique_id( 'ayesha-slider-' );
 	$label    = trim( (string) ( $attributes['label'] ?? '' ) );
 	$label    = '' === $label ? __( 'Highlights', 'ayesha-core' ) : $label;
-	$interval = max( 4000, min( 10000, (int) ( $attributes['interval'] ?? 6500 ) ) );
+	$interval = max( 4000, min( 10000, (int) ( $attributes['interval'] ?? 5000 ) ) );
 	$multi    = $count > 1;
 
 	$tags  = new WP_HTML_Tag_Processor( $content );

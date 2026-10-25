@@ -1297,44 +1297,12 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 	.ayesha-trust.is-ticking .ayesha-trust__list > li { padding-inline: 1.75rem; }
 	.ayesha-trust.is-ticking .ayesha-trust__list > li + li { box-shadow: inset 1px 0 0 var(--ayesha-line-dark); }
 
-	.ayesha-trust.is-ticking:hover .ayesha-trust__list,
-	.ayesha-trust.is-ticking:focus-within .ayesha-trust__list,
-	.ayesha-trust.is-paused .ayesha-trust__list { animation-play-state: paused; }
+	.ayesha-trust.is-ticking:hover .ayesha-trust__list { animation-play-state: paused; }
 }
 
 @media (max-width: 639.98px) {
 	.ayesha-trust__list > li[aria-hidden="true"],
-	.ayesha-trust__pause { display: none !important; }
-}
-
-@keyframes ayesha-ticker { to { transform: translateX(-50%); } }
-
-.ayesha-trust__pause {
-	position: absolute;
-	z-index: 1;
-	top: 50%;
-	right: 0.5rem;
-	display: grid;
-	place-items: center;
-	width: 36px;
-	height: 36px;
-	padding: 0;
-	border: 1px solid rgb(255 255 255 / 0.4);
-	border-radius: 2px;
-	background: var(--ayesha-navy-deep);
-	color: #fff;
-	cursor: pointer;
-	transform: translateY(-50%);
-}
-
-.ayesha-trust__pause:hover { background: var(--ayesha-gold); border-color: var(--ayesha-gold); color: var(--ayesha-navy); }
-.ayesha-trust__pause:focus-visible { outline: 3px solid var(--ayesha-gold); outline-offset: 2px; box-shadow: none; }
-.ayesha-trust__pause svg { width: 14px; height: 14px; fill: currentColor; }
-.ayesha-trust__pause .is-play,
-.ayesha-trust.is-paused .ayesha-trust__pause .is-pause { display: none; }
-.ayesha-trust.is-paused .ayesha-trust__pause .is-play { display: block; }
-
-/* ---- Stats (hidden by AYESHA Core until "Show stats" is on; empty or 0 numbers never show) ---- */
+	/* ---- Stats (hidden by AYESHA Core until "Show stats" is on; empty or 0 numbers never show) ---- */
 .ayesha-stats__row {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));

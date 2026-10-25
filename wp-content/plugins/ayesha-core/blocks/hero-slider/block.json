@@ -18,7 +18,7 @@
 		"align": { "type": "string", "default": "full" },
 		"label": { "type": "string", "default": "Highlights" },
 		"autoplay": { "type": "boolean", "default": true },
-		"interval": { "type": "number", "default": 6500 }
+		"interval": { "type": "number", "default": 5000 }
 	},
 	"editorScript": "ayesha-hero-slider-editor",
 	"viewScript": "ayesha-hero-slider-view",

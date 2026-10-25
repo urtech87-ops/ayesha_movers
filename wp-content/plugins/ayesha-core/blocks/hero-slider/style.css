@@ -290,7 +290,7 @@ section.ayesha-slider .ayesha-slider__dot[aria-current] .ayesha-slider__tape::af
 }
 
 section.ayesha-slider.is-playing.is-restart .ayesha-slider__dot[aria-current] .ayesha-slider__tape::after {
-	animation: ayesha-tape-fill var(--ayesha-slide-time, 6500ms) linear both;
+	animation: ayesha-tape-fill var(--ayesha-slide-time, 5000ms) linear both;
 }
 
 @keyframes ayesha-tape-fill {

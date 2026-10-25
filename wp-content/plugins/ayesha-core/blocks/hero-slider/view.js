@@ -16,7 +16,7 @@
 		var track = root.querySelector( '.ayesha-slider__track' );
 		var dots = Array.prototype.slice.call( controls.querySelectorAll( '.ayesha-slider__dot' ) );
 		var pause = controls.querySelector( '.ayesha-slider__pause' );
-		var interval = parseInt( root.getAttribute( 'data-interval' ), 10 ) || 6500;
+		var interval = parseInt( root.getAttribute( 'data-interval' ), 10 ) || 5000;
 		var current = 0;
 		var timer = null;
 		var stopped = root.getAttribute( 'data-autoplay' ) !== '1' || reduce.matches; // by Pause, the block setting or reduced motion

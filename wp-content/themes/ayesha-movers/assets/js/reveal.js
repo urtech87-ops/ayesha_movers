@@ -120,8 +120,8 @@
 	/*
 	 * Trust strip ticker (640px and wider; on phones the facts stay a still grid). The facts are
 	 * copied (hidden from screen readers) until one run is wider than the screen, then the whole run
-	 * is doubled and slides left by half its width forever. Stops on hover, on focus and with the
-	 * Pause button.
+	 * is doubled and slides left by half its width forever. Stops while the mouse is over it. (No
+	 * button of its own: the banner's Pause button is the only one on the page, user decision.)
 	 */
 	Array.prototype.forEach.call( document.querySelectorAll( '.ayesha-trust' ), function ( strip ) {
 		var list = strip.querySelector( '.ayesha-trust__list' );
@@ -150,16 +150,5 @@
 		} );
 		// About 45 px a second, whatever the screen width.
 		strip.style.setProperty( '--ayesha-ticker-time', Math.round( list.scrollWidth / 2 / 45 ) + 's' );
-
-		var button = document.createElement( 'button' );
-		button.type = 'button';
-		button.className = 'ayesha-trust__pause';
-		button.setAttribute( 'aria-label', 'Pause' );
-		button.innerHTML = '<svg class="is-pause" viewBox="0 0 14 14" aria-hidden="true"><rect x="2" y="1" width="3.5" height="12"/><rect x="8.5" y="1" width="3.5" height="12"/></svg><svg class="is-play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1l10 6-10 6z"/></svg>';
-		button.addEventListener( 'click', function () {
-			var paused = strip.classList.toggle( 'is-paused' );
-			button.setAttribute( 'aria-label', paused ? 'Play' : 'Pause' );
-		} );
-		strip.appendChild( button );
 	} );
 } )();

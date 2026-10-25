@@ -177,13 +177,13 @@ The banner is a **Banner slider** block with up to **3 slides**. In the editor t
 - **Headings:** slide 1's heading is the page's main heading (**H1**); the other slides use **H2** and look the same. Keep it that way (a page should have one H1).
 - **WhatsApp us** opens the chat with a message: slide 1 the general one from Business Info, slide 2 asks about truck hire, slide 3 about packing. To change a message, see "Services: Ask on WhatsApp links" below (code editor, `"message"`).
 - **Add, remove or reorder slides:** open **List View**, select a "Slide" inside "Banner", then ⋮ → **Duplicate** / **Delete**, or drag it. At most 3. With only 1 slide it becomes a still banner (no arrows or dots).
-- **Settings** (click "Banner" in List View, then the sidebar): **Change slides by themselves** (on now), **Time per slide** (6, 6.5 or 7 seconds) and the name read out by screen readers ("Highlights"). The slides stop changing while the mouse is over the banner or a button in it has keyboard focus, and visitors can press **Pause** beside the dots. For visitors who ask their device for less motion they never change by themselves.
+- **Settings** (click "Banner" in List View, then the sidebar): **Change slides by themselves** (on now), **Time per slide** (5 seconds now; or 6, 6.5 or 7) and the name read out by screen readers ("Highlights"). The slides stop changing while the mouse is over the banner or a button in it has keyboard focus, and visitors can press **Pause** beside the dots. For visitors who ask their device for less motion they never change by themselves.
 - **Animations** (the words coming in, the slow photo zoom, the fade-in of sections lower down): switch them off in Settings → Business Info → **Page animations**.
 
 ### Trust strip (the navy strip under the banner)
 
 Six short facts with an icon: Open 24 hours, Labour included in the price, Carpenters on our team, Dyna and 6-wheel trucks, Bahrain and the GCC, Free quote. It is one **List** block: click a fact to change its words. Only write facts that are true.
-- On computers the facts slide slowly sideways. They stop while the mouse is over the strip, and visitors can press the small **Pause** button on the right. On phones they stand still in two columns. With **Page animations** off (Business Info), or for visitors who ask for less motion, they stand still in one row.
+- On computers the facts slide slowly sideways. They stop while the mouse is over the strip. The strip has no Pause button of its own (one Pause button per page, the banner's). On phones they stand still in two columns. With **Page animations** off (Business Info), or for visitors who ask for less motion, they stand still in one row.
 - **The icon** comes from the item's CSS class: select the fact, then in the sidebar **Advanced → Additional CSS class(es)**: `ayesha-trust--clock`, `ayesha-trust--tag`, `ayesha-trust--tools`, `ayesha-trust--truck`, `ayesha-trust--pin` or `ayesha-trust--quote`. A new fact (press Enter at the end of one) copies the class of the one before; change it if you want a different icon.
 
 ### Stats (hidden until you switch on "Show stats")
