@@ -129,6 +129,9 @@
 			return;
 		}
 		var facts = Array.prototype.slice.call( list.children );
+		// Start where the still row already is, so nothing jumps when the ticker begins (moved by
+		// transform only, which is not a layout shift).
+		var startX = facts[ 0 ].getBoundingClientRect().left - strip.getBoundingClientRect().left;
 		function copyRun() {
 			facts.forEach( function ( li ) {
 				var copy = li.cloneNode( true );
@@ -150,5 +153,6 @@
 		} );
 		// About 45 px a second, whatever the screen width.
 		strip.style.setProperty( '--ayesha-ticker-time', Math.round( list.scrollWidth / 2 / 45 ) + 's' );
+		strip.style.setProperty( '--ayesha-ticker-start', Math.round( startX - parseFloat( window.getComputedStyle( facts[ 0 ] ).paddingLeft ) ) + 'px' );
 	} );
 } )();

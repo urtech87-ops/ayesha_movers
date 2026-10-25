@@ -116,15 +116,19 @@ add_action( 'wp_head', 'ayesha_theme_head', -1 );
 
 /**
  * Viewport with viewport-fit=cover (so the sticky bar can use the safe-area inset)
- * and a preload for the body font (Roboto 400; 500 and 700 load when used).
+ * and preloads for the three Roboto files (about 12 KB each). Each is used on the first screen (700 the
+ * banner heading, 500 buttons and the facts under the banner); in the wider fallback font the banner
+ * heading wrapped onto one more line, so the page jumped when Roboto arrived.
  */
 function ayesha_theme_head() {
 	remove_action( 'wp_head', '_block_template_viewport_meta_tag', 0 );
 	echo '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />' . "\n";
-	printf(
-		'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
-		esc_url( get_theme_file_uri( 'assets/fonts/roboto-latin-400.woff2' ) )
-	);
+	foreach ( array( '400', '500', '700' ) as $weight ) {
+		printf(
+			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
+			esc_url( get_theme_file_uri( 'assets/fonts/roboto-latin-' . $weight . '.woff2' ) )
+		);
+	}
 }
 
 add_action( 'init', 'ayesha_theme_register_styles_and_patterns' );

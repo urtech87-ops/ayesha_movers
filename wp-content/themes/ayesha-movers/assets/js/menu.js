@@ -9,7 +9,8 @@
 		if ( 'ArrowDown' !== e.key && 'ArrowUp' !== e.key ) {
 			return;
 		}
-		var item = e.target.closest && e.target.closest( '.ayesha-header .wp-block-navigation-submenu' );
+		// The item (li), not its list: the list (ul) carries the class wp-block-navigation-submenu too.
+		var item = e.target.closest && e.target.closest( '.ayesha-header li.wp-block-navigation-submenu' );
 		if ( ! item ) {
 			return;
 		}
@@ -22,12 +23,17 @@
 		e.preventDefault();
 		if ( -1 === index ) {
 			// On "Our Services" or its arrow button: open the list, then go to the first (or last) service.
-			if ( 'true' !== toggle.getAttribute( 'aria-expanded' ) ) {
-				toggle.click();
+			// After the click, WordPress shows the list at once but only notes that it is open a moment
+			// later; moving focus into it before then closes it again. So wait briefly when we opened it.
+			var target = links[ 'ArrowDown' === e.key ? 0 : links.length - 1 ];
+			if ( 'true' === toggle.getAttribute( 'aria-expanded' ) ) {
+				target.focus();
+				return;
 			}
-			window.requestAnimationFrame( function () {
-				links[ 'ArrowDown' === e.key ? 0 : links.length - 1 ].focus();
-			} );
+			toggle.click();
+			window.setTimeout( function () {
+				target.focus();
+			}, 80 );
 			return;
 		}
 		if ( 'ArrowUp' === e.key && 0 === index ) {

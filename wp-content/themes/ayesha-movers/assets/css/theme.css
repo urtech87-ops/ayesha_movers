@@ -1301,8 +1301,16 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 }
 
 @media (max-width: 639.98px) {
-	.ayesha-trust__list > li[aria-hidden="true"],
-	/* ---- Stats (hidden by AYESHA Core until "Show stats" is on; empty or 0 numbers never show) ---- */
+	.ayesha-trust__list > li[aria-hidden="true"] { display: none !important; }
+}
+
+/* From where the still row was (set by reveal.js) and left by one run (half the doubled list). */
+@keyframes ayesha-ticker {
+	from { transform: translateX(var(--ayesha-ticker-start, 0px)); }
+	to { transform: translateX(calc(var(--ayesha-ticker-start, 0px) - 50%)); }
+}
+
+/* ---- Stats (hidden by AYESHA Core until "Show stats" is on; empty or 0 numbers never show) ---- */
 .ayesha-stats__row {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
