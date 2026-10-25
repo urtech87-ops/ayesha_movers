@@ -38,6 +38,8 @@ function ayesha_core_defaults() {
 		'facebook_url'     => 'https://www.facebook.com/ayeshamoversbahrain/',
 		'address'          => '',
 		'show_reviews'     => 0,
+		'show_stats'       => 0,
+		'show_prices'      => 0,
 		'show_contact'     => 1,
 		'animations'       => 1,
 		'share_image_url'  => '',
@@ -132,6 +134,16 @@ function ayesha_core_fields() {
 			'type'  => 'checkbox',
 			'help'  => __( 'Only switch this on after the example reviews have been replaced with real customer reviews.', 'ayesha-core' ),
 		),
+		'show_stats'       => array(
+			'label' => __( 'Show stats', 'ayesha-core' ),
+			'type'  => 'checkbox',
+			'help'  => __( 'The row of numbers on Home (years in business, moves completed and so on). Switch it on only after each number in that row is a real one. A number left empty, or 0, never shows.', 'ayesha-core' ),
+		),
+		'show_prices'      => array(
+			'label' => __( 'Show prices', 'ayesha-core' ),
+			'type'  => 'checkbox',
+			'help'  => __( 'The price cards on Home (studio, 2–3 bedrooms, villa, office). Switch it on only after the cards hold the real prices or the wording you want.', 'ayesha-core' ),
+		),
 		'show_contact'     => array(
 			'label' => __( 'Show contact details on Contact Us', 'ayesha-core' ),
 			'type'  => 'checkbox',
@@ -204,6 +216,8 @@ function ayesha_core_sanitize( $input ) {
 	$clean['facebook_url'] = $facebook;
 
 	$clean['show_reviews'] = empty( $input['show_reviews'] ) ? 0 : 1;
+	$clean['show_stats']   = empty( $input['show_stats'] ) ? 0 : 1;
+	$clean['show_prices']  = empty( $input['show_prices'] ) ? 0 : 1;
 	$clean['show_contact'] = empty( $input['show_contact'] ) ? 0 : 1;
 	$clean['animations']   = empty( $input['animations'] ) ? 0 : 1;
 

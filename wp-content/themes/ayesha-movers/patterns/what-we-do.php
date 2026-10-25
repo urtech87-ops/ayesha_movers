@@ -4,7 +4,7 @@
  * Slug: ayesha-movers/what-we-do
  * Categories: ayesha-movers
  * Keywords: services, shifting, packing, furniture, trucks, cargo
- * Description: The six services as equal cards on light grey (three across on computers): an icon in a gold circle, the title linking to its section on Our Services, one line of text and an "Ask on WhatsApp" link that opens a chat with the service name already typed. A "See all services" button under the cards.
+ * Description: The six services as equal cards on light grey (three across on computers): a photo with the service's icon on a gold tab, the title linking to its section on Our Services, one line of text, a "Read more" link to that section and an "Ask on WhatsApp" link that opens a chat with the service name already typed. A "See all services" button under the cards. Replace a photo by selecting it and choosing Replace.
  *
  * @package AyeshaMovers
  */
@@ -16,19 +16,26 @@ $ayesha_services_url = home_url( '/our-services/' );
  * extra is stored. The WhatsApp link's message is in the button's binding ("message"), so the client
  * can change it in the code editor (see docs/editing-guide.md).
  */
-$ayesha_card = static function ( $anchor, $title, $text, $service ) use ( $ayesha_services_url ) {
+$ayesha_card = static function ( $anchor, $title, $text, $service, $photo ) use ( $ayesha_services_url ) {
 	$message = "Hi AYESHA Movers \\u0026 Packers, I'd like a price for {$service}.";
+	$link    = esc_url( $ayesha_services_url . '#' . $anchor );
 	return '<!-- wp:group {"metadata":{"name":"Service: ' . esc_attr( $title ) . '"},"className":"ayesha-service-card","layout":{"type":"default"}} -->
-<div class="wp-block-group ayesha-service-card"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading"><a href="' . esc_url( $ayesha_services_url . '#' . $anchor ) . '">' . esc_html( $title ) . '</a></h3>
+<div class="wp-block-group ayesha-service-card">' . ayesha_theme_image_markup( $photo, 'medium_large', 'ayesha-service-card__photo', 'Photo (stock, replace with your own)' ) . '
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><a href="' . $link . '">' . esc_html( $title ) . '</a></h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 <p>' . esc_html( $text ) . '</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-text-link","metadata":{"bindings":{"url":{"source":"ayesha/business","args":{"key":"whatsapp_url","message":"' . $message . '"}}},"name":"WhatsApp: ' . esc_attr( $title ) . '"}} -->
+<!-- wp:buttons {"className":"ayesha-service-card__links"} -->
+<div class="wp-block-buttons ayesha-service-card__links"><!-- wp:button {"className":"is-style-text-link ayesha-read-more"} -->
+<div class="wp-block-button is-style-text-link ayesha-read-more"><a class="wp-block-button__link wp-element-button" href="' . $link . '">Read more<span class="screen-reader-text"> about ' . esc_html( $title ) . '</span></a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-text-link","metadata":{"bindings":{"url":{"source":"ayesha/business","args":{"key":"whatsapp_url","message":"' . $message . '"}}},"name":"WhatsApp: ' . esc_attr( $title ) . '"}} -->
 <div class="wp-block-button is-style-text-link"><a class="wp-block-button__link wp-element-button" href="https://wa.me/97334448236">Ask on WhatsApp</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
@@ -43,12 +50,12 @@ $ayesha_card = static function ( $anchor, $title, $text, $service ) use ( $ayesh
 <!-- wp:group {"metadata":{"name":"Service cards"},"className":"ayesha-services__grid","layout":{"type":"default"}} -->
 <div class="wp-block-group ayesha-services__grid"><?php
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- cards are escaped inside $ayesha_card.
-echo $ayesha_card( 'house-shifting', 'House, villa, flat and office shifting', 'House shifting from door to door, anywhere in Bahrain. The price includes the crew who pack, carry and load.', 'house, villa, flat or office shifting' ) . "\n\n";
-echo $ayesha_card( 'packing', 'Packing and unpacking', 'International-standard packing, with special packing for fragile items and crockery.', 'packing and unpacking' ) . "\n\n";
-echo $ayesha_card( 'furniture', 'Furniture dismantling and refitting', 'Our carpenters take furniture and curtains down, put them back up, and set up new furniture for homes and offices.', 'furniture dismantling and refitting' ) . "\n\n";
-echo $ayesha_card( 'appliances', 'AC, TV and curtain removal', 'Split units and other air conditioners, LCD and LED TVs, curtains and blinds: taken down and fitted again.', 'AC, TV or curtain removal and fitting' ) . "\n\n";
-echo $ayesha_card( 'trucks', 'Truck hire: 8 hours or a full day', 'Dyna and 6-wheel trucks, including runs to Mina Salman, Khalifa Bin Salman Port, the airport and courier depots.', 'truck hire (Dyna or 6-wheel truck)' ) . "\n\n";
-echo $ayesha_card( 'cargo', 'Container cargo to the GCC', '20ft and 40ft containers loaded and unloaded, with customs documents, to Saudi Arabia, the UAE, Kuwait, Qatar and Oman.', 'GCC cargo (20ft or 40ft container)' );
+echo $ayesha_card( 'house-shifting', 'House, villa, flat and office shifting', 'House shifting from door to door, anywhere in Bahrain. The price includes the crew who pack, carry and load.', 'house, villa, flat or office shifting', 127 ) . "\n\n";
+echo $ayesha_card( 'packing', 'Packing and unpacking', 'International-standard packing, with special packing for fragile items and crockery.', 'packing and unpacking', 121 ) . "\n\n";
+echo $ayesha_card( 'furniture', 'Furniture dismantling and refitting', 'Our carpenters take furniture and curtains down, put them back up, and set up new furniture for homes and offices.', 'furniture dismantling and refitting', 122 ) . "\n\n";
+echo $ayesha_card( 'appliances', 'AC, TV and curtain removal', 'Split units and other air conditioners, LCD and LED TVs, curtains and blinds: taken down and fitted again.', 'AC, TV or curtain removal and fitting', 123 ) . "\n\n";
+echo $ayesha_card( 'trucks', 'Truck hire: 8 hours or a full day', 'Dyna and 6-wheel trucks, including runs to Mina Salman, Khalifa Bin Salman Port, the airport and courier depots.', 'truck hire (Dyna or 6-wheel truck)', 124 ) . "\n\n";
+echo $ayesha_card( 'cargo', 'Container cargo to the GCC', '20ft and 40ft containers loaded and unloaded, with customs documents, to Saudi Arabia, the UAE, Kuwait, Qatar and Oman.', 'GCC cargo (20ft or 40ft container)', 125 );
 // phpcs:enable
 ?></div>
 <!-- /wp:group -->

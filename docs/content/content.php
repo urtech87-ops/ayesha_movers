@@ -35,7 +35,7 @@ $ayesha_pages = array(
 		'id'       => (int) get_option( 'page_on_front' ),
 		'file'     => 'home',
 		'template' => '',
-		'patterns' => array( 'hero', 'what-we-do', 'how-a-move-works', 'where-we-go', 'reviews', 'why-and-questions', 'cta-band' ),
+		'patterns' => array( 'hero', 'home-trust-strip', 'home-stats', 'home-about', 'what-we-do', 'how-a-move-works', 'home-pricing', 'why-choose-us', 'home-coverage', 'reviews', 'home-questions', 'cta-band' ),
 	),
 	'about'    => array(
 		'id'       => (int) ( get_page_by_path( 'about-us' )->ID ?? 0 ),

@@ -1,6 +1,6 @@
 <?php
 /**
- * Front-end output: floating WhatsApp button (desktop) and the reviews switch.
+ * Front-end output: floating WhatsApp button (desktop) and the switches for sections that wait for real content.
  *
  * @package AyeshaCore
  */
@@ -136,22 +136,67 @@ function ayesha_core_whatsapp_conditional_blocks( $content, $block ) {
 	return $content;
 }
 
-add_filter( 'render_block', 'ayesha_core_hide_reviews', 10, 2 );
+add_filter( 'render_block', 'ayesha_core_hide_switched_off', 10, 2 );
 
 /**
- * Remove any block with the CSS class "ayesha-reviews" while "Show reviews section" is off,
- * so placeholder reviews never reach visitors.
+ * Sections that wait for real content, each behind a Business Info switch (all off by default):
+ * a block with the CSS class on the left is removed while its switch is off, so placeholders
+ * never reach visitors.
+ *
+ * @return array<string, string> CSS class => setting key.
+ */
+function ayesha_core_switched_sections() {
+	return array(
+		'ayesha-reviews' => 'show_reviews',
+		'ayesha-stats'   => 'show_stats',
+		'ayesha-pricing' => 'show_prices',
+	);
+}
+
+/**
+ * Remove a switched-off section (see ayesha_core_switched_sections()).
  *
  * @param string $content Block HTML.
  * @param array  $block   Parsed block.
  * @return string
  */
-function ayesha_core_hide_reviews( $content, $block ) {
+function ayesha_core_hide_switched_off( $content, $block ) {
 	$class = $block['attrs']['className'] ?? '';
-	if ( '' === $class || ! in_array( 'ayesha-reviews', preg_split( '/\s+/', $class ), true ) ) {
+	if ( '' === $class ) {
 		return $content;
 	}
-	return ayesha_core_setting( 'show_reviews' ) ? $content : '';
+	$classes = preg_split( '/\s+/', $class );
+	foreach ( ayesha_core_switched_sections() as $section => $key ) {
+		if ( in_array( $section, $classes, true ) && ! ayesha_core_setting( $key ) ) {
+			return '';
+		}
+	}
+	// Stats switched on but no real number left (see ayesha_core_hide_empty_stat()): no empty section.
+	if ( in_array( 'ayesha-stats', $classes, true ) && false === strpos( $content, 'ayesha-stat__number' ) ) {
+		return '';
+	}
+	return $content;
+}
+
+add_filter( 'render_block', 'ayesha_core_hide_empty_stat', 10, 2 );
+
+/**
+ * A stat (class "ayesha-stat") shows only when its number (class "ayesha-stat__number") holds a
+ * digit other than 0, so the stats row can never show an empty or 0 number.
+ *
+ * @param string $content Block HTML.
+ * @param array  $block   Parsed block.
+ * @return string
+ */
+function ayesha_core_hide_empty_stat( $content, $block ) {
+	$class = $block['attrs']['className'] ?? '';
+	if ( '' === $class || ! in_array( 'ayesha-stat', preg_split( '/\s+/', $class ), true ) ) {
+		return $content;
+	}
+	if ( ! preg_match( '/class="[^"]*\bayesha-stat__number\b[^"]*"[^>]*>(.*?)<\/p>/s', $content, $match ) ) {
+		return '';
+	}
+	return preg_match( '/[1-9]/', wp_strip_all_tags( $match[1] ) ) ? $content : '';
 }
 
 add_filter( 'render_block', 'ayesha_core_contact_conditional_blocks', 10, 2 );
