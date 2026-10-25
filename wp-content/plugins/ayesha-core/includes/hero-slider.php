@@ -161,8 +161,10 @@ function ayesha_core_hero_slider_image( $tags, $index ) {
 		$tags->set_attribute( 'height', (string) $src[2] );
 	}
 	// The photo covers the banner, which is taller than the photo's shape on phones and tablets,
-	// so the browser needs a wider copy there than the screen width (e.g. 1920 on a 2x phone).
-	$tags->set_attribute( 'sizes', '(max-width: 599px) 256vw, (max-width: 959px) 125vw, 100vw' );
+	// so the browser needs a wider copy there than the screen width. On phones 170vw (not the full
+	// 256vw of the crop): a 2x phone gets the 1280 copy (about 65 KB) instead of the 1920 one
+	// (about 110 KB), slightly soft under the navy shade but much faster on mobile data.
+	$tags->set_attribute( 'sizes', '(max-width: 599px) 170vw, (max-width: 959px) 125vw, 100vw' );
 
 	if ( 0 === $index ) {
 		$tags->remove_attribute( 'loading' );

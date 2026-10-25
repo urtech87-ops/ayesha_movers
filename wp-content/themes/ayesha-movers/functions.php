@@ -131,6 +131,18 @@ function ayesha_theme_head() {
 	}
 }
 
+add_action( 'init', 'ayesha_theme_no_emoji_script' );
+
+/**
+ * No WordPress emoji script and styles on the site (23 KB on every page; the site uses no emoji
+ * and every browser it targets draws emoji itself).
+ */
+function ayesha_theme_no_emoji_script() {
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+	remove_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+}
+
 add_action( 'init', 'ayesha_theme_register_styles_and_patterns' );
 
 /**
@@ -201,12 +213,17 @@ add_filter( 'render_block_core/image', 'ayesha_theme_lazy_footer_logo', 10, 2 );
  * @return string
  */
 function ayesha_theme_lazy_footer_logo( $html, $block ) {
-	if ( ! str_contains( $block['attrs']['className'] ?? '', 'ayesha-footer__logo' ) ) {
+	$class = $block['attrs']['className'] ?? '';
+	// Also the Home "About us" photo: WordPress leaves the first few content images eager, and the
+	// banner's three photos fill that count, so this one would load with the banner (it is below the
+	// first screen on every device).
+	if ( ! str_contains( $class, 'ayesha-footer__logo' ) && ! str_contains( $class, 'ayesha-home-about__image' ) ) {
 		return $html;
 	}
 	$tags = new WP_HTML_Tag_Processor( $html );
-	if ( $tags->next_tag( 'img' ) && null === $tags->get_attribute( 'loading' ) ) {
+	if ( $tags->next_tag( 'img' ) && 'lazy' !== $tags->get_attribute( 'loading' ) ) {
 		$tags->set_attribute( 'loading', 'lazy' );
+		$tags->remove_attribute( 'fetchpriority' );
 		$html = $tags->get_updated_html();
 	}
 	return $html;
