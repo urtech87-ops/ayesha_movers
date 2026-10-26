@@ -60,11 +60,11 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | 6. Contact Us + quote form + email | phase-6-contact | **Done; approved and merged into main 2026-10-03 (fast-forward to 497997f)** |
 | 7. Design refresh + service area (Bahrain and GCC only) | phase-7-design | **Done; approved and merged into main 2026-10-06 (fast-forward to e5d9310)** (client ads still pending) |
 | 7b. Logo (carton mark, two-line name), favicon + share image, official WhatsApp glyph | phase-7b-logo | **Done; approved and merged into main 2026-10-06 (fast-forward to 4cc572a)** |
-| 7c. Top bar, header with Services dropdown, Home banner slider, animations, Home sections below the banner | phase-7c-hero | **Done; approved and merged into main 2026-10-26 (fast-forward to f20dba4)** |
+| 7c. Top bar, header with Services dropdown, Home banner slider, animations, Home sections below the banner | phase-7c-hero | **Done; approved and merged into main 2026-10-26 (fast-forward to f20dba4, then the trust strip pause button: fast-forward to bb888c6)** |
 | 8. Full QA, SEO, performance, handover (was Phase 7) | phase-8-qa | **Next, waiting for the user's go-ahead**; scope approved 2026-10-03 (see Phase 8 notes). Favicon and og:image already done in Phase 7b |
 
 ## Current phase + next step
-- **Current: Phase 8 (QA, SEO, performance, handover), waiting for the user's go-ahead.** Phase 7c (top bar, header with Services dropdown, Home banner slider, Home sections below the banner, animations) approved and merged into `main` 2026-10-26 (fast-forward to f20dba4). Carried into Phase 8: the axe `region` landmark fix, and Lighthouse on the live host with compression and a page cache (Phase 7c: 84 locally uncompressed, 92 with gzip). Note: the local branch `phase-7c-hero` in the old worktree `phase-7c-hero-0df42c` is still at 5e0649f (behind origin); `git pull` it or delete that worktree.
+- **Current: Phase 8 (QA, SEO, performance, handover), waiting for the user's go-ahead.** Phase 7c (top bar, header with Services dropdown, Home banner slider, Home sections below the banner, animations) approved and merged into `main` 2026-10-26 (fast-forward to f20dba4; then the trust strip Pause/Play button, merged by fast-forward to bb888c6 the same day). Carried into Phase 8: the axe `region` landmark fix, and Lighthouse on the live host with compression and a page cache (Phase 7c: 84 locally uncompressed, 92 with gzip). Note: the local branch `phase-7c-hero` in the old worktree `phase-7c-hero-0df42c` is still at 5e0649f (behind origin); `git pull` it or delete that worktree.
 - **Phase 7c (top bar, header with Services dropdown, Home banner slider, animations), branch `phase-7c-hero`, started 2026-10-21.** Reference: https://royalmoversbahrain.com/ (a direct competitor; layout only). Reference screenshots: `docs/design-preview/hero/reference/` (`reference-375.png`, `reference-1280.png`, `reference-1280-dropdown.png`, `reference-1280-scrolled.png`).
   - **What we take from the reference (layout only):**
     1. Top bar: a thin dark bar above the header, one group of items on each side; **hidden on phones** (the reference hides it below tablet width).
@@ -854,3 +854,17 @@ WCAG 2.2.2 (Pause, Stop, Hide): the trust strip moves for more than 5 seconds, s
 | P7 | Layout | No sideways scroll | 375, 768, 1280, 1920: none | Pass |
 | P8 | CLS | 0 | 0 at 375, 768, 1280 and 1920, with and without motion | Pass |
 | P9 | axe-core 4.10, Home | 0 serious/critical | 1280 with the button, 1280 reduced motion, 375: 0 serious, 0 critical (only the known moderate `region`) | Pass |
+
+#### Phase 7c: second merge and smoke test (2026-10-26, site running `main` at bb888c6)
+The trust strip Pause/Play button was built and tested on `phase-7c-hero` (bc5a7ca, bb888c6) with the dev junctions pointing at the worktree again (the main checkout's real folders were moved to the session scratch folder meanwhile). Then: junctions removed with `rmdir` (links only), the main checkout's folders restored from git, `main` fast-forwarded 10b7516 → bb888c6, both branches pushed (`git ls-remote`: main and phase-7c-hero at bb888c6).
+
+| # | Test | Expected | Result | Pass/Fail |
+|---|---|---|---|---|
+| N1 | Running code | From main, no junctions | 0 junctions; AYESHA Movers 0.8.1 / AYESHA Core 0.8.1 from the real folders | Pass |
+| N2 | Pages load | 200 | Home, About Us, Our Services, Contact Us: 200; no JavaScript errors on Home | Pass |
+| N3 | Banner slider | 3 slides, autoplay | 3 slides; slide 2 after 5.5 s | Pass |
+| N4 | Services dropdown | Hover and keys | Opens on hover; Arrow Down from the arrow button opens it and focuses "House, villa, flat and office shifting"; Esc closes. Phone menu opens | Pass |
+| N5 | Trust strip and its button | Moves; Pause works; none on phones | Moves (about 45 px/s) at 1280; Pause → "Play the moving strip", aria-pressed true, strip stopped; phone (375): still grid, no button, no sideways scroll | Pass |
+| N6 | Hidden sections | Still hidden | Stats, prices, reviews: 0 on the page | Pass |
+| N7 | Business Info values | Client facts | +973 3444 8236, +973 3642 9850, +973 7736 0292, WhatsApp 97334448236, ayeshamoversbh786@gmail.com, "Open 24 hours, every day", Instagram and Facebook links as in CLAUDE.md, address empty; show reviews / stats / prices 0, animations 1 | Pass |
+| N8 | debug.log | No new entries | None dated 2026-10-26 (63 lines, last entries 2026-10-25 from my WP-CLI command in step 2) | Pass |
