@@ -183,7 +183,7 @@ The banner is a **Banner slider** block with up to **3 slides**. In the editor t
 ### Trust strip (the navy strip under the banner)
 
 Six short facts with an icon: Open 24 hours, Labour included in the price, Carpenters on our team, Dyna and 6-wheel trucks, Bahrain and the GCC, Free quote. It is one **List** block: click a fact to change its words. Only write facts that are true.
-- On computers the facts slide slowly sideways. They stop while the mouse is over the strip. The strip has no Pause button of its own (one Pause button per page, the banner's). On phones they stand still in two columns. With **Page animations** off (Business Info), or for visitors who ask for less motion, they stand still in one row.
+- On computers the facts slide slowly sideways. They stop while the mouse is over the strip or a keyboard user is on its button, and visitors can press the small **Pause** button at the left end of the strip (it becomes **Play**). The button only appears while the strip moves, and the next page starts moving again. On phones they stand still in two columns. With **Page animations** off (Business Info), or for visitors who ask for less motion, they stand still in one row.
 - **The icon** comes from the item's CSS class: select the fact, then in the sidebar **Advanced → Additional CSS class(es)**: `ayesha-trust--clock`, `ayesha-trust--tag`, `ayesha-trust--tools`, `ayesha-trust--truck`, `ayesha-trust--pin` or `ayesha-trust--quote`. A new fact (press Enter at the end of one) copies the class of the one before; change it if you want a different icon.
 
 ### Stats (hidden until you switch on "Show stats")
