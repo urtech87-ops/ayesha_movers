@@ -1283,6 +1283,18 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 
 	.ayesha-trust__list > li { white-space: nowrap; }
 
+	/* When the strip is going to move (JavaScript on, Page animations on, no reduced motion), it is one
+	   line from the start, so turning into the ticker changes nothing (no layout shift). Without
+	   JavaScript or with reduced motion the facts wrap and all stay visible. */
+	@media (prefers-reduced-motion: no-preference) {
+		.ayesha-js .ayesha-motion .ayesha-trust__list {
+			flex-wrap: nowrap;
+			justify-content: flex-start;
+			max-inline-size: none !important;
+			padding-inline-start: 3.75rem; /* starts right of the Pause button */
+		}
+	}
+
 	/* Ticker (only while reveal.js runs it): two identical runs of the facts slide left forever. */
 	.ayesha-trust.is-ticking .ayesha-trust__list {
 		flex-wrap: nowrap;
@@ -1297,11 +1309,45 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 	.ayesha-trust.is-ticking .ayesha-trust__list > li { padding-inline: 1.75rem; }
 	.ayesha-trust.is-ticking .ayesha-trust__list > li + li { box-shadow: inset 1px 0 0 var(--ayesha-line-dark); }
 
-	.ayesha-trust.is-ticking:hover .ayesha-trust__list { animation-play-state: paused; }
+	/* Stops on hover, while anything in the strip has keyboard focus, and with the Pause button. */
+	.ayesha-trust.is-ticking:hover .ayesha-trust__list,
+	.ayesha-trust.is-ticking:focus-within .ayesha-trust__list,
+	.ayesha-trust.is-ticking.is-paused .ayesha-trust__list { animation-play-state: paused; }
+
+	/* Pause/Play (added by reveal.js only while the strip moves): 32px, at the left end of the strip
+	   (the round WhatsApp button floats at the bottom right), on the strip's own navy so the facts
+	   slide under it. */
+	.ayesha-trust__pause {
+		position: absolute;
+		z-index: 1;
+		top: 0;
+		bottom: 0;
+		left: 0.75rem;
+		display: grid;
+		place-items: center;
+		width: 32px;
+		height: 32px;
+		margin: auto 0 !important;
+		padding: 0;
+		border: 1px solid rgb(255 255 255 / 0.45);
+		border-radius: 2px;
+		background: var(--ayesha-navy-deep);
+		box-shadow: 14px 0 14px 4px var(--ayesha-navy-deep);
+		color: #fff;
+		cursor: pointer;
+	}
+
+	.ayesha-trust__pause:hover { background: var(--ayesha-gold); border-color: var(--ayesha-gold); color: var(--ayesha-navy); }
+	.ayesha-trust__pause:focus-visible { outline: 3px solid var(--ayesha-gold); outline-offset: 2px; }
+	.ayesha-trust__pause svg { width: 14px; height: 14px; fill: currentColor; }
+	.ayesha-trust__icon-play,
+	.ayesha-trust.is-paused .ayesha-trust__icon-pause { display: none; }
+	.ayesha-trust.is-paused .ayesha-trust__icon-play { display: block; }
 }
 
 @media (max-width: 639.98px) {
-	.ayesha-trust__list > li[aria-hidden="true"] { display: none !important; }
+	.ayesha-trust__list > li[aria-hidden="true"],
+	.ayesha-trust__pause { display: none !important; }
 }
 
 /* From where the still row was (set by reveal.js) and left by one run (half the doubled list). */

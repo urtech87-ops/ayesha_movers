@@ -120,8 +120,9 @@
 	/*
 	 * Trust strip ticker (640px and wider; on phones the facts stay a still grid). The facts are
 	 * copied (hidden from screen readers) until one run is wider than the screen, then the whole run
-	 * is doubled and slides left by half its width forever. Stops while the mouse is over it. (No
-	 * button of its own: the banner's Pause button is the only one on the page, user decision.)
+	 * is doubled and slides left by half its width forever. It stops while the mouse is over it,
+	 * while anything in it has keyboard focus, and with its Pause/Play button (WCAG 2.2.2). The button
+	 * exists only while the strip moves, and nothing is remembered: the next page starts moving again.
 	 */
 	Array.prototype.forEach.call( document.querySelectorAll( '.ayesha-trust' ), function ( strip ) {
 		var list = strip.querySelector( '.ayesha-trust__list' );
@@ -154,5 +155,20 @@
 		// About 45 px a second, whatever the screen width.
 		strip.style.setProperty( '--ayesha-ticker-time', Math.round( list.scrollWidth / 2 / 45 ) + 's' );
 		strip.style.setProperty( '--ayesha-ticker-start', Math.round( startX - parseFloat( window.getComputedStyle( facts[ 0 ] ).paddingLeft ) ) + 'px' );
+
+		var button = document.createElement( 'button' );
+		button.type = 'button';
+		button.className = 'ayesha-trust__pause';
+		button.innerHTML = '<svg class="ayesha-trust__icon-pause" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 2h3v12H4zM9 2h3v12H9z"/></svg><svg class="ayesha-trust__icon-play" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 2l10 6-10 6z"/></svg>';
+		function setPaused( paused ) {
+			strip.classList.toggle( 'is-paused', paused );
+			button.setAttribute( 'aria-pressed', paused ? 'true' : 'false' );
+			button.setAttribute( 'aria-label', paused ? 'Play the moving strip' : 'Pause the moving strip' );
+		}
+		button.addEventListener( 'click', function () {
+			setPaused( ! strip.classList.contains( 'is-paused' ) );
+		} );
+		setPaused( false );
+		strip.appendChild( button );
 	} );
 } )();

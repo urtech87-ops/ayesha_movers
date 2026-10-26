@@ -123,6 +123,9 @@ add_action( 'wp_head', 'ayesha_theme_head', -1 );
 function ayesha_theme_head() {
 	remove_action( 'wp_head', '_block_template_viewport_meta_tag', 0 );
 	echo '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />' . "\n";
+	// "JavaScript runs" flag for the CSS, set before anything is drawn: lets the trust strip start as
+	// one line when it is going to move, so it doesn't jump from two lines to one (layout shift).
+	echo '<script>document.documentElement.classList.add("ayesha-js");</script>' . "\n";
 	foreach ( array( '400', '500', '700' ) as $weight ) {
 		printf(
 			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
