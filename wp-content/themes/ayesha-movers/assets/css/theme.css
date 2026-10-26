@@ -2269,10 +2269,9 @@ body:not(.editor-styles-wrapper) .ayesha-contact__columns:not(:has(.ayesha-conta
 	.ayesha-contact__aside { align-self: stretch; }
 }
 
-/* ---- Contact Us: the map. A drawing of Bahrain with "Show map"; the Google map (assets/js/map.js)
-        takes exactly the drawing's place, so nothing moves when it loads. ---- */
+/* ---- Contact Us: the Google map of the business address (block "ayesha/map", from Business Info).
+        A fixed shape, so nothing moves when the map loads. ---- */
 .ayesha-map {
-	position: relative;
 	box-sizing: border-box;
 	max-inline-size: var(--wp--style--global--content-size) !important;
 	aspect-ratio: 4 / 3;
@@ -2280,34 +2279,12 @@ body:not(.editor-styles-wrapper) .ayesha-contact__columns:not(:has(.ayesha-conta
 	overflow: hidden;
 	border: 1px solid var(--ayesha-line);
 	border-radius: 2px;
-	background: var(--ayesha-navy);
+	background: var(--ayesha-line);
 }
 
 @media (min-width: 600px) { .ayesha-map { aspect-ratio: 16 / 9; } }
 
-.ayesha-map > * { margin: 0 !important; }
-
-.ayesha-map__image,
-.ayesha-map__image img,
-.ayesha-map__frame {
-	display: block;
-	width: 100%;
-	height: 100%;
-}
-
-.ayesha-map__image img { object-fit: cover; }
-.ayesha-map__frame { border: 0; }
-
-.ayesha-map__buttons {
-	position: absolute;
-	inset: auto 0 1.5rem;
-	justify-content: center;
-}
-
-@media (min-width: 600px) { .ayesha-map__buttons { inset: 50% 0 auto; transform: translateY(-50%); } }
-
-.ayesha-map__show .wp-block-button__link { box-shadow: 0 10px 30px rgb(0 0 0 / 0.35); }
-.ayesha-map__show .wp-block-button__link:focus-visible { outline-color: #fff; box-shadow: 0 0 0 2px var(--ayesha-navy); }
+.ayesha-map__frame { display: block; width: 100%; height: 100%; border: 0; }
 
 /* Phones and tablets: "How a move works" shows its steps as a left-aligned list, so its title
    lines up on the left as well (centred from 960px). */

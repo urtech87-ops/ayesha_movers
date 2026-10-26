@@ -8,7 +8,7 @@
 - Email: ayeshamoversbh786@gmail.com
 - Instagram: https://www.instagram.com/ayesha_movers_packers/
 - Facebook: https://www.facebook.com/ayeshamoversbahrain/ (given by the user 2026-10-03)
-- No street address is published. Leave the address field empty in settings and don't show an address on the site until the client provides one.
+- Address: "Al Mutanabi Ave, Manama, Bahrain" (given by the user 2026-10-27). It is in Business Info → Business address and shown as the Google map on Contact Us (and in the search-engine data). Don't invent a building, flat or PO box number.
 - Coverage: all of Bahrain (Manama and every city), Mina Salman port, Khalifa Bin Salman Port, airport cargo; Saudi Arabia (KSA) and the other GCC countries (UAE, Kuwait, Qatar, Oman). Bahrain to the GCC only: NOT the UK, USA, Canada, Europe or "worldwide" (corrected by the user 2026-10-03; still being confirmed with the client).
 - Available 24 hours, day and night.
 - Services:

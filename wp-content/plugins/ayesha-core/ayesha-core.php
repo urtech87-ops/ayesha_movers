@@ -40,6 +40,7 @@ require_once AYESHA_CORE_DIR . 'includes/quote-render.php';
 require_once AYESHA_CORE_DIR . 'includes/quote-mail.php';
 require_once AYESHA_CORE_DIR . 'includes/hero-slider.php';
 require_once AYESHA_CORE_DIR . 'includes/inner-pages.php';
+require_once AYESHA_CORE_DIR . 'includes/map.php';
 
 register_activation_hook( __FILE__, 'ayesha_core_activate' );
 

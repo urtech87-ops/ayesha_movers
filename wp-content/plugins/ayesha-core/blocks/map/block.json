@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ayesha/map",
+	"title": "Map (Business Info address)",
+	"category": "widgets",
+	"icon": "location-alt",
+	"description": "A Google map of the business address from Settings → Business Info. Change the address there; the map follows. Nothing shows while the address is empty.",
+	"keywords": [ "map", "address", "location", "google maps" ],
+	"textdomain": "ayesha-core",
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"customClassName": false
+	},
+	"attributes": {
+		"zoom": { "type": "number", "default": 15 }
+	},
+	"editorScript": "ayesha-map-editor"
+}

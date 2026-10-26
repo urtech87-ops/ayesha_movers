@@ -96,20 +96,6 @@ function ayesha_theme_assets() {
 			)
 		);
 	}
-
-	// Contact Us: the Google map loads only after "Show map" is clicked. Only on pages that have the map.
-	if ( is_singular() && str_contains( (string) get_post_field( 'post_content', get_queried_object_id() ), 'ayesha-map' ) ) {
-		wp_enqueue_script(
-			'ayesha-map',
-			get_theme_file_uri( 'assets/js/map.js' ),
-			array(),
-			ayesha_theme_asset_version( 'assets/js/map.js' ),
-			array(
-				'in_footer' => true,
-				'strategy'  => 'defer',
-			)
-		);
-	}
 }
 
 add_action( 'wp_head', 'ayesha_theme_head', -1 );
