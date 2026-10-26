@@ -6,5 +6,13 @@
     "ayesha-where-we-go": {
         "title": "Where we go",
         "id": 27
+    },
+    "ayesha-stats": {
+        "title": "Stats (hidden until Show stats is on)",
+        "id": 148
+    },
+    "ayesha-prices": {
+        "title": "Prices (hidden until Show prices is on)",
+        "id": 149
     }
 }

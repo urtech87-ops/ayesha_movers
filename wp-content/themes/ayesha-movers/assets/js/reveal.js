@@ -1,7 +1,8 @@
 /*
  * Scroll reveals: section headings, cards and other parts below the first screen come in once as
  * they come into view, each section in its own way (cards rise one after another, the About photo
- * slides in from its side, the area tags pop in, the questions fade, numbers count up). Also the
+ * and the Our Services photos slide in from their side, the area tags pop in, the questions and the
+ * Contact Us details fade in one after another, numbers count up). Also the
  * slow sideways ticker of the trust strip under the Home banner. Only with "Page animations" on
  * (class ayesha-motion on <body>) and never with reduced motion. The hiding classes are added
  * here, so without JavaScript everything is simply visible and still. Forms, the phone bar and the
@@ -18,17 +19,19 @@
 	 */
 	var groups = [
 		{ sel: 'main h2' },
-		{ sel: '.ayesha-home-about__photo', kind: 'left' },
-		{ sel: '.ayesha-home-about__text', kind: 'right' },
-		{ sel: '.ayesha-service-card, .ayesha-svc__section, .ayesha-why-card, .ayesha-plan, .ayesha-review, .ayesha-reason, .ayesha-stat', step: 90, max: 4 },
+		{ sel: '.ayesha-home-about__photo, .ayesha-svc__section:nth-child(odd) > .ayesha-svc__photo', kind: 'left' },
+		{ sel: '.ayesha-home-about__text, .ayesha-svc__section:nth-child(even) > .ayesha-svc__photo', kind: 'right' },
+		{ sel: '.ayesha-service-card, .ayesha-svc__text, .ayesha-why-card, .ayesha-plan, .ayesha-review, .ayesha-reason, .ayesha-stat', step: 90, max: 4 },
 		{ sel: '.ayesha-step', step: 160, max: 3 },
 		{ sel: '.ayesha-areas > li', kind: 'pop', step: 35, max: 20 },
 		{ sel: '.ayesha-faq > .wp-block-details', kind: 'fade', step: 60, max: 6 },
-		{ sel: '.ayesha-route > li, .ayesha-jump__list > li', step: 90, max: 4 },
+		{ sel: '.ayesha-route > li', step: 90, max: 4 },
+		{ sel: '.ayesha-contact__row', kind: 'fade', step: 70, max: 9 },
 	];
-	var never = '.ayesha-slider, form, .wp-block-ayesha-quote-form, .ayesha-sticky-bar, .ayesha-wa-float, .ayesha-contact, .ayesha-trust';
+	// Never moved: the forms, the map and its button, the sliders and the phone bar / WhatsApp button.
+	var never = '.ayesha-slider, form, .wp-block-ayesha-quote-form, .ayesha-sticky-bar, .ayesha-wa-float, .ayesha-map, .ayesha-trust, .ayesha-banner';
 	// A part that moves as a whole: its own heading doesn't move again.
-	var wholes = '.ayesha-service-card, .ayesha-svc__section, .ayesha-reason, .ayesha-why-card, .ayesha-plan, .ayesha-home-about__text';
+	var wholes = '.ayesha-service-card, .ayesha-svc__text, .ayesha-reason, .ayesha-why-card, .ayesha-plan, .ayesha-home-about__text';
 
 	var items = [];
 	groups.forEach( function ( group, index ) {

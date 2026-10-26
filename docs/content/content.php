@@ -7,7 +7,7 @@
  *   php wp-cli.phar eval-file <path>/docs/content/content.php export         Save every page + the synced patterns into docs/content/
  *   php wp-cli.phar eval-file <path>/docs/content/content.php import         Recreate them on another site from docs/content/
  *
- * Synced patterns are found by slug (ayesha-cta-band, ayesha-where-we-go), so running it twice updates
+ * Synced patterns are found by slug (ayesha-cta-band, ayesha-where-we-go, ayesha-stats, ayesha-prices), so running it twice updates
  * instead of duplicating. On import, pattern IDs and the site URL in the saved markup are mapped to
  * the new site. See docs/content/README.md.
  *
@@ -24,6 +24,8 @@ $ayesha_local  = 'http://localhost/ayesha-movers';
 $ayesha_synced = array(
 	'ayesha-cta-band'    => array( 'title' => 'CTA band', 'pattern' => 'cta-band' ),
 	'ayesha-where-we-go' => array( 'title' => 'Where we go', 'pattern' => 'where-we-go' ),
+	'ayesha-stats'       => array( 'title' => 'Stats (hidden until Show stats is on)', 'pattern' => 'home-stats' ),
+	'ayesha-prices'      => array( 'title' => 'Prices (hidden until Show prices is on)', 'pattern' => 'home-pricing' ),
 );
 
 /*
@@ -41,19 +43,19 @@ $ayesha_pages = array(
 		'id'       => (int) ( get_page_by_path( 'about-us' )->ID ?? 0 ),
 		'file'     => 'about',
 		'template' => 'page-sections',
-		'patterns' => array( 'about-intro', 'about-team', 'where-we-go', 'cta-band' ),
+		'patterns' => array( 'about-banner', 'about-story', 'about-values', 'home-stats', 'where-we-go', 'cta-band' ),
 	),
 	'services' => array(
 		'id'       => (int) ( get_page_by_path( 'our-services' )->ID ?? 0 ),
 		'file'     => 'services',
 		'template' => 'page-sections',
-		'patterns' => array( 'services-intro', 'services-list', 'services-gallery', 'services-questions', 'cta-band' ),
+		'patterns' => array( 'services-banner', 'services-cards', 'services-list', 'services-gallery', 'home-pricing', 'services-questions', 'cta-band' ),
 	),
 	'contact'  => array(
 		'id'       => (int) ( get_page_by_path( 'contact-us' )->ID ?? 0 ),
 		'file'     => 'contact',
 		'template' => 'page-sections',
-		'patterns' => array( 'contact-page' ),
+		'patterns' => array( 'contact-banner', 'contact-page', 'contact-map', 'cta-band' ),
 	),
 );
 
@@ -214,7 +216,7 @@ switch ( $ayesha_mode ) {
 			update_post_meta( $page['id'], '_ayesha_seo_title', (string) ( $seo['title'] ?? '' ) );
 			update_post_meta( $page['id'], '_ayesha_seo_description', (string) ( $seo['description'] ?? '' ) );
 		}
-		WP_CLI::warning( 'Check the photos: the saved markup uses Media Library IDs 9 and 12 (Home), 15 (About Us) and 14 (Our Services). If a photo has another ID on this site, pick it again in the editor.' );
+		WP_CLI::warning( 'Check the photos: the saved markup uses Media Library IDs 113-115, 120-125 and 127 (Home), 131-138 (About Us), 121-125, 127 and 139-145 (Our Services) and 146-147 (Contact Us). If a photo has another ID on this site, pick it again in the editor.' );
 		break;
 
 	default:

@@ -5,16 +5,18 @@ Page content lives in the WordPress database, not in the theme. These files are 
 | File | What it is |
 |---|---|
 | `home.html` | The Home page's block markup, exactly as saved in the editor |
-| `about.html` | The About Us page's block markup |
-| `services.html` | The Our Services page's block markup |
-| `contact.html` | The Contact Us page's block markup (heading, contact rows, quote form block) |
+| `about.html` | The About Us page's block markup (banner, photo + who runs it, How we work cards, Stats, Where we go, CTA band) |
+| `services.html` | The Our Services page's block markup (banner, What we do cards, the six services in detail, ads gallery, Prices, Questions, CTA band) |
+| `contact.html` | The Contact Us page's block markup (banner, "Request a free quote", contact card, quote form block, map, CTA band) |
 | `home-seo.json`, `about-seo.json`, `services-seo.json`, `contact-seo.json` | Each page's search-engine title and description (the "Search engines" panel) |
 | `patterns/ayesha-cta-band.html` | Synced pattern "CTA band" (the yellow band above the footer) |
-| `patterns/ayesha-where-we-go.html` | Synced pattern "Where we go" (the service-area route) |
+| `patterns/ayesha-where-we-go.html` | Synced pattern "Where we go" (the service-area route, About Us) |
+| `patterns/ayesha-stats.html` | Synced pattern "Stats" (Home and About Us; hidden until Business Info → Show stats is on) |
+| `patterns/ayesha-prices.html` | Synced pattern "Prices" (Home and Our Services; hidden until Business Info → Show prices is on) |
 | `patterns/manifest.json` | Each synced pattern's title and its ID on the local site (used to fix the references in the pages on import) |
 | `content.php` | The WP-CLI script that builds, exports and imports all of the above (was `home-content.php` until Phase 5) |
 
-About Us, Our Services and Contact Us use the page template **Page with sections (heading in the page)** (`page-sections`): their H1 is a Heading block in the page instead of the page title. The script sets it on build and import.
+About Us, Our Services and Contact Us use the page template **Page with sections (heading in the page)** (`page-sections`): their H1 is a Heading block in the page (inside the banner at the top since Phase 7d) instead of the page title. The script sets it on build and import.
 
 The quote form's words (labels, button, messages) are saved in the page itself, in the form block's comment, so they are in `contact.html` too. Enquiries (the saved quote requests) are **not** part of this backup: they are customer data and stay in the database.
 
@@ -27,12 +29,12 @@ php wp-cli.phar eval-file path/to/docs/content/content.php import
 ```
 
 The script:
-1. creates or updates the two synced patterns (found by their slugs `ayesha-cta-band` and `ayesha-where-we-go`, so running it twice doesn't make duplicates);
+1. creates or updates the four synced patterns (found by their slugs `ayesha-cta-band`, `ayesha-where-we-go`, `ayesha-stats` and `ayesha-prices`, so running it twice doesn't make duplicates);
 2. replaces `http://localhost/ayesha-movers` with the new site's address;
 3. points each page's `<!-- wp:block {"ref":…} /-->` references at the new pattern IDs;
 4. saves Home, About Us, Our Services and Contact Us, their template and their search-engine title and description.
 
-Afterwards, open each page in the editor once. If a photo is missing, it has a different Media Library ID on the new site: pick it again (size *Photo (560px)*). The pages use photo 9 and 12 (Home), 15 (About Us) and 14, cropped (Our Services).
+Afterwards, open each page in the editor once. If a photo is missing, it has a different Media Library ID on the new site: pick it again. The photos are listed with their IDs in `docs/image-credits.md`: Home 113–115, 120–125, 127; About Us 131–138; Our Services 139–145 and 121–125, 127; Contact Us 146 (banner) and 147 (map drawing). A banner photo is replaced on its Cover block (toolbar → Replace).
 
 ## Update this backup
 
@@ -46,4 +48,4 @@ php wp-cli.phar eval-file .claude/worktrees/<worktree>/docs/content/content.php 
 
 ## First build
 
-`content.php build home|about|services|contact` makes one page from the theme's patterns (`wp-content/themes/ayesha-movers/patterns/`) and **overwrites** that page. Home was built once in Phase 4, About Us and Our Services once in Phase 5, and Contact Us once in Phase 6 (pattern `contact-page`); don't run it on a page the client has already edited.
+`content.php build home|about|services|contact` makes one page from the theme's patterns (`wp-content/themes/ayesha-movers/patterns/`) and **overwrites** that page. Home was built once in Phase 4, About Us and Our Services once in Phase 5, and Contact Us once in Phase 6; About Us, Our Services and Contact Us were rebuilt in Phase 7d (patterns `about-banner`, `about-story`, `about-values`, `home-stats`, `where-we-go`, `cta-band`; `services-banner`, `services-cards`, `services-list`, `services-gallery`, `home-pricing`, `services-questions`, `cta-band`; `contact-banner`, `contact-page`, `contact-map`, `cta-band`). Don't run it on a page the client has already edited.

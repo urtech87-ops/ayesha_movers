@@ -34,3 +34,30 @@ Checked before use: no company names, logos, phone numbers or readable licence p
 Files: downloaded at 2400px wide (JPEG, kept as the Media Library original); WordPress makes WebP copies, and the banner uses the 768, 1280 and 1920px ones (largest: 132 KB).
 
 Other photos on the site (Media IDs 9, 12, 14, 15) came from the client's sources in Phase 1; see PROGRESS.md › Media status.
+
+**Inner pages: About Us, Our Services, Contact Us (Phase 7d, downloaded 2026-10-26).** Pexels licence and Unsplash licence as above. Every photo was checked at full size before use: no company names, logos, phone numbers or readable licence plates (on the lorry, the maker's lettering on the grille and the plate were softened with a blur before upload; both licences allow editing). The alt text describes only the scene; nothing says the people, vehicles or buildings are AYESHA's. The cards and the About photo were cropped (3 × 2, 5 × 4) and saved as WebP 1200 px; the three banners were uploaded as 2400 px JPEG and WordPress made the WebP copies the banners use (768 / 1280 / 1920).
+
+| Where | Media ID / file | Page | Photographer | Licence | Downloaded |
+|---|---|---|---|---|---|
+| About Us banner (LCP) | 131 `bahrain-skyline-from-a-park` | https://www.pexels.com/photo/view-bahrain-skyline-from-the-park-6658660/ | Satheesh Cholakkal | Pexels licence | 2026-10-26 |
+| About Us photo beside "Who runs it" | 132 `movers-carrying-cartons-arched-windows` | https://www.pexels.com/photo/men-carrying-cardboard-boxes-while-having-a-conversation-7464244/ | RDNE Stock project | Pexels licence | 2026-10-26 |
+| About card: Labour included in the price | 133 `labourer-wheeling-cartons-past-a-van` | https://www.pexels.com/photo/man-pushing-trolley-with-big-boxes-6169660/ | Tima Miroshnichenko | Pexels licence | 2026-10-26 |
+| About card: One team, start to finish | 134 `two-workers-in-blue-overalls` | https://unsplash.com/photos/men-in-blue-work-uniforms-USfhKrR7L1M | Divaris Shirichena | Unsplash licence | 2026-10-26 |
+| About card: Door to door | 135 `gated-villa-entrance-with-palms` | https://unsplash.com/photos/large-tan-house-with-gated-entrance-and-lush-greenery-RX_i1KjMKw8 | Nourhan Sabek | Unsplash licence | 2026-10-26 |
+| About card: Open 24 hours | 136 `manama-towers-at-night` | https://unsplash.com/photos/buildings-at-night-k4JjOG5QQoY | Charles-Adrien Fournier | Unsplash licence | 2026-10-26 |
+| About card: Careful packing | 137 `carton-sealed-with-fragile-tape` | https://unsplash.com/photos/cardboard-box-sealed-with-red-fragile-tape-RqZ-xGRnCYI | Ari Sha | Unsplash licence | 2026-10-26 |
+| About card: Bahrain and the GCC | 138 `gulf-highway-between-mountains` | https://unsplash.com/photos/highway-with-mountains-and-uae-flags-MopMPlA1mf4 | Muhammed Sultan Ali | Unsplash licence | 2026-10-26 |
+| Our Services banner (LCP) | 139 `packed-cartons-and-covered-sofa` | https://www.pexels.com/photo/packed-boxes-and-piece-of-furniture-in-new-house-room-4246098/ | Ketut Subiyanto | Pexels licence | 2026-10-26 |
+| Services card: house shifting | 140 `lifting-a-carton-in-a-living-room` | https://unsplash.com/photos/a-woman-moving-boxes-in-a-living-room-wS40ELZROLE | Vitaly Gariev | Unsplash licence | 2026-10-26 |
+| Services card: packing | 141 `wrapping-crockery-in-paper` | https://www.pexels.com/photo/crop-unrecognizable-person-packing-ceramic-tableware-in-parchment-4246187/ | Ketut Subiyanto | Pexels licence | 2026-10-26 |
+| Services card: furniture | 142 `refitting-a-dismantled-cot` | https://www.pexels.com/photo/man-setting-up-a-dismantled-baby-crib-7491085/ | MART PRODUCTION | Pexels licence | 2026-10-26 |
+| Services card: AC, TV and curtains | 143 `tv-mounted-on-a-living-room-wall` | https://unsplash.com/photos/a-room-with-a-tv-and-shelves-UZfddycAnDE | Wemax Projectors | Unsplash licence | 2026-10-26 |
+| Services card: truck hire | 144 `lorry-on-the-road-at-dusk` | https://www.pexels.com/photo/photo-of-a-truck-with-white-lights-11053643/ | Sergei Skrynnik | Pexels licence (grille lettering and plate blurred) | 2026-10-26 |
+| Services card: GCC cargo | 145 `port-cranes-on-the-waterfront` | https://www.pexels.com/photo/harbor-cranes-under-blue-sky-13409736/ | Engin Akyurt | Pexels licence | 2026-10-26 |
+| Contact Us banner (LCP) | 146 `gold-tower-on-the-bahrain-waterfront` | https://www.pexels.com/photo/the-waterfront-four-season-hotel-in-bahrain-6658659/ | Satheesh Cholakkal | Pexels licence | 2026-10-26 |
+
+The six service rows further down Our Services reuse the Home page's service photos (121–125, 127; credits above), so no photo shows twice on one page. Photos 14 (red truck) and 15 (man in front of a truck) are no longer on any page; both stay in the Media Library (15 until the client says who the man is).
+
+**Contact Us map drawing (Media 147, `outline-map-of-bahrain`):** not a photo. Drawn for this site from **Natural Earth** 1:10m country borders (public domain, https://www.naturalearthdata.com/; file `ne_10m_admin_0_countries`): Bahrain with a gold coastline, the nearby Saudi and Qatari coasts in a darker navy. No pin, no address, no text. It is only the placeholder: the Google map loads in its place after a visitor clicks "Show map".
+
+Rejected while choosing (so they aren't picked again): a mover unloading a truck in a Russian street (readable plate and Russian shop signs), a miniature model of dock workers, a US highway in snow, a drill with the maker's name, a container ship with the line's name on the hull, containers with line names (Maersk, Yang Ming), an aerial view of Seef with hotel names on the buildings, a CGI-looking render of cartons, a team in T-shirts printed with a company name, a packing photo with brand labels on the cartons.

@@ -1,10 +1,10 @@
 <?php
 /**
- * Title: Our Services: the six services with the "Jump to" list
+ * Title: Our Services: the six services in detail (photo beside text)
  * Slug: ayesha-movers/services-list
  * Categories: ayesha-movers
  * Keywords: services, shifting, packing, furniture, appliances, trucks, cargo
- * Description: One section per service (what it is, what's included, a WhatsApp button with the service already typed). The "Jump to a service" list wraps under the intro on phones and becomes a sticky menu on the left on computers. Each heading has an HTML anchor (Advanced panel) that the Home page and the list link to: keep them.
+ * Description: One row per service: a photo beside what the service is, what's included (ticks) and a WhatsApp button with the service already typed. On computers the photo changes side from row to row; on phones it sits above the text. Each heading has an HTML anchor (Advanced panel) that the Home page, the header's Services menu and the service cards link to: keep them.
  *
  * @package AyeshaMovers
  */
@@ -15,12 +15,13 @@ $ayesha_message = static function ( $service ) {
 
 /*
  * Content from the client facts in CLAUDE.md only. The WhatsApp messages use the same wording
- * as the Home page's "What we do" links. Sections alternate grey and white.
+ * as the Home page's "What we do" links. The photos are the Home page's service photos (the cards
+ * at the top of Our Services use other ones, so no photo shows twice on this page).
  */
 $ayesha_services = array(
 	array(
 		'id'      => 'house-shifting',
-		'label'   => 'House shifting',
+		'photo'   => 127,
 		'title'   => 'House, villa, flat and office shifting',
 		'text'    => 'We move houses, villas, flats and offices from door to door, anywhere in Bahrain. The price includes the labour: the crew who pack, carry and load.',
 		'items'   => array(
@@ -33,7 +34,7 @@ $ayesha_services = array(
 	),
 	array(
 		'id'      => 'packing',
-		'label'   => 'Packing and unpacking',
+		'photo'   => 121,
 		'title'   => 'Packing and unpacking',
 		'text'    => 'We pack your things to international standards before the move and unpack them at your new place.',
 		'items'   => array(
@@ -46,7 +47,7 @@ $ayesha_services = array(
 	),
 	array(
 		'id'      => 'furniture',
-		'label'   => 'Furniture',
+		'photo'   => 122,
 		'title'   => 'Furniture dismantling and refitting',
 		'text'    => 'Our professional carpenters take your furniture apart before the move and fit it back together in your new home or office.',
 		'items'   => array(
@@ -59,7 +60,7 @@ $ayesha_services = array(
 	),
 	array(
 		'id'      => 'appliances',
-		'label'   => 'Appliances',
+		'photo'   => 123,
 		'title'   => 'Appliance removal and refitting',
 		'text'    => 'We take down your air conditioners, TVs, curtains and blinds before the move and fit them again at your new place.',
 		'items'   => array(
@@ -71,7 +72,7 @@ $ayesha_services = array(
 	),
 	array(
 		'id'      => 'trucks',
-		'label'   => 'Truck hire',
+		'photo'   => 124,
 		'title'   => 'Truck hire: 8 hours or a full day',
 		'text'    => 'Hire a Dyna or a 6-wheel truck for 8 hours or for a full day, for a move or for runs to the ports, the airport and courier depots.',
 		'items'   => array(
@@ -82,11 +83,10 @@ $ayesha_services = array(
 			'Runs to courier depots: DHL, Aramex and GLS',
 		),
 		'message' => $ayesha_message( 'truck hire (Dyna or 6-wheel truck)' ),
-		'image'   => ayesha_theme_image_markup( 14, 'ayesha-photo', 'ayesha-svc__photo' ),
 	),
 	array(
 		'id'      => 'cargo',
-		'label'   => 'GCC cargo',
+		'photo'   => 125,
 		'title'   => 'GCC cargo',
 		'text'    => 'We load and unload 20ft and 40ft containers and handle the customs documentation for moves to Saudi Arabia, the UAE, Kuwait, Qatar and Oman.',
 		'items'   => array(
@@ -99,29 +99,11 @@ $ayesha_services = array(
 	),
 );
 
-$ayesha_links = array();
-foreach ( $ayesha_services as $ayesha_service ) {
-	$ayesha_links[] = '<!-- wp:list-item -->
-<li><a href="#' . esc_attr( $ayesha_service['id'] ) . '">' . esc_html( $ayesha_service['label'] ) . '</a></li>
-<!-- /wp:list-item -->';
-}
 ?>
-<!-- wp:group {"metadata":{"name":"Services"},"align":"full","className":"ayesha-svc","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull ayesha-svc"><!-- wp:group {"className":"ayesha-svc__grid","layout":{"type":"default"}} -->
-<div class="wp-block-group ayesha-svc__grid"><!-- wp:group {"metadata":{"name":"Jump to a service (sticky menu on computers)"},"tagName":"nav","className":"ayesha-jump","ariaLabel":"Services on this page","layout":{"type":"default"}} -->
-<nav class="wp-block-group ayesha-jump" aria-label="Services on this page"><!-- wp:paragraph {"className":"ayesha-jump__label"} -->
-<p class="ayesha-jump__label">Jump to a service</p>
-<!-- /wp:paragraph -->
+<!-- wp:group {"metadata":{"name":"Services in detail"},"align":"full","className":"ayesha-svc","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull ayesha-svc"><?php
+echo implode( "
 
-<!-- wp:list {"className":"ayesha-jump__list"} -->
-<ul class="wp-block-list ayesha-jump__list"><?php echo implode( "\n\n", $ayesha_links ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></ul>
-<!-- /wp:list --></nav>
-<!-- /wp:group -->
-
-<!-- wp:group {"metadata":{"name":"Service sections"},"className":"ayesha-svc__sections","layout":{"type":"default"}} -->
-<div class="wp-block-group ayesha-svc__sections"><?php
-echo implode( "\n\n", array_map( 'ayesha_theme_service_section_markup', $ayesha_services ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in the helper.
+", array_map( 'ayesha_theme_service_section_markup', $ayesha_services ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in the helper.
 ?></div>
-<!-- /wp:group --></div>
-<!-- /wp:group --></div>
 <!-- /wp:group -->

@@ -1,6 +1,6 @@
 <?php
 /**
- * Title: Home: prices (hidden until "Show prices" is on)
+ * Title: Prices (shared, hidden until "Show prices" is on)
  * Slug: ayesha-movers/home-pricing
  * Categories: ayesha-movers
  * Keywords: prices, pricing, plans, cost, quote
@@ -8,6 +8,13 @@
  *
  * @package AyeshaMovers
  */
+
+// Shared: inserts the synced pattern (Home and Our Services), so the prices are typed once.
+$ayesha_ref = apply_filters( 'ayesha_theme_use_synced_patterns', true ) ? ayesha_theme_synced_pattern_id( 'ayesha-prices' ) : 0;
+if ( $ayesha_ref ) {
+	echo '<!-- wp:block {"ref":' . (int) $ayesha_ref . '} /-->';
+	return;
+}
 
 $ayesha_quote = home_url( '/contact-us/#quote' );
 $ayesha_plans = array(

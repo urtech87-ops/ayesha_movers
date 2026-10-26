@@ -90,11 +90,61 @@ function ayesha_theme_section_markup( $name, $classes, $inner ) {
 }
 
 /**
- * One section of the Our Services page: H2 with the id the Home page links to, a short paragraph,
- * an optional photo, the "What's included" checklist and an "Ask about this on WhatsApp" button
- * whose prefilled message names the service (in the button's binding, so the client can edit it).
+ * Inner page banner (About Us, Our Services, Contact Us): a Cover block with the page's photo under
+ * a navy shade, the page heading (H1) and the breadcrumb "Home / page". AYESHA Core loads the photo
+ * first (WebP banner copies, high priority) and marks the last breadcrumb item as the current page.
  *
- * @param array{id: string, title: string, text: string, items: string[], message: string, image?: string} $service Section content.
+ * @param string $h1       The page heading.
+ * @param string $crumb    The page's name in the breadcrumb.
+ * @param int    $image_id Media Library ID of the photo.
+ * @return string Block markup ('' when the photo is missing).
+ */
+function ayesha_theme_banner_markup( $h1, $crumb, $image_id ) {
+	$url = wp_get_attachment_image_url( $image_id, 'full' );
+	if ( ! $url ) {
+		return '';
+	}
+	$alt   = (string) get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+	$attrs = array(
+		'url'                => $url,
+		'id'                 => $image_id,
+		'alt'                => $alt,
+		'dimRatio'           => 70,
+		'overlayColor'       => 'cab-teal',
+		'isUserOverlayColor' => true,
+		'sizeSlug'           => 'full',
+		'tagName'            => 'section',
+		'metadata'           => array( 'name' => 'Banner (photo, page heading, breadcrumb)' ),
+		'align'              => 'full',
+		'className'          => 'ayesha-banner',
+		'layout'             => array( 'type' => 'constrained' ),
+	);
+	return '<!-- wp:cover ' . serialize_block_attributes( $attrs ) . ' -->
+<section class="wp-block-cover alignfull ayesha-banner"><span aria-hidden="true" class="wp-block-cover__background has-cab-teal-background-color has-background-dim-70 has-background-dim"></span><img class="wp-block-cover__image-background wp-image-' . (int) $image_id . ' size-full" alt="' . esc_attr( $alt ) . '" src="' . esc_url( $url ) . '" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:heading {"level":1} -->
+<h1 class="wp-block-heading">' . esc_html( $h1 ) . '</h1>
+<!-- /wp:heading -->
+
+<!-- wp:group {"tagName":"nav","metadata":{"name":"Breadcrumb"},"ariaLabel":"Breadcrumb","className":"ayesha-breadcrumb-nav","layout":{"type":"default"}} -->
+<nav class="wp-block-group ayesha-breadcrumb-nav" aria-label="Breadcrumb"><!-- wp:list {"ordered":true,"className":"ayesha-breadcrumb"} -->
+<ol class="wp-block-list ayesha-breadcrumb"><!-- wp:list-item -->
+<li><a href="' . esc_url( home_url( '/' ) ) . '">Home</a></li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>' . esc_html( $crumb ) . '</li>
+<!-- /wp:list-item --></ol>
+<!-- /wp:list --></nav>
+<!-- /wp:group --></div></section>
+<!-- /wp:cover -->';
+}
+
+/**
+ * One service on the Our Services page, as a photo beside its text (the rows alternate sides on
+ * computers): the photo, then the H2 with the id the Home page, the header menu and the service
+ * cards link to, a short paragraph, the "What's included" ticks and an "Ask about this on WhatsApp"
+ * button whose prefilled message names the service (in the button's binding, so the client can edit it).
+ *
+ * @param array{id: string, title: string, text: string, items: string[], message: string, photo: int} $service Section content.
  * @return string Block markup.
  */
 function ayesha_theme_service_section_markup( $service ) {
@@ -121,27 +171,22 @@ function ayesha_theme_service_section_markup( $service ) {
 		),
 	);
 	$section = array(
-		'metadata'  => array( 'name' => 'Service: ' . $service['title'] ),
 		'tagName'   => 'section',
+		'metadata'  => array( 'name' => 'Service: ' . $service['title'] ),
 		'className' => $classes,
-		'style'     => array(
-			'spacing' => array(
-				'padding' => array(
-					'top'    => 'var:preset|spacing|50',
-					'bottom' => 'var:preset|spacing|50',
-				),
-			),
-		),
 		'layout'    => array( 'type' => 'default' ),
 	);
 	return '<!-- wp:group ' . serialize_block_attributes( $section ) . ' -->
-<section class="wp-block-group ' . esc_attr( $classes ) . '" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50)"><!-- wp:heading -->
-<h2 class="wp-block-heading" id="' . esc_attr( $service['id'] ) . '">' . esc_html( $service['title'] ) . '</h2>
+<section class="wp-block-group ' . esc_attr( $classes ) . '">' . ayesha_theme_image_markup( $service['photo'], 'medium_large', 'ayesha-svc__photo', 'Photo (stock, replace with your own)' ) . '
+
+<!-- wp:group {"metadata":{"name":"Text"},"className":"ayesha-svc__text","layout":{"type":"default"}} -->
+<div class="wp-block-group ayesha-svc__text"><!-- wp:heading {"anchor":"' . esc_attr( $service['id'] ) . '"} -->
+<h2 id="' . esc_attr( $service['id'] ) . '" class="wp-block-heading">' . esc_html( $service['title'] ) . '</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 <p>' . esc_html( $service['text'] ) . '</p>
-<!-- /wp:paragraph -->' . ( empty( $service['image'] ) ? '' : "\n\n" . $service['image'] ) . '
+<!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"className":"ayesha-svc__label"} -->
 <p class="ayesha-svc__label">What\'s included</p>
@@ -155,7 +200,8 @@ function ayesha_theme_service_section_markup( $service ) {
 <div class="wp-block-buttons"><!-- wp:button ' . serialize_block_attributes( $button ) . ' -->
 <div class="wp-block-button is-style-whatsapp"><a class="wp-block-button__link wp-element-button" href="https://wa.me/97334448236">Ask about this on WhatsApp</a></div>
 <!-- /wp:button --></div>
-<!-- /wp:buttons --></section>
+<!-- /wp:buttons --></div>
+<!-- /wp:group --></section>
 <!-- /wp:group -->';
 }
 

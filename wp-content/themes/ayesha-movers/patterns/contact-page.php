@@ -1,10 +1,10 @@
 <?php
 /**
- * Title: Contact Us: heading, contact rows and the quote form
+ * Title: Contact Us: quote intro, contact card and the quote form
  * Slug: ayesha-movers/contact-page
  * Categories: ayesha-movers
  * Keywords: contact, phone, whatsapp, email, quote, form
- * Description: The Contact Us page: a navy band with the page heading (H1) and the opening hours, then a row for each way to reach the team (all from Settings → Business Info) and the quote request form under the heading "Request a free quote" (anchor "quote", which the Home page links to). On computers the contact rows stay on screen while the form scrolls.
+ * Description: "Request a free quote" and its line, then a navy card with a row for each way to reach the team, the service area and the opening hours (numbers, email, links and hours from Settings → Business Info), beside the quote request form on a white card. The form column has the HTML anchor "quote", which the Home page links to. On computers the contact card stays on screen while the form scrolls.
  *
  * @package AyeshaMovers
  */
@@ -51,36 +51,47 @@ $ayesha_rows = array(
 	$ayesha_row( 'Email', 'Email', 'email_link', '<a href="mailto:ayeshamoversbh786@gmail.com">ayeshamoversbh786@gmail.com</a>' ),
 	$ayesha_row( 'Instagram', 'Instagram', 'instagram_link', '<a href="https://www.instagram.com/ayesha_movers_packers/" target="_blank" rel="noopener">@ayesha_movers_packers</a>' ),
 	$ayesha_row( 'Facebook', 'Facebook', 'facebook_link', '<a href="https://www.facebook.com/ayeshamoversbahrain/" target="_blank" rel="noopener" aria-label="AYESHA Movers on Facebook">AYESHA Movers</a>', 'AYESHA Movers' ),
+	// Not links: the service area (typed here) and the opening hours (from Business Info).
+	'<!-- wp:group {"metadata":{"name":"Service area"},"className":"ayesha-contact__row ayesha-contact__row--area","style":{"spacing":{"blockGap":"0"}},"layout":{"type":"default"}} -->
+<div class="wp-block-group ayesha-contact__row ayesha-contact__row--area"><!-- wp:paragraph {"className":"ayesha-contact__label"} -->
+<p class="ayesha-contact__label">Service area</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"ayesha-contact__value"} -->
+<p class="ayesha-contact__value">All of Bahrain and the GCC</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->',
+	'<!-- wp:group {"metadata":{"name":"Hours"},"className":"ayesha-contact__row ayesha-contact__row--hours","style":{"spacing":{"blockGap":"0"}},"layout":{"type":"default"}} -->
+<div class="wp-block-group ayesha-contact__row ayesha-contact__row--hours"><!-- wp:paragraph {"className":"ayesha-contact__label"} -->
+<p class="ayesha-contact__label">Hours</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"ayesha-contact__value","metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"hours"}}},"name":"Opening hours (from Business Info)"}} -->
+<p class="ayesha-contact__value">Open 24 hours, every day</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->',
 );
 ?>
-<!-- wp:group {"metadata":{"name":"Page heading"},"tagName":"section","align":"full","className":"is-style-teal-panel ayesha-section ayesha-intro ayesha-contact-intro","layout":{"type":"constrained"}} -->
-<section class="wp-block-group alignfull is-style-teal-panel ayesha-section ayesha-intro ayesha-contact-intro"><!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Contact us</h1>
+<!-- wp:group {"metadata":{"name":"Contact"},"tagName":"section","align":"full","className":"ayesha-section ayesha-contact","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull ayesha-section ayesha-contact" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:heading -->
+<h2 class="wp-block-heading">Request a free quote</h2>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"className":"ayesha-if-contact-details","fontSize":"lead","metadata":{"bindings":{"content":{"source":"ayesha/business","args":{"key":"hours"}}},"name":"Opening hours"}} -->
-<p class="ayesha-if-contact-details has-lead-font-size">Open 24 hours, every day</p>
-<!-- /wp:paragraph --></section>
-<!-- /wp:group -->
+<!-- wp:paragraph {"className":"has-lead-font-size ayesha-contact__intro"} -->
+<p class="has-lead-font-size ayesha-contact__intro">Takes under a minute. We'll call or WhatsApp you back.</p>
+<!-- /wp:paragraph -->
 
-<!-- wp:group {"metadata":{"name":"Contact"},"tagName":"section","align":"full","className":"ayesha-section ayesha-contact","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
-<section class="wp-block-group alignfull ayesha-section ayesha-contact" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:columns {"className":"ayesha-contact__columns","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|50","left":"var:preset|spacing|50"}}}} -->
+<!-- wp:columns {"className":"ayesha-contact__columns"} -->
 <div class="wp-block-columns ayesha-contact__columns"><!-- wp:column {"width":"41.67%","className":"ayesha-contact__aside"} -->
 <div class="wp-block-column ayesha-contact__aside" style="flex-basis:41.67%"><!-- wp:group {"metadata":{"name":"Contact rows (shown when Business Info > Show contact details is on)"},"className":"ayesha-contact__rows ayesha-if-contact-details","layout":{"type":"default"}} -->
-<div class="wp-block-group ayesha-contact__rows ayesha-if-contact-details"><?php echo implode( "\n\n", $ayesha_rows ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- block markup built above. ?></div>
+<div class="wp-block-group ayesha-contact__rows ayesha-if-contact-details"><?php echo implode( "
+
+", $ayesha_rows ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- block markup built above. ?></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->
 
-<!-- wp:column {"width":"58.33%","className":"ayesha-contact__form"} -->
-<div class="wp-block-column ayesha-contact__form" style="flex-basis:58.33%"><!-- wp:heading -->
-<h2 class="wp-block-heading" id="quote">Request a free quote</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Takes under a minute. We'll call or WhatsApp you back.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:ayesha/quote-form {"showMoveParts":false,"askReply":false} /--></div>
+<!-- wp:column {"width":"58.33%","className":"ayesha-contact__form","anchor":"quote"} -->
+<div id="quote" class="wp-block-column ayesha-contact__form" style="flex-basis:58.33%"><!-- wp:ayesha/quote-form {"showMoveParts":false,"askReply":false} /--></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></section>
 <!-- /wp:group -->

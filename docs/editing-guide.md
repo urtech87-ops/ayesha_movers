@@ -12,7 +12,7 @@ All contact details live on one page: **Settings → Business Info** (in the bla
 | Second mobile number, Office number | The numbers listed in the footer and on the Contact Us page |
 | WhatsApp number | Every WhatsApp button and link: footer, phone bar, the round green button on computers, the WhatsApp row on Contact Us, and the "Send this on WhatsApp too" button after a quote request. **Digits only**, with the country code, e.g. `97334448236` |
 | WhatsApp opening message | The message that is already typed for the visitor when WhatsApp opens. They can change it before sending |
-| Email address | The email shown on the site, **where quote requests are emailed to**, and the sender address of every email the website sends (see section 9) |
+| Email address | The email shown on the site, **where quote requests are emailed to**, and the sender address of every email the website sends (see section 10) |
 | Opening hours | The hours line in the top bar, the small line above the heading on the first Home banner slide, the footer, the gold band and the Contact Us page |
 | Service areas | One place per line. Kept for later use: the "Where we go" list on the pages is edited in the editor instead (see section 5) |
 | Instagram page | The Instagram link in the top bar, the footer, on Contact Us and under the ads gallery |
@@ -160,7 +160,7 @@ Each section is also in the block inserter: **+** → **Patterns** → **Ayesha 
 
 ### Sections shared with other pages (synced patterns)
 
-Two sections are **synced patterns**: the gold **CTA band** ("Moving soon? Message us now.") and **Where we go**. They have a purple outline in the editor. Change one once and it changes on every page that uses it. **Where we go** is on About Us; on Home it was replaced by "We cover all of Bahrain" (see below).
+Four sections are **synced patterns**: the gold **CTA band** ("Moving soon? Message us now.", on all four pages), **Where we go** (About Us; on Home it was replaced by "We cover all of Bahrain", see below), **Stats** (Home and About Us) and **Prices** (Home and Our Services). They have a purple outline in the editor. Change one once and it changes on every page that uses it.
 
 - To edit: click the section, then **Edit original** in the toolbar. Make the change and save. Or open **Appearance → Editor → Patterns → Ayesha Movers**.
 - Don't choose **Detach** unless you want this page to have its own separate copy. A detached copy no longer follows the shared one.
@@ -188,7 +188,7 @@ Six short facts with an icon: Open 24 hours, Labour included in the price, Carpe
 
 ### Stats (hidden until you switch on "Show stats")
 
-A row of four numbers with a label: **Years in business**, **Moves completed**, **Trucks**, **Team members**. The numbers are empty on purpose: the site never shows a number we can't prove. When you have real numbers:
+A row of four numbers with a label: **Years in business**, **Moves completed**, **Trucks**, **Team members**. It is a shared (synced) section, also on About Us: type the numbers once (**Edit original**) and both pages show them. The numbers are empty on purpose: the site never shows a number we can't prove. When you have real numbers:
 1. Click the empty line above each label (it says "Type the real number") and type the number, e.g. `25` or `1,200+`. Leave a number empty if you don't want it shown: that stat is then hidden (a 0 is hidden too).
 2. Change a label if you like (click and type), or delete a whole stat in List View.
 3. Switch on **Show stats** in Settings → Business Info.
@@ -217,7 +217,7 @@ Four cards numbered 1 to 4 (the numbers count themselves, so if you move a card 
 
 ### Prices (hidden until you switch on "Show prices")
 
-Four price cards: **Studio or 1-bedroom flat**, **2–3 bedroom flat**, **Villa**, **Office**. Each card says **Price on request**, has a tick list (now only "Labour included") and a **Get a free quote** button (goes to the quote form). When you're ready:
+Four price cards: **Studio or 1-bedroom flat**, **2–3 bedroom flat**, **Villa**, **Office**. It is a shared (synced) section, also on Our Services: change it once (**Edit original**) for both pages. Each card says **Price on request**, has a tick list (now only "Labour included") and a **Get a free quote** button (goes to the quote form). When you're ready:
 1. In each card, replace "Price on request" with your price or starting price (for example "From BHD …"), or keep "Price on request". **Never type BHD 0.**
 2. Add what each price includes to its tick list (press Enter after "Labour included" for a new line), only true things.
 3. Switch on **Show prices** in Settings → Business Info.
@@ -257,25 +257,46 @@ Each page has its own title and description for search results. Open the page, c
 
 Click **Save**. If you leave them empty, WordPress uses the page name and Google picks the description itself. The Home description mentions the WhatsApp number as text: if the number changes, update the description too.
 
-## 6. The Our Services page
+## 6. The banner at the top of About Us, Our Services and Contact Us
 
-Open **Pages → Our Services**. In **List View** you'll see: Page heading, Services (with "Jump to a service" and one group per service), the ads gallery ("Seen on our Facebook and Instagram"), Questions and the CTA band.
+Each of the three pages opens with the same kind of banner: a wide photo under a navy shade, the page's big heading and a small "Home / page" line (the breadcrumb). In **List View** it is the first block, named "Banner (photo, page heading, breadcrumb)". It is a **Cover** block.
 
-### Change a service
+- **Change the photo:** click the banner (on the photo, not on the words) → in the toolbar **Replace** → pick or upload a photo. Use a **wide photo at least 1920 pixels wide**; WordPress makes the smaller copies itself, and the site loads the right size for each screen (phones never get the largest one). In the sidebar write the photo's **Alternative text**: only what is in the picture. Keep the navy shade as it is (it keeps the white words readable on any photo; it was measured at 6.9:1 or better on all three photos).
+- **The heading** is the page's main heading (H1): click and type. Keep it the only H1 on the page.
+- **The breadcrumb** is a small list: "Home" (a link to the Home page) and the page's name. Click to change the words. Leave the last item as plain text, without a link: the site marks it as "the page you are on" for screen readers and gives search engines the same trail (BreadcrumbList), read from this list.
+- The gold line under the banner is part of the design.
 
-Each service is one group named "Service: …". Click any text to change it:
+## 7. The About Us page
 
-- **The heading** (e.g. "Packing and unpacking"). Keep its **HTML anchor**: with the heading selected, open **Advanced** in the right-hand sidebar. The anchor (`house-shifting`, `packing`, `furniture`, `appliances`, `trucks`, `cargo`) is what the Home page's service links and the "Jump to a service" list point to. If you change an anchor, change the matching links too.
+Open **Pages → About Us**. In **List View**: the banner, **About: photo and who runs it**, **How we work**, the shared **Stats** (hidden), the shared **Where we go** and the gold **CTA band**.
+
+- **Photo and who runs it:** laid out like the Home page's About section. The photo (stock, see `docs/image-credits.md`) has a gold edge and a white badge with your **opening hours** (from Business Info: change them there). On the other side: the lead paragraph, **Who runs it** (the General Manager and the other trading name) and the buttons **WhatsApp us** and **Call us** (number and chat link from Business Info). Click any text to change it; change the photo with **Replace**. The design crops it a little (5 × 4), so keep the people near the middle.
+- **How we work:** six cards (three across on computers, one under the other on phones). Each card is a group with a photo, a title and one sentence. Change the words by clicking them, the photo with **Replace** (the design crops it to 3 × 2). The icon on the gold tab comes from the card's CSS class (Advanced): `ayesha-value-card--tag`, `--team`, `--door`, `--clock`, `--shield` or `--pin`. Only true facts: no years, numbers of moves, "insured" or ratings.
+- **Stats** is the same shared section as on the Home page (see section 5, "Stats"): type the real numbers once (on either page, or in Patterns) and both pages show them when **Show stats** is on.
+- **Where we go** and the **CTA band** are shared (synced) sections: edit them with **Edit original** (section 5). A change shows on every page that uses them. About Us keeps "Where we go" (the route from your door to the GCC) rather than the Home page's area tags, because it tells how far you go, which fits the About page.
+- The man in the old About photo (Media 15) is no longer shown; the photo stays in the Media Library until the client says who he is.
+- Please don't add a founding year or "years of experience" until the client has confirmed one.
+
+## 8. The Our Services page
+
+Open **Pages → Our Services**. In **List View**: the banner, **What we do (cards)**, **Services in detail** (one group per service), the ads gallery ("Seen on our Facebook and Instagram"), the shared **Prices** (hidden), **Questions** and the CTA band.
+
+### The six cards (top of the page)
+
+Like the Home page's "What we do": a photo, the service's icon on a gold tab, the title, one line and two links: **Learn more** (jumps to the same service further down the page) and **Ask on WhatsApp** (opens a chat with the service already typed). The line above the cards ("Everything for a move in Bahrain or to the GCC…") is a normal paragraph.
+- **Change a text:** click it and type. **Change a photo:** click it → **Replace** (cropped to 3 × 2). These photos are different from the Home page's.
+- **Learn more** links to `#house-shifting`, `#packing`, `#furniture`, `#appliances`, `#trucks` or `#cargo`. The icon on the tab follows that link, so keep each one pointing at its own service. Screen readers hear "Learn more about [service]"; the extra words are hidden on screen.
+
+### The services in detail
+
+Each service is one group named "Service: …" with a **photo** and a **Text** group beside it (on computers the photo changes side from one service to the next; on phones it sits above the text):
+
+- **The heading** (e.g. "Packing and unpacking"). Keep its **HTML anchor**: with the heading selected, open **Advanced** in the right-hand sidebar. The anchors (`house-shifting`, `packing`, `furniture`, `appliances`, `trucks`, `cargo`) are what the Home page's cards, the header's **Our Services** menu and the cards at the top of this page point to. If you change an anchor, change those links too.
 - **The paragraph** under the heading.
-- **What's included**: a list. Click at the end of an item and press Enter to add one; select an item and press Delete/Backspace to remove one. Only list things the team really does.
+- **What's included**: a list with gold ticks. Click at the end of an item and press Enter to add one; select an item and press Delete/Backspace to remove one. Only list things the team really does.
 - **Ask about this on WhatsApp**: the link comes from Business Info and the chat opens with the service already typed. To change that message, use the code editor (⋮ → **Code editor**), find `"message":"…"` in that button and edit the words between the quotes (see section 3).
-- **The truck photo** (Truck hire): click it, then **Replace**. Keep the alt text a plain description of what is in the photo, and don't say the truck is yours until that's confirmed. (The photo was cropped in the Media Library so the brand name on the cab doesn't show; **Edit image → Restore image** there brings back the full photo.)
-
-Each service shows as a white card like the ones on Home (three across on wide screens, two on tablets, one on phones), with its icon in a gold circle at the top and the WhatsApp button at the foot of the card.
-
-### The "Jump to a service" list
-
-A row of small cards with icons under the page heading (2 across on phones, 6 on computers). Each item is a link to a heading's anchor, e.g. `#packing`. If you add a service, copy a service group (⋮ → **Duplicate**), give its heading a new anchor, and add a link to it here.
+- **The photo**: click it → **Replace**. These are the Home page's service photos (stock). The design crops them to 4 × 3 and adds the gold edge and the icon.
+- The old "Jump to a service" list and the sticky menu on computers were removed in Phase 7d: the cards at the top do that job now.
 
 ### The ads gallery: "Seen on our Facebook & Instagram"
 
@@ -285,33 +306,23 @@ A **Gallery** block with your ads, and a button to your Instagram page (its word
 - **Alt text** (in the right-hand sidebar when a picture is selected): an ad is a picture of text, so type **all the words in the ad** as its alt text (for people who can't see the picture, and for Google).
 - The pictures are not cropped, so the text in each ad stays whole. Don't put an ad in a service card: the small text can't be read on a phone.
 
-### Questions
+### Prices and Questions
 
-As on the Home page: each question is a **Details** block. Answer only with facts you're sure of.
+**Prices** is the same shared section as on the Home page (section 5, "Prices"): type the prices once and switch on **Show prices** in Business Info. **Questions**: as on the Home page, each question is a **Details** block. Answer only with facts you're sure of.
 
-## 7. The About Us page
+## 9. The Contact Us page
 
-Open **Pages → About Us**. In **List View**: Page heading (with the photo), Who runs it + How we work, Where we go and the CTA band.
+Open **Pages → Contact Us**. In **List View**: the banner, **Contact** (the heading "Request a free quote", its line, then **Columns** with the navy **contact card** on the left and the **quote form** on the right), **Map of Bahrain** and the gold **CTA band** (added in Phase 7d; the page had none before).
 
-- **Heading, lead paragraph, "Who runs it", "How we work"**: click any text to change it. Each of the four "How we work" points is a small heading with a paragraph under it.
-- **The photo** is in the page twice, on purpose: "Photo (computers only)" beside the heading, and "Photo (phones and tablets only)" after "How we work". Each screen shows one of them and never downloads the other. On phones the photo comes after "How we work" so the man in it isn't taken for the General Manager. To change the photo, replace **both** copies (click each, **Replace**, size *Photo (560px)*), and keep the same alt text on both. Keep the alt text a plain description of the scene: don't name the man or say whose truck it is until that's confirmed. No caption.
-- **Where we go** and the gold **CTA band** are the shared (synced) sections: edit them with **Edit original** (see section 5). A change shows on every page that uses them.
-- Please don't add a founding year or "years of experience" until the client has confirmed one.
-
-Both pages use the template **Page with sections (heading in the page)**: the big heading at the top is a normal Heading block in the page, not the page's title. Renaming the page doesn't change this heading (and doesn't rename the menu item either: that is in **Appearance → Editor → Navigation**). The title and description in Google are set in the **Search engines** panel, as for Home (section 5).
-
-## 8. The Contact Us page
-
-Open **Pages → Contact Us**. In **List View**: **Page heading** (the navy band with "Contact us" and the opening hours), then **Contact** → Columns → the left column (**Contact rows**, shown as one white card) and the right column (**Request a free quote**, one line of text, and the **Quote request form**). On computers the two cards sit side by side and slightly overlap the navy band; the rows card stays on screen while the form scrolls. On phones the rows card comes first and the form follows.
-
-- **Heading and the line under "Request a free quote"**: click and type.
-- **Show or hide the hours and contact rows:** Settings → Business Info → **Show contact details on Contact Us** (on now). While it's off, visitors see only the heading and the form, but the hours and rows stay in the page and you can still edit them here (the editor always shows them).
+- **"Request a free quote" and the line under it**: click and type.
+- **The contact card** (navy): one row per way to reach the team, then **Service area** ("All of Bahrain and the GCC", typed here) and **Hours** (from Business Info). Numbers, email, Instagram, Facebook and hours come from **Settings → Business Info** (section 1): you can't type them here. Click a small label ("Mobile", "Office", …) to change its words. Where the value is a link, the whole row is the link; the icon is chosen by the site from the kind of link (or the row's class `ayesha-contact__row--area` / `--hours`). There is no address row, on purpose: add one only when the client confirms an address (a row connected to Business Info → Business address).
+- **Show or hide the card:** Settings → Business Info → **Show contact details on Contact Us** (on now). While it's off, visitors see the form alone in one centred column; the rows stay in the page and you can still edit them here.
 - **"Call or WhatsApp" row:** when your WhatsApp number is the same as the main number, the card shows one green row "Call or WhatsApp" (tap it for WhatsApp; the small "or call" link under the number rings it) and no separate "Mobile" row for that number. If you set a different WhatsApp number in Business Info, it shows a "WhatsApp" row and a "Mobile" row instead, by itself. In the editor you see all three rows; their names say when each one shows (same rule as the footer).
-- **Opening hours and the contact rows** come from **Settings → Business Info** (see section 1): you can't type in the numbers, email or Instagram name here. Each row has a small label above the value ("WhatsApp", "Mobile", "Office", …); click a label to change its words. The whole row is the link, and its icon (phone, WhatsApp, envelope, Instagram) is chosen by the site from the kind of link.
-- To remove a row, select its group in List View (e.g. "Office") and delete it. To add one, duplicate a row (⋮ → **Duplicate**) and connect the copy's value to another Business Info field (section 3: Attributes → content).
-- **Keep the heading "Request a free quote" and its HTML anchor `quote`** (Advanced in the sidebar): the Home page's "Send a detailed quote request" link points to `/contact-us/#quote`.
-- There is no address and no map, on purpose. When an address is confirmed, it can be added here as a paragraph connected to Business Info → Business address.
+- **The form column has the HTML anchor `quote`** (select the column → Advanced): the Home page's "Get a free quote" and "Send a detailed quote request" links point to `/contact-us/#quote` and land on the form. (Before Phase 7d the anchor was on the heading.) Keep it.
+- **The map:** a drawing of Bahrain with a gold **Show map** button. Google Maps loads only when a visitor clicks the button (nothing goes to Google before that) and takes the drawing's place. The map shows Bahrain only: no pin, no address. The button's link sets where the map looks (`https://www.google.com/maps/@26.03,50.55,10z` = latitude, longitude, zoom); the drawing's **Alternative text** becomes the map's title for screen readers. Without JavaScript the button opens Google Maps in a new tab.
 - The page's title and description in Google are in the **Search engines** panel, as for Home (section 5).
+
+All three pages use the template **Page with sections (heading in the page)**: the big heading is the Heading block in the banner, not the page's title. Renaming the page doesn't change this heading (and doesn't rename the menu item either: that is in **Appearance → Editor → Navigation**). The title and description in Google are set in the **Search engines** panel, as for Home (section 5).
 
 ### The quote form
 
@@ -329,7 +340,7 @@ The choices in the lists (types of move, property sizes, floors, services, truck
 
 The preview in the editor is the real form, so you can't type in it there. Try it on the live page instead (and mark your test enquiry as Done afterwards).
 
-## 9. Quote requests (Enquiries)
+## 10. Quote requests (Enquiries)
 
 Every quote request is **saved** in WordPress and **emailed** to you.
 

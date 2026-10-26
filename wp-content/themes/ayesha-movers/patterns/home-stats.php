@@ -1,6 +1,6 @@
 <?php
 /**
- * Title: Home: stats (hidden until "Show stats" is on)
+ * Title: Stats (shared, hidden until "Show stats" is on)
  * Slug: ayesha-movers/home-stats
  * Categories: ayesha-movers
  * Keywords: stats, numbers, counter, years, moves
@@ -8,6 +8,13 @@
  *
  * @package AyeshaMovers
  */
+
+// Shared: inserts the synced pattern (Home and About Us), so the numbers are typed once.
+$ayesha_ref = apply_filters( 'ayesha_theme_use_synced_patterns', true ) ? ayesha_theme_synced_pattern_id( 'ayesha-stats' ) : 0;
+if ( $ayesha_ref ) {
+	echo '<!-- wp:block {"ref":' . (int) $ayesha_ref . '} /-->';
+	return;
+}
 
 $ayesha_stats = array(
 	'years'  => 'Years in business',
