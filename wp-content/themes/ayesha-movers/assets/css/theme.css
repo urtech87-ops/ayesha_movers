@@ -1151,69 +1151,123 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 	margin-block-start: 3rem !important;
 }
 
-/* ---- Where we go: the route line ---- */
+/* ---- Where we go (shared section, About Us): a navy band like the Home coverage band. Each stop of
+        the route is a card with its icon in a gold circle on the edge (like the Home step cards),
+        joined by a dashed gold line; the last stop, the rest of the GCC, is solid gold like the Home
+        GCC tag. Phones: the cards stack and the line runs down the left. The icon follows the stop's
+        place in the list (door, city, port, truck, then a pin for the last). ---- */
 .ayesha-route {
-	list-style: none;
-	padding-inline-start: 0;
+	position: relative;
+	display: grid;
+	gap: 1rem;
 	margin-block: 0;
+	padding-inline-start: 0;
+	list-style: none;
 	color: var(--ayesha-navy);
 	font-weight: 500;
 }
 
-.ayesha-route > li { position: relative; padding: 0 0 1.25rem 2.25rem; }
+/* The route line, behind the cards: seen only between them. */
+.ayesha-route::before {
+	content: "";
+	position: absolute;
+	top: 2rem;
+	bottom: 2rem;
+	left: calc(1rem + 23px);
+	border-left: 2px dashed var(--ayesha-gold);
+}
 
+.ayesha-route > li {
+	position: relative;
+	display: flex;
+	align-items: center;
+	min-height: 72px;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0.875rem 1.25rem 0.875rem calc(1rem + 48px + 1rem);
+	border: 1px solid var(--ayesha-line);
+	border-radius: 2px;
+	background: #fff;
+	line-height: 1.35;
+}
+
+/* The gold circle (::before) and the stop's icon on it (::after). */
 .ayesha-route > li::before {
 	content: "";
 	position: absolute;
-	left: 0;
-	top: 0.3em;
-	width: 16px;
-	height: 16px;
-	box-sizing: border-box;
-	border: 3px solid var(--ayesha-gold);
+	top: 50%;
+	left: 1rem;
+	width: 48px;
+	height: 48px;
+	margin-block-start: -24px;
 	border-radius: 50%;
-	background: #fff;
+	background: var(--ayesha-gold);
 }
 
-.ayesha-route > li:is(:first-child, :last-child)::before { background: var(--ayesha-navy); border-color: var(--ayesha-navy); }
-
-.ayesha-route > li:not(:last-child)::after {
+.ayesha-route > li::after {
 	content: "";
 	position: absolute;
-	left: 7px;
-	top: calc(0.3em + 16px);
-	bottom: 0;
-	width: 2px;
-	background: var(--ayesha-line);
+	top: 50%;
+	left: calc(1rem + 12px);
+	width: 24px;
+	height: 24px;
+	margin-block-start: -12px;
+	background: var(--ayesha-navy);
+	-webkit-mask: var(--ayesha-icon, var(--ayesha-icon-pin)) center / contain no-repeat;
+	mask: var(--ayesha-icon, var(--ayesha-icon-pin)) center / contain no-repeat;
 }
 
-.ayesha-route > li:last-child { padding-block-end: 0; }
+.ayesha-route > li:nth-child(1) { --ayesha-icon: var(--ayesha-icon-door); }
+.ayesha-route > li:nth-child(2) { --ayesha-icon: var(--ayesha-icon-building); }
+.ayesha-route > li:nth-child(3) { --ayesha-icon: var(--ayesha-icon-container); }
+.ayesha-route > li:nth-child(4) { --ayesha-icon: var(--ayesha-icon-truck); }
+.ayesha-route > li:last-child { --ayesha-icon: var(--ayesha-icon-pin); }
+
+/* The last stop: solid gold, its circle navy with a gold icon. */
+.ayesha-route > li:last-child { border-color: var(--ayesha-gold); background: var(--ayesha-gold); font-weight: 700; }
+.ayesha-route > li:last-child::before { background: var(--ayesha-navy); }
+.ayesha-route > li:last-child::after { background: var(--ayesha-gold); }
 
 .ayesha-where > .ayesha-route {
 	margin-block-start: 3rem;
 	max-inline-size: var(--wp--style--global--content-size);
 }
 
+/* On the navy band the cards are a deeper navy with white words. */
+.is-style-teal-panel .ayesha-route > li:not(:last-child) {
+	border-color: var(--ayesha-line-dark);
+	background: var(--ayesha-navy-deep);
+	color: #fff;
+}
+
 @media (min-width: 960px) {
 	.ayesha-route {
-		display: grid;
 		grid-auto-flow: column;
 		grid-auto-columns: minmax(0, 1fr);
-		column-gap: 1rem;
+		gap: 1.25rem;
+		padding-block-start: 24px;
 		text-align: center;
 	}
 
-	.ayesha-route > li { padding: 2.25rem 0 0; }
-	.ayesha-route > li::before { top: 0; left: 50%; width: 20px; height: 20px; transform: translateX(-50%); }
-
-	.ayesha-route > li:not(:last-child)::after {
-		top: 9px;
-		left: calc(50% + 14px);
-		right: calc(-50% - 1rem + 14px);
+	/* The line now runs across, through the middle of the circles on the cards' top edges. */
+	.ayesha-route::before {
+		top: 24px;
 		bottom: auto;
-		width: auto;
-		height: 2px;
+		left: 10%;
+		right: 10%;
+		border-left: 0;
+		border-top: 2px dashed var(--ayesha-gold);
 	}
+
+	.ayesha-route > li {
+		flex-direction: column;
+		justify-content: center;
+		min-height: 128px;
+		padding: calc(24px + 1rem) 1rem 1.25rem;
+	}
+
+	.ayesha-route > li::before { top: 0; left: calc(50% - 24px); margin-block-start: -24px; }
+	.ayesha-route > li::after { top: 0; left: calc(50% - 12px); margin-block-start: -12px; }
 }
 
 /* ---- Trust strip: short facts under the banner. A still grid on phones; from 640px a centred row,
