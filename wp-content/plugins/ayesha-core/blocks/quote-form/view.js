@@ -1,34 +1,36 @@
 /*
- * Quote form enhancements. The form works without this file.
+ * Quote form enhancements (also used by the WhatsApp quote form). The forms work without this file.
  * - After a failed send, move focus to the error summary; after a successful one, to the result.
- * - Stop a second click from sending the form twice.
+ * - Stop a second click from sending a form twice.
  * - "For how long" only matters when a truck is picked.
  */
 ( function () {
-	var form = document.querySelector( '.ayesha-qf__form' );
-	var target = document.getElementById( 'ayesha-qf-summary' ) || document.getElementById( 'ayesha-qf-result' );
+	var target = document.getElementById( 'ayesha-qf-summary' ) || document.getElementById( 'ayesha-wf-summary' ) || document.getElementById( 'ayesha-qf-result' );
 	if ( target ) {
 		target.focus();
 	}
+
+	Array.prototype.forEach.call( document.querySelectorAll( '.ayesha-qf__form' ), function ( form ) {
+		var button = form.querySelector( '.ayesha-qf__button' );
+		form.addEventListener( 'submit', function ( event ) {
+			if ( form.classList.contains( 'is-sending' ) ) {
+				event.preventDefault();
+				return;
+			}
+			form.classList.add( 'is-sending' );
+			button.setAttribute( 'aria-disabled', 'true' );
+		} );
+		// Coming back with the browser's Back button (e.g. from WhatsApp): ready to send again.
+		window.addEventListener( 'pageshow', function () {
+			form.classList.remove( 'is-sending' );
+			button.removeAttribute( 'aria-disabled' );
+		} );
+	} );
+
+	var form = document.querySelector( '.ayesha-qf__form:not(.ayesha-wf__form)' );
 	if ( ! form ) {
 		return;
 	}
-
-	var button = form.querySelector( '.ayesha-qf__button' );
-	form.addEventListener( 'submit', function ( event ) {
-		if ( form.classList.contains( 'is-sending' ) ) {
-			event.preventDefault();
-			return;
-		}
-		form.classList.add( 'is-sending' );
-		button.setAttribute( 'aria-disabled', 'true' );
-	} );
-	// Coming back with the browser's Back button: ready to send again.
-	window.addEventListener( 'pageshow', function () {
-		form.classList.remove( 'is-sending' );
-		button.removeAttribute( 'aria-disabled' );
-	} );
-
 	var time = form.querySelector( '#aqf-truck_time-8h' );
 	var group = time && time.closest( '.ayesha-qf__group' );
 	function syncTruck() {

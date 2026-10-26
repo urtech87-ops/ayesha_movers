@@ -470,3 +470,23 @@
 	outline-color: var(--aqf-yellow);
 	box-shadow: none;
 }
+
+/* ---- WhatsApp quote form (block "ayesha/whatsapp-form"): same fields, a WhatsApp-green button with
+        the WhatsApp glyph in black (WhatsApp's brand colours; navy words on green 9.12:1). ---- */
+.ayesha-wf__button.wp-element-button {
+	gap: 0.625rem;
+	background: #25D366;
+	color: var(--aqf-teal);
+}
+
+.ayesha-wf__button.wp-element-button:hover { background: #3DDC77; color: var(--aqf-teal); }
+
+.ayesha-wf__button.wp-element-button::before {
+	content: "";
+	flex: none;
+	inline-size: 1.5rem;
+	block-size: 1.5rem;
+	background: #000;
+	-webkit-mask: var(--ayesha-icon-whatsapp) center / contain no-repeat;
+	mask: var(--ayesha-icon-whatsapp) center / contain no-repeat;
+}

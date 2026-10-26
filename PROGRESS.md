@@ -65,6 +65,7 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | 7b. Logo (carton mark, two-line name), favicon + share image, official WhatsApp glyph | phase-7b-logo | **Done; approved and merged into main 2026-10-06 (fast-forward to 4cc572a)** |
 | 7c. Top bar, header with Services dropdown, Home banner slider, animations, Home sections below the banner | phase-7c-hero | **Done; approved and merged into main 2026-10-26 (fast-forward to f20dba4, then the trust strip pause button: fast-forward to bb888c6)** |
 | 7d. Inner pages (About Us, Our Services, Contact Us) in the Home style | phase-7d-inner-pages | **Done; approved and merged into main 2026-10-27 (fast-forward 825ceda → 72e126a; then the light "Where we go" and the Contact address map: 6275d26 → e7ee583)** |
+| 7e. WhatsApp quote form on Contact Us | phase-7e-whatsapp-form | **Built and tested 2026-10-27; waiting for merge approval** |
 | 8. Full QA, SEO, performance, handover (was Phase 7) | phase-8-qa | **Next, waiting for the user's go-ahead**; scope approved 2026-10-03 (see Phase 8 notes). Favicon and og:image already done in Phase 7b |
 
 ## Current phase + next step
@@ -965,3 +966,25 @@ The light "Where we go" cards and the Contact Us address map were built on `phas
 | Q4 | Contact Us map | Address map, no Show map | 1 map frame with `q=Al%20Mutanabi%20Ave…`, 0 Show map buttons | Pass |
 | Q5 | Layout and motion | No sideways scroll, CLS 0, reveals finish, one H1 | All 4 pages at 1280 and 375 (phone emulation) | Pass |
 | Q6 | Hidden sections; debug.log | Still hidden; no new entries | Stats, prices, reviews 0; no debug.log entries dated 2026-10-27 | Pass |
+
+### Phase 7e: WhatsApp quote form on Contact Us (2026-10-27, user request)
+Request: a new section on Contact Us with a form that sends the message on WhatsApp **and** by email. Branch `phase-7e-whatsapp-form` (from `main` at 71ce5ca), same worktree; dev junctions point at it (main checkout's real folders in this session's scratch `orig3/`); database dump before the changes: scratch `db-before-phase7e.sql`. WhatsApp stays click-to-chat (wa.me), as CLAUDE.md requires: the website can't send a WhatsApp message itself; the customer presses Send in WhatsApp.
+- **Built:** new AYESHA Core block **`ayesha/whatsapp-form`** ("WhatsApp quote form", `includes/whatsapp-form.php`, `blocks/whatsapp-form/`): name and phone (required), service (the six services), preferred date (today or later), "Tell us about your move" (optional, 1,000 characters). One click → the same checks as the quote form (its own nonce `ayesha_whatsapp_form`, honeypot, 3-second fill time, the shared 5-per-hour limit, every field validated and escaped) → saved as an enquiry (`parts` short, `via` whatsapp, `service`, `date`; reference AYM-…) → the owner email (same template; new rows Service, Preferred date, "Sent with: The WhatsApp form") → a 303 to `https://wa.me/<Business Info WhatsApp>?text=…` with the reference, name, phone, service, date and the message (first 300 characters), line breaks kept (the header is sent directly because `wp_redirect()` strips `%0A`; only an exact wa.me link with URL-encoded text is allowed). Errors come back to the form with the values kept (state tagged `form: whatsapp`, so the quote form ignores it and vice versa). All labels editable in the block sidebar; uses the quote form's styles and script (green WhatsApp button with the black glyph added). The shared quote-form helpers now take an id prefix (`aqf-` / `awf-`), so both forms sit on one page without duplicate ids; `view.js` handles every form on the page.
+- **Contact Us:** new section "Message us on WhatsApp" (theme pattern `contact-whatsapp-form`, Light grey panel, anchor `whatsapp-form`) between the quote form and the map; the map section is now on white so the bands alternate. Inserted by a script that required exactly one insertion (rest of the page unchanged).
+- Plugin and theme **0.9.1**.
+
+| # | Test | Expected | Result | Pass/Fail |
+|---|---|---|---|---|
+| E1 | Valid send (375, phone emulation) | Saved, emailed, WhatsApp opens with the message | AYM-261027-001 saved; owner email logged (Service "Packing and unpacking", "Sunday 15 November 2026", "Sent with: The WhatsApp form", the message); the browser went to wa.me → `api.whatsapp.com/send/?phone=97334448236&text=…` with 7 lines (greeting, Reference, Name, Phone, Service, Date, About my move). (Locally `wp_mail` reports "not sent", as for every earlier test request: no mail server; WP Mail Logging recorded the email) | Pass |
+| E2 | Required, invalid phone, past date, forged service value | Messages, values kept, nothing saved | "Enter your name" / "Enter a phone number so we can reply"; `12345` → the phone message; 2026-10-01 → "Choose today or a date after today"; a forged service value is dropped. Focus on the summary (`whatsapp-form-errors-375.png`) | Pass |
+| E3 | Honeypot, 0-second send, forged timer, bad nonce, the quote form's nonce | Rejected, nothing saved, WhatsApp not opened | The quote form's messages for each; 0 requests to WhatsApp | Pass |
+| E4 | XSS (same strings as D9) | Text only | Error state: 0 injected elements, 0 dialogs; sent: the WhatsApp text fully URL-encoded; the enquiry screen shows the text literally | Pass |
+| E5 | Rate limit (shared with the quote form) | 6th blocked | Sends 3–5 → 303 to wa.me; the 6th → back to the form with "You have sent 5 quote requests in the last hour…" | Pass |
+| E6 | Two forms on one page | No duplicate ids; each shows only its own result | 0 duplicate ids; a quote-form error shows only in the quote form, a WhatsApp-form error only in the WhatsApp form | Pass |
+| E7 | No JavaScript | Works | Posts and shows its error summary (`#ayesha-wf-summary`) | Pass |
+| E8 | Layout, CLS, axe, JS errors | Clean | 1280 and 375: no sideways scroll, CLS 0, one H1, reveals finish, axe 0 serious/critical (only the known moderate `region`), 0 JS errors | Pass |
+| E9 | Editor | Valid, editable | Contact Us 61 blocks, 0 invalid; the block's sidebar shows the 9 word fields; live preview with "Send via WhatsApp"; the quote form is still `multiple: false`; temporary admin session destroyed (0) | Pass |
+| E10 | Clean-up | Only this phase's test data | Enquiries 173–177 (AYM-261027-001…005) and mail-log rows 42–46 deleted, rate-limit and result transients deleted: back to 22 enquiries, last mail row 35 | Pass |
+| E11 | php -l, debug.log | Clean | All changed PHP files clean; no debug.log entries dated 2026-10-27 | Pass |
+
+Note: during E1 and E4 the test browser followed the redirect to the real WhatsApp website (a page view only; no message was sent, no account involved). **Waiting for merge approval.**

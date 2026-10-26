@@ -12,6 +12,21 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * ID prefix of the form being drawn: "aqf-" for the quote form, "awf-" for the WhatsApp form, so
+ * both can be on one page without clashing ids.
+ *
+ * @param string|null $prefix New prefix, or null to read it.
+ * @return string
+ */
+function ayesha_core_quote_id_prefix( $prefix = null ) {
+	static $current = 'aqf-';
+	if ( null !== $prefix ) {
+		$current = $prefix;
+	}
+	return $current;
+}
+
+/**
  * Render callback.
  *
  * @param array $attributes Block attributes (defaults from block.json filled in).
@@ -26,6 +41,10 @@ function ayesha_core_quote_render( $attributes ) {
 		}
 	}
 	$state = ayesha_core_quote_current_state();
+	if ( $state && 'whatsapp' === ( $state['form'] ?? '' ) ) {
+		$state = null; // The WhatsApp form's own result: shown there, not here.
+	}
+	ayesha_core_quote_id_prefix( 'aqf-' );
 	$page  = get_the_ID() ? get_permalink( get_the_ID() ) : '';
 	$inner = ( $state && 'success' === ( $state['type'] ?? '' ) )
 		? ayesha_core_quote_render_success( $a, $state, $page )
@@ -146,8 +165,7 @@ function ayesha_core_quote_render_form( array $a, $state, $page ) {
 	$html .= '<input type="hidden" name="ayesha_qf" value="1">'
 		. '<input type="hidden" name="_aqnonce" value="' . esc_attr( wp_create_nonce( 'ayesha_quote_form' ) ) . '">'
 		. '<input type="hidden" name="aq_t" value="' . esc_attr( ayesha_core_quote_timer_token() ) . '">'
-		. '<div class="ayesha-qf__hp" aria-hidden="true"><label for="aqf-website">' . esc_html__( 'Leave this field empty', 'ayesha-core' ) . '</label>'
-		. '<input type="text" id="aqf-website" name="aq_website" value="" tabindex="-1" autocomplete="off"></div>';
+		. ayesha_core_quote_honeypot();
 
 	$html .= '<div class="ayesha-qf__submit"><button type="submit" class="wp-element-button ayesha-qf__button">' . esc_html( $a['submitText'] ) . '</button>';
 	if ( '' !== trim( (string) $a['privacyNote'] ) ) {
@@ -185,7 +203,7 @@ function ayesha_core_quote_render_move_parts( array $a, array $v, array $e, arra
 			'type' => 'date',
 			'min'  => ayesha_core_quote_today(),
 		),
-		'<div class="ayesha-qf__choice ayesha-qf__choice--after"><input class="ayesha-qf__check" type="checkbox" id="aqf-flexible" name="aq[flexible]" value="1"' . checked( ! empty( $v['flexible'] ), true, false ) . '><label for="aqf-flexible">' . esc_html( $a['labelFlexible'] ) . '</label></div>'
+		'<div class="ayesha-qf__choice ayesha-qf__choice--after"><input class="ayesha-qf__check" type="checkbox" id="' . esc_attr( ayesha_core_quote_id_prefix() . 'flexible' ) . '" name="aq[flexible]" value="1"' . checked( ! empty( $v['flexible'] ), true, false ) . '><label for="' . esc_attr( ayesha_core_quote_id_prefix() . 'flexible' ) . '">' . esc_html( $a['labelFlexible'] ) . '</label></div>'
 	);
 	$html .= ayesha_core_quote_select( 'size', $a['labelSize'], $o['size'], $v['size'] );
 	foreach ( array( 'pickup' => $a['labelPickup'], 'dropoff' => $a['labelDropoff'] ) as $where => $legend ) {
@@ -208,13 +226,25 @@ function ayesha_core_quote_render_move_parts( array $a, array $v, array $e, arra
 }
 
 /**
- * Error summary at the top: what went wrong and a link to each field.
+ * The field people never see (bots fill it in).
  *
- * @param array $state  Error state.
- * @param array $errors Field errors.
  * @return string
  */
-function ayesha_core_quote_render_summary( array $state, array $errors ) {
+function ayesha_core_quote_honeypot() {
+	$id = ayesha_core_quote_id_prefix() . 'website';
+	return '<div class="ayesha-qf__hp" aria-hidden="true"><label for="' . esc_attr( $id ) . '">' . esc_html__( 'Leave this field empty', 'ayesha-core' ) . '</label>'
+		. '<input type="text" id="' . esc_attr( $id ) . '" name="aq_website" value="" tabindex="-1" autocomplete="off"></div>';
+}
+
+/**
+ * Error summary at the top: what went wrong and a link to each field.
+ *
+ * @param array  $state  Error state.
+ * @param array  $errors Field errors.
+ * @param string $id     The summary's id (the WhatsApp form has its own).
+ * @return string
+ */
+function ayesha_core_quote_render_summary( array $state, array $errors, $id = 'ayesha-qf-summary' ) {
 	$problems = array(
 		'expired' => __( 'The form was open for a long time and expired. Your answers are still here: check them and press the button again.', 'ayesha-core' ),
 		'fast'    => __( 'The form was sent faster than a person can fill it in. Check your answers and press the button again.', 'ayesha-core' ),
@@ -224,8 +254,8 @@ function ayesha_core_quote_render_summary( array $state, array $errors ) {
 	);
 	$problem = (string) ( $state['problem'] ?? '' );
 
-	$html = '<div class="ayesha-qf__summary" id="ayesha-qf-summary" role="alert" tabindex="-1" aria-labelledby="ayesha-qf-summary-title">'
-		. '<h3 class="ayesha-qf__summary-title" id="ayesha-qf-summary-title">' . esc_html__( 'Your request was not sent', 'ayesha-core' ) . '</h3>';
+	$html = '<div class="ayesha-qf__summary" id="' . esc_attr( $id ) . '" role="alert" tabindex="-1" aria-labelledby="' . esc_attr( $id . '-title' ) . '">'
+		. '<h3 class="ayesha-qf__summary-title" id="' . esc_attr( $id . '-title' ) . '">' . esc_html__( 'Your request was not sent', 'ayesha-core' ) . '</h3>';
 	if ( isset( $problems[ $problem ] ) ) {
 		$html .= '<p>' . esc_html( $problems[ $problem ] ) . '</p>';
 		$wa    = ayesha_core_whatsapp_url();
@@ -237,7 +267,8 @@ function ayesha_core_quote_render_summary( array $state, array $errors ) {
 		$html .= '<p>' . esc_html__( 'Check these answers:', 'ayesha-core' ) . '</p><ul>';
 		foreach ( ayesha_core_quote_error_targets() as $field => $target ) {
 			if ( isset( $errors[ $field ] ) ) {
-				$html .= '<li><a href="#' . esc_attr( $target ) . '">' . esc_html( $errors[ $field ] ) . '</a></li>';
+				$target = ayesha_core_quote_id_prefix() . substr( $target, 4 );
+				$html  .= '<li><a href="#' . esc_attr( $target ) . '">' . esc_html( $errors[ $field ] ) . '</a></li>';
 			}
 		}
 		$html .= '</ul>';
@@ -291,7 +322,7 @@ function ayesha_core_quote_required_tag( $required ) {
  * @return string
  */
 function ayesha_core_quote_input( $key, $label, $hint, $value, array $errors, $required, array $attrs = array(), $after = '' ) {
-	$id    = 'aqf-' . $key;
+	$id    = ayesha_core_quote_id_prefix() . $key;
 	$error = (string) ( $errors[ $key ] ?? '' );
 	list( $messages, $describe ) = ayesha_core_quote_messages( $id, $hint, $error );
 	$attrs = array_merge( array( 'type' => 'text' ), $attrs );
@@ -323,7 +354,7 @@ function ayesha_core_quote_input( $key, $label, $hint, $value, array $errors, $r
  * @return string
  */
 function ayesha_core_quote_textarea( $key, $label, $hint, $value, array $errors, $max = 0 ) {
-	$id    = 'aqf-' . $key;
+	$id    = ayesha_core_quote_id_prefix() . $key;
 	$error = (string) ( $errors[ $key ] ?? '' );
 	list( $messages, $describe ) = ayesha_core_quote_messages( $id, $hint, $error );
 	return '<div class="ayesha-qf__field' . ( $error ? ' is-invalid' : '' ) . '">'
@@ -346,7 +377,7 @@ function ayesha_core_quote_textarea( $key, $label, $hint, $value, array $errors,
  * @return string
  */
 function ayesha_core_quote_select( $key, $label, array $options, $value ) {
-	$id   = 'aqf-' . $key;
+	$id   = ayesha_core_quote_id_prefix() . $key;
 	$html = '<div class="ayesha-qf__field"><label class="ayesha-qf__label" for="' . esc_attr( $id ) . '">' . esc_html( $label ) . '</label>'
 		. '<select class="ayesha-qf__input ayesha-qf__select" id="' . esc_attr( $id ) . '" name="aq[' . esc_attr( $key ) . ']">'
 		. '<option value="">' . esc_html__( 'Choose', 'ayesha-core' ) . '</option>';
@@ -371,7 +402,7 @@ function ayesha_core_quote_select( $key, $label, array $options, $value ) {
  * @return string
  */
 function ayesha_core_quote_choices( $key, $type, $legend, $hint, array $options, array $checked, array $errors, $required, $layout ) {
-	$id    = 'aqf-' . $key;
+	$id    = ayesha_core_quote_id_prefix() . $key;
 	$error = (string) ( $errors[ $key ] ?? '' );
 	list( $messages, $describe ) = ayesha_core_quote_messages( $id, $hint, $error );
 	$name  = 'checkbox' === $type ? 'aq[' . $key . '][]' : 'aq[' . $key . ']';

@@ -7,7 +7,7 @@ Page content lives in the WordPress database, not in the theme. These files are 
 | `home.html` | The Home page's block markup, exactly as saved in the editor |
 | `about.html` | The About Us page's block markup (banner, photo + who runs it, How we work cards, Stats, Where we go, CTA band) |
 | `services.html` | The Our Services page's block markup (banner, What we do cards, the six services in detail, ads gallery, Prices, Questions, CTA band) |
-| `contact.html` | The Contact Us page's block markup (banner, "Request a free quote", contact card, quote form block, map, CTA band) |
+| `contact.html` | The Contact Us page's block markup (banner, "Request a free quote", contact card, quote form block, WhatsApp quote form section, address map, CTA band) |
 | `home-seo.json`, `about-seo.json`, `services-seo.json`, `contact-seo.json` | Each page's search-engine title and description (the "Search engines" panel) |
 | `patterns/ayesha-cta-band.html` | Synced pattern "CTA band" (the yellow band above the footer) |
 | `patterns/ayesha-where-we-go.html` | Synced pattern "Where we go" (the service-area route, About Us) |
@@ -48,4 +48,4 @@ php wp-cli.phar eval-file .claude/worktrees/<worktree>/docs/content/content.php 
 
 ## First build
 
-`content.php build home|about|services|contact` makes one page from the theme's patterns (`wp-content/themes/ayesha-movers/patterns/`) and **overwrites** that page. Home was built once in Phase 4, About Us and Our Services once in Phase 5, and Contact Us once in Phase 6; About Us, Our Services and Contact Us were rebuilt in Phase 7d (patterns `about-banner`, `about-story`, `about-values`, `home-stats`, `where-we-go`, `cta-band`; `services-banner`, `services-cards`, `services-list`, `services-gallery`, `home-pricing`, `services-questions`, `cta-band`; `contact-banner`, `contact-page`, `contact-map`, `cta-band`). Don't run it on a page the client has already edited.
+`content.php build home|about|services|contact` makes one page from the theme's patterns (`wp-content/themes/ayesha-movers/patterns/`) and **overwrites** that page. Home was built once in Phase 4, About Us and Our Services once in Phase 5, and Contact Us once in Phase 6; About Us, Our Services and Contact Us were rebuilt in Phase 7d (patterns `about-banner`, `about-story`, `about-values`, `home-stats`, `where-we-go`, `cta-band`; `services-banner`, `services-cards`, `services-list`, `services-gallery`, `home-pricing`, `services-questions`, `cta-band`; `contact-banner`, `contact-page`, `contact-map`, `cta-band`; the WhatsApp quote form section `contact-whatsapp-form` was added in Phase 7e). Don't run it on a page the client has already edited.

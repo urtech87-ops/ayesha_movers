@@ -1,0 +1,31 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ayesha/whatsapp-form",
+	"title": "WhatsApp quote form",
+	"category": "widgets",
+	"icon": "whatsapp",
+	"description": "A short form (name, phone, service, preferred date, message). One click saves the request under Enquiries, emails it to the address in Settings → Business Info, then opens WhatsApp with the message ready for the customer to send to your WhatsApp number. Change the words in the sidebar.",
+	"keywords": [ "whatsapp", "form", "quote", "enquiry" ],
+	"textdomain": "ayesha-core",
+	"supports": {
+		"html": false,
+		"multiple": false,
+		"reusable": false,
+		"customClassName": false
+	},
+	"attributes": {
+		"labelName": { "type": "string", "default": "Your name" },
+		"labelPhone": { "type": "string", "default": "Phone or WhatsApp number" },
+		"hintPhone": { "type": "string", "default": "Bahrain: 8 digits, e.g. 3xxx xxxx. Other countries: start with the country code, e.g. +966." },
+		"labelService": { "type": "string", "default": "Service" },
+		"labelDate": { "type": "string", "default": "Preferred date" },
+		"labelMessage": { "type": "string", "default": "Tell us about your move" },
+		"hintMessage": { "type": "string", "default": "Optional. For example what you are moving, from where to where, and when." },
+		"submitText": { "type": "string", "default": "Send via WhatsApp" },
+		"note": { "type": "string", "default": "We also get your request by email. WhatsApp opens with your message ready: press Send there." }
+	},
+	"editorScript": "ayesha-whatsapp-form-editor",
+	"viewScript": "ayesha-quote-form-view",
+	"style": "ayesha-quote-form"
+}

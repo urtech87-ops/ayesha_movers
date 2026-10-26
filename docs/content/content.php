@@ -55,7 +55,7 @@ $ayesha_pages = array(
 		'id'       => (int) ( get_page_by_path( 'contact-us' )->ID ?? 0 ),
 		'file'     => 'contact',
 		'template' => 'page-sections',
-		'patterns' => array( 'contact-banner', 'contact-page', 'contact-map', 'cta-band' ),
+		'patterns' => array( 'contact-banner', 'contact-page', 'contact-whatsapp-form', 'contact-map', 'cta-band' ),
 	),
 );
 

@@ -715,8 +715,16 @@ function ayesha_core_quote_rows( array $data ) {
 	if ( '' !== (string) ( $data['message'] ?? '' ) ) {
 		$rows[] = array( __( 'About the move', 'ayesha-core' ), (string) $data['message'] );
 	}
-	// Short form: parts 2 and 3 were not asked, so they are not listed at all.
+	// Short form: parts 2 and 3 were not asked, so they are not listed at all. The WhatsApp form
+	// (ayesha_core_whatsapp_form_*) adds a service and a date, and says it came from that form.
 	if ( ayesha_core_quote_is_short( $data ) ) {
+		if ( '' !== (string) ( $data['service'] ?? '' ) ) {
+			$rows[] = array( __( 'Service', 'ayesha-core' ), ayesha_core_whatsapp_form_service_label( (string) $data['service'] ) );
+		}
+		if ( 'whatsapp' === ( $data['via'] ?? '' ) ) {
+			$rows[] = array( __( 'Preferred date', 'ayesha-core' ), ayesha_core_quote_date_text( $data ) );
+			$rows[] = array( __( 'Sent with', 'ayesha-core' ), __( 'The WhatsApp form (WhatsApp opened with the message ready to send)', 'ayesha-core' ) );
+		}
 		return $rows;
 	}
 	return array_merge(

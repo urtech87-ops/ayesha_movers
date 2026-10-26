@@ -2269,6 +2269,44 @@ body:not(.editor-styles-wrapper) .ayesha-contact__columns:not(:has(.ayesha-conta
 	.ayesha-contact__aside { align-self: stretch; }
 }
 
+/* ---- Contact Us: the WhatsApp quote form (block "ayesha/whatsapp-form"): the heading, a line and
+        three ticks on the left, the form on a white card like the quote form's on the right. ---- */
+.wp-block-columns.ayesha-wf-section__columns { align-items: center !important; gap: 2rem 3.5rem !important; margin-block: 0; }
+.ayesha-wf-section__text > * { margin-block: 0; }
+.ayesha-wf-section__text > * + * { margin-block-start: 1.25rem; }
+.ayesha-wf-section__text > h2 { position: relative; padding-block-end: 1rem; }
+
+.ayesha-wf-section__text > h2::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 56px;
+	height: 3px;
+	background: var(--ayesha-gold);
+}
+
+.ayesha-wf-section__text > .ayesha-checklist { color: var(--ayesha-navy); font-weight: 500; }
+
+.ayesha-wf-section__card {
+	box-sizing: border-box;
+	padding: 2rem 1.25rem;
+	background: #fff;
+	border: 1px solid var(--ayesha-line);
+	border-top: 4px solid #25D366;
+	border-radius: 2px;
+	box-shadow: 0 10px 30px rgb(12 18 57 / 0.08);
+}
+
+@media (min-width: 600px) { .ayesha-wf-section__card { padding: 2.5rem 2.25rem; } }
+
+#whatsapp-form { scroll-margin-block-start: 1.75rem; }
+
+@media (min-width: 782px) and (max-width: 959.98px) {
+	.wp-block-columns.ayesha-wf-section__columns { flex-wrap: wrap !important; }
+	.wp-block-columns.ayesha-wf-section__columns > .wp-block-column { flex-basis: 100% !important; }
+}
+
 /* ---- Contact Us: the Google map of the business address (block "ayesha/map", from Business Info).
         A fixed shape, so nothing moves when the map loads. ---- */
 .ayesha-map {
