@@ -112,15 +112,15 @@ function ayesha_theme_banner_markup( $h1, $crumb, $image_id ) {
 		'dimRatio'           => 70,
 		'overlayColor'       => 'cab-teal',
 		'isUserOverlayColor' => true,
-		'sizeSlug'           => 'full',
 		'tagName'            => 'section',
+		'sizeSlug'           => 'full',
 		'metadata'           => array( 'name' => 'Banner (photo, page heading, breadcrumb)' ),
 		'align'              => 'full',
 		'className'          => 'ayesha-banner',
 		'layout'             => array( 'type' => 'constrained' ),
 	);
 	return '<!-- wp:cover ' . serialize_block_attributes( $attrs ) . ' -->
-<section class="wp-block-cover alignfull ayesha-banner"><span aria-hidden="true" class="wp-block-cover__background has-cab-teal-background-color has-background-dim-70 has-background-dim"></span><img class="wp-block-cover__image-background wp-image-' . (int) $image_id . ' size-full" alt="' . esc_attr( $alt ) . '" src="' . esc_url( $url ) . '" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:heading {"level":1} -->
+<section class="wp-block-cover alignfull ayesha-banner"><img class="wp-block-cover__image-background wp-image-' . (int) $image_id . ' size-full" alt="' . esc_attr( $alt ) . '" src="' . esc_url( $url ) . '" data-object-fit="cover"/><span aria-hidden="true" class="wp-block-cover__background has-cab-teal-background-color has-background-dim-70 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:heading {"level":1} -->
 <h1 class="wp-block-heading">' . esc_html( $h1 ) . '</h1>
 <!-- /wp:heading -->
 

@@ -1970,6 +1970,8 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 .ayesha-svc__text > * + * { margin-block-start: 1rem; }
 
 .ayesha-svc__text > h2 {
+	/* A link to #packing etc. stops with some space above the heading (and, on computers, the photo beside it). */
+	scroll-margin-block-start: 2rem;
 	position: relative;
 	padding-block-end: 1rem;
 	font-size: clamp(1.5rem, 1.3rem + 0.8vw, 1.875rem);
@@ -1993,7 +1995,9 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 .ayesha-svc__text > .wp-block-buttons { margin-block-start: 2rem; }
 
 @media (min-width: 960px) {
-	.ayesha-svc__section { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4.5rem; }
+	/* Top-aligned, so a link to a service shows its photo and heading together. */
+	.ayesha-svc__section { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4.5rem; align-items: start; }
+	.ayesha-svc__text { padding-block-start: 0.5rem; }
 	.ayesha-svc__photo { margin-inline-start: 22px !important; }
 	.ayesha-svc__photo img { box-shadow: -22px 22px 0 var(--ayesha-gold); }
 
