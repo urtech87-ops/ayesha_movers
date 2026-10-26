@@ -1151,67 +1151,69 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 	margin-block-start: 3rem !important;
 }
 
-/* ---- Where we go (shared section, About Us): a navy band like the Home coverage band. Each stop of
-        the route is a card with its icon in a gold circle on the edge (like the Home step cards),
-        joined by a dashed gold line; the last stop, the rest of the GCC, is solid gold like the Home
-        GCC tag. Phones: the cards stack and the line runs down the left. The icon follows the stop's
-        place in the list (door, city, port, truck, then a pin for the last). ---- */
+/* ---- Where we go (shared section, About Us): the stops of the route as cards like the Home
+        "Why people book us" cards (white on light grey, gold top edge, icon in a gold ring, a faint
+        number in the corner). Here the numbers mean something: they are the order of the route.
+        Five across on wide screens, three on tablets, one under the other on phones. The icon
+        follows the stop's place in the list (door, city, port, truck, then a pin for the last). ---- */
 .ayesha-route {
-	position: relative;
+	counter-reset: ayesha-stop;
 	display: grid;
-	gap: 1rem;
+	grid-template-columns: 1fr;
+	gap: 1.5rem;
 	margin-block: 0;
 	padding-inline-start: 0;
 	list-style: none;
-	color: var(--ayesha-navy);
-	font-weight: 500;
 }
 
-/* The route line, behind the cards: seen only between them. */
-.ayesha-route::before {
-	content: "";
-	position: absolute;
-	top: 2rem;
-	bottom: 2rem;
-	left: calc(1rem + 23px);
-	border-left: 2px dashed var(--ayesha-gold);
+/* Tablets: three across, the last row centred (flex, so two cards don't leave an empty slot). */
+@media (min-width: 640px) and (max-width: 1099.98px) {
+	.ayesha-route { display: flex; flex-wrap: wrap; justify-content: center; }
+	.ayesha-route > li { flex: 0 0 calc((100% - 3rem) / 3); }
 }
+
+@media (min-width: 1100px) { .ayesha-route { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 
 .ayesha-route > li {
 	position: relative;
-	display: flex;
-	align-items: center;
-	min-height: 72px;
+	counter-increment: ayesha-stop;
 	box-sizing: border-box;
 	margin: 0;
-	padding: 0.875rem 1.25rem 0.875rem calc(1rem + 48px + 1rem);
-	border: 1px solid var(--ayesha-line);
+	padding: 6.25rem 1.5rem 2rem;
+	overflow: hidden;
+	border-top: 3px solid var(--ayesha-gold);
 	border-radius: 2px;
-	background: #fff;
-	line-height: 1.35;
+	/* The gold ring around the icon, drawn in the card's background (as on the Home cards). */
+	background:
+		radial-gradient(circle at calc(1.5rem + 30px) calc(1.75rem + 30px), transparent 28px, var(--ayesha-gold) 28.5px, var(--ayesha-gold) 30px, transparent 30.5px),
+		#fff;
+	color: var(--ayesha-navy);
+	font-size: 1.1875rem;
+	font-weight: 700;
+	line-height: 1.3;
 }
 
-/* The gold circle (::before) and the stop's icon on it (::after). */
+/* The faint number in the corner (decorative: hidden from screen readers where supported). */
 .ayesha-route > li::before {
-	content: "";
+	content: counter(ayesha-stop, decimal-leading-zero);
+	content: counter(ayesha-stop, decimal-leading-zero) / "";
 	position: absolute;
-	top: 50%;
-	left: 1rem;
-	width: 48px;
-	height: 48px;
-	margin-block-start: -24px;
-	border-radius: 50%;
-	background: var(--ayesha-gold);
+	top: 0.75rem;
+	right: 1.25rem;
+	color: #EDEFF4;
+	font-size: 4.25rem;
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: -0.02em;
 }
 
 .ayesha-route > li::after {
 	content: "";
 	position: absolute;
-	top: 50%;
-	left: calc(1rem + 12px);
-	width: 24px;
-	height: 24px;
-	margin-block-start: -12px;
+	top: calc(1.75rem + 16px);
+	left: calc(1.5rem + 16px);
+	width: 28px;
+	height: 28px;
 	background: var(--ayesha-navy);
 	-webkit-mask: var(--ayesha-icon, var(--ayesha-icon-pin)) center / contain no-repeat;
 	mask: var(--ayesha-icon, var(--ayesha-icon-pin)) center / contain no-repeat;
@@ -1223,51 +1225,9 @@ a { color: var(--ayesha-navy); text-underline-offset: 0.2em; }
 .ayesha-route > li:nth-child(4) { --ayesha-icon: var(--ayesha-icon-truck); }
 .ayesha-route > li:last-child { --ayesha-icon: var(--ayesha-icon-pin); }
 
-/* The last stop: solid gold, its circle navy with a gold icon. */
-.ayesha-route > li:last-child { border-color: var(--ayesha-gold); background: var(--ayesha-gold); font-weight: 700; }
-.ayesha-route > li:last-child::before { background: var(--ayesha-navy); }
-.ayesha-route > li:last-child::after { background: var(--ayesha-gold); }
-
 .ayesha-where > .ayesha-route {
 	margin-block-start: 3rem;
 	max-inline-size: var(--wp--style--global--content-size);
-}
-
-/* On the navy band the cards are a deeper navy with white words. */
-.is-style-teal-panel .ayesha-route > li:not(:last-child) {
-	border-color: var(--ayesha-line-dark);
-	background: var(--ayesha-navy-deep);
-	color: #fff;
-}
-
-@media (min-width: 960px) {
-	.ayesha-route {
-		grid-auto-flow: column;
-		grid-auto-columns: minmax(0, 1fr);
-		gap: 1.25rem;
-		padding-block-start: 24px;
-		text-align: center;
-	}
-
-	/* The line now runs across, through the middle of the circles on the cards' top edges. */
-	.ayesha-route::before {
-		top: 24px;
-		bottom: auto;
-		left: 10%;
-		right: 10%;
-		border-left: 0;
-		border-top: 2px dashed var(--ayesha-gold);
-	}
-
-	.ayesha-route > li {
-		flex-direction: column;
-		justify-content: center;
-		min-height: 128px;
-		padding: calc(24px + 1rem) 1rem 1.25rem;
-	}
-
-	.ayesha-route > li::before { top: 0; left: calc(50% - 24px); margin-block-start: -24px; }
-	.ayesha-route > li::after { top: 0; left: calc(50% - 12px); margin-block-start: -12px; }
 }
 
 /* ---- Trust strip: short facts under the banner. A still grid on phones; from 640px a centred row,
@@ -2349,12 +2309,11 @@ body:not(.editor-styles-wrapper) .ayesha-contact__columns:not(:has(.ayesha-conta
 .ayesha-map__show .wp-block-button__link { box-shadow: 0 10px 30px rgb(0 0 0 / 0.35); }
 .ayesha-map__show .wp-block-button__link:focus-visible { outline-color: #fff; box-shadow: 0 0 0 2px var(--ayesha-navy); }
 
-/* Phones and tablets: "How a move works" and "Where we go" show their steps and stops as a
-   left-aligned list, so their title and intro line up on the left as well (centred from 960px). */
+/* Phones and tablets: "How a move works" shows its steps as a left-aligned list, so its title
+   lines up on the left as well (centred from 960px). */
 @media (max-width: 959.98px) {
-	:is(.ayesha-how, .ayesha-where) > h2,
-	.ayesha-where > p { text-align: left !important; margin-inline: 0 !important; }
-	:is(.ayesha-how, .ayesha-where) > h2::after { left: 0 !important; transform: none !important; }
+	.ayesha-how > h2 { text-align: left !important; margin-inline: 0 !important; }
+	.ayesha-how > h2::after { left: 0 !important; transform: none !important; }
 }
 
 /* ---------------------------------------------------------------
