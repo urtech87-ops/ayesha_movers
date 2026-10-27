@@ -65,7 +65,7 @@ In the Media Library, the tags are prefixed to the title (`[DO NOT USE]`, `[PLAC
 | 7b. Logo (carton mark, two-line name), favicon + share image, official WhatsApp glyph | phase-7b-logo | **Done; approved and merged into main 2026-10-06 (fast-forward to 4cc572a)** |
 | 7c. Top bar, header with Services dropdown, Home banner slider, animations, Home sections below the banner | phase-7c-hero | **Done; approved and merged into main 2026-10-26 (fast-forward to f20dba4, then the trust strip pause button: fast-forward to bb888c6)** |
 | 7d. Inner pages (About Us, Our Services, Contact Us) in the Home style | phase-7d-inner-pages | **Done; approved and merged into main 2026-10-27 (fast-forward 825ceda → 72e126a; then the light "Where we go" and the Contact address map: 6275d26 → e7ee583)** |
-| 7e. WhatsApp quote form on Contact Us | phase-7e-whatsapp-form | **Built and tested 2026-10-27; waiting for merge approval** |
+| 7e. WhatsApp quote form on Contact Us | phase-7e-whatsapp-form | **Approved and merged 2026-10-27 (f5770d2)** |
 | 8. Full QA, SEO, performance, handover (was Phase 7) | phase-8-qa | **Next, waiting for the user's go-ahead**; scope approved 2026-10-03 (see Phase 8 notes). Favicon and og:image already done in Phase 7b |
 
 ## Current phase + next step
@@ -987,4 +987,8 @@ Request: a new section on Contact Us with a form that sends the message on Whats
 | E10 | Clean-up | Only this phase's test data | Enquiries 173–177 (AYM-261027-001…005) and mail-log rows 42–46 deleted, rate-limit and result transients deleted: back to 22 enquiries, last mail row 35 | Pass |
 | E11 | php -l, debug.log | Clean | All changed PHP files clean; no debug.log entries dated 2026-10-27 | Pass |
 
-Note: during E1 and E4 the test browser followed the redirect to the real WhatsApp website (a page view only; no message was sent, no account involved). **Waiting for merge approval.**
+Note: during E1 and E4 the test browser followed the redirect to the real WhatsApp website (a page view only; no message was sent, no account involved).
+
+**Approved by the user and merged 2026-10-27:** dev junctions removed (the main checkout serves its own folders again), `main` fast-forwarded to f5770d2 after a secret check (no wp-config, .env, SQL dumps or passwords in the diff) and pushed (`git ls-remote` shows f5770d2).
+
+Smoke test on `main` (real folders): Home, About Us, Our Services, Contact Us all 200, one H1 each, 0 JS errors, CLS 0, 0 duplicate ids; plugin assets at 0.9.1; Contact Us has both forms (quote form and the WhatsApp quote form with its green button) and the address map. Pass.
