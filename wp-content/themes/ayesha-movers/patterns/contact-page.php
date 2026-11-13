@@ -1,10 +1,10 @@
 <?php
 /**
- * Title: Contact Us: quote intro, contact card and the quote form
+ * Title: Contact Us: contact card and the two quote forms in tabs
  * Slug: ayesha-movers/contact-page
  * Categories: ayesha-movers
- * Keywords: contact, phone, whatsapp, email, quote, form
- * Description: "Request a free quote" and its line, then a navy card with a row for each way to reach the team, the service area and the opening hours (numbers, email, links and hours from Settings → Business Info), beside the quote request form on a white card. The form column has the HTML anchor "quote", which the Home page links to. On computers the contact card stays on screen while the form scrolls.
+ * Keywords: contact, phone, whatsapp, email, quote, form, tabs
+ * Description: "Request a free quote", then a navy card with a row for each way to reach the team, the service area and the opening hours (numbers, email, links and hours from Settings → Business Info), beside a white card with two tabs (block "Form tabs"): "WhatsApp quote" (opens first; the WhatsApp quote form) and "Detailed quote request" (the quote request form), each with a one-line intro. The tabs have the HTML anchors "whatsapp-form" and "quote" (the Home page and the header link to #quote, which opens the Detailed tab). On computers the contact card stays on screen while the form scrolls.
  *
  * @package AyeshaMovers
  */
@@ -77,10 +77,6 @@ $ayesha_rows = array(
 <h2 class="wp-block-heading">Request a free quote</h2>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"className":"has-lead-font-size ayesha-contact__intro"} -->
-<p class="has-lead-font-size ayesha-contact__intro">Takes under a minute. We'll call or WhatsApp you back.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:columns {"className":"ayesha-contact__columns"} -->
 <div class="wp-block-columns ayesha-contact__columns"><!-- wp:column {"width":"41.67%","className":"ayesha-contact__aside"} -->
 <div class="wp-block-column ayesha-contact__aside" style="flex-basis:41.67%"><!-- wp:group {"metadata":{"name":"Contact rows (shown when Business Info > Show contact details is on)"},"className":"ayesha-contact__rows ayesha-if-contact-details","layout":{"type":"default"}} -->
@@ -90,8 +86,24 @@ $ayesha_rows = array(
 <!-- /wp:group --></div>
 <!-- /wp:column -->
 
-<!-- wp:column {"width":"58.33%","className":"ayesha-contact__form","anchor":"quote"} -->
-<div id="quote" class="wp-block-column ayesha-contact__form" style="flex-basis:58.33%"><!-- wp:ayesha/quote-form {"showMoveParts":false,"askReply":false} /--></div>
+<!-- wp:column {"width":"58.33%","className":"ayesha-contact__form"} -->
+<div class="wp-block-column ayesha-contact__form" style="flex-basis:58.33%"><!-- wp:ayesha/form-tabs -->
+<!-- wp:ayesha/form-tab {"label":"WhatsApp quote","shortLabel":"WhatsApp","icon":"whatsapp","panelId":"whatsapp-form"} -->
+<!-- wp:paragraph {"className":"ayesha-form-tabs__intro"} -->
+<p class="ayesha-form-tabs__intro">Fill in a few details and press Send via WhatsApp. Your request comes to us by email, and WhatsApp opens with your message ready to send.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:ayesha/whatsapp-form /-->
+<!-- /wp:ayesha/form-tab -->
+
+<!-- wp:ayesha/form-tab {"label":"Detailed quote request","shortLabel":"Detailed quote","panelId":"quote"} -->
+<!-- wp:paragraph {"className":"ayesha-form-tabs__intro"} -->
+<p class="ayesha-form-tabs__intro">Takes under a minute. We'll call or WhatsApp you back.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:ayesha/quote-form {"showMoveParts":false,"askReply":false} /-->
+<!-- /wp:ayesha/form-tab -->
+<!-- /wp:ayesha/form-tabs --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></section>
 <!-- /wp:group -->

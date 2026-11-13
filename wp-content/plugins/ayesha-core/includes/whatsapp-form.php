@@ -224,6 +224,7 @@ function ayesha_core_whatsapp_form_handle() {
 		// No WhatsApp number in Business Info: show the quote form's "sent" panel instead.
 		$token = ayesha_core_quote_store_state(
 			array(
+				'form'      => 'quote', // Shown by the quote form.
 				'type'      => 'success',
 				'reference' => $reference,
 				'values'    => array_intersect_key( $data, array_flip( array( 'name', 'message', 'parts' ) ) ),

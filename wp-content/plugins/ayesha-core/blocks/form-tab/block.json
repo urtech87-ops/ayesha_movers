@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ayesha/form-tab",
+	"title": "Form tab",
+	"category": "widgets",
+	"icon": "feedback",
+	"description": "One tab of the Form tabs block: its label (in the sidebar) and the blocks shown when it is open.",
+	"textdomain": "ayesha-core",
+	"parent": [ "ayesha/form-tabs" ],
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"customClassName": false
+	},
+	"attributes": {
+		"label": { "type": "string", "default": "" },
+		"shortLabel": { "type": "string", "default": "" },
+		"icon": { "type": "string", "enum": [ "", "whatsapp" ], "default": "" },
+		"panelId": { "type": "string", "default": "" }
+	}
+}

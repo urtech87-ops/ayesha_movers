@@ -4,7 +4,7 @@
  * Slug: ayesha-movers/contact-whatsapp-form
  * Categories: ayesha-movers
  * Keywords: whatsapp, form, quote, contact
- * Description: A section with a heading, one line and the "WhatsApp quote form" block on a white card. One click saves the request under Enquiries, emails it to you (Business Info email) and opens WhatsApp with the message ready for the customer to send. The section has the HTML anchor "whatsapp-form".
+ * Description: Not used on Contact Us since Phase 7f (the WhatsApp quote form is now the first tab of the form card there; see the Contact Us pattern). A section with a heading, one line and the "WhatsApp quote form" block on a white card. One click saves the request under Enquiries, emails it to you (Business Info email) and opens WhatsApp with the message ready for the customer to send. The section has the HTML anchor "whatsapp-form".
  *
  * @package AyeshaMovers
  */

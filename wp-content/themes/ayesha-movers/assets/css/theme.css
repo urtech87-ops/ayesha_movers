@@ -2100,7 +2100,21 @@ section.ayesha-questions > .ayesha-faq { max-inline-size: 820px; margin-inline: 
 
 @media (min-width: 600px) { .ayesha-contact__form { padding: 2.5rem 2.25rem; } }
 
-#quote { scroll-margin-block-start: 1.75rem; }
+/* The two forms in tabs (block "ayesha/form-tabs", Phase 7f): the tab bar runs edge to edge across
+   the top of the card and the open tab's gold bar takes the place of the card's gold edge. Only once
+   the card is tabs (class set before it is drawn); without JavaScript the card stays as it was. */
+.ayesha-contact__form:has(> .ayesha-form-tabs.is-tabbed) {
+	padding-block-start: 0 !important;
+	border-top: 1px solid var(--ayesha-line);
+}
+
+.ayesha-contact__form > .ayesha-form-tabs.is-tabbed { --aft-gap: 1.75rem; }
+.ayesha-contact__form > .ayesha-form-tabs.is-tabbed > .ayesha-form-tabs__bar { margin-inline: -1.25rem; }
+
+@media (min-width: 600px) {
+	.ayesha-contact__form > .ayesha-form-tabs.is-tabbed { --aft-gap: 2.25rem; }
+	.ayesha-contact__form > .ayesha-form-tabs.is-tabbed > .ayesha-form-tabs__bar { margin-inline: -2.25rem; }
+}
 
 /* One row per way to reach the team: label above the value, the icon in a gold circle; where the
    value is a link, the whole row is the link. Rows are divided by thin lines. */
@@ -2269,8 +2283,9 @@ body:not(.editor-styles-wrapper) .ayesha-contact__columns:not(:has(.ayesha-conta
 	.ayesha-contact__aside { align-self: stretch; }
 }
 
-/* ---- Contact Us: the WhatsApp quote form (block "ayesha/whatsapp-form"): the heading, a line and
-        three ticks on the left, the form on a white card like the quote form's on the right. ---- */
+/* ---- The WhatsApp quote form section (pattern contact-whatsapp-form; not used on Contact Us since
+        Phase 7f, where the form is a tab of the form card): the heading, a line and three ticks on
+        the left, the form on a white card like the quote form's on the right. ---- */
 .wp-block-columns.ayesha-wf-section__columns { align-items: center !important; gap: 2rem 3.5rem !important; margin-block: 0; }
 .ayesha-wf-section__text > * { margin-block: 0; }
 .ayesha-wf-section__text > * + * { margin-block-start: 1.25rem; }
@@ -2300,7 +2315,7 @@ body:not(.editor-styles-wrapper) .ayesha-contact__columns:not(:has(.ayesha-conta
 
 @media (min-width: 600px) { .ayesha-wf-section__card { padding: 2.5rem 2.25rem; } }
 
-#whatsapp-form { scroll-margin-block-start: 1.75rem; }
+.ayesha-wf-section { scroll-margin-block-start: 1.75rem; }
 
 @media (min-width: 782px) and (max-width: 959.98px) {
 	.wp-block-columns.ayesha-wf-section__columns { flex-wrap: wrap !important; }

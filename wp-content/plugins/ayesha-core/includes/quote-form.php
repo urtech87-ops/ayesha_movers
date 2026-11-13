@@ -544,6 +544,7 @@ function ayesha_core_quote_handle() {
 	if ( '' !== $problem || $errors ) {
 		$token = ayesha_core_quote_store_state(
 			array(
+				'form'    => 'quote',
 				'type'    => 'error',
 				'problem' => $problem,
 				// A form-level problem is shown on its own; field errors would only add noise.
@@ -560,6 +561,7 @@ function ayesha_core_quote_handle() {
 	if ( is_wp_error( $post_id ) ) {
 		$token = ayesha_core_quote_store_state(
 			array(
+				'form'    => 'quote',
 				'type'    => 'error',
 				'problem' => 'save',
 				'errors'  => array(),
@@ -574,6 +576,7 @@ function ayesha_core_quote_handle() {
 
 	$token = ayesha_core_quote_store_state(
 		array(
+			'form'      => 'quote',
 			'type'      => 'success',
 			'reference' => $reference,
 			'values'    => array_intersect_key( $data, array_flip( array( 'name', 'move_type', 'from', 'to', 'date', 'flexible', 'email', 'message', 'parts' ) ) ),

@@ -7,7 +7,7 @@ Page content lives in the WordPress database, not in the theme. These files are 
 | `home.html` | The Home page's block markup, exactly as saved in the editor |
 | `about.html` | The About Us page's block markup (banner, photo + who runs it, How we work cards, Stats, Where we go, CTA band) |
 | `services.html` | The Our Services page's block markup (banner, What we do cards, the six services in detail, ads gallery, Prices, Questions, CTA band) |
-| `contact.html` | The Contact Us page's block markup (banner, "Request a free quote", contact card, quote form block, WhatsApp quote form section, address map, CTA band) |
+| `contact.html` | The Contact Us page's block markup (banner, "Request a free quote", contact card, the form card with two tabs: "WhatsApp quote" with the WhatsApp quote form and "Detailed quote request" with the quote form (block Form tabs, since Phase 7f), address map, CTA band) |
 | `home-seo.json`, `about-seo.json`, `services-seo.json`, `contact-seo.json` | Each page's search-engine title and description (the "Search engines" panel) |
 | `patterns/ayesha-cta-band.html` | Synced pattern "CTA band" (the yellow band above the footer) |
 | `patterns/ayesha-where-we-go.html` | Synced pattern "Where we go" (the service-area route, About Us) |
@@ -18,7 +18,7 @@ Page content lives in the WordPress database, not in the theme. These files are 
 
 About Us, Our Services and Contact Us use the page template **Page with sections (heading in the page)** (`page-sections`): their H1 is a Heading block in the page (inside the banner at the top since Phase 7d) instead of the page title. The script sets it on build and import.
 
-The quote form's words (labels, button, messages) are saved in the page itself, in the form block's comment, so they are in `contact.html` too. Enquiries (the saved quote requests) are **not** part of this backup: they are customer data and stay in the database.
+The forms' words (labels, button, messages) and the tab labels are saved in the page itself, in the blocks' comments, so they are in `contact.html` too. Enquiries (the saved quote requests) are **not** part of this backup: they are customer data and stay in the database.
 
 ## Rebuild on another site
 
@@ -48,4 +48,4 @@ php wp-cli.phar eval-file .claude/worktrees/<worktree>/docs/content/content.php 
 
 ## First build
 
-`content.php build home|about|services|contact` makes one page from the theme's patterns (`wp-content/themes/ayesha-movers/patterns/`) and **overwrites** that page. Home was built once in Phase 4, About Us and Our Services once in Phase 5, and Contact Us once in Phase 6; About Us, Our Services and Contact Us were rebuilt in Phase 7d (patterns `about-banner`, `about-story`, `about-values`, `home-stats`, `where-we-go`, `cta-band`; `services-banner`, `services-cards`, `services-list`, `services-gallery`, `home-pricing`, `services-questions`, `cta-band`; `contact-banner`, `contact-page`, `contact-map`, `cta-band`; the WhatsApp quote form section `contact-whatsapp-form` was added in Phase 7e). Don't run it on a page the client has already edited.
+`content.php build home|about|services|contact` makes one page from the theme's patterns (`wp-content/themes/ayesha-movers/patterns/`) and **overwrites** that page. Home was built once in Phase 4, About Us and Our Services once in Phase 5, and Contact Us once in Phase 6; About Us, Our Services and Contact Us were rebuilt in Phase 7d (patterns `about-banner`, `about-story`, `about-values`, `home-stats`, `where-we-go`, `cta-band`; `services-banner`, `services-cards`, `services-list`, `services-gallery`, `home-pricing`, `services-questions`, `cta-band`; `contact-banner`, `contact-page`, `contact-map`, `cta-band`; the WhatsApp quote form section `contact-whatsapp-form` was added in Phase 7e and replaced in Phase 7f by the two-tab form card inside `contact-page`; the section pattern is kept but not used on Contact Us). Don't run it on a page the client has already edited.

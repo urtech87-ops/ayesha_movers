@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ayesha/form-tabs",
+	"title": "Form tabs",
+	"category": "widgets",
+	"icon": "index-card",
+	"description": "Two forms in one card with a tab for each (for example the WhatsApp quote form and the detailed quote form). Each tab holds normal blocks: a short line and a form. Rename a tab in its own sidebar; choose which tab opens first here. Without JavaScript both forms show one after the other.",
+	"keywords": [ "tabs", "form", "quote", "whatsapp" ],
+	"textdomain": "ayesha-core",
+	"allowedBlocks": [ "ayesha/form-tab" ],
+	"supports": {
+		"html": false,
+		"multiple": false,
+		"reusable": false,
+		"customClassName": false
+	},
+	"attributes": {
+		"tablistLabel": { "type": "string", "default": "Ways to ask for a quote" },
+		"openFirst": { "type": "number", "default": 0 }
+	},
+	"editorScript": "ayesha-form-tabs-editor",
+	"viewScript": "ayesha-form-tabs-view",
+	"style": "ayesha-form-tabs"
+}
