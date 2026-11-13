@@ -251,6 +251,35 @@ function ayesha_core_hide_empty_social( $content, $block ) {
 	return $content;
 }
 
+add_filter( 'render_block', 'ayesha_core_hide_empty_row', 10, 2 );
+
+/**
+ * A contact row (a group with the class "ayesha-contact__row" on Contact Us or "ayesha-footer__row"
+ * in the footer) is removed when a value in it bound to Business Info is empty, e.g. the Office
+ * number left blank: no label with nothing under it. Fill the field in again and the row is back.
+ *
+ * @param string $content Block HTML.
+ * @param array  $block   Parsed block.
+ * @return string
+ */
+function ayesha_core_hide_empty_row( $content, $block ) {
+	$class = $block['attrs']['className'] ?? '';
+	if ( '' === $class || ! array_intersect( array( 'ayesha-contact__row', 'ayesha-footer__row' ), preg_split( '/\s+/', $class ) ) ) {
+		return $content;
+	}
+	foreach ( $block['innerBlocks'] ?? array() as $inner ) {
+		$binding = $inner['attrs']['metadata']['bindings']['content'] ?? array();
+		if ( 'ayesha/business' !== ( $binding['source'] ?? '' ) || '' === (string) ( $binding['args']['key'] ?? '' ) ) {
+			continue;
+		}
+		$value = ayesha_core_value( sanitize_key( $binding['args']['key'] ), (array) $binding['args'] );
+		if ( null !== $value && '' === trim( wp_strip_all_tags( $value ) ) ) {
+			return '';
+		}
+	}
+	return $content;
+}
+
 /**
  * "Page animations" in Business Info (on by default).
  *

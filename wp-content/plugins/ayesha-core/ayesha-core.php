@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       AYESHA Core
  * Description:       Business Info settings, Block Bindings, the quote form, the WhatsApp quote form, the form tabs and Enquiries, shortcodes, structured data, search-engine titles, the share image and SVG tab icon, the Home banner slider, the page-animations switch, WebP image sizes and mail settings for the AYESHA Movers & Packers website.
- * Version:           0.9.2
+ * Version:           0.9.3
  * Requires at least: 6.9
  * Requires PHP:      8.0
  * Author:            AYESHA Movers & Packers
@@ -14,7 +14,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'AYESHA_CORE_VERSION', '0.9.2' );
+define( 'AYESHA_CORE_VERSION', '0.9.3' );
 define( 'AYESHA_CORE_FILE', __FILE__ );
 define( 'AYESHA_CORE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AYESHA_CORE_URL', plugin_dir_url( __FILE__ ) );

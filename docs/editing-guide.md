@@ -9,7 +9,7 @@ All contact details live on one page: **Settings → Business Info** (in the bla
 | Field | What it changes |
 |---|---|
 | Main phone number | The "Or call" line on every Home banner slide, the big number in the gold band above the footer, every **Call** button, the Call button in the header (the number itself on wide computer screens), the number in the navy bar at the very top (computers), the big number in the footer, and the **Call** button in the bar at the bottom of phone screens. The big number resizes itself to fit, even if the new number is longer |
-| Second mobile number, Office number | The numbers listed in the footer and on the Contact Us page |
+| Second mobile number, Office number | The numbers listed in the footer and on the Contact Us page. **Leave one empty to hide its row** (label and all) in both places; type it again and the row comes back |
 | WhatsApp number | Every WhatsApp button and link: footer, phone bar, the round green button on computers, the WhatsApp row on Contact Us, and the "Send this on WhatsApp too" button after a quote request. **Digits only**, with the country code, e.g. `97334448236` |
 | WhatsApp opening message | The message that is already typed for the visitor when WhatsApp opens. They can change it before sending |
 | Email address | The email shown on the site, **where quote requests are emailed to**, and the sender address of every email the website sends (see section 10) |
